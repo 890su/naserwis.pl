@@ -1,0 +1,22 @@
+node_modules/
+.dev.vars*
+.env*
+!.env.example
+.wrangler/
+*.log
+
+# The PHP deployment is retained locally as a rollback source only. Cloudflare
+# Pages serves the committed static export from public/ and functions/.
+*.php
+/PHPMailer/
+/includes/
+/en/
+/ru/
+/uk/
+/.reports/
+/.htaccess
+/styles.css
+/custom.css
+/script.js
+/robots.txt
+/sitemap.xml

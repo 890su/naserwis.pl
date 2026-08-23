@@ -1,0 +1,11 @@
+{
+  "name": "naserwis-pl",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Static NaSerwis.pl website for Cloudflare Pages",
+  "scripts": {
+    "export:live": "node scripts/export-live-site.mjs",
+    "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs"
+  }
+}
