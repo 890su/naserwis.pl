@@ -73,7 +73,7 @@ async function updateLandingPage(file) {
     );
     html = html.replace(/\/script\.js\?v=[^"']+/, '/script.js?v=20260823d');
     html = html.replace(/\/consent\.js\?v=[^"']+/, '/consent.js?v=20260823c');
-    html = html.replace(/\/styles\.css(?:\?v=[^"']+)?/g, '/styles.css?v=20260823e');
+    html = html.replace(/\/styles\.css(?:\?v=[^"']+)?/g, '/styles.css?v=20260823f');
     html = html.replace(/\/custom\.css(?:\?v=[^"']+)?/g, '/custom.css?v=20260823e');
     for (const [from, to] of safeCopyReplacements) html = html.split(from).join(to);
     await fs.writeFile(file, html);
@@ -158,7 +158,7 @@ ${measurementBlock}    <meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css?v=20260823e">
+    <link rel="stylesheet" href="/styles.css?v=20260823f">
     <link rel="stylesheet" href="/custom.css?v=20260823e">
 </head>
 <body class="legal-page">
