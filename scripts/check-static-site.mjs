@@ -17,7 +17,6 @@ const pages = [
   "public/en/privacy/index.html",
   "public/en/cookies/index.html",
   "public/consent.js",
-  "public/legal.css",
   "public/script.js",
   "functions/api/contact.js"
 ];
@@ -45,7 +44,7 @@ for (const language of ["", "ru/", "uk/", "en/"]) {
   for (const type of ["privacy", "cookies"]) {
     const file = `public/${language}${type}/index.html`;
     const html = await readFile(file, "utf8");
-    for (const hook of ["legal.css", "legal-language", "legal-settings-button", "data-consent-settings"]) {
+    for (const hook of ["custom.css", "legal-language", "legal-settings-button", "data-consent-settings"]) {
       if (!html.includes(hook)) throw new Error(`Missing legal interface hook ${hook} in ${file}.`);
     }
   }

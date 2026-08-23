@@ -45,9 +45,9 @@ are not supported by conversion/value Smart Bidding.
   applicable, and the privacy contact address.
 - [x] Add PL/RU/UK/EN privacy and cookie pages.
 - [x] Add a multilingual consent banner and persistent consent settings.
-- [x] Redesign the multilingual consent centre and all eight legal pages with
-  accessible close controls, balanced accept/reject/customise actions,
-  responsive layouts and language navigation; production deployment pending.
+- [x] Integrate all eight legal pages into the existing NaSerwis.pl visual
+  system and provide accessible close controls, balanced consent actions,
+  responsive layouts and language navigation.
 - [x] Default Google consent signals to denied before loading measurement tags.
 - [x] Add Article 13 notices under all lead forms.
 - [x] Add separate review/publication consent handling.

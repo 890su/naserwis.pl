@@ -73,7 +73,8 @@ async function updateLandingPage(file) {
     );
     html = html.replace(/\/script\.js\?v=[^"']+/, '/script.js?v=20260823d');
     html = html.replace(/\/consent\.js\?v=[^"']+/, '/consent.js?v=20260823c');
-    html = html.replace(/\/styles\.css(?:\?v=[^"']+)?/g, '/styles.css?v=20260823c');
+    html = html.replace(/\/styles\.css(?:\?v=[^"']+)?/g, '/styles.css?v=20260823e');
+    html = html.replace(/\/custom\.css(?:\?v=[^"']+)?/g, '/custom.css?v=20260823e');
     for (const [from, to] of safeCopyReplacements) html = html.split(from).join(to);
     await fs.writeFile(file, html);
 }
@@ -116,28 +117,16 @@ const legal = {
 
 const legalUi = {
     pl: {
-        centre: 'Centrum prywatności', eyebrow: 'Jasne zasady i pełna kontrola',
-        skip: 'Przejdź do treści', documents: 'Dokumenty i ustawienia',
-        contact: 'Kontakt w sprawach danych', contactText: 'Masz pytanie dotyczące swoich danych lub zgody? Napisz bezpośrednio do administratora.',
-        back: 'Wróć do serwisu'
+        skip: 'Przejdź do treści', documents: 'Dokumenty i ustawienia', back: 'Wróć do serwisu'
     },
     ru: {
-        centre: 'Центр конфиденциальности', eyebrow: 'Понятные правила и полный контроль',
-        skip: 'Перейти к содержанию', documents: 'Документы и настройки',
-        contact: 'Вопросы о данных', contactText: 'Есть вопрос о персональных данных или согласии? Напишите напрямую администратору.',
-        back: 'Вернуться на сайт'
+        skip: 'Перейти к содержанию', documents: 'Документы и настройки', back: 'Вернуться на сайт'
     },
     uk: {
-        centre: 'Центр конфіденційності', eyebrow: 'Зрозумілі правила й повний контроль',
-        skip: 'Перейти до змісту', documents: 'Документи та налаштування',
-        contact: 'Питання щодо даних', contactText: 'Маєте запитання про персональні дані або згоду? Напишіть безпосередньо адміністратору.',
-        back: 'Повернутися на сайт'
+        skip: 'Перейти до змісту', documents: 'Документи та налаштування', back: 'Повернутися на сайт'
     },
     en: {
-        centre: 'Privacy centre', eyebrow: 'Clear rules and full control',
-        skip: 'Skip to content', documents: 'Documents and settings',
-        contact: 'Privacy contact', contactText: 'Have a question about your data or consent? Contact the controller directly.',
-        back: 'Return to the website'
+        skip: 'Skip to content', documents: 'Documents and settings', back: 'Return to the website'
     }
 };
 
@@ -166,44 +155,36 @@ ${measurementBlock}    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, follow">
     <title>${title} | NaSerwis.pl</title>
-    <link rel="stylesheet" href="/styles.css?v=20260823c">
-    <link rel="stylesheet" href="/legal.css?v=20260823c">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css?v=20260823e">
+    <link rel="stylesheet" href="/custom.css?v=20260823e">
 </head>
 <body class="legal-page">
     <a class="legal-skip-link" href="#legal-main">${ui.skip}</a>
     <header class="legal-header">
-        <div class="legal-container legal-header-inner">
-            <a class="legal-brand" href="${t.home}" aria-label="NaSerwis.pl">
-                <span class="legal-brand-name">Na<span>Serwis</span></span>
-                <small>${ui.centre}</small>
-            </a>
+        <div class="container legal-header-inner">
+            <a class="logo" href="${t.home}" aria-label="NaSerwis.pl">Na<span>Serwis</span></a>
             <nav class="legal-language" aria-label="Language">${legalLanguageLinks(type, language)}</nav>
-            <a class="legal-back" href="${t.home}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h10"/></svg>${ui.back}</a>
+            <a class="btn btn-primary legal-back" href="${t.home}">← ${ui.back}</a>
         </div>
     </header>
-    <main id="legal-main" class="legal-container legal-shell">
-        <section class="legal-hero" aria-labelledby="legal-title">
-            <span class="legal-hero-mark" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M24 4 40 10v11c0 10.8-6.6 19-16 23-9.4-4-16-12.2-16-23V10L24 4Z"/><circle cx="24" cy="21" r="4"/><path d="M24 25v8M16 17h4m8 0h4"/></svg></span>
-            <div><p class="legal-eyebrow">${ui.eyebrow}</p><h1 id="legal-title">${title}</h1><p class="legal-updated">${t.updated}</p></div>
+    <main id="legal-main" class="legal-main">
+        <div class="container">
+        <section class="legal-page-heading" aria-labelledby="legal-title">
+            <h1 id="legal-title">${title}</h1>
+            <p class="legal-updated">${t.updated}</p>
         </section>
-        <div class="legal-layout">
-            <aside class="legal-side" aria-label="${ui.documents}">
-                <div class="legal-side-card">
-                    <p class="legal-side-label">${ui.documents}</p>
-                    <a class="legal-doc-link" href="${prefix}/privacy"${type === 'privacy' ? ' aria-current="page"' : ''}><span>${t.privacyTitle}</span><span aria-hidden="true">→</span></a>
-                    <a class="legal-doc-link" href="${prefix}/cookies"${type === 'cookies' ? ' aria-current="page"' : ''}><span>${t.cookieTitle}</span><span aria-hidden="true">→</span></a>
-                    <button class="legal-settings-button" type="button" data-consent-settings>${t.manage}<span aria-hidden="true">↗</span></button>
-                </div>
-                <div class="legal-side-card legal-contact-card">
-                    <p class="legal-side-label">${ui.contact}</p><p>${ui.contactText}</p>
-                    <a href="mailto:iharshastsiuk@gmail.com">iharshastsiuk@gmail.com</a>
-                    <a href="tel:+48453327678">+48 453 327 678</a>
-                </div>
-            </aside>
-            <article class="legal-content">${body}</article>
+        <div class="legal-document-nav" aria-label="${ui.documents}">
+            <a class="btn ${type === 'privacy' ? 'btn-primary' : 'legal-nav-button'}" href="${prefix}/privacy"${type === 'privacy' ? ' aria-current="page"' : ''}>${t.privacyTitle}</a>
+            <a class="btn ${type === 'cookies' ? 'btn-primary' : 'legal-nav-button'}" href="${prefix}/cookies"${type === 'cookies' ? ' aria-current="page"' : ''}>${t.cookieTitle}</a>
+            <button class="btn legal-nav-button legal-settings-button" type="button" data-consent-settings>${t.manage}</button>
+        </div>
+        <article class="legal-content">${body}</article>
         </div>
     </main>
-    <footer class="legal-footer"><div class="legal-container legal-footer-inner"><p>© 2026 NaSerwis.pl</p><div class="legal-footer-links"><a href="${prefix}/privacy">${t.privacyTitle}</a><a href="${prefix}/cookies">${t.cookieTitle}</a><button type="button" data-consent-settings>${t.manage}</button></div></div></footer>
+    <footer class="legal-footer"><div class="container legal-footer-inner"><p>© 2026 NaSerwis.pl</p><div class="footer-legal-links"><a href="${prefix}/privacy">${t.privacyTitle}</a><a href="${prefix}/cookies">${t.cookieTitle}</a><button type="button" data-consent-settings>${t.manage}</button></div></div></footer>
 </body>
 </html>
 `;
