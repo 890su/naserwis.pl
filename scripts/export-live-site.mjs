@@ -41,7 +41,8 @@ function makeStatic(html) {
     // on the current host. Avoid shipping new 404s until branded assets exist.
     .replace(/\s*<meta property=["'](?:og|twitter):image["'][^>]*>/gi, "")
     .replace(/\s*<link rel=["'](?:icon|apple-touch-icon)["'][^>]*>/gi, "")
-    .replace(/\s*"image": "https:\/\/naserwis\.pl\/logo\.png",?/gi, "");
+    .replace(/\s*"image": "https:\/\/naserwis\.pl\/logo\.png",?/gi, "")
+    .replace(/[\t ]+(?=\r?\n)/g, "");
 }
 
 function makePagesClient(script) {
