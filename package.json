@@ -5,6 +5,8 @@
   "version": "1.0.0",
   "description": "Static NaSerwis.pl website for Cloudflare Pages",
   "scripts": {
+    "ads:build": "node scripts/build-google-ads.mjs",
+    "compliance:generate": "node scripts/apply-compliance.mjs",
     "export:live": "node scripts/export-live-site.mjs",
     "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs"
   }

@@ -458,6 +458,19 @@
                     messageDiv.className = 'success-message';
                     messageDiv.textContent = result.message;
 
+                    pushMeasurementEvent('naserwis_lead_submit', {
+                        form_id: formId,
+                        form_type: formId,
+                        language: currentLang,
+                        service: getPageService(),
+                        page_path: window.location.pathname
+                    });
+                    pushMeasurementEvent('generate_lead', {
+                        form_id: formId,
+                        language: currentLang,
+                        service: getPageService()
+                    });
+
                     // Reset form
                     form.reset();
 
@@ -819,6 +832,11 @@
                         messageDiv.innerHTML = '<span class=\"success-text\">' + successMsg + '</span>' +
                             '<button type=\"button\" class=\"review-ok-btn\">' + okLabel + '</button>';
 
+                        pushMeasurementEvent('naserwis_review_submit', {
+                            language: currentLang,
+                            page_path: window.location.pathname
+                        });
+
                         const okBtn = messageDiv.querySelector('.review-ok-btn');
                         if (okBtn) okBtn.addEventListener('click', closeModal);
                     } else {
@@ -945,6 +963,8 @@
             fabChat.addEventListener('click', function () {
                 if (window.$chatwoot) {
                     window.$chatwoot.toggle('open');
+                } else if (window.NASERWIS_CONSENT) {
+                    window.NASERWIS_CONSENT.requestSupport();
                 } else {
                     // SDK not yet loaded — open when ready
                     window.addEventListener('chatwoot:ready', function () {
@@ -1011,6 +1031,103 @@
         document.head.appendChild(loader);
     }
 
+    function getPageService() {
+        const path = window.location.pathname;
+        if (path.includes('naprawa-wifi')) return 'wifi_repair';
+        if (path.includes('montaz-sieci')) return 'lan_install';
+        if (path.includes('naprawa-sieci')) return 'lan_cctv_repair';
+        return 'it_general';
+    }
+
+    function pushMeasurementEvent(eventName, parameters) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(Object.assign({ event: eventName }, parameters || {}));
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', eventName, parameters || {});
+        }
+    }
+
+    function initContactTracking() {
+        document.addEventListener('click', function (event) {
+            const link = event.target.closest('a[href]');
+            if (!link) return;
+            const href = link.getAttribute('href') || '';
+            let method = '';
+            if (href.startsWith('tel:')) method = 'phone';
+            else if (href.includes('wa.me/')) method = 'whatsapp';
+            else if (href.includes('t.me/')) method = 'telegram';
+            if (!method) return;
+
+            pushMeasurementEvent('naserwis_contact_click', {
+                contact_method: method,
+                language: document.documentElement.lang || 'pl',
+                service: getPageService(),
+                page_path: window.location.pathname
+            });
+        });
+    }
+
+    function initPrivacyNotices() {
+        const language = document.documentElement.lang || 'pl';
+        const prefix = language === 'pl' ? '' : '/' + language;
+        const privacyUrl = prefix + '/privacy';
+        const notices = {
+            pl: 'Dane służą do odpowiedzi na zapytanie. Administrator: Ihar Shestsiuk. <a href="' + privacyUrl + '">Prywatność</a>.',
+            ru: 'Данные нужны для ответа на запрос. Администратор: Ihar Shestsiuk. <a href="' + privacyUrl + '">Конфиденциальность</a>.',
+            uk: 'Дані потрібні для відповіді на запит. Адміністратор: Ihar Shestsiuk. <a href="' + privacyUrl + '">Конфіденційність</a>.',
+            en: 'We use the data to answer your enquiry. Controller: Ihar Shestsiuk. <a href="' + privacyUrl + '">Privacy</a>.'
+        };
+        const reviewConsent = {
+            pl: 'Wyrażam zgodę na moderację i publikację treści opinii w serwisie NaSerwis.pl. Zgodę mogę wycofać, kontaktując się z administratorem.',
+            ru: 'Я соглашаюсь на модерацию и публикацию текста отзыва на NaSerwis.pl. Согласие можно отозвать, связавшись с администратором.',
+            uk: 'Я погоджуюся на модерацію та публікацію тексту відгуку на NaSerwis.pl. Згоду можна відкликати, звернувшись до адміністратора.',
+            en: 'I consent to moderation and publication of my review on NaSerwis.pl. I can withdraw consent by contacting the controller.'
+        };
+
+        document.querySelectorAll('form:not(#review-form)').forEach(function (form) {
+            if (!form.querySelector('[name="phone"]') || form.querySelector('.form-privacy-notice')) return;
+            const notice = document.createElement('p');
+            notice.className = 'form-privacy-notice';
+            notice.innerHTML = notices[language] || notices.pl;
+            const message = form.querySelector('[role="alert"]');
+            form.insertBefore(notice, message || null);
+        });
+
+        const reviewForm = document.getElementById('review-form');
+        if (reviewForm && !reviewForm.querySelector('[name="reviewConsent"]')) {
+            const fileGroup = reviewForm.querySelector('#review-photos')?.closest('.form-group');
+            if (fileGroup) fileGroup.remove();
+            const label = document.createElement('label');
+            label.className = 'review-consent';
+            label.innerHTML = '<input type="checkbox" name="reviewConsent" required> <span>' +
+                (reviewConsent[language] || reviewConsent.pl) + ' <a href="' + privacyUrl + '">' +
+                ({ pl: 'Szczegóły', ru: 'Подробнее', uk: 'Докладніше', en: 'Details' }[language] || 'Szczegóły') + '</a>.</span>';
+            const actions = reviewForm.querySelector('.modal-actions');
+            reviewForm.insertBefore(label, actions || null);
+        }
+
+        const footerBottom = document.querySelector('.footer-bottom');
+        if (footerBottom && !footerBottom.querySelector('.footer-legal-links')) {
+            const labels = {
+                pl: ['Polityka prywatności', 'Polityka cookies', 'Ustawienia prywatności'],
+                ru: ['Политика конфиденциальности', 'Политика cookies', 'Настройки конфиденциальности'],
+                uk: ['Політика конфіденційності', 'Політика cookies', 'Налаштування конфіденційності'],
+                en: ['Privacy policy', 'Cookie policy', 'Privacy settings']
+            }[language] || ['Polityka prywatności', 'Polityka cookies', 'Ustawienia prywatności'];
+            const links = document.createElement('div');
+            links.className = 'footer-legal-links';
+            links.innerHTML = '<a href="' + privacyUrl + '">' + labels[0] + '</a>' +
+                '<a href="' + prefix + '/cookies">' + labels[1] + '</a>' +
+                '<button type="button" data-consent-settings>' + labels[2] + '</button>';
+            footerBottom.appendChild(links);
+            if (window.NASERWIS_CONSENT) {
+                links.querySelector('[data-consent-settings]').addEventListener('click', function () {
+                    window.NASERWIS_CONSENT.open();
+                });
+            }
+        }
+    }
+
     function initAll() {
         initDropdowns();
         initMobileMenu();
@@ -1025,6 +1142,8 @@
         initReviewModal();
         initFabToggle();
         initAllBotProtection();
+        initContactTracking();
+        initPrivacyNotices();
 
         // Initialize form handlers
         handleFormSubmit('hero-form', 'hero-form-message');

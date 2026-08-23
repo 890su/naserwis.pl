@@ -4,6 +4,7 @@ node_modules/
 !.env.example
 .wrangler/
 *.log
+/outputs/
 
 # The PHP deployment is retained locally as a rollback source only. Cloudflare
 # Pages serves the committed static export from public/ and functions/.
