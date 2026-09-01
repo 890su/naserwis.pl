@@ -1,6 +1,7 @@
 const MAX_NAME_LENGTH = 120;
 const MAX_PHONE_LENGTH = 60;
 const MAX_MESSAGE_LENGTH = 4_000;
+const MAX_ATTRIBUTION_LENGTH = 300;
 const ALLOWED_LANGUAGES = new Set(["pl", "ru", "uk", "en"]);
 const ALLOWED_FORM_TYPES = new Set(["hero-form", "final-form", "review"]);
 
@@ -23,10 +24,28 @@ function clean(value, maximum) {
   return value.trim().replace(/[\u0000-\u001f\u007f]/g, "").slice(0, maximum);
 }
 
-function telegramText({ name, phone, message, formType, rating, lang }) {
+function cleanAttribution(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+  const allowed = [
+    "utm_source", "utm_medium", "utm_campaign", "utm_id", "utm_adgroup",
+    "utm_term", "utm_content", "matchtype", "device", "network", "lang",
+    "gclid", "wbraid", "gbraid", "landing_page", "captured_at", "language", "service"
+  ];
+  return Object.fromEntries(allowed
+    .map((key) => [key, clean(value[key], MAX_ATTRIBUTION_LENGTH)])
+    .filter(([, item]) => item));
+}
+
+function attributionText(attribution) {
+  const entries = Object.entries(attribution || {});
+  if (entries.length === 0) return "";
+  return `\n\n📊 Attribution\n${entries.map(([key, value]) => `${key}: ${value}`).join("\n")}`;
+}
+
+function telegramText({ leadId, name, phone, message, formType, rating, lang, attribution }) {
   const title = formType === "review" ? "📝 New private review" : "📩 New contact request";
   const review = formType === "review" ? `\n⭐ Rating: ${rating}/5` : "";
-  return `${title}${review}\n\n👤 ${name}\n📞 ${phone}\n💬 ${message}\n📋 Form: ${formType}\n🌐 Language: ${lang}\n🕐 ${new Date().toISOString()}`;
+  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name}\n📞 ${phone}\n💬 ${message}\n📋 Form: ${formType}\n🌐 Language: ${lang}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
 }
 
 async function validateTurnstile(token, request, env) {
@@ -83,11 +102,13 @@ export async function onRequestPost(context) {
   const lang = ALLOWED_LANGUAGES.has(payload.lang) ? payload.lang : "pl";
   const text = messages[lang];
   const data = {
+    leadId: crypto.randomUUID(),
     name: clean(payload.name, MAX_NAME_LENGTH),
     phone: clean(payload.phone, MAX_PHONE_LENGTH),
     message: clean(payload.message, MAX_MESSAGE_LENGTH),
     formType: ALLOWED_FORM_TYPES.has(payload.formType) ? payload.formType : "hero-form",
     rating: Math.min(5, Math.max(1, Number.parseInt(payload.rating, 10) || 1)),
+    attribution: cleanAttribution(payload.attribution),
     lang
   };
 
@@ -105,7 +126,7 @@ export async function onRequestPost(context) {
     return reply({ success: false, message: "Wystąpił błąd podczas wysyłania wiadomości. Proszę zadzwonić: +48 453 327 678" }, 502);
   }
 
-  return reply({ success: true, message: text.success });
+  return reply({ success: true, message: text.success, leadId: data.leadId });
 }
 
 export function onRequest() {

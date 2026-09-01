@@ -428,7 +428,8 @@
                 website: formData.get('website'),
                 turnstileToken: formData.get('cf-turnstile-response'),
                 formType: formId,
-                lang: currentLang  // Add current language
+                lang: currentLang,
+                attribution: getLeadAttribution()
             };
 
             // Disable submit button and show loading state
@@ -468,8 +469,10 @@
                     pushMeasurementEvent('generate_lead', {
                         form_id: formId,
                         language: currentLang,
-                        service: getPageService()
+                        service: getPageService(),
+                        transaction_id: result.leadId || undefined
                     });
+                    sendGoogleAdsConversion('lead', result.leadId);
 
                     // Reset form
                     form.reset();
@@ -961,6 +964,11 @@
         // Chat button triggers Chatwoot
         if (fabChat) {
             fabChat.addEventListener('click', function () {
+                const eventParameters = contactEventParameters('chatwoot', fabChat);
+                pushMeasurementEvent('naserwis_contact_click', eventParameters);
+                pushMeasurementEvent('chatwoot_open', eventParameters);
+                sendGoogleAdsConversion('chatwoot');
+
                 if (window.$chatwoot) {
                     window.$chatwoot.toggle('open');
                 } else if (window.NASERWIS_CONSENT) {
@@ -1039,12 +1047,100 @@
         return 'it_general';
     }
 
+    const ATTRIBUTION_STORAGE_KEY = 'naserwis-attribution-v1';
+    const ATTRIBUTION_KEYS = [
+        'utm_source', 'utm_medium', 'utm_campaign', 'utm_id', 'utm_adgroup',
+        'utm_term', 'utm_content', 'matchtype', 'device', 'network', 'lang',
+        'gclid', 'wbraid', 'gbraid'
+    ];
+    let pendingAttribution = null;
+
+    function hasMarketingConsent() {
+        const value = window.NASERWIS_CONSENT?.get?.();
+        return Boolean(value && value.marketing);
+    }
+
+    function attributionFromUrl() {
+        const parameters = new URLSearchParams(window.location.search);
+        const attribution = {};
+        ATTRIBUTION_KEYS.forEach(function (key) {
+            const value = parameters.get(key);
+            if (value) attribution[key] = value.slice(0, 300);
+        });
+        if (Object.keys(attribution).length === 0) return null;
+        attribution.landing_page = window.location.pathname;
+        attribution.captured_at = new Date().toISOString();
+        return attribution;
+    }
+
+    function persistAttribution(attribution) {
+        if (!attribution || !hasMarketingConsent()) return;
+        try {
+            sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
+        } catch (_error) {
+            // Measurement must never block contact forms.
+        }
+    }
+
+    function storedAttribution() {
+        if (!hasMarketingConsent()) return null;
+        try {
+            return JSON.parse(sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || 'null');
+        } catch (_error) {
+            return null;
+        }
+    }
+
+    function initAttribution() {
+        pendingAttribution = attributionFromUrl();
+        persistAttribution(pendingAttribution);
+        window.addEventListener('naserwis:consent', function (event) {
+            if (event.detail?.marketing) persistAttribution(pendingAttribution);
+        });
+    }
+
+    function getLeadAttribution() {
+        const base = {
+            landing_page: window.location.pathname,
+            language: document.documentElement.lang || 'pl',
+            service: getPageService()
+        };
+        if (!hasMarketingConsent()) return base;
+        return Object.assign(base, storedAttribution() || pendingAttribution || {});
+    }
+
     function pushMeasurementEvent(eventName, parameters) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push(Object.assign({ event: eventName }, parameters || {}));
         if (typeof window.gtag === 'function') {
             window.gtag('event', eventName, parameters || {});
         }
+    }
+
+    function sendGoogleAdsConversion(type, transactionId) {
+        const sendTo = window.NASERWIS_CONFIG?.googleAdsConversions?.[type];
+        if (!sendTo || typeof window.gtag !== 'function') return;
+        const payload = { send_to: sendTo };
+        if (transactionId) payload.transaction_id = transactionId;
+        window.gtag('event', 'conversion', payload);
+    }
+
+    function contactPlacement(element) {
+        if (element.closest('.fab-container')) return 'floating';
+        if (element.closest('header')) return 'header';
+        if (element.closest('footer')) return 'footer';
+        if (element.closest('.mobile-menu-overlay')) return 'mobile_menu';
+        return 'content';
+    }
+
+    function contactEventParameters(method, element) {
+        return {
+            contact_method: method,
+            contact_placement: contactPlacement(element),
+            language: document.documentElement.lang || 'pl',
+            service: getPageService(),
+            page_path: window.location.pathname
+        };
     }
 
     function initContactTracking() {
@@ -1058,12 +1154,10 @@
             else if (href.includes('t.me/')) method = 'telegram';
             if (!method) return;
 
-            pushMeasurementEvent('naserwis_contact_click', {
-                contact_method: method,
-                language: document.documentElement.lang || 'pl',
-                service: getPageService(),
-                page_path: window.location.pathname
-            });
+            const eventParameters = contactEventParameters(method, link);
+            pushMeasurementEvent('naserwis_contact_click', eventParameters);
+            pushMeasurementEvent(method + '_click', eventParameters);
+            sendGoogleAdsConversion(method);
         });
     }
 
@@ -1140,6 +1234,7 @@
         initReviewsSlider();
         initInteractiveStars();
         initReviewModal();
+        initAttribution();
         initFabToggle();
         initAllBotProtection();
         initContactTracking();
