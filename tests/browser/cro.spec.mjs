@@ -159,7 +159,7 @@ test('chat consent grants open once after ready; reject never counts as chat ope
   expect((await events(page, 'chatwoot_open')).length).toBe(1);
 });
 
-test('no new diagnostics without analytics, no infinite motion, no overflow', async ({ page }) => {
+test('no new diagnostics without analytics; reduced motion stays static; no overflow', async ({ page }) => {
   await isolate(page); await consent(page);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const width of [360, 390, 768, 1440]) {
@@ -206,7 +206,7 @@ test('unavailable chat offers a fallback without a false chat conversion', async
   expect((await events(page, 'chatwoot_open')).length).toBe(0);
 });
 
-test('restored circular visuals and suppression at navigation and keyboard', async ({ page }) => {
+test('restored circular visuals, navigation suppression and visibility during form input', async ({ page }) => {
   await page.route(/googletagmanager\.com|google-analytics\.com|ai\.czait\.pl/, route => route.abort());
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/ru/naprawa-wifi/'); await page.evaluate(() => document.fonts.ready);
@@ -220,7 +220,10 @@ test('restored circular visuals and suppression at navigation and keyboard', asy
   await page.screenshot({ path: 'outputs/visual/mobile-round.png', animations: 'disabled' });
   await page.locator('#mobile-menu-toggle').click(); await expect(page.locator('.fab-toggle')).toBeHidden();
   await page.keyboard.press('Escape'); await expect(page.locator('.fab-toggle')).toBeVisible();
-  await page.locator('#final-name').focus(); await expect(page.locator('.fab-toggle')).toBeHidden();
+  await page.locator('#final-name').focus();
+  await expect(page.locator('.fab-toggle')).toBeVisible();
+  await page.locator('#final-name').fill('Тест');
+  await expect(page.locator('.fab-toggle')).toBeVisible();
   await page.locator('#final-form').screenshot({ path: 'outputs/visual/mobile-form.png', animations: 'disabled' });
   await page.locator('#final-name').blur();
   await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('.fab-toggle')).toBeVisible();
@@ -232,15 +235,19 @@ test('restored circular visuals and suppression at navigation and keyboard', asy
   await page.screenshot({ path: 'outputs/visual/desktop-contact.png', animations: 'disabled' });
 });
 
-test('delayed left invitation, bounded rocking/rings, dismissal persists', async ({ page }) => {
+test('idle motion starts after 2.5s, stops while scrolling, and invitation dismissal persists', async ({ page }) => {
   await isolate(page); await consent(page);
   await page.clock.install({ time: new Date('2026-09-04T12:00:00Z') });
   await page.clock.pauseAt(new Date('2026-09-04T12:00:01Z'));
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/ru/naprawa-wifi/');
-  await page.clock.runFor(5900);
+  await page.clock.runFor(2400);
   await expect(page.locator('.contact-invitation')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
   await page.clock.runFor(200);
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
+  await expect(page.locator('.fab-toggle')).toHaveCSS('animation-duration', '1s');
+  await page.clock.runFor(3500);
   await expect(page.locator('.contact-invitation')).toBeVisible();
   await expect(page.locator('[data-contact-invite]')).toContainText('Есть вопрос?');
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
@@ -261,15 +268,22 @@ test('delayed left invitation, bounded rocking/rings, dismissal persists', async
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await page.screenshot({ path: 'outputs/visual/mobile-motion.png' });
   await page.screenshot({ path: 'outputs/visual/mobile-invitation.png', animations: 'disabled' });
-  await page.clock.runFor(4500);
+  await page.evaluate(() => window.scrollBy({ top: 120, behavior: 'instant' }));
+  await page.clock.runFor(100);
   await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
-  await page.clock.runFor(11500);
+  await page.clock.runFor(2400);
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  await page.clock.runFor(200);
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
   await page.locator('[data-contact-dismiss]').click();
   await expect(page.locator('.contact-invitation')).toBeHidden();
   await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
-  await page.reload(); await page.clock.runFor(7000);
+  await page.locator('.fab-toggle').evaluate(element => element.blur());
+  await page.clock.runFor(2600);
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
+  await page.reload(); await page.clock.runFor(2600);
   await expect(page.locator('.contact-invitation')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
 });
 
 test('invitation waits for a consent choice; reduced motion stays static; balloon opens menu', async ({ page }) => {

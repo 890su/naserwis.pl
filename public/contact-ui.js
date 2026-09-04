@@ -14,8 +14,7 @@
     let invitationDismissed = false;
     try { invitationDismissed = sessionStorage.getItem(invitationKey) === '1'; } catch (_error) { /* In-memory fallback. */ }
     let invitationTimer;
-    let repeatTimer;
-    let motionTimer;
+    let idleMotionTimer;
     let opener = toggle;
     let chatPending = false;
     let chatOpen = false;
@@ -86,14 +85,21 @@
     }
 
     function stopMotion() {
-        clearTimeout(motionTimer);
         toggle.classList.remove('contact-attention');
+    }
+    function queueIdleMotion() {
+        clearTimeout(idleMotionTimer);
+        stopMotion();
+        if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden || container.matches(':hover, :focus-within')) return;
+        idleMotionTimer = setTimeout(() => {
+            idleMotionTimer = undefined;
+            if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden || container.matches(':hover, :focus-within')) return;
+            toggle.classList.add('contact-attention');
+        }, 2500);
     }
     function pauseInvitation() {
         clearTimeout(invitationTimer);
         invitationTimer = undefined;
-        clearTimeout(repeatTimer);
-        stopMotion();
         invitation.hidden = true;
     }
     function dismissInvitation() {
@@ -101,52 +107,51 @@
         try { sessionStorage.setItem(invitationKey, '1'); } catch (_error) { /* Session preference only. */ }
         pauseInvitation();
     }
-    function attentionBurst() {
-        if (invitation.hidden || invitationDismissed || document.hidden || menuOpen) return;
-        if (!reducedMotion.matches && !container.matches(':hover, :focus-within')) {
-            toggle.classList.add('contact-attention');
-            motionTimer = setTimeout(stopMotion, 4200);
-        }
-        // Short bursts separated by quiet time; the invitation's X stops them.
-        repeatTimer = setTimeout(attentionBurst, 16000);
-    }
     function queueInvitation() {
         if (invitationDismissed || invitationTimer || !invitation.hidden || menuOpen || document.hidden) return;
         invitationTimer = setTimeout(() => {
             invitationTimer = undefined;
             if (container.dataset.suppressed === 'true' || menuOpen || document.hidden) return;
             invitation.hidden = false;
-            attentionBurst();
             observeImpressions();
         }, 6000);
     }
     container.addEventListener('pointerenter', stopMotion);
+    container.addEventListener('pointerleave', scheduleUpdate);
     container.addEventListener('focusin', stopMotion);
-    reducedMotion.addEventListener('change', stopMotion);
+    container.addEventListener('focusout', scheduleUpdate);
+    reducedMotion.addEventListener('change', scheduleUpdate);
     document.addEventListener('visibilitychange', scheduleUpdate);
 
     function update() {
         updateQueued = false;
-        const focusedField = document.activeElement?.matches('input, textarea, select');
-        const keyboard = focusedField || (window.visualViewport && window.visualViewport.height < innerHeight * 0.75);
         const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active');
         const initialConsent = consentVisible() && !consentSettingsVisible();
         const panelHeight = initialConsent ? document.querySelector('.consent-panel')?.getBoundingClientRect().height || 0 : 0;
         if (initialConsent && panelHeight) container.style.bottom = `${Math.ceil(panelHeight + 24)}px`;
         else container.style.removeProperty('bottom');
-        const suppressed = consentSettingsVisible() || keyboard || Boolean(modal) || chatOpen || document.hidden;
+        const suppressed = consentSettingsVisible() || Boolean(modal) || chatOpen || document.hidden;
         container.dataset.suppressed = String(suppressed);
         if (suppressed) {
             setOpen(false);
             pauseInvitation();
-        } else if (initialConsent) pauseInvitation();
-        else queueInvitation();
+            clearTimeout(idleMotionTimer);
+            stopMotion();
+        } else {
+            if (initialConsent) pauseInvitation();
+            else queueInvitation();
+            queueIdleMotion();
+        }
         observeImpressions();
     }
     function scheduleUpdate() {
         if (!updateQueued) { updateQueued = true; requestAnimationFrame(update); }
     }
-    addEventListener('scroll', scheduleUpdate, { passive: true });
+    addEventListener('scroll', () => {
+        clearTimeout(idleMotionTimer);
+        stopMotion();
+        scheduleUpdate();
+    }, { passive: true });
     addEventListener('resize', scheduleUpdate);
     window.visualViewport?.addEventListener('resize', scheduleUpdate);
     window.addEventListener('naserwis:consent-ui', () => {

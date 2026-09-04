@@ -1,6 +1,16 @@
 # CRO v1 release — 2026-09-04
 
-## Latest revision: clearer consent row and stronger contact cue
+## Latest revision: idle contact motion and form visibility
+
+Asset revision `20260904-idle5` keeps the circular launcher visible while a user
+focuses or types in any form field. Scrolling stops the animation immediately;
+2.5 seconds after scrolling ends, the launcher resumes a continuous one-second
+rock/scale cycle with two pulse rings. It remains static for reduced-motion users
+and pauses during hover, its open menu, modal UI, open chat and background tabs.
+The invitation timing/dismissal, contact links, forms, SEO and Ads contracts are
+unchanged.
+
+## Previous revision: clearer consent row and stronger contact cue
 
 Asset revision `20260904-consent4` removes the two owner-rejected homepage hero
 buttons in PL/RU/UK/EN. The initial, non-modal cookie notice now uses a visibly

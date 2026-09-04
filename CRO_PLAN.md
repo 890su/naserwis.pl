@@ -4,7 +4,16 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Current revision — clearer consent row and stronger contact cue
+## Current revision — persistent idle contact motion
+
+Owner update, 2026-09-04 (`20260904-idle5`): focusing or typing in a form field
+must not hide the circular contact launcher. Scroll activity immediately stops
+its motion; after 2.5 seconds without scrolling it starts a continuous one-second
+rock/scale and double-ring pulse cycle. Hover, contact-menu/modal/chat state,
+background tabs and `prefers-reduced-motion` still pause or disable motion. The
+six-second invitation remains independently dismissible and consent-aware.
+
+## Previous revision — clearer consent row and stronger contact cue
 
 Owner update, 2026-09-04 (`20260904-consent4`): remove the two rejected hero
 links from all four localized homepages while preserving the service-page and

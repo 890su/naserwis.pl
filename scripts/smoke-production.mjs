@@ -28,13 +28,13 @@ for (let index = 0; index < files.length; index += 4) {
     const route = file.replace(/^public/, '').replace(/index.html$/, '');
     const live = await get(route);
     assert.deepEqual(seo(live), seo(local), `Production SEO mismatch: ${route}`);
-    assert.ok(live.includes('/contact-ui.css?v=20260904-consent4'), route);
+    assert.ok(live.includes('/contact-ui.css?v=20260904-idle5'), route);
     if (local.includes('class="fab-container"')) {
       assert.ok(!live.includes('class="contact-toggle-label"'), route);
       assert.ok(!live.includes('class="contact-bar"'), route);
       assert.ok(live.includes('class="contact-invitation"'), route);
       assert.equal((live.match(/class="contact-tip"/g) || []).length, 4, route);
-      assert.ok(live.includes('/contact-ui.js?v=20260904-consent4'), route);
+      assert.ok(live.includes('/contact-ui.js?v=20260904-idle5'), route);
     }
   }));
 }
