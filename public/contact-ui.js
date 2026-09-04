@@ -1,4 +1,4 @@
-/** Labelled contact launcher. No new vendors, presence claims or auto-open chat. */
+/** Original circular contact UI with consent, keyboard and measurement fixes. */
 (function () {
     'use strict';
     const container = document.querySelector('.fab-container');
@@ -6,21 +6,12 @@
     const toggle = container.querySelector('.fab-toggle');
     const toggleLabel = toggle.getAttribute('aria-label');
     const menu = container.querySelector('.fab-menu');
-    const bar = document.querySelector('.contact-bar');
-    const barToggle = bar?.querySelector('button');
-    const hint = container.querySelector('.contact-hint');
+    const fallback = container.querySelector('.contact-fallback');
     const status = container.querySelector('.contact-status');
-    const hero = document.querySelector('main > section, .hero, .service-hero');
-    const forms = [...document.querySelectorAll('#hero-form, #final-form')];
-    const footer = document.querySelector('footer');
-    const mobile = matchMedia('(max-width: 768px)');
-    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     let opener = toggle;
     let chatPending = false;
     let chatOpen = false;
     let chatTimer;
-    let attentionStarted = false;
-    let attentionTimer;
     let updateQueued = false;
     let menuOpen = false;
 
@@ -43,21 +34,18 @@
         menu.inert = !open;
         toggle.setAttribute('aria-expanded', String(open));
         toggle.setAttribute('aria-label', open ? toggle.dataset.closeLabel : toggleLabel);
-        barToggle?.setAttribute('aria-expanded', String(open));
-        if (hint) hint.hidden = true;
+        if (!open) fallback.hidden = true;
         if (open) {
-            track('naserwis_contact_open', { placement: source === barToggle ? 'sticky' : 'floating' });
+            track('naserwis_contact_open', { placement: 'floating' });
             menu.querySelector('a, button')?.focus({ preventScroll: true });
         } else if (restoreFocus && opener?.offsetParent !== null) opener?.focus({ preventScroll: true });
     }
 
     toggle.addEventListener('click', () => setOpen(!menuOpen, toggle));
-    barToggle?.addEventListener('click', () => setOpen(!menuOpen, barToggle));
     menu.inert = true;
-    hint?.querySelector('button').addEventListener('click', () => { hint.hidden = true; });
     document.addEventListener('click', (event) => {
-        if (!container.contains(event.target) && !bar?.contains(event.target)) setOpen(false);
-        if (event.target.closest('.fab-menu a')) setOpen(false);
+        if (!container.contains(event.target)) setOpen(false);
+        if (event.target.closest('.fab-menu a, .contact-form-link')) setOpen(false);
     });
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && menuOpen) {
@@ -66,7 +54,7 @@
         }
     });
     document.addEventListener('focusin', (event) => {
-        if (menuOpen && !container.contains(event.target) && !bar?.contains(event.target)) setOpen(false);
+        if (menuOpen && !container.contains(event.target)) setOpen(false);
         scheduleUpdate();
     });
     document.addEventListener('focusout', scheduleUpdate);
@@ -78,43 +66,16 @@
     }
     function consentVisible() { return document.getElementById('consent-dialog')?.hidden === false; }
 
-    function attention() {
-        if (attentionStarted || container.dataset.suppressed === 'true' || !inView(toggle) || menuOpen || !bar.hidden) return;
-        attentionStarted = true;
-        try {
-            if (sessionStorage.getItem('naserwis-contact-hint-v1')) return;
-            sessionStorage.setItem('naserwis-contact-hint-v1', 'shown');
-        } catch (_error) { /* Once per page without optional storage. */ }
-        attentionTimer = setTimeout(() => {
-            if (container.dataset.suppressed === 'true' || menuOpen || !bar.hidden) return;
-            if (hint) hint.hidden = false;
-            if (!reducedMotion.matches) toggle.classList.add('contact-attention');
-            setTimeout(() => toggle.classList.remove('contact-attention'), 2900);
-            setTimeout(() => { if (hint && !hint.matches(':hover, :focus-within')) hint.hidden = true; }, 8000);
-        }, 1400);
-    }
-    reducedMotion.addEventListener('change', () => toggle.classList.remove('contact-attention'));
-
     function update() {
         updateQueued = false;
         const focusedField = document.activeElement?.matches('input, textarea, select');
         const keyboard = focusedField || (window.visualViewport && window.visualViewport.height < innerHeight * 0.75);
         const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active');
-        const formVisible = forms.some(form => {
-            const rect = form.getBoundingClientRect();
-            return Math.min(rect.bottom, innerHeight) - Math.max(rect.top, 0) >= 160;
-        });
-        const suppressed = consentVisible() || keyboard || Boolean(modal) || formVisible || inView(footer) || chatOpen;
-        const pastHero = hero ? hero.getBoundingClientRect().bottom <= 80 : scrollY > 600;
-        const showBar = mobile.matches && pastHero && !suppressed;
-        if (bar) bar.hidden = !showBar;
-        document.body.classList.toggle('contact-bar-visible', showBar);
+        const suppressed = consentVisible() || keyboard || Boolean(modal) || chatOpen;
         container.dataset.suppressed = String(suppressed);
         if (suppressed) {
             setOpen(false);
-            clearTimeout(attentionTimer);
-            toggle.classList.remove('contact-attention');
-        } else attention();
+        }
         observeImpressions();
     }
     function scheduleUpdate() {
@@ -135,6 +96,7 @@
         chatPending = false;
         status.textContent = chatErrors[language] || chatErrors.pl;
         setOpen(true, opener);
+        fallback.hidden = false;
         track('naserwis_chat_error', { placement: 'floating' });
     }
     function openChat() {
@@ -173,9 +135,8 @@
     // Exposure is counted only when analytics consent exists and the control is
     // actually visible (not underneath the consent UI). No retroactive events.
     const seen = new WeakSet();
-    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle, .contact-bar a, .contact-bar button')];
+    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle')];
     function placement(element) {
-        if (element.closest('.contact-bar')) return 'sticky';
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('.contact-checkpoint')) return 'checkpoint';
         return 'content';

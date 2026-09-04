@@ -66,6 +66,10 @@ New `sticky` and `form` placements also identify existing contact-link events.
 Existing event names, conversion labels and Consent Mode transport semantics are
 preserved; the website does not edit account bidding goals or campaign status.
 
+The subsequent `20260904-round2` visual revision restores the circular contact
+widget and removes the mobile strip. New sticky impressions/clicks are therefore
+no longer emitted; retain that value when interpreting earlier release data.
+
 No retroactive diagnostic events are replayed after consent. Consent selection
 therefore affects the observed funnel; report its coverage, not just aggregate
 conversion rate. For GA4 breakdowns, register the required custom dimensions in

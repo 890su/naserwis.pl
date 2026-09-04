@@ -59,6 +59,8 @@ npm run test:e2e
 
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
+The owner's preferred original round launcher/channel buttons are retained;
+the labelled contact card, timed hint and mobile contact strip are removed.
 `compliance:generate` regenerates legal pages and reapplies CRO markup.
 Run generators only for intentional source updates, inspect their diff and rerun
 checks. The immutable pre-CRO SEO/Ads fixture works in shallow CI checkouts.

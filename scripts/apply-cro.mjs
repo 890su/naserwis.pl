@@ -2,7 +2,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const version = '20260904-cro1';
+const version = '20260904-round2';
 const copy = {
   pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie' },
   ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу' },
@@ -37,17 +37,15 @@ for (const file of await pages('public')) {
     html = html.replace(/class="fab-menu"(?: id="contact-menu")?/, 'class="fab-menu" id="contact-menu"');
     html = html.replace(/(<button[^>]*class="fab fab-toggle"[^>]*)(>)/, (all, attrs) =>
       `${attrs.replace(/ aria-controls="[^"]*"/, '').replace(/ aria-label="[^"]*"/, ` aria-label="${t.write}"`).replace(/ data-close-label="[^"]*"/, '')} aria-controls="contact-menu" data-close-label="${t.close}">`);
-    if (!html.includes('class="contact-toggle-label"')) {
-      html = html.replace(/(<button[^>]*class="fab fab-toggle"[^>]*>)/, `$1<span class="contact-toggle-label">${t.write}</span>`);
-      html = html.replace(/(<div class="fab-menu"[^>]*>)/, `$1<p class="contact-menu-title">${t.channels}</p>`);
-      for (const [type, label] of Object.entries({ phone: t.call, whatsapp: 'WhatsApp', telegram: 'Telegram', chat: t.chat })) {
-        html = html.replace(new RegExp(`(<(?:a|button)[^>]*class="fab fab-${type}"[^>]*>)`), `$1<span class="contact-choice-label">${label}</span>`);
-      }
-      html = html.replace(/(\s*<\/div>\s*)(<button[^>]*class="fab fab-toggle")/, `\n<a class="contact-form-link" href="#contact">${t.form} →</a>\n<p class="contact-status" role="status" aria-live="polite"></p>$1$2`);
-      html = html.replace(/(<div class="fab-container"[^>]*>)/, `$1<div class="contact-hint" hidden><span>${t.hint}</span><button type="button" aria-label="${t.close}">×</button></div>`);
-    }
-    if (!html.includes('class="contact-bar"')) {
-      html = html.replace('<!-- Floating Action Buttons for Quick Contact -->', `<nav class="contact-bar" aria-label="${t.channels}" hidden><a href="tel:+48453327678">${t.call}</a><button type="button" data-contact-open aria-controls="contact-menu" aria-expanded="false">${t.write}</button></nav>\n    <!-- Floating Action Buttons for Quick Contact -->`);
+    // Owner requested the original icon-only circles, not the CRO contact card.
+    html = html.replace(/<span class="contact-(?:toggle|choice)-label">[\s\S]*?<\/span>/g, '')
+      .replace(/<p class="contact-menu-title">[\s\S]*?<\/p>/g, '')
+      .replace(/<div class="contact-hint"[^>]*>[\s\S]*?<\/div>/g, '')
+      .replace(/<nav class="contact-bar"[^>]*>[\s\S]*?<\/nav>\r?\n[\t ]*/g, '');
+    if (!html.includes('class="contact-fallback"')) {
+      html = html.replace(/\n?<a class="contact-form-link"[^>]*>[\s\S]*?<\/a>/g, '')
+        .replace(/\n?<p class="contact-status"[^>]*>[\s\S]*?<\/p>/g, '');
+      html = html.replace(/(<div class="fab-container"[^>]*>)/, `$1<div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">${t.form} →</a></div>`);
     }
     // Keep the API contract and all existing form IDs/SEO content. Helpers are additive.
     html = html.replace(/(<form id="(hero-form|final-form)"[^>]*>)([\s\S]*?)(<\/form>)/g, (all, start, id, body, end) => {

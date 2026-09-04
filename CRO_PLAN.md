@@ -4,7 +4,19 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Release scope
+## Current revision — original circular contacts restored
+
+Owner preference, 2026-09-04: restore the original round launcher and four
+separate round channel buttons. Remove the labelled pill, white contact card,
+automatic hint/attention sequence and mobile contact strip. The launcher remains
+available while scrolling, except during consent, navigation/review modals,
+keyboard input or open chat. Keep form/consent/measurement improvements, keyboard
+controls and chat failure handling. Asset version: `20260904-round2`.
+
+This preference supersedes the contact-widget design below; the initial release
+is retained as history. Do not reintroduce the card/strip via generators.
+
+## Initial release scope (historical)
 
 - [x] Non-modal compact initial consent banner; explicit modal settings retained.
 - [x] Labelled contact launcher, one short attention sequence, reduced-motion support.

@@ -20,22 +20,28 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.locator('link[rel=canonical]')).toHaveCount(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
-      await expect(page.locator('.fab-toggle')).toContainText(/Napisz|Напишите|Напишіть|Message/);
+      await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-label', /Napisz|Напишите|Напишіть|Message/);
       await page.locator('.fab-toggle').click();
       await expect(page.locator('.fab-menu')).toBeVisible();
       await expect(page.locator('.fab-phone')).toHaveAttribute('href', 'tel:+48453327678');
-      await expect(page.locator('.contact-choice-label')).toHaveCount(4);
+      await expect(page.locator('.fab-menu > .fab')).toHaveCount(4);
+      await expect(page.locator('.contact-choice-label, .contact-toggle-label, .contact-bar, .contact-hint')).toHaveCount(0);
+      for (const button of await page.locator('.fab-container .fab').all()) {
+        const shape = await button.evaluate(e => ({ width: getComputedStyle(e).width, height: getComputedStyle(e).height, radius: getComputedStyle(e).borderRadius }));
+        expect(shape).toEqual({ width: '48px', height: '48px', radius: '50%' });
+      }
       await page.keyboard.press('Escape');
       await expect(page.locator('.fab-toggle')).toBeFocused();
+      await expect(page.locator('.fab-toggle')).toHaveCSS('border-radius', '50%');
       await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-expanded', 'false');
       await page.locator('.service-content, .trust-signals').first().evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
-      await expect(page.locator('.contact-bar')).toBeVisible();
-      await page.locator('[data-contact-open]').click();
+      await expect(page.locator('.fab-toggle')).toBeVisible();
+      await page.locator('.fab-toggle').click();
       await expect(page.locator('.fab-menu')).toBeVisible();
       await page.keyboard.press('Escape');
-      await expect(page.locator('[data-contact-open]')).toBeFocused();
+      await expect(page.locator('.fab-toggle')).toBeFocused();
       await page.locator('#final-form').scrollIntoViewIfNeeded();
-      await expect(page.locator('.contact-bar')).toBeHidden();
+      await expect(page.locator('.fab-toggle')).toBeVisible();
       expect(errors).toEqual([]);
     });
   }
@@ -47,7 +53,7 @@ test('consent is non-modal; settings have modal focus; reject never loads chat',
   const panel = page.locator('.consent-panel');
   await expect(panel).toHaveAttribute('role', 'region');
   expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe('hidden');
-  await expect(page.locator('.contact-bar')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).toBeHidden();
   await expect(page.locator('script[data-chatwoot-loader]')).toHaveCount(0);
   await page.locator('.consent-customise').click();
   await expect(panel).toHaveAttribute('aria-modal', 'true');
@@ -159,7 +165,7 @@ test('unavailable chat offers a fallback without a false chat conversion', async
   expect((await events(page, 'chatwoot_open')).length).toBe(0);
 });
 
-test('visual states and suppression at navigation, keyboard and footer', async ({ page }) => {
+test('restored circular visuals and suppression at navigation and keyboard', async ({ page }) => {
   await page.route(/googletagmanager\.com|google-analytics\.com|ai\.czait\.pl/, route => route.abort());
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/ru/naprawa-wifi/'); await page.evaluate(() => document.fonts.ready);
@@ -169,14 +175,18 @@ test('visual states and suppression at navigation, keyboard and footer', async (
   await page.screenshot({ path: 'outputs/visual/mobile-contact.png', animations: 'disabled' });
   await page.keyboard.press('Escape');
   await page.locator('.service-content').evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
-  await expect(page.locator('.contact-bar')).toBeVisible();
-  await page.screenshot({ path: 'outputs/visual/mobile-sticky.png', animations: 'disabled' });
-  await page.locator('#mobile-menu-toggle').click(); await expect(page.locator('.contact-bar')).toBeHidden();
-  await page.keyboard.press('Escape'); await expect(page.locator('.contact-bar')).toBeVisible();
-  await page.locator('#final-name').focus(); await expect(page.locator('.contact-bar')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).toBeVisible();
+  await page.screenshot({ path: 'outputs/visual/mobile-round.png', animations: 'disabled' });
+  await page.locator('#mobile-menu-toggle').click(); await expect(page.locator('.fab-toggle')).toBeHidden();
+  await page.keyboard.press('Escape'); await expect(page.locator('.fab-toggle')).toBeVisible();
+  await page.locator('#final-name').focus(); await expect(page.locator('.fab-toggle')).toBeHidden();
   await page.locator('#final-form').screenshot({ path: 'outputs/visual/mobile-form.png', animations: 'disabled' });
-  await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('.contact-bar')).toBeHidden();
+  await page.locator('#final-name').blur();
+  await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('.fab-toggle')).toBeVisible();
   await page.setViewportSize({ width: 1440, height: 900 }); await page.goto('/en/naprawa-wifi/');
   await page.locator('.fab-toggle').click();
+  for (const button of await page.locator('.fab-container .fab').all()) {
+    expect(await button.evaluate(e => [getComputedStyle(e).width, getComputedStyle(e).height, getComputedStyle(e).borderRadius])).toEqual(['56px', '56px', '50%']);
+  }
   await page.screenshot({ path: 'outputs/visual/desktop-contact.png', animations: 'disabled' });
 });

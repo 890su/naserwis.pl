@@ -1,5 +1,18 @@
 # CRO v1 release — 2026-09-04
 
+## Latest revision: original circular contacts
+
+At the owner's request, asset revision `20260904-round2` restores the original
+round button and vertical coloured round channel icons from `styles.css`.
+The labelled pill/card, timed hint, sheen and mobile strip are removed.
+Form enhancements, compact consent, SEO and Ads configuration are retained.
+The chat fallback appears only on failure, not as the normal contact menu.
+
+Regression coverage now asserts 48px mobile / 56px desktop circles and absence
+of the discarded UI on all 16 landings, while retaining form/conversion tests.
+Publish through the existing Pages Git integration; require its successful check
+and `npm run smoke:production`. The historical release record follows below.
+
 Target: existing Cloudflare Pages `naserwis-pl`, account
 `5354e054d53157bf5b02ce5119d08948`, domain `naserwis.pl`, Git `main`.
 This is Pages static hosting plus a Pages Function, not a new standalone Worker.
