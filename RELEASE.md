@@ -14,6 +14,13 @@ than every 16 seconds; hover/focus and reduced-motion safeguards remain. Static,
 link, unit, browser and production smoke verification cover the four locales.
 No routes, SEO metadata/schema, form/API behavior or Ads conversion IDs changed.
 
+Implementation commit `9d8bb5bf99a44d96d21b1613b2497c2170d993bf` was pushed to
+`origin/main` and published by the existing Cloudflare Pages Git integration as
+deployment `ee08d3b5-65e8-4dd7-8ccf-28fc165df226` (successful). Production
+verification passed: 24-page SEO/UI and exact-asset smoke checks, safe API
+405/400 checks, and all 27 browser scenarios against `https://naserwis.pl`.
+No production leads were submitted during QA.
+
 ## Previous revision: left balloons and attention around the circles
 
 Owner clarification: `20260904-balloons3` keeps the original circles and adds a
