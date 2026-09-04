@@ -4,7 +4,23 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Current revision — balloons beside the original circles
+## Current revision — clearer consent row and stronger contact cue
+
+Owner update, 2026-09-04 (`20260904-consent4`): remove the two rejected hero
+links from all four localized homepages while preserving the service-page and
+form conversion paths. The initial cookie notice remains non-modal, but is now a
+clearly separated grey 50/50 row: explanation on the left and three distinctly
+styled choices in one row on the right, including narrow mobile layouts.
+
+Keep the circular contact launcher visible above that initial row. Opening
+explicit cookie settings still creates a modal and suppresses the launcher.
+Increase the centered rock/scale movement and the two background pulse rings;
+each burst remains bounded to 4.2 seconds and starts at most once per 16 seconds.
+The invitation still waits for a consent choice and reduced-motion users get no
+animation. URLs, SEO metadata/schema, forms and existing Ads conversions remain
+unchanged.
+
+## Previous revision — balloons beside the original circles
 
 Owner clarification, 2026-09-04 (`20260904-balloons3`): retain the round icons,
 add a left invitation after six seconds of availability, and add left channel

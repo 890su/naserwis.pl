@@ -19,6 +19,10 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await page.goto('/' + locale + service);
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.locator('link[rel=canonical]')).toHaveCount(1);
+      if (!service) {
+        await expect(page.locator('.hero-text a[href="#contact"]')).toHaveCount(0);
+        await expect(page.locator('.hero-text a[href="#services"]')).toHaveCount(0);
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
       await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-label', /Napisz|Напишите|Напишіть|Message/);
       await page.locator('.fab-toggle').click();
@@ -53,16 +57,47 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
   }
 }
 
-test('consent is non-modal; settings have modal focus; reject never loads chat', async ({ page }) => {
+test('consent is a grey split row below the usable contact button; settings stay modal', async ({ page }) => {
   await isolate(page); await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
   const panel = page.locator('.consent-panel');
+  const actions = page.locator('.consent-actions');
+  const visibleConsentButtons = actions.locator('.consent-button:visible');
+  const fab = page.locator('.fab-toggle');
   await expect(panel).toHaveAttribute('role', 'region');
   expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe('hidden');
-  await expect(page.locator('.fab-toggle')).toBeHidden();
+  await expect(panel).toHaveCSS('background-color', 'rgb(225, 231, 235)');
+  await expect(page.locator('.consent-close')).toBeHidden();
+  await expect(visibleConsentButtons).toHaveCount(3);
+  const layout = await page.evaluate(() => {
+    const panel = document.querySelector('.consent-panel').getBoundingClientRect();
+    const heading = document.querySelector('.consent-heading').getBoundingClientRect();
+    const actions = document.querySelector('.consent-actions').getBoundingClientRect();
+    const buttons = [...document.querySelectorAll('.consent-actions .consent-button')].filter(button => !button.hidden).map(button => {
+      const box = button.getBoundingClientRect();
+      const style = getComputedStyle(button);
+      return { x: box.x, y: box.y, bottom: box.bottom, background: style.backgroundColor, border: style.borderTopWidth };
+    });
+    return { panel: { x: panel.x, y: panel.y, width: panel.width }, heading: { x: heading.x }, actions: { x: actions.x }, buttons };
+  });
+  expect(layout.heading.x).toBeLessThan(layout.panel.x + layout.panel.width / 2);
+  expect(layout.actions.x).toBeGreaterThanOrEqual(layout.panel.x + layout.panel.width * .45);
+  expect(Math.max(...layout.buttons.map(button => button.y)) - Math.min(...layout.buttons.map(button => button.y))).toBeLessThan(2);
+  expect(layout.buttons.every(button => button.background !== 'rgba(0, 0, 0, 0)' && button.border === '2px')).toBe(true);
+  await expect(fab).toBeVisible();
+  await expect.poll(async () => {
+    const fabBox = await fab.boundingBox();
+    const panelBox = await panel.boundingBox();
+    return fabBox.y + fabBox.height < panelBox.y - 8;
+  }).toBe(true);
+  await fab.click();
+  await expect(page.locator('.fab-menu')).toBeVisible();
+  await page.keyboard.press('Escape');
   await expect(page.locator('script[data-chatwoot-loader]')).toHaveCount(0);
   await page.locator('.consent-customise').click();
   await expect(panel).toHaveAttribute('aria-modal', 'true');
+  await expect(page.locator('.consent-close')).toBeVisible();
+  await expect(fab).toBeHidden();
   await expect(page.locator('#main-content')).toHaveAttribute('inert', '');
   await page.locator('.consent-save').focus(); await page.keyboard.press('Tab');
   await expect(page.locator('.consent-close')).toBeFocused();
@@ -218,12 +253,17 @@ test('delayed left invitation, bounded rocking/rings, dismissal persists', async
   await page.locator('.fab-toggle').evaluate(e => e.getAnimations({ subtree: true }).forEach(animation => {
     animation.pause(); animation.currentTime = 500;
   }));
+  const activeScale = await page.locator('.fab-toggle').evaluate(e => {
+    const matrix = new DOMMatrixReadOnly(getComputedStyle(e).transform);
+    return Math.hypot(matrix.a, matrix.b);
+  });
+  expect(activeScale).toBeGreaterThan(1.05);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await page.screenshot({ path: 'outputs/visual/mobile-motion.png' });
   await page.screenshot({ path: 'outputs/visual/mobile-invitation.png', animations: 'disabled' });
-  await page.clock.runFor(5000);
+  await page.clock.runFor(4500);
   await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
-  await page.clock.runFor(19000);
+  await page.clock.runFor(11500);
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
   await page.locator('[data-contact-dismiss]').click();
   await expect(page.locator('.contact-invitation')).toBeHidden();
@@ -232,7 +272,7 @@ test('delayed left invitation, bounded rocking/rings, dismissal persists', async
   await expect(page.locator('.contact-invitation')).toBeHidden();
 });
 
-test('invitation waits for consent; reduced motion stays static; balloon opens menu', async ({ page }) => {
+test('invitation waits for a consent choice; reduced motion stays static; balloon opens menu', async ({ page }) => {
   await isolate(page); await page.clock.install(); await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/en/naprawa-wifi/'); await page.clock.runFor(10000);
   await expect(page.locator('.contact-invitation')).toBeHidden();

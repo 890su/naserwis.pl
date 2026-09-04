@@ -1,6 +1,20 @@
 # CRO v1 release — 2026-09-04
 
-## Latest revision: left balloons and attention around the circles
+## Latest revision: clearer consent row and stronger contact cue
+
+Asset revision `20260904-consent4` removes the two owner-rejected homepage hero
+buttons in PL/RU/UK/EN. The initial, non-modal cookie notice now uses a visibly
+grey two-half row: copy on the left and three bordered, filled actions in one row
+on the right. The circular contact launcher is raised above that notice and stays
+usable; it is hidden only when the full consent settings dialog becomes modal.
+
+The launcher uses a stronger centered rock/scale burst and two more visible
+background rings. A burst lasts at most 4.2 seconds and restarts no more often
+than every 16 seconds; hover/focus and reduced-motion safeguards remain. Static,
+link, unit, browser and production smoke verification cover the four locales.
+No routes, SEO metadata/schema, form/API behavior or Ads conversion IDs changed.
+
+## Previous revision: left balloons and attention around the circles
 
 Owner clarification: `20260904-balloons3` keeps the original circles and adds a
 delayed left invitation, centered rocking/scaling and two expanding pulse rings.
@@ -49,10 +63,11 @@ handled. No advertising account mutations or ITBIZ deployment.
   redirects and site configuration/Ads labels.
 - Four Node test groups cover input/origin validation, failed delivery,
   Turnstile and accepted multilingual delivery with mocked providers.
-- 24 Chrome browser scenarios cover all 16 landing pages, 360/390/768/1440px,
+- 27 Chrome browser scenarios cover all 16 landing pages, 320/360/390/768/1440px,
   menu/focus/consent/storage/motion, form failure and retry, attribution,
   existing conversion labels, chat grant/rejection/timeout and suppression.
-- Screenshots reviewed: mobile consent/contact/menu/bar/form and desktop menu.
+- Screenshots reviewed: mobile consent/contact/round/motion/invitation/form and
+  desktop contact/channel descriptions.
 - CRO generator rerun verified idempotent. No new third-party runtime package;
   Playwright and Wrangler are pinned development tools only.
 

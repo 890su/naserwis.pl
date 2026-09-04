@@ -2,7 +2,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const version = '20260904-balloons3';
+const version = '20260904-consent4';
 const copy = {
   pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie' },
   ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу' },
@@ -62,6 +62,9 @@ for (const file of await pages('public')) {
       html = html.replace(new RegExp(`(<(?:a|button)[^>]*class="fab fab-${channel}"[^>]*)(>)`), (_all, attrs) =>
         `${attrs.replace(/ title="[^"]*"/, '').replace(/ aria-describedby="[^"]*"/, '')} aria-describedby="contact-tip-${channel}"><span class="contact-tip" id="contact-tip-${channel}" role="tooltip"><strong>${contact[channel][0]}</strong><span>${contact[channel][1]}</span></span>`);
     }
+    // Remove only the two owner-rejected homepage hero links. Other content and
+    // service-specific conversion links remain unchanged.
+    html = html.replace(/\s*<div class="cta-buttons">\s*<a href="#contact"[^>]*>[\s\S]*?<\/a>\s*<a href="#services"[^>]*>[\s\S]*?<\/a>\s*<\/div>/, '');
     // Keep the API contract and all existing form IDs/SEO content. Helpers are additive.
     html = html.replace(/(<form id="(hero-form|final-form)"[^>]*>)([\s\S]*?)(<\/form>)/g, (all, start, id, body, end) => {
       body = body.replace(/(<input[^>]*name="name")([^>]*>)/, (m, prefix, suffix) => `${prefix}${suffix.replace(/ (?:minlength|maxlength|autocomplete)="[^"]*"/g, '').replace('>', ' minlength="2" maxlength="120" autocomplete="name">')}`);

@@ -51,6 +51,9 @@ if (record) {
     assert.equal((html.match(/class="fab fab-(?:phone|whatsapp|telegram|chat)"/g) || []).length, 4, file);
     assert.equal((html.match(/class="contact-tip"/g) || []).length, 4, file);
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
+    if (/^public(?:\/(?:ru|uk|en))?\/index\.html$/.test(file)) {
+      assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);
+    }
   }
   assert.equal(landingCount, 16);
   console.log('CRO guards passed: 24 pages, unchanged SEO/routing/Ads, 16 enhanced landings.');

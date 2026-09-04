@@ -60,9 +60,11 @@ npm run test:e2e
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
 The owner's preferred original round launcher/channel buttons are retained.
-Revision `20260904-balloons3` adds a left invitation after six eligible seconds,
-centered rocking/scaling and stronger pulse rings. Channel descriptions appear
-on hover/keyboard focus, or all at once on mobile/touch. No contact card or strip.
+Revision `20260904-consent4` keeps the localized left invitation and channel
+descriptions, strengthens the bounded rocking/pulse cue, and raises the launcher
+above the initial cookie row. That row is a grey 50/50 text/actions layout with
+three styled buttons; the full settings view remains modal. The two rejected
+homepage hero buttons are removed without changing service-page conversion links.
 The invitation X stops attention for the tab session; reduced motion disables it.
 `compliance:generate` regenerates legal pages and reapplies CRO markup.
 Run generators only for intentional source updates, inspect their diff and rerun

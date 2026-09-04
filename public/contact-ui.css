@@ -8,34 +8,46 @@
     pointer-events: none;
 }
 #consent-dialog:not(.consent-overlay-settings) .consent-panel {
-    width: min(1080px, 100%);
-    padding: 14px 18px;
-    border: 1px solid #c3d4df;
+    width: min(1180px, 100%);
+    padding: 14px 16px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    column-gap: 22px;
+    align-items: center;
+    background: #e1e7eb;
+    border: 1px solid #8fa2af;
     border-radius: 14px;
-    box-shadow: 0 4px 24px #0a254026;
+    box-shadow: 0 7px 28px #0a25403d, inset 0 1px #ffffffcc;
     pointer-events: auto;
     animation: none;
 }
-#consent-dialog:not(.consent-overlay-settings) .consent-heading { grid-template-columns: 1fr 40px; gap: 8px; }
+#consent-dialog:not(.consent-overlay-settings) .consent-heading { grid-template-columns: 1fr; gap: 0; }
 #consent-dialog:not(.consent-overlay-settings) .consent-mark,
 #consent-dialog:not(.consent-overlay-settings) .consent-eyebrow,
-#consent-dialog:not(.consent-overlay-settings) .consent-change-note { display: none; }
+#consent-dialog:not(.consent-overlay-settings) .consent-change-note,
+#consent-dialog:not(.consent-overlay-settings) .consent-close { display: none; }
 #consent-dialog:not(.consent-overlay-settings) .consent-panel h2 { font-size: 16px; }
-#consent-dialog:not(.consent-overlay-settings) .consent-summary { padding: 0; }
+#consent-dialog:not(.consent-overlay-settings) .consent-heading { grid-column: 1; grid-row: 1; min-width: 0; }
+#consent-dialog:not(.consent-overlay-settings) .consent-summary { grid-column: 1; grid-row: 2; padding: 0; min-width: 0; }
 #consent-dialog:not(.consent-overlay-settings) .consent-summary > p:first-child { font-size: 12px; line-height: 1.4; }
 #consent-dialog:not(.consent-overlay-settings) .consent-policy-links { font-size: 11px; margin-top: 5px !important; }
-#consent-dialog:not(.consent-overlay-settings) .consent-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 10px; gap: 6px; }
+#consent-dialog:not(.consent-overlay-settings) .consent-actions { grid-column: 2; grid-row: 1 / span 2; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; gap: 8px; align-items: stretch; }
 #consent-dialog .consent-reject,
-#consent-dialog .consent-accept { border: 1px solid #9ab0bf; background: #f4f8fa; color: #0a2540; box-shadow: none; }
+#consent-dialog .consent-accept { box-shadow: inset 0 1px #ffffffcc, 0 3px 7px #0a254026; }
+#consent-dialog:not(.consent-overlay-settings) .consent-reject { border: 2px solid #a56b00; background: #fff8e8; color: #663d00; }
+#consent-dialog:not(.consent-overlay-settings) .consent-accept { border: 2px solid #008b73; background: #e2f8f2; color: #075e50; }
+#consent-dialog:not(.consent-overlay-settings) .consent-customise { border: 2px solid #536c7c; background: #fff; color: #0a2540; box-shadow: inset 0 1px #fff, 0 3px 7px #0a254026; }
 #consent-dialog .consent-reject:hover,
-#consent-dialog .consent-accept:hover { background: #e4edf2; border-color: #60788a; box-shadow: none; }
-#consent-dialog:not(.consent-overlay-settings) .consent-button { padding: 8px; min-height: 44px; font-size: 12px; order: 0; }
+#consent-dialog .consent-accept:hover { filter: brightness(.96); transform: translateY(-1px); box-shadow: 0 5px 10px #0a25402b; }
+#consent-dialog:not(.consent-overlay-settings) .consent-button { padding: 8px 6px; min-height: 48px; font-size: 12px; line-height: 1.2; order: 0; border-radius: 9px; font-weight: 700; }
 #consent-dialog:not(.consent-overlay-settings) .consent-reject { grid-column: 1; grid-row: 1; }
 #consent-dialog:not(.consent-overlay-settings) .consent-accept { grid-column: 2; grid-row: 1; }
-#consent-dialog:not(.consent-overlay-settings) .consent-customise { grid-column: 3; grid-row: 1; border-color: #9ab0bf; }
+#consent-dialog:not(.consent-overlay-settings) .consent-customise { grid-column: 3; grid-row: 1; }
 #consent-dialog [hidden], .contact-fallback[hidden], .contact-invitation[hidden] { display: none !important; }
 
 /* Circle dimensions, gradients and vertical icon menu come from styles.css. */
+body:has(#consent-dialog:not([hidden]):not(.consent-overlay-settings)) .fab-container { bottom: 160px; }
 .fab-container[data-suppressed="true"] { visibility: hidden; pointer-events: none; }
 .contact-fallback { position: absolute; bottom: 0; right: 70px; width: min(270px, calc(100vw - 110px)); padding: 12px; border: 1px solid #c3d4df; border-radius: 12px; background: #fff; box-shadow: 0 4px 20px #0a254026; }
 .contact-form-link { display: block; padding: 12px; min-height: 44px; color: #0a2540; font-weight: 700; }
@@ -126,20 +138,31 @@ form .contact-alternatives { display: flex; justify-content: center; gap: 14px; 
     opacity: 0;
     pointer-events: none;
 }
-.fab-container .fab-toggle.contact-attention { animation: contact-rock 4.8s ease-in-out both; }
-.fab-toggle.contact-attention::before { animation: contact-ring 1.45s ease-out 3; }
-.fab-toggle.contact-attention::after { animation: contact-ring 1.45s .35s ease-out 3; }
+.fab-container .fab-toggle.contact-attention { animation: contact-rock 4.2s ease-in-out both; }
+.fab-toggle.contact-attention::before { border-width: 4px; background: #ffc53d73; animation: contact-ring 1.25s ease-out 3; }
+.fab-toggle.contact-attention::after { border-width: 4px; background: #ff9d0066; animation: contact-ring 1.25s .28s ease-out 3; }
 @keyframes contact-rock {
-    0%, 32%, 68%, 100% { transform: rotate(0) scale(1); }
-    5%, 74% { transform: rotate(-15deg) scale(1.12); }
-    10%, 80% { transform: rotate(13deg) scale(1.17); }
-    16%, 86% { transform: rotate(-10deg) scale(1.12); }
-    22%, 92% { transform: rotate(7deg) scale(1.08); }
-    27%, 96% { transform: rotate(-3deg) scale(1.03); }
+    0%, 34%, 62%, 100% { transform: rotate(0) scale(1); }
+    5%, 68% { transform: rotate(-20deg) scale(1.14); }
+    10%, 75% { transform: rotate(18deg) scale(1.22); }
+    16%, 82% { transform: rotate(-15deg) scale(1.16); }
+    22%, 89% { transform: rotate(11deg) scale(1.12); }
+    28%, 95% { transform: rotate(-5deg) scale(1.05); }
 }
 @keyframes contact-ring {
-    0% { transform: scale(.95); opacity: .7; }
-    100% { transform: scale(1.85); opacity: 0; }
+    0% { transform: scale(.9); opacity: .9; }
+    100% { transform: scale(2.05); opacity: 0; }
+}
+@media (max-width: 700px) {
+    body:has(#consent-dialog:not([hidden]):not(.consent-overlay-settings)) .fab-container { bottom: 230px; }
+    #consent-dialog.consent-overlay:not(.consent-overlay-settings) { padding: 8px; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-panel { padding: 10px; column-gap: 10px; border-radius: 12px; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-panel h2 { font-size: 13px; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-heading { grid-template-columns: minmax(0, 1fr); }
+    #consent-dialog:not(.consent-overlay-settings) .consent-summary > p:first-child { font-size: 10.5px; line-height: 1.25; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-policy-links { font-size: 9.5px; line-height: 1.2; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-actions { gap: 4px; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-button { padding: 6px 2px; min-height: 52px; font-size: 9.5px; hyphens: auto; overflow-wrap: anywhere; }
 }
 @media (max-width: 768px) {
     .fab-container { --contact-size: 48px; }

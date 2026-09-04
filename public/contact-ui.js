@@ -80,6 +80,10 @@
         return rect.height > 0 && rect.top < innerHeight && rect.bottom > 0;
     }
     function consentVisible() { return document.getElementById('consent-dialog')?.hidden === false; }
+    function consentSettingsVisible() {
+        const dialog = document.getElementById('consent-dialog');
+        return dialog?.hidden === false && dialog.classList.contains('consent-overlay-settings');
+    }
 
     function stopMotion() {
         clearTimeout(motionTimer);
@@ -101,10 +105,10 @@
         if (invitation.hidden || invitationDismissed || document.hidden || menuOpen) return;
         if (!reducedMotion.matches && !container.matches(':hover, :focus-within')) {
             toggle.classList.add('contact-attention');
-            motionTimer = setTimeout(stopMotion, 4800);
+            motionTimer = setTimeout(stopMotion, 4200);
         }
         // Short bursts separated by quiet time; the invitation's X stops them.
-        repeatTimer = setTimeout(attentionBurst, 24000);
+        repeatTimer = setTimeout(attentionBurst, 16000);
     }
     function queueInvitation() {
         if (invitationDismissed || invitationTimer || !invitation.hidden || menuOpen || document.hidden) return;
@@ -126,12 +130,17 @@
         const focusedField = document.activeElement?.matches('input, textarea, select');
         const keyboard = focusedField || (window.visualViewport && window.visualViewport.height < innerHeight * 0.75);
         const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active');
-        const suppressed = consentVisible() || keyboard || Boolean(modal) || chatOpen || document.hidden;
+        const initialConsent = consentVisible() && !consentSettingsVisible();
+        const panelHeight = initialConsent ? document.querySelector('.consent-panel')?.getBoundingClientRect().height || 0 : 0;
+        if (initialConsent && panelHeight) container.style.bottom = `${Math.ceil(panelHeight + 24)}px`;
+        else container.style.removeProperty('bottom');
+        const suppressed = consentSettingsVisible() || keyboard || Boolean(modal) || chatOpen || document.hidden;
         container.dataset.suppressed = String(suppressed);
         if (suppressed) {
             setOpen(false);
             pauseInvitation();
-        } else queueInvitation();
+        } else if (initialConsent) pauseInvitation();
+        else queueInvitation();
         observeImpressions();
     }
     function scheduleUpdate() {
@@ -142,8 +151,18 @@
     window.visualViewport?.addEventListener('resize', scheduleUpdate);
     window.addEventListener('naserwis:consent-ui', () => {
         if (!consentVisible() && !window.NASERWIS_CONSENT?.get()?.support) chatPending = false;
-        scheduleUpdate();
+        update();
     });
+    // Consent is built on DOMContentLoaded. Measure again after its panel has
+    // participated in layout so the circular launcher clears the full banner.
+    document.addEventListener('DOMContentLoaded', update);
+    const consentPanelObserver = new ResizeObserver(scheduleUpdate);
+    function observeConsentPanel() {
+        const panel = document.querySelector('.consent-panel');
+        if (panel) consentPanelObserver.observe(panel);
+    }
+    window.addEventListener('naserwis:consent-ui', observeConsentPanel);
+    document.addEventListener('DOMContentLoaded', observeConsentPanel);
     const modalObserver = new MutationObserver(scheduleUpdate);
     document.querySelectorAll('.mobile-menu-overlay, #review-modal').forEach(element => modalObserver.observe(element, { attributes: true, attributeFilter: ['class', 'hidden'] }));
 
