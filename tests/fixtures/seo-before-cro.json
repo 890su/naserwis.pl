@@ -1,0 +1,35 @@
+{
+  "baselineRevision": "19c718796d749613deed8bd634745359883372e7",
+  "pages": {
+    "public/cookies/index.html": "e7463e8c3d315897f99c090e844906a69e0bf5d20394adc0015780dda4d73117",
+    "public/en/cookies/index.html": "2e74c4b27d7b0b908011e57c98233059d15141d32eba7e76a37a65c49f9168ef",
+    "public/en/index.html": "c6ea70c6b1002df9d19f414a526ec08ba2c29721e0f09d1355b468fa33d8c166",
+    "public/en/montaz-sieci/index.html": "07f24323251cb7c9f15c98361faf6e076b7af0b7815ca31cb34b056983fda396",
+    "public/en/naprawa-sieci/index.html": "9c782cb2b662da0df084ae1d19be50f93750139b284f460e4f59e46e848c6a36",
+    "public/en/naprawa-wifi/index.html": "75fcb9fbf49c05f0d78d7667fe86bcbe6f356f38eaa1a023f25ac009a25a004c",
+    "public/en/privacy/index.html": "989b9422eed2fa775f3fdede651c3066e3dca571a7ccb1bf7cadade5a9ef07dc",
+    "public/index.html": "ee5a30388d9581073220477094661977c761ae954062e7a7f0d43441f201d950",
+    "public/montaz-sieci/index.html": "9b6618f141f4773030f3bb716811a46bf65ad660ec1e4919187353877700ccdb",
+    "public/naprawa-sieci/index.html": "525fd9d672cf5bfe60be1824ae5deb2f3eb16303c987e681a2b576ace200834b",
+    "public/naprawa-wifi/index.html": "b9626e91c60c140e5f25d960ce61f88d1da978c209571521e144159ab4e45cf9",
+    "public/privacy/index.html": "22622e2a5c55be3ccbc9258789840d511236f3ffb9503a85c91eb263b00aa516",
+    "public/ru/cookies/index.html": "0b38ed9211bc1866ec7a8cbcb6879fb1f71c9584f781d816084db333220be043",
+    "public/ru/index.html": "28f17b4a0218ecf81fd1695c3b90fee899984f2f7dbc14d5c7b640d87ebf702f",
+    "public/ru/montaz-sieci/index.html": "29ac21725637c7656dc9912e4d283df19aafb366b276e618560f82b47f200de3",
+    "public/ru/naprawa-sieci/index.html": "5a9c340d9e63cb1d7b72086a35acb632ce678c3912dd71b487f470c2125610d0",
+    "public/ru/naprawa-wifi/index.html": "06462e356bf2fcc8a82bc8c58d129d6c8165669822f9b6af0b86b761d0c58852",
+    "public/ru/privacy/index.html": "638f14c44ea2508d4e1790c0c271a688b82fb5f3fe3546282ef77e2f5b5d4ff8",
+    "public/uk/cookies/index.html": "fe7397eff247be4d79cf56f861c805645b5483d849ae99551659c62034460382",
+    "public/uk/index.html": "7d6809a5dd4d7e09fc3ca35f6cdd809b4270d075d66a3000271afe74271840e2",
+    "public/uk/montaz-sieci/index.html": "c960f57b6ba144ea553372cda84910b601d41ee614a6323690a86dc79c3b35d7",
+    "public/uk/naprawa-sieci/index.html": "e8a77296365a8f85aac798edb8d619b187e24d574d4721e2bfa826eb33fd407b",
+    "public/uk/naprawa-wifi/index.html": "20a1e206ab0639e9bb47b3e33d41ef8c1b99ea4d693090698b446cb288a2204d",
+    "public/uk/privacy/index.html": "5000ff76774e2ac0f5015a118d9e3ebf6a849d6cb71babb4d89df06d64fd0f34"
+  },
+  "protectedFiles": {
+    "public/sitemap.xml": "c5410b4689ae52e29a9a8f359ee9613d39436c5563249a2fac2881da4d0758bb",
+    "public/robots.txt": "760f12d550117710092dd0bbb533fd001ed76bdd97966340b42b6527c961ae45",
+    "public/_redirects": "718d5707a96a468bab8128f9c36e55fd226cc5853f35d9570cc68edcf4bffd0b",
+    "public/site-config.js": "c41c3037ff0973e2b0cf0395dc5bcdee65ff78e50d52511aac8c3e81ac5fe98e"
+  }
+}

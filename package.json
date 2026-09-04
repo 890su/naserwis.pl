@@ -6,8 +6,16 @@
   "description": "Static NaSerwis.pl website for Cloudflare Pages",
   "scripts": {
     "ads:build": "node scripts/build-google-ads.mjs",
-    "compliance:generate": "node scripts/apply-compliance.mjs",
+    "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-cro.mjs",
     "export:live": "node scripts/export-live-site.mjs",
-    "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs"
+    "cro:generate": "node scripts/apply-cro.mjs",
+    "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs && node scripts/check-cro.mjs",
+    "test": "node --test tests/unit/*.test.mjs",
+    "test:e2e": "playwright test",
+    "smoke:production": "node scripts/smoke-production.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "wrangler": "4.129.0"
   }
 }

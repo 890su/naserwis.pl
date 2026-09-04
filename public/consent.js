@@ -7,6 +7,7 @@
 
     const STORAGE_KEY = 'naserwis_consent_v1';
     const POLICY_VERSION = 1;
+    let memoryConsent = null;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
@@ -25,9 +26,9 @@
     function readConsent() {
         try {
             const value = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            return value && value.version === POLICY_VERSION ? value : null;
+            return value && value.version === POLICY_VERSION ? value : memoryConsent;
         } catch (_error) {
-            return null;
+            return memoryConsent;
         }
     }
 
@@ -145,7 +146,10 @@
             updatedAt: new Date().toISOString()
         };
 
-        if (persist) localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+        memoryConsent = value;
+        if (persist) {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(value)); } catch (_error) { /* Contact must work with storage disabled. */ }
+        }
         window.gtag('consent', 'update', googleConsent(value));
         if (value.support) loadChatwoot();
         window.dispatchEvent(new CustomEvent('naserwis:consent', { detail: value }));
@@ -206,7 +210,32 @@
         const customise = overlay.querySelector('.consent-customise');
         const save = overlay.querySelector('.consent-save');
         const closeButton = overlay.querySelector('.consent-close');
+        const panel = overlay.querySelector('.consent-panel');
+        const backgroundState = new Map();
         let previouslyFocused = null;
+
+        function modalMode(active) {
+            document.body.classList.toggle('consent-open', active);
+            panel.setAttribute('aria-modal', String(active));
+            panel.setAttribute('role', active ? 'dialog' : 'region');
+            if (active) {
+                Array.from(document.body.children).forEach(function (element) {
+                    if (element === overlay || ['SCRIPT', 'STYLE'].includes(element.tagName)) return;
+                    if (!backgroundState.has(element)) backgroundState.set(element, element.inert);
+                    element.inert = true;
+                });
+                window.requestAnimationFrame(function () { closeButton.focus(); });
+            } else {
+                backgroundState.forEach(function (inert, element) { element.inert = inert; });
+                backgroundState.clear();
+            }
+        }
+
+        function notifyVisibility() {
+            window.dispatchEvent(new CustomEvent('naserwis:consent-ui', {
+                detail: { visible: !overlay.hidden, settings: overlay.classList.contains('consent-overlay-settings') }
+            }));
+        }
 
         function setChecks(value) {
             overlay.querySelector('[name="analytics"]').checked = Boolean(value && value.analytics);
@@ -217,9 +246,10 @@
         function close() {
             overlay.hidden = true;
             overlay.classList.remove('consent-overlay-settings');
-            document.body.classList.remove('consent-open');
+            modalMode(false);
             document.removeEventListener('keydown', onKeydown);
-            if (previouslyFocused && typeof previouslyFocused.focus === 'function') previouslyFocused.focus();
+            if (previouslyFocused && previouslyFocused !== document.body && previouslyFocused.offsetParent !== null && typeof previouslyFocused.focus === 'function') previouslyFocused.focus();
+            notifyVisibility();
         }
 
         function show(customiseImmediately) {
@@ -231,9 +261,9 @@
             overlay.querySelector('.consent-accept').hidden = Boolean(customiseImmediately);
             overlay.classList.toggle('consent-overlay-settings', Boolean(customiseImmediately));
             overlay.hidden = false;
-            document.body.classList.add('consent-open');
+            modalMode(Boolean(customiseImmediately));
             document.addEventListener('keydown', onKeydown);
-            window.requestAnimationFrame(function () { closeButton.focus(); });
+            notifyVisibility();
         }
 
         function closeWithNecessary() {
@@ -242,6 +272,8 @@
         }
 
         function onKeydown(event) {
+            // The initial banner never traps focus or intercepts page shortcuts.
+            if (!overlay.classList.contains('consent-overlay-settings')) return;
             if (event.key === 'Escape') {
                 event.preventDefault();
                 closeWithNecessary();
@@ -276,6 +308,8 @@
             save.hidden = false;
             overlay.querySelector('.consent-accept').hidden = true;
             overlay.classList.add('consent-overlay-settings');
+            modalMode(true);
+            notifyVisibility();
         });
         save.addEventListener('click', function () {
             applyConsent({

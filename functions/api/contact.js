@@ -6,10 +6,10 @@ const ALLOWED_LANGUAGES = new Set(["pl", "ru", "uk", "en"]);
 const ALLOWED_FORM_TYPES = new Set(["hero-form", "final-form", "review"]);
 
 const messages = {
-  pl: { success: "Dziękujemy! Wiadomość została wysłana. Oddzwonimy w ciągu godziny.", invalid: "Proszę poprawnie wypełnić formularz.", spam: "Nie udało się zweryfikować formularza. Spróbuj ponownie." },
-  ru: { success: "Спасибо! Сообщение отправлено. Мы перезвоним в течение часа.", invalid: "Пожалуйста, корректно заполните форму.", spam: "Не удалось проверить форму. Попробуйте ещё раз." },
-  uk: { success: "Дякуємо! Повідомлення надіслано. Ми передзвонимо протягом години.", invalid: "Будь ласка, коректно заповніть форму.", spam: "Не вдалося перевірити форму. Спробуйте ще раз." },
-  en: { success: "Thank you! Your message has been sent. We will call you within an hour.", invalid: "Please complete the form correctly.", spam: "We could not verify the form. Please try again." }
+  pl: { success: "Dziękujemy! Otrzymaliśmy zapytanie. Oddzwonimy, aby uzgodnić szczegóły i możliwy termin.", invalid: "Proszę poprawnie wypełnić formularz.", spam: "Nie udało się zweryfikować formularza. Spróbuj ponownie." },
+  ru: { success: "Спасибо! Запрос получен. Перезвоним, чтобы согласовать детали и возможное время визита.", invalid: "Пожалуйста, корректно заполните форму.", spam: "Не удалось проверить форму. Попробуйте ещё раз." },
+  uk: { success: "Дякуємо! Запит отримано. Передзвонимо, щоб узгодити деталі й можливий час візиту.", invalid: "Будь ласка, коректно заповніть форму.", spam: "Не вдалося перевірити форму. Спробуйте ще раз." },
+  en: { success: "Thank you! Your enquiry has been received. We will call to agree the details and a possible visit time.", invalid: "Please complete the form correctly.", spam: "We could not verify the form. Please try again." }
 };
 
 function reply(body, status = 200) {

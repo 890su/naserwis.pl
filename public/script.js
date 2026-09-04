@@ -86,10 +86,13 @@
      */
     function showLanguageSuggestion() {
         const currentLang = getCurrentLanguage();
-        const isFirstVisit = !localStorage.getItem('hasVisited');
-        const dismissed = localStorage.getItem('langBannerDismissed');
-
-        localStorage.setItem('hasVisited', 'true');
+        let isFirstVisit = false;
+        let dismissed = true;
+        try {
+            isFirstVisit = !localStorage.getItem('hasVisited');
+            dismissed = localStorage.getItem('langBannerDismissed');
+            localStorage.setItem('hasVisited', 'true');
+        } catch (_error) { return; }
 
         if (!isFirstVisit || dismissed) return;
 
@@ -299,7 +302,7 @@
 
             window.scrollTo({
                 top: Math.max(0, offsetPosition), // Ensure non-negative
-                behavior: 'smooth'
+                behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
             });
 
             return true;
@@ -389,32 +392,52 @@
 
         const msgs = validationMessages[currentLang] || validationMessages['pl'];
 
-        // Apply custom validation messages to inputs
-        const inputs = form.querySelectorAll('input, textarea');
+        form.noValidate = true;
+        const inputs = form.querySelectorAll('[name="name"], [name="phone"], [name="message"]');
+        const minimum = { name: 2, phone: 5, message: 3 };
+        const originalLabel = form.querySelector('button[type="submit"]')?.textContent;
+        let sending = false;
+        let started = false;
+        const formParameters = { form_id: formId, placement: formId === 'hero-form' ? 'hero' : 'final' };
+        const shortMessages = {
+            pl: 'Uzupełnij pole — minimalna liczba znaków: ',
+            ru: 'Дополните поле — минимум символов: ',
+            uk: 'Доповніть поле — мінімум символів: ',
+            en: 'Complete this field — minimum characters: '
+        };
         inputs.forEach(input => {
-            input.addEventListener('invalid', function (e) {
-                e.preventDefault();
-                if (this.validity.valueMissing) {
-                    if (this.name === 'name') {
-                        this.setCustomValidity(msgs.name);
-                    } else if (this.name === 'phone') {
-                        this.setCustomValidity(msgs.phone);
-                    } else if (this.name === 'message') {
-                        this.setCustomValidity(msgs.message);
-                    } else {
-                        this.setCustomValidity(msgs.required);
-                    }
-                }
-            });
-
-            // Clear custom message on input
+            const error = document.createElement('small');
+            error.className = 'contact-field-error';
+            error.id = input.id + '-error';
+            error.hidden = true;
+            input.insertAdjacentElement('afterend', error);
+            input.setAttribute('aria-describedby', [input.getAttribute('aria-describedby'), error.id].filter(Boolean).join(' '));
             input.addEventListener('input', function () {
                 this.setCustomValidity('');
+                this.removeAttribute('aria-invalid');
+                error.hidden = true;
+                if (!started) started = trackFunnelEvent('naserwis_form_start', formParameters);
             });
         });
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (sending) return;
+            let invalid = null;
+            inputs.forEach(input => {
+                const value = input.value.trim();
+                const error = document.getElementById(input.id + '-error');
+                const valid = value.length >= minimum[input.name] && input.validity.valid;
+                input.setAttribute('aria-invalid', String(!valid));
+                error.hidden = valid;
+                if (!valid) {
+                    error.textContent = value ? (shortMessages[currentLang] || shortMessages.pl) + minimum[input.name] + '.' : msgs[input.name];
+                    invalid ||= input;
+                    trackFunnelEvent('naserwis_form_validation_error', { ...formParameters, field: input.name, reason: value ? 'too_short_or_invalid' : 'required' });
+                }
+            });
+            if (invalid) { invalid.focus(); return; }
+            sending = true;
 
             const formData = new FormData(form);
             const submitButton = form.querySelector('button[type="submit"]');
@@ -443,7 +466,7 @@
                 // Absolute path — works from any page/language
                 const emailHandlerPath = '/api/contact';
 
-                // Send data to PHP backend
+                // Send to the existing Cloudflare Pages Function.
                 const response = await fetch(emailHandlerPath, {
                     method: 'POST',
                     headers: {
@@ -454,7 +477,7 @@
 
                 const result = await response.json();
 
-                if (result.success) {
+                if (response.ok && result.success && result.leadId) {
                     // Show success message
                     messageDiv.className = 'success-message';
                     messageDiv.textContent = result.message;
@@ -473,19 +496,16 @@
                         transaction_id: result.leadId || undefined
                     });
                     sendGoogleAdsConversion('lead', result.leadId);
+                    trackFunnelEvent('naserwis_form_success', formParameters);
 
                     // Reset form
                     form.reset();
-
-                    // Clear message after delay
-                    setTimeout(() => {
-                        messageDiv.textContent = '';
-                        messageDiv.className = '';
-                    }, 5000);
+                    started = false;
                 } else {
                     // Show error message
                     messageDiv.className = 'error-message';
                     messageDiv.textContent = result.message;
+                    trackFunnelEvent('naserwis_form_error', { ...formParameters, reason: 'server' });
                 }
             } catch (error) {
                 // Network or other error
@@ -493,12 +513,14 @@
                 messageDiv.className = 'error-message';
                 const errorText = { pl: 'Wystąpił błąd. Proszę zadzwonić: +48 453 327 678', ru: 'Произошла ошибка. Пожалуйста, позвоните: +48 453 327 678', uk: 'Виникла помилка. Будь ласка, зателефонуйте: +48 453 327 678', en: 'An error occurred. Please call: +48 453 327 678' };
                 messageDiv.textContent = errorText[currentLang] || errorText.pl;
+                trackFunnelEvent('naserwis_form_error', { ...formParameters, reason: 'network' });
             } finally {
+                sending = false;
+                if (window.turnstile && form.dataset.turnstileWidget) window.turnstile.reset(form.dataset.turnstileWidget);
                 // Re-enable submit button
                 if (submitButton) {
                     submitButton.disabled = false;
-                    const submitText = { pl: 'Wyślij zapytanie', ru: 'Отправить запрос', uk: 'Надіслати запит', en: 'Send request' };
-                    submitButton.textContent = submitText[currentLang] || submitText.pl;
+                    submitButton.textContent = originalLabel;
                 }
             }
         });
@@ -947,53 +969,6 @@
         }
     }
 
-    // ========================
-    // FAB Toggle Menu
-    // ========================
-    function initFabToggle() {
-        const fabContainer = document.querySelector('.fab-container');
-        const fabToggle = fabContainer?.querySelector('.fab-toggle');
-        const fabChat = fabContainer?.querySelector('.fab-chat');
-        if (!fabToggle) return;
-
-        fabToggle.addEventListener('click', function () {
-            fabContainer.classList.toggle('open');
-            fabToggle.setAttribute('aria-expanded', fabContainer.classList.contains('open'));
-        });
-
-        // Chat button triggers Chatwoot
-        if (fabChat) {
-            fabChat.addEventListener('click', function () {
-                const eventParameters = contactEventParameters('chatwoot', fabChat);
-                pushMeasurementEvent('naserwis_contact_click', eventParameters);
-                pushMeasurementEvent('chatwoot_open', eventParameters);
-                sendGoogleAdsConversion('chatwoot');
-
-                if (window.$chatwoot) {
-                    window.$chatwoot.toggle('open');
-                } else if (window.NASERWIS_CONSENT) {
-                    window.NASERWIS_CONSENT.requestSupport();
-                } else {
-                    // SDK not yet loaded — open when ready
-                    window.addEventListener('chatwoot:ready', function () {
-                        window.$chatwoot.toggle('open');
-                    }, { once: true });
-                }
-                fabContainer.classList.remove('open');
-                fabToggle.setAttribute('aria-expanded', 'false');
-            });
-        }
-
-        // Close menu on outside click
-        document.addEventListener('click', function (e) {
-            if (!fabContainer.contains(e.target)) {
-                fabContainer.classList.remove('open');
-                fabToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-    }
-
-
     // Cloudflare Pages has no PHP sessions. This replaces the legacy CSRF
     // field with a honeypot and an optional, server-validated Turnstile token.
     function initBotProtection(form) {
@@ -1117,6 +1092,46 @@
         }
     }
 
+    function trackFunnelEvent(eventName, parameters = {}) {
+        if (!window.NASERWIS_CONSENT?.get()?.analytics) return false;
+        const allowedEvents = ['naserwis_cta_view', 'naserwis_cta_click', 'naserwis_contact_open',
+            'naserwis_form_start', 'naserwis_form_validation_error', 'naserwis_form_error',
+            'naserwis_form_success', 'naserwis_chat_error'];
+        if (!allowedEvents.includes(eventName)) return false;
+        const safe = {
+            language: document.documentElement.lang || 'pl',
+            service: getPageService(),
+            page_path: window.location.pathname,
+            release: 'cro-v1',
+            device_category: matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop'
+        };
+        const allowed = {
+            placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final'],
+            action: ['form', 'contact_menu', 'phone'],
+            form_id: ['hero-form', 'final-form'],
+            field: ['name', 'phone', 'message'],
+            reason: ['required', 'too_short_or_invalid', 'server', 'network']
+        };
+        Object.entries(allowed).forEach(([key, values]) => {
+            if (values.includes(parameters[key])) safe[key] = parameters[key];
+        });
+        pushMeasurementEvent(eventName, safe);
+        return true;
+    }
+
+    function initFunnelTracking() {
+        window.addEventListener('naserwis:ui-event', function (event) {
+            trackFunnelEvent(event.detail?.event, event.detail);
+        });
+        window.addEventListener('naserwis:chat-opened', function () {
+            const chat = document.querySelector('.fab-chat');
+            const parameters = contactEventParameters('chatwoot', chat);
+            pushMeasurementEvent('naserwis_contact_click', parameters);
+            pushMeasurementEvent('chatwoot_open', parameters);
+            sendGoogleAdsConversion('chatwoot');
+        });
+    }
+
     function sendGoogleAdsConversion(type, transactionId) {
         const sendTo = window.NASERWIS_CONFIG?.googleAdsConversions?.[type];
         if (!sendTo || typeof window.gtag !== 'function') return;
@@ -1126,6 +1141,8 @@
     }
 
     function contactPlacement(element) {
+        if (element.closest('.contact-bar')) return 'sticky';
+        if (element.closest('.contact-alternatives')) return 'form';
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('header')) return 'header';
         if (element.closest('footer')) return 'footer';
@@ -1235,7 +1252,7 @@
         initInteractiveStars();
         initReviewModal();
         initAttribution();
-        initFabToggle();
+        initFunnelTracking();
         initAllBotProtection();
         initContactTracking();
         initPrivacyNotices();

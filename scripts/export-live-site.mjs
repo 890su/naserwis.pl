@@ -1,6 +1,12 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
+// This importer predates the committed Pages/CRO source. Never overwrite the
+// current site merely to deploy it. It is retained for explicit migration work.
+if (!process.argv.includes('--allow-legacy-overwrite')) {
+  throw new Error('Legacy importer disabled by default. Edit public/ directly; see README. Explicit migration only: --allow-legacy-overwrite.');
+}
+
 const site = "https://naserwis.pl";
 const routes = [
   "/", "/montaz-sieci", "/naprawa-wifi", "/naprawa-sieci",

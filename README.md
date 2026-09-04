@@ -1,10 +1,20 @@
 # NaSerwis.pl on Cloudflare Pages
 
-This repository is a static export of the existing multilingual website, with a Cloudflare Pages Function for form submissions. It preserves the 16 public pages and their extensionless URLs.
+Production source: `public/` (16 landing pages and 8 legal pages, PL/RU/UK/EN),
+with `functions/api/contact.js` for form delivery. The ignored legacy PHP files
+are a local migration archive, not the deployment source.
+
+Release plan: [CRO_PLAN.md](CRO_PLAN.md). Measurement contract:
+[ads/measurement.md](ads/measurement.md). Deployment and QA record:
+[RELEASE.md](RELEASE.md).
 
 ## Cloudflare Pages configuration
 
-Connect this GitHub repository in **Workers & Pages → Create application → Pages → Connect to Git**.
+Existing project: **naserwis-pl** in account
+`5354e054d53157bf5b02ce5119d08948`. GitHub repository `890su/naserwis.pl`
+is already connected. Pushes to `main` trigger the **Cloudflare Pages** check.
+Do not create a new Worker/Pages project or change DNS during normal releases.
+Both apex and www DNS records point to `naserwis-pl.pages.dev`.
 
 | Setting | Value |
 | --- | --- |
@@ -23,19 +33,51 @@ In **Settings → Variables and Secrets**, add encrypted production secrets. Do 
 | --- | --- |
 | `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` | Existing Telegram notification channel |
 | `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` | Optional email notification channel via Resend |
-| `TURNSTILE_SECRET_KEY` | Required anti-spam verification |
+| `TURNSTILE_SECRET_KEY` | Enables server-side Turnstile verification |
 | `TURNSTILE_HOSTNAMES` | Comma-separated allowed hostnames |
 
 To enable Turnstile, create a widget for `naserwis.pl` and `www.naserwis.pl`, place its **public site key** in `public/site-config.js`, and set its private key as `TURNSTILE_SECRET_KEY`. The public key is safe to commit; the secret is not.
 
-Before changing DNS, use the generated `*.pages.dev` URL to submit all three forms (the two contact forms and the review modal), checking delivery in Telegram and/or email. Then add the custom domain in Pages and update the DNS records following the Cloudflare dashboard instructions.
+The committed Turnstile site key is currently empty. This release does not change
+anti-spam configuration or delivery credentials. Verify the production secret/
+public-key pairing separately before enabling it; a secret without a widget key
+would reject real enquiries. Local tests mock provider responses and never send
+customer or test leads to Telegram/Resend.
 
-## Refreshing the static snapshot
+## Development and release
 
-The original application uses PHP. Cloudflare Pages does not run PHP, so the HTML in `public/` is a static export of the live pages. To intentionally refresh it from the live site, run:
+Use Node 22+ and the committed lockfile. Chrome is the default test browser;
+set `PLAYWRIGHT_CHANNEL` to another installed supported channel if needed.
 
 ```powershell
-npm run export:live
+npm ci
+npm run cro:generate
+npm run check
+npm test
+npm run test:e2e
 ```
 
-Review and commit the resulting changes before deployment.
+`cro:generate` maintains localized additive markup on the committed HTML;
+`public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
+`compliance:generate` regenerates legal pages and reapplies CRO markup.
+Run generators only for intentional source updates, inspect their diff and rerun
+checks. The immutable pre-CRO SEO/Ads fixture works in shallow CI checkouts.
+
+The static QA server (`node scripts/serve-test.mjs`, localhost:8846) deliberately
+does not deliver forms. Browser traces and visual captures are in ignored
+`outputs/`. Do not commit them or secrets.
+
+`export:live` is a legacy migration importer, disabled by default because it
+overwrites source files and predates current tracking/CRO changes. Its explicit
+`--allow-legacy-overwrite` option is only for separately reviewed migration work.
+It is never a build or deployment step.
+
+After a reviewed commit/push, require a successful Cloudflare Pages check for
+that SHA, then verify `https://naserwis.pl` and the deployed asset content. Roll
+back with the previous successful Pages deployment or a reviewed Git revert,
+never with destructive reset/force-push. No DNS changes are needed.
+
+`npm run smoke:production` verifies the deployed page/asset content and rejected
+API requests without submitting leads. For browser regression against production,
+set `PLAYWRIGHT_BASE_URL=https://naserwis.pl`; valid form delivery stays mocked
+and third-party measurement/chat requests are blocked in those tests.

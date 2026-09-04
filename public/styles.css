@@ -2649,7 +2649,7 @@ footer {
 /* Toggle button */
 .fab-toggle {
     background: linear-gradient(135deg, #ffc53d 0%, #b85d00 100%);
-    animation: fabPulse 2s ease-in-out infinite;
+    animation: none;
 }
 
 .fab-toggle:hover {
