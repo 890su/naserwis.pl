@@ -1,6 +1,21 @@
 # CRO v1 release — 2026-09-04
 
-## Latest revision: original circular contacts
+## Latest revision: left balloons and attention around the circles
+
+Owner clarification: `20260904-balloons3` keeps the original circles and adds a
+delayed left invitation, centered rocking/scaling and two expanding pulse rings.
+Each movement burst ends within 4.8 seconds, repeats after 24 seconds, and stops
+on interaction. Dismissal/opening the menu persists for the current tab session.
+Reduced motion keeps the invitation static. No online/SLA claim is introduced.
+
+Four localized channel balloons show on desktop hover/keyboard focus and all show
+on mobile/touch when the menu opens. No new card/strip and no changed lead/API,
+SEO or Ads contract. Updated regression suite covers 27 browser scenarios,
+including delayed invitation, repeat/dismissal, reduced motion, hoverable channel
+descriptions, touch behavior and 320px viewport bounds. Production is verified
+with the same smoke script and existing Cloudflare Pages Git deployment check.
+
+## Previous revision: original circular contacts
 
 At the owner's request, asset revision `20260904-round2` restores the original
 round button and vertical coloured round channel icons from `styles.css`.

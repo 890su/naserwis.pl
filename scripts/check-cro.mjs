@@ -44,11 +44,12 @@ if (record) {
     assert.equal((html.match(/href="\/contact-ui.css/g) || []).length, 1, file);
     if (!html.includes('class="fab-container"')) continue;
     landingCount++;
-    for (const value of ['id="contact-menu"', 'class="contact-fallback"', 'src="/contact-ui.js']) {
+    for (const value of ['id="contact-menu"', 'class="contact-fallback"', 'class="contact-invitation"', 'src="/contact-ui.js']) {
       assert.equal(html.split(value).length - 1, 1, `${file}: ${value}`);
     }
     assert.equal((html.match(/class="contact-(?:choice-label|toggle-label|bar|hint)"/g) || []).length, 0, file);
     assert.equal((html.match(/class="fab fab-(?:phone|whatsapp|telegram|chat)"/g) || []).length, 4, file);
+    assert.equal((html.match(/class="contact-tip"/g) || []).length, 4, file);
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
   }
   assert.equal(landingCount, 16);

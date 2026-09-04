@@ -4,7 +4,19 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Current revision — original circular contacts restored
+## Current revision — balloons beside the original circles
+
+Owner clarification, 2026-09-04 (`20260904-balloons3`): retain the round icons,
+add a left invitation after six seconds of availability, and add left channel
+descriptions on hover/focus (all visible immediately on mobile/coarse pointers).
+Invitation copy: "Have a question? Message us", localized PL/RU/UK/EN; no online
+presence claim. Rock/scale around the circle center with two stronger pulse rings
+in 4.8-second bursts, separated by 24 seconds. Stop motion on hover/focus and when
+reduced motion is enabled. Invitation X or opening the menu disables further
+invitation/attention for the tab session. Consent/modals/keyboard/chat/background
+tabs pause the invitation. No automatic channel opening or Ads changes.
+
+## Previous revision — original circular contacts restored
 
 Owner preference, 2026-09-04: restore the original round launcher and four
 separate round channel buttons. Remove the labelled pill, white contact card,

@@ -8,6 +8,14 @@
     const menu = container.querySelector('.fab-menu');
     const fallback = container.querySelector('.contact-fallback');
     const status = container.querySelector('.contact-status');
+    const invitation = container.querySelector('.contact-invitation');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const invitationKey = 'naserwis-contact-invitation-dismissed-v3';
+    let invitationDismissed = false;
+    try { invitationDismissed = sessionStorage.getItem(invitationKey) === '1'; } catch (_error) { /* In-memory fallback. */ }
+    let invitationTimer;
+    let repeatTimer;
+    let motionTimer;
     let opener = toggle;
     let chatPending = false;
     let chatOpen = false;
@@ -36,18 +44,25 @@
         toggle.setAttribute('aria-label', open ? toggle.dataset.closeLabel : toggleLabel);
         if (!open) fallback.hidden = true;
         if (open) {
+            dismissInvitation();
             track('naserwis_contact_open', { placement: 'floating' });
             menu.querySelector('a, button')?.focus({ preventScroll: true });
         } else if (restoreFocus && opener?.offsetParent !== null) opener?.focus({ preventScroll: true });
     }
 
     toggle.addEventListener('click', () => setOpen(!menuOpen, toggle));
+    invitation.querySelector('[data-contact-invite]').addEventListener('click', () => setOpen(true));
+    invitation.querySelector('[data-contact-dismiss]').addEventListener('click', () => {
+        dismissInvitation();
+        toggle.focus({ preventScroll: true });
+    });
     menu.inert = true;
     document.addEventListener('click', (event) => {
         if (!container.contains(event.target)) setOpen(false);
         if (event.target.closest('.fab-menu a, .contact-form-link')) setOpen(false);
     });
     document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !invitation.hidden) dismissInvitation();
         if (event.key === 'Escape' && menuOpen) {
             event.preventDefault();
             setOpen(false, opener, true);
@@ -66,16 +81,57 @@
     }
     function consentVisible() { return document.getElementById('consent-dialog')?.hidden === false; }
 
+    function stopMotion() {
+        clearTimeout(motionTimer);
+        toggle.classList.remove('contact-attention');
+    }
+    function pauseInvitation() {
+        clearTimeout(invitationTimer);
+        invitationTimer = undefined;
+        clearTimeout(repeatTimer);
+        stopMotion();
+        invitation.hidden = true;
+    }
+    function dismissInvitation() {
+        invitationDismissed = true;
+        try { sessionStorage.setItem(invitationKey, '1'); } catch (_error) { /* Session preference only. */ }
+        pauseInvitation();
+    }
+    function attentionBurst() {
+        if (invitation.hidden || invitationDismissed || document.hidden || menuOpen) return;
+        if (!reducedMotion.matches && !container.matches(':hover, :focus-within')) {
+            toggle.classList.add('contact-attention');
+            motionTimer = setTimeout(stopMotion, 4800);
+        }
+        // Short bursts separated by quiet time; the invitation's X stops them.
+        repeatTimer = setTimeout(attentionBurst, 24000);
+    }
+    function queueInvitation() {
+        if (invitationDismissed || invitationTimer || !invitation.hidden || menuOpen || document.hidden) return;
+        invitationTimer = setTimeout(() => {
+            invitationTimer = undefined;
+            if (container.dataset.suppressed === 'true' || menuOpen || document.hidden) return;
+            invitation.hidden = false;
+            attentionBurst();
+            observeImpressions();
+        }, 6000);
+    }
+    container.addEventListener('pointerenter', stopMotion);
+    container.addEventListener('focusin', stopMotion);
+    reducedMotion.addEventListener('change', stopMotion);
+    document.addEventListener('visibilitychange', scheduleUpdate);
+
     function update() {
         updateQueued = false;
         const focusedField = document.activeElement?.matches('input, textarea, select');
         const keyboard = focusedField || (window.visualViewport && window.visualViewport.height < innerHeight * 0.75);
         const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active');
-        const suppressed = consentVisible() || keyboard || Boolean(modal) || chatOpen;
+        const suppressed = consentVisible() || keyboard || Boolean(modal) || chatOpen || document.hidden;
         container.dataset.suppressed = String(suppressed);
         if (suppressed) {
             setOpen(false);
-        }
+            pauseInvitation();
+        } else queueInvitation();
         observeImpressions();
     }
     function scheduleUpdate() {
@@ -135,7 +191,7 @@
     // Exposure is counted only when analytics consent exists and the control is
     // actually visible (not underneath the consent UI). No retroactive events.
     const seen = new WeakSet();
-    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle')];
+    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle, [data-contact-invite]')];
     function placement(element) {
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('.contact-checkpoint')) return 'checkpoint';

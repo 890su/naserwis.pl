@@ -2,12 +2,19 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const version = '20260904-round2';
+const version = '20260904-balloons3';
 const copy = {
   pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie' },
   ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу' },
   uk: { write: 'Напишіть нам', call: 'Зателефонувати', close: 'Закрити', channels: 'Виберіть спосіб зв’язку', hint: 'Є питання? Опишіть проблему.', form: 'Форма заявки', chat: 'Чат на сайті', next: 'Опишіть проблему й місце розташування. Передзвонимо, щоб узгодити обсяг роботи та можливий час візиту.', help: 'Достатньо коротко описати симптоми й указати місто — деталі обговоримо під час дзвінка.', submit: 'Попросити зв’язатися', more: 'Є питання про обсяг роботи чи ціну?', request: 'Описати завдання' },
   en: { write: 'Message us', call: 'Call', close: 'Close', channels: 'Choose how to contact us', hint: 'Have a question? Describe the issue.', form: 'Contact form', chat: 'Website chat', next: 'Describe the issue and location. We will call to agree the scope and a possible visit time.', help: 'A short description of the symptoms and your town is enough — we can discuss the details by phone.', submit: 'Request a callback', more: 'A question about the scope or price?', request: 'Describe the job' }
+};
+
+const contactCopy = {
+  pl: { question: 'Masz pytanie?', dismiss: 'Ukryj podpowiedź i animację', phone: ['Zadzwoń', 'Porozmawiajmy o problemie'], whatsapp: ['Napisz na WhatsApp', 'Wyślij opis lub zdjęcie'], telegram: ['Bot na Telegramie', 'Opisz zadanie w bocie'], chat: ['Czat na stronie', 'Napisz bez opuszczania strony'] },
+  ru: { question: 'Есть вопрос?', dismiss: 'Скрыть подсказку и анимацию', phone: ['Позвонить', 'Обсудим задачу по телефону'], whatsapp: ['Написать в WhatsApp', 'Отправьте описание или фото'], telegram: ['Бот в Telegram', 'Опишите задачу в боте'], chat: ['Чат на сайте', 'Напишите прямо на странице'] },
+  uk: { question: 'Є питання?', dismiss: 'Приховати підказку й анімацію', phone: ['Зателефонувати', 'Обговоримо завдання телефоном'], whatsapp: ['Написати у WhatsApp', 'Надішліть опис або фото'], telegram: ['Бот у Telegram', 'Опишіть завдання в боті'], chat: ['Чат на сайті', 'Напишіть прямо на сторінці'] },
+  en: { question: 'Have a question?', dismiss: 'Hide invitation and animation', phone: ['Call us', 'Discuss the issue by phone'], whatsapp: ['Message on WhatsApp', 'Send a description or photo'], telegram: ['Telegram bot', 'Describe the job in our bot'], chat: ['Website chat', 'Message us on this page'] }
 };
 
 async function pages(root) {
@@ -46,6 +53,14 @@ for (const file of await pages('public')) {
       html = html.replace(/\n?<a class="contact-form-link"[^>]*>[\s\S]*?<\/a>/g, '')
         .replace(/\n?<p class="contact-status"[^>]*>[\s\S]*?<\/p>/g, '');
       html = html.replace(/(<div class="fab-container"[^>]*>)/, `$1<div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">${t.form} →</a></div>`);
+    }
+    const contact = contactCopy[language];
+    html = html.replace(/<div class="contact-invitation"[^>]*>[\s\S]*?<\/div>/g, '');
+    html = html.replace(/(<div class="fab-container"[^>]*>)/, `$1<div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>${contact.question}</strong><span>${t.write} →</span></button><button type="button" data-contact-dismiss aria-label="${contact.dismiss}" title="${contact.dismiss}">×</button></div>`);
+    html = html.replace(/<span class="contact-tip"[^>]*>[\s\S]*?<\/span><\/span>/g, '');
+    for (const channel of ['phone', 'whatsapp', 'telegram', 'chat']) {
+      html = html.replace(new RegExp(`(<(?:a|button)[^>]*class="fab fab-${channel}"[^>]*)(>)`), (_all, attrs) =>
+        `${attrs.replace(/ title="[^"]*"/, '').replace(/ aria-describedby="[^"]*"/, '')} aria-describedby="contact-tip-${channel}"><span class="contact-tip" id="contact-tip-${channel}" role="tooltip"><strong>${contact[channel][0]}</strong><span>${contact[channel][1]}</span></span>`);
     }
     // Keep the API contract and all existing form IDs/SEO content. Helpers are additive.
     html = html.replace(/(<form id="(hero-form|final-form)"[^>]*>)([\s\S]*?)(<\/form>)/g, (all, start, id, body, end) => {

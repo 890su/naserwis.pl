@@ -26,6 +26,12 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.fab-phone')).toHaveAttribute('href', 'tel:+48453327678');
       await expect(page.locator('.fab-menu > .fab')).toHaveCount(4);
       await expect(page.locator('.contact-choice-label, .contact-toggle-label, .contact-bar, .contact-hint')).toHaveCount(0);
+      for (const tip of await page.locator('.contact-tip').all()) {
+        await expect(tip).toBeVisible();
+        const box = await tip.boundingBox();
+        expect(box.x).toBeGreaterThanOrEqual(0);
+        expect(box.x + box.width).toBeLessThan(330);
+      }
       for (const button of await page.locator('.fab-container .fab').all()) {
         const shape = await button.evaluate(e => ({ width: getComputedStyle(e).width, height: getComputedStyle(e).height, radius: getComputedStyle(e).borderRadius }));
         expect(shape).toEqual({ width: '48px', height: '48px', radius: '50%' });
@@ -189,4 +195,78 @@ test('restored circular visuals and suppression at navigation and keyboard', asy
     expect(await button.evaluate(e => [getComputedStyle(e).width, getComputedStyle(e).height, getComputedStyle(e).borderRadius])).toEqual(['56px', '56px', '50%']);
   }
   await page.screenshot({ path: 'outputs/visual/desktop-contact.png', animations: 'disabled' });
+});
+
+test('delayed left invitation, bounded rocking/rings, dismissal persists', async ({ page }) => {
+  await isolate(page); await consent(page);
+  await page.clock.install({ time: new Date('2026-09-04T12:00:00Z') });
+  await page.clock.pauseAt(new Date('2026-09-04T12:00:01Z'));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/ru/naprawa-wifi/');
+  await page.clock.runFor(5900);
+  await expect(page.locator('.contact-invitation')).toBeHidden();
+  await page.clock.runFor(200);
+  await expect(page.locator('.contact-invitation')).toBeVisible();
+  await expect(page.locator('[data-contact-invite]')).toContainText('Есть вопрос?');
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
+  expect(await page.locator('.fab-toggle').evaluate(e => getComputedStyle(e, '::before').animationName)).toBe('contact-ring');
+  const bubble = await page.locator('.contact-invitation').boundingBox();
+  const circle = await page.locator('.fab-toggle').boundingBox();
+  expect(bubble.x).toBeGreaterThanOrEqual(0);
+  expect(bubble.x + bubble.width).toBeLessThan(circle.x);
+  // Inspect an actual enlarged/rotated frame, including pseudo-element rings.
+  await page.locator('.fab-toggle').evaluate(e => e.getAnimations({ subtree: true }).forEach(animation => {
+    animation.pause(); animation.currentTime = 500;
+  }));
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
+  await page.screenshot({ path: 'outputs/visual/mobile-motion.png' });
+  await page.screenshot({ path: 'outputs/visual/mobile-invitation.png', animations: 'disabled' });
+  await page.clock.runFor(5000);
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  await page.clock.runFor(19000);
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
+  await page.locator('[data-contact-dismiss]').click();
+  await expect(page.locator('.contact-invitation')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  await page.reload(); await page.clock.runFor(7000);
+  await expect(page.locator('.contact-invitation')).toBeHidden();
+});
+
+test('invitation waits for consent; reduced motion stays static; balloon opens menu', async ({ page }) => {
+  await isolate(page); await page.clock.install(); await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/en/naprawa-wifi/'); await page.clock.runFor(10000);
+  await expect(page.locator('.contact-invitation')).toBeHidden();
+  await page.locator('.consent-reject').click(); await page.clock.runFor(6100);
+  await expect(page.locator('.contact-invitation')).toBeVisible();
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  expect(await page.locator('.fab-toggle').evaluate(e => getComputedStyle(e, '::after').animationName)).toBe('none');
+  await page.locator('[data-contact-invite]').click();
+  await expect(page.locator('.fab-menu')).toBeVisible();
+  await expect(page.locator('.contact-invitation')).toBeHidden();
+  expect((await events(page, 'chatwoot_open')).length).toBe(0);
+});
+
+test('desktop channel balloons appear on hover/focus; touch shows every description', async ({ page }) => {
+  await isolate(page); await consent(page); await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('/ru/naprawa-wifi/'); await page.locator('.fab-toggle').click();
+  await page.locator('.fab-toggle').focus(); await page.mouse.move(100, 100);
+  for (const tip of await page.locator('.contact-tip').all()) await expect(tip).toBeHidden();
+  await page.locator('.fab-whatsapp').hover();
+  await expect(page.locator('#contact-tip-whatsapp')).toBeVisible();
+  await expect(page.locator('#contact-tip-chat')).toBeHidden();
+  await page.screenshot({ path: 'outputs/visual/desktop-whatsapp-balloon.png', animations: 'disabled' });
+  // The tooltip itself remains hoverable across the gap.
+  await page.locator('#contact-tip-whatsapp').hover();
+  await expect(page.locator('#contact-tip-whatsapp')).toBeVisible();
+  await page.mouse.move(100, 100); await page.locator('.fab-telegram').focus();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#contact-tip-chat')).toBeVisible();
+  for (const width of [320, 360, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    for (const tip of await page.locator('.contact-tip').all()) {
+      await expect(tip).toBeVisible();
+      expect((await tip.boundingBox()).x).toBeGreaterThanOrEqual(0);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+  }
 });
