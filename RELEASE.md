@@ -10,6 +10,13 @@ and pauses during hover, its open menu, modal UI, open chat and background tabs.
 The invitation timing/dismissal, contact links, forms, SEO and Ads contracts are
 unchanged.
 
+Implementation commit `d74af4fe004eb63dc64d15828ad9c81a0c814ce7` was pushed to
+`origin/main` and published by the existing Cloudflare Pages Git integration as
+deployment `93ef617e-2b68-41af-af54-91b4add19ade` (successful). Production smoke
+passed all 24 pages and exact assets; the four focused browser scenarios covering
+form focus, idle/scroll motion, reduced motion and consent also passed live. No
+production leads were submitted during QA.
+
 ## Previous revision: clearer consent row and stronger contact cue
 
 Asset revision `20260904-consent4` removes the two owner-rejected homepage hero
