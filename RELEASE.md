@@ -35,10 +35,26 @@ an operational follow-up, not silently changed in this CRO release.
 
 ## Publication record
 
-Pending commit/push and successful Cloudflare check; fill in exact deployment
-and production smoke results after release. The supplied account token verifies
-but currently returns 403 for Pages/Workers; Git integration is already linked
-and verified. No tokens were written into source or documentation.
+Implementation commit: `f2a3505a3d537c94bc328820bf7f56f750fb3b6a`, pushed to
+`origin/main`. Cloudflare Pages check completed successfully in the requested
+account/project: deployment `db1332af-e4f6-4d0e-bdd3-13bb4a5da43b`.
+
+Production verification on `https://naserwis.pl` passed:
+
+- all 24 page SEO/UI checks;
+- eight exact source asset comparisons (including UI JS/CSS and site config);
+- original robots source plus the verified additional Cloudflare Managed robots
+  prefix; no robots or zone policy changes were made;
+- API rejects GET with 405 and an empty JSON POST with 400, without delivery;
+- all 24 browser scenarios repeated against the production domain (44.1s),
+  with valid submission/provider/analytics requests isolated as described above.
+
+The documentation/QA follow-up changes no `public/` or `functions/` source; its
+Git-triggered deployment serves the same verified implementation.
+
+The supplied account token verifies but currently returns 403 for Pages/Workers.
+The existing Git integration successfully published the site instead. No tokens
+were written into source or documentation. Rotate the token shared in chat.
 
 ## Rollback and follow-up
 

@@ -36,9 +36,18 @@ for (let index = 0; index < files.length; index += 4) {
   }));
 }
 for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
-  assert.equal(normalized(await get('/' + asset)), normalized(await readFile('public/' + asset, 'utf8')), `Production asset mismatch: ${asset}`);
+  const live = normalized(await get('/' + asset));
+  const local = normalized(await readFile('public/' + asset, 'utf8'));
+  if (asset === 'robots.txt' && live !== local) {
+    // The existing zone prepends its Managed robots content to an exported
+    // source that already contains that same block. Do not mutate zone policy.
+    assert.ok(live.endsWith(local), 'Production robots source was altered');
+    const marker = local.indexOf('# robots.txt for NaSerwis.pl');
+    assert.ok(marker > 0, 'Missing known robots source boundary');
+    assert.equal(live.slice(0, -local.length).trim(), local.slice(0, marker).trim(), 'Unexpected Cloudflare robots prefix');
+  } else assert.equal(live, local, `Production asset mismatch: ${asset}`);
 }
 assert.equal((await fetch(origin + '/api/contact', { signal: AbortSignal.timeout(20000) })).status, 405);
 const invalid = await fetch(origin + '/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: '{}', signal: AbortSignal.timeout(20000) });
 assert.equal(invalid.status, 400); assert.equal((await invalid.json()).success, false);
-console.log('Production smoke passed: 24 page SEO/UI checks, 9 exact assets, API 405/400. No leads submitted.');
+console.log('Production smoke passed: 24 page SEO/UI checks, 8 exact assets + unchanged robots with verified managed prefix, API 405/400. No leads submitted.');

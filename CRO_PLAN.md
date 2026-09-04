@@ -17,7 +17,7 @@ Baseline: production commit `19c7187`; historical analytics are January–Februa
   characters for name/phone/message), persistent success, safe retry.
 - [x] Remove the unverified one-hour callback promise from API responses.
 - [x] Static/SEO regression, endpoint tests, four-locale browser and visual QA.
-- [ ] Commit/push, publish exact source to existing Cloudflare Pages project,
+- [x] Commit/push, publish exact source to existing Cloudflare Pages project,
   production smoke tests and rollback record.
 
 ## Design decision
@@ -66,3 +66,8 @@ Existing GitHub integration verified: baseline commit `19c7187` has a successful
 Cloudflare Pages check pointing to this account/project. Use that integration;
 direct token permission troubleshooting is not required to publish this release.
 Credentials are never committed or stored in project files.
+
+Published implementation: `f2a3505a3d537c94bc328820bf7f56f750fb3b6a`, successful
+Pages deployment `db1332af-e4f6-4d0e-bdd3-13bb4a5da43b`. All 24 browser scenarios
+also passed against production. See [RELEASE.md](RELEASE.md) for the smoke-test
+scope and operational follow-ups; no commercial uplift is asserted.
