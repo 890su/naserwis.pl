@@ -8,6 +8,12 @@ three visible actions and non-modal behavior remain; detailed settings still use
 the accessible modal. The contact launcher remains above the notice. This is a
 layout-only change with no consent, analytics, Ads, form, SEO or route changes.
 
+Implementation commit `7c9d0e301f0d5581ada33519ab4bd60d005560da` was pushed to
+`origin/main` and published by the existing Cloudflare Pages Git integration as
+deployment `b5aa8160-2248-410e-b2f9-9e52eb71fe48` (successful). Production
+smoke passed all 24 pages, exact assets and safe API rejection checks. No lead
+was submitted during verification.
+
 ## Previous revision: modal enquiry paths and mobile contact dock
 
 Asset revision `20260905-modal6` changes the launcher to one short animation
