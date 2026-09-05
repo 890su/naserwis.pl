@@ -160,7 +160,7 @@ const finalUrlSuffix = "utm_source=google&utm_medium=cpc&utm_campaign={campaigni
 const campaigns = [["Campaign", "Status", "Campaign type", "Networks", "Language", "Daily budget PLN", "Bid strategy", "Default max CPC PLN", "Geo zone", "Custom parameter {_lang}", "Custom parameter {_zone}", "Final URL suffix", "Launch", "Desired status after QA"]];
 const geos = [["Campaign", "Location", "Google criterion ID", "Target type", "Presence setting", "Initial bid adjustment", "Action required"]];
 const keywords = [["Campaign", "Ad group", "Keyword", "Match type", "Status", "Final URL", "Language", "Zone"]];
-const ads = [["Campaign", "Ad group", "Status", "Final URL", "Path 1", "Path 2", ...Array.from({length: 8}, (_, i) => `Headline ${i + 1}`), ...Array.from({length: 4}, (_, i) => `Description ${i + 1}`)]];
+const ads = [["Campaign", "Ad group", "Status", "Ad type", "Final URL", "Path 1", "Path 2", ...Array.from({length: 8}, (_, i) => `Headline ${i + 1}`), ...Array.from({length: 4}, (_, i) => `Description ${i + 1}`)]];
 
 for (const [langCode, lang] of Object.entries(languages)) {
   for (const zone of Object.values(zones)) {
@@ -178,7 +178,7 @@ for (const [langCode, lang] of Object.entries(languages)) {
       }
       const asset = lang.ads[adGroup];
       const [path1, path2] = ({"WIFI-REPAIR":["wifi","serwis"],"LAN-INSTALL":["lan","montaz"],"LAN-CCTV-REPAIR":["lan","naprawa"],"PC-LAPTOP-REPAIR":["komputer","serwis"],"IT-GENERAL":["it","warszawa"]})[adGroup];
-      ads.push([campaign, adGroup, "Paused", finalUrl, path1, path2, ...asset.headlines, ...asset.descriptions]);
+      ads.push([campaign, adGroup, "Paused", "Responsive search ad", finalUrl, path1, path2, ...asset.headlines, ...asset.descriptions]);
     }
   }
 }
@@ -217,8 +217,41 @@ await writeFile(path.join(out, "keywords.csv"), csv(keywords), "utf8");
 await writeFile(path.join(out, "responsive-search-ads.csv"), csv(ads), "utf8");
 await writeFile(path.join(out, "negative-keywords.csv"), csv(negatives), "utf8");
 
+// Import-ready additions for the owner's existing empty EN/UK core shells.
+// RU already has a live manually created campaign, so it is intentionally
+// excluded to prevent two campaigns competing for the same searches.
+const nonPlCoreCampaigns = new Set(["SRCH-EN-A-CORE", "SRCH-UK-A-CORE"]);
+// Google Ads rejects these English phrases under the third-party consumer
+// technical support policy. Keep the import clean instead of relying on
+// Google to drop the rejected rows during Apply.
+const excludedImportKeywords = new Set([
+  "laptop repair warsaw",
+  "computer repair warsaw",
+  "slow computer repair",
+]);
+const importKeywords = [["Campaign", "Ad group", "Keyword", "Match type", "Status", "Final URL"]];
+for (const row of keywords.slice(1).filter((candidate) => nonPlCoreCampaigns.has(candidate[0]))) {
+  if (row[0] === "SRCH-EN-A-CORE" && excludedImportKeywords.has(row[2])) continue;
+  importKeywords.push([row[0], row[1], row[2], row[3], "Enabled", row[5]]);
+}
+const importAds = [ads[0], ...ads.slice(1).filter((row) => nonPlCoreCampaigns.has(row[0])).map((row) => row.map((value, index) => index === 2 ? "Enabled" : value))];
+const importAdGroups = [["Campaign", "Ad group", "Status", "Max CPC"]];
+for (const campaign of nonPlCoreCampaigns) {
+  for (const adGroup of Object.keys(languages.EN.keywords)) importAdGroups.push([campaign, adGroup, "Enabled", "3.00"]);
+}
+const importNegativeLists = {
+  EN: negativeByLanguage.EN.map((keyword) => `"${keyword}"`),
+  UK: negativeByLanguage.UK.map((keyword) => `"${keyword}"`),
+};
+await writeFile(path.join(out, "non-pl-core-ad-groups.csv"), csv(importAdGroups), "utf8");
+await writeFile(path.join(out, "non-pl-core-keywords.csv"), csv(importKeywords), "utf8");
+await writeFile(path.join(out, "non-pl-core-responsive-search-ads.csv"), csv(importAds), "utf8");
+await writeFile(path.join(out, "non-pl-core-negative-list-en.txt"), `${importNegativeLists.EN.join("\r\n")}\r\n`, "utf8");
+await writeFile(path.join(out, "non-pl-core-negative-list-uk.txt"), `${importNegativeLists.UK.join("\r\n")}\r\n`, "utf8");
+
 const fundedDailyBudget = campaigns.slice(1).reduce((total, row) => total + (Number(row[5]) || 0), 0);
 const activeDailyBudget = campaigns.slice(1).filter((row) => row[13] === "Enabled").reduce((total, row) => total + (Number(row[5]) || 0), 0);
 if (fundedDailyBudget !== 60) throw new Error(`Configured core budgets must equal 60 PLN; got ${fundedDailyBudget}.`);
 if (activeDailyBudget !== 30) throw new Error(`Desired active daily budget must equal 30 PLN; got ${activeDailyBudget}.`);
 console.log(`Generated ${campaigns.length - 1} campaigns, ${keywords.length - 1} keyword rows, ${ads.length - 1} RSAs and ${geos.length - 1} geo targets. Configured core budgets: ${fundedDailyBudget} PLN/day; desired active budget: ${activeDailyBudget} PLN/day.`);
+console.log(`Prepared existing-shell import: ${importAdGroups.length - 1} EN/UK ad groups, ${importKeywords.length - 1} keywords, ${importAds.length - 1} RSAs and ${importNegativeLists.EN.length + importNegativeLists.UK.length} shared-list negatives; campaigns remain paused.`);

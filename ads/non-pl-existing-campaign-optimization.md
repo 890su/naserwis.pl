@@ -1,13 +1,12 @@
 # NaSerwis RU/UK/EN existing-campaign optimization
 
-Status: execution-ready plan for the manually created campaigns that the owner
-reports as approved by Google on 2026-09-05. Scope is NaSerwis.pl only; Polish
-and ITBIZ are excluded.
+Status: implemented for the paused EN/UK core campaign shells on 2026-09-05.
+Scope is NaSerwis.pl only; Polish and ITBIZ are excluded. The existing active
+Russian campaign was deliberately left unchanged to avoid duplicate traffic.
 
-The NaSerwis Ads account is not available in the currently signed-in browser
-session. Do not guess campaign names, overwrite entities from the repository
-drafts or create parallel campaigns. Reconcile this plan with a current Google
-Ads export before any account mutation.
+The live result, accepted row counts, policy exclusions and launch gates are in
+`live-account-change-log.md`. Do not create parallel campaigns or activate the
+new EN/UK campaigns without a separate budget decision.
 
 ## Fastest safe sequence
 

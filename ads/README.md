@@ -28,9 +28,20 @@ legal identity and budget approval are complete.
 - `responsive-search-ads.csv` — one paused RSA asset set per campaign/ad group;
   text is validated against the 30/90 character limits.
 - `negative-keywords.csv` — language-specific exclusions to review before use.
+- `non-pl-core-ad-groups.csv`, `non-pl-core-keywords.csv` and
+  `non-pl-core-responsive-search-ads.csv` — bulk-upload content used for the
+  existing `SRCH-EN-A-CORE` and `SRCH-UK-A-CORE` shells.
+- `non-pl-core-negative-list-en.txt` and
+  `non-pl-core-negative-list-uk.txt` — phrase-match lines for the shared
+  `NEG-EN-SERVICE` and `NEG-UK-SERVICE` lists. The Google Ads web importer did
+  not accept a campaign-negative CSV, so these are pasted into shared lists in
+  the UI and applied to one matching campaign each.
+- `live-account-change-log.md` — verified live-account changes and remaining
+  launch gates. RU is excluded from this import because the account already has
+  an active manually created Russian campaign.
 - `measurement.md` — conversion, consent and UTM implementation contract.
 
-Regenerate the CSVs with `npm run ads:build`.
+Regenerate the CSV and negative-list source files with `npm run ads:build`.
 
 ## Import notes
 
