@@ -1,0 +1,484 @@
+{
+  "campaign": "non_pl_quick_2026_09",
+  "links": [
+    {
+      "language": "ru",
+      "destination": "general",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/ru/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "destination": "general",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/ru/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "destination": "general",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/ru/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "destination": "general",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/ru/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "destination": "wifi",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "destination": "wifi",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "destination": "wifi",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "destination": "wifi",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "destination": "lan",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/ru/montaz-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_lan"
+    },
+    {
+      "language": "ru",
+      "destination": "lan",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/ru/montaz-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_lan"
+    },
+    {
+      "language": "ru",
+      "destination": "lan",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/ru/montaz-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_lan"
+    },
+    {
+      "language": "ru",
+      "destination": "lan",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/ru/montaz-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=ru_lan"
+    },
+    {
+      "language": "ru",
+      "destination": "network",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "destination": "network",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "destination": "network",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "destination": "network",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "uk",
+      "destination": "general",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/uk/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "destination": "general",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/uk/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "destination": "general",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/uk/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "destination": "general",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/uk/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "destination": "wifi",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "destination": "wifi",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "destination": "wifi",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "destination": "wifi",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "destination": "lan",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/uk/montaz-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_lan"
+    },
+    {
+      "language": "uk",
+      "destination": "lan",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/uk/montaz-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_lan"
+    },
+    {
+      "language": "uk",
+      "destination": "lan",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/uk/montaz-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_lan"
+    },
+    {
+      "language": "uk",
+      "destination": "lan",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/uk/montaz-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=uk_lan"
+    },
+    {
+      "language": "uk",
+      "destination": "network",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "destination": "network",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "destination": "network",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "destination": "network",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "en",
+      "destination": "general",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/en/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "destination": "general",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/en/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "destination": "general",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/en/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "destination": "general",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/en/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "destination": "wifi",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "destination": "wifi",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "destination": "wifi",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "destination": "wifi",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "destination": "lan",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/en/montaz-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_lan"
+    },
+    {
+      "language": "en",
+      "destination": "lan",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/en/montaz-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_lan"
+    },
+    {
+      "language": "en",
+      "destination": "lan",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/en/montaz-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_lan"
+    },
+    {
+      "language": "en",
+      "destination": "lan",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/en/montaz-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=en_lan"
+    },
+    {
+      "language": "en",
+      "destination": "network",
+      "channel": "google_business_profile",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "destination": "network",
+      "channel": "facebook",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "destination": "network",
+      "channel": "telegram",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "destination": "network",
+      "channel": "local_partner",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=local_partner&utm_medium=referral&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    }
+  ],
+  "posts": [
+    {
+      "language": "ru",
+      "topic": "wifi",
+      "channel": "google_business_profile",
+      "copy": "Пропадает Wi-Fi или не хватает покрытия в квартире или небольшом офисе? Диагностируем сеть, настраиваем роутеры и Mesh в Варшаве. Опишите проблему — согласуем следующий шаг.",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "topic": "wifi",
+      "channel": "facebook",
+      "copy": "Пропадает Wi-Fi или не хватает покрытия в квартире или небольшом офисе? Диагностируем сеть, настраиваем роутеры и Mesh в Варшаве. Опишите проблему — согласуем следующий шаг.",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "topic": "wifi",
+      "channel": "telegram",
+      "copy": "Пропадает Wi-Fi или не хватает покрытия в квартире или небольшом офисе? Диагностируем сеть, настраиваем роутеры и Mesh в Варшаве. Опишите проблему — согласуем следующий шаг.",
+      "url": "https://naserwis.pl/ru/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_wifi"
+    },
+    {
+      "language": "ru",
+      "topic": "network",
+      "channel": "google_business_profile",
+      "copy": "Нужно установить или отремонтировать LAN, розетку RJ45 или кабельную сеть в Варшаве? Пришлите краткое описание задачи — объём и условия согласуем до работ.",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "topic": "network",
+      "channel": "facebook",
+      "copy": "Нужно установить или отремонтировать LAN, розетку RJ45 или кабельную сеть в Варшаве? Пришлите краткое описание задачи — объём и условия согласуем до работ.",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "topic": "network",
+      "channel": "telegram",
+      "copy": "Нужно установить или отремонтировать LAN, розетку RJ45 или кабельную сеть в Варшаве? Пришлите краткое описание задачи — объём и условия согласуем до работ.",
+      "url": "https://naserwis.pl/ru/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_network"
+    },
+    {
+      "language": "ru",
+      "topic": "general",
+      "channel": "google_business_profile",
+      "copy": "Нужна IT-помощь с выездом в Варшаве? Помогаем с сетями, Wi-Fi, компьютерами и настройкой оборудования дома и в небольших офисах. Консультация на русском языке.",
+      "url": "https://naserwis.pl/ru/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "topic": "general",
+      "channel": "facebook",
+      "copy": "Нужна IT-помощь с выездом в Варшаве? Помогаем с сетями, Wi-Fi, компьютерами и настройкой оборудования дома и в небольших офисах. Консультация на русском языке.",
+      "url": "https://naserwis.pl/ru/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "ru",
+      "topic": "general",
+      "channel": "telegram",
+      "copy": "Нужна IT-помощь с выездом в Варшаве? Помогаем с сетями, Wi-Fi, компьютерами и настройкой оборудования дома и в небольших офисах. Консультация на русском языке.",
+      "url": "https://naserwis.pl/ru/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=ru_general"
+    },
+    {
+      "language": "uk",
+      "topic": "wifi",
+      "channel": "google_business_profile",
+      "copy": "Зникає Wi-Fi або не вистачає покриття у квартирі чи невеликому офісі? Діагностуємо мережу, налаштовуємо роутери та Mesh у Варшаві. Опишіть проблему — погодимо наступний крок.",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "topic": "wifi",
+      "channel": "facebook",
+      "copy": "Зникає Wi-Fi або не вистачає покриття у квартирі чи невеликому офісі? Діагностуємо мережу, налаштовуємо роутери та Mesh у Варшаві. Опишіть проблему — погодимо наступний крок.",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "topic": "wifi",
+      "channel": "telegram",
+      "copy": "Зникає Wi-Fi або не вистачає покриття у квартирі чи невеликому офісі? Діагностуємо мережу, налаштовуємо роутери та Mesh у Варшаві. Опишіть проблему — погодимо наступний крок.",
+      "url": "https://naserwis.pl/uk/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_wifi"
+    },
+    {
+      "language": "uk",
+      "topic": "network",
+      "channel": "google_business_profile",
+      "copy": "Потрібно встановити або відремонтувати LAN, розетку RJ45 чи кабельну мережу у Варшаві? Надішліть короткий опис — обсяг і умови погодимо до робіт.",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "topic": "network",
+      "channel": "facebook",
+      "copy": "Потрібно встановити або відремонтувати LAN, розетку RJ45 чи кабельну мережу у Варшаві? Надішліть короткий опис — обсяг і умови погодимо до робіт.",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "topic": "network",
+      "channel": "telegram",
+      "copy": "Потрібно встановити або відремонтувати LAN, розетку RJ45 чи кабельну мережу у Варшаві? Надішліть короткий опис — обсяг і умови погодимо до робіт.",
+      "url": "https://naserwis.pl/uk/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_network"
+    },
+    {
+      "language": "uk",
+      "topic": "general",
+      "channel": "google_business_profile",
+      "copy": "Потрібна IT-допомога з виїздом у Варшаві? Допомагаємо з мережами, Wi-Fi, комп’ютерами та налаштуванням обладнання вдома й у невеликих офісах. Консультація українською.",
+      "url": "https://naserwis.pl/uk/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "topic": "general",
+      "channel": "facebook",
+      "copy": "Потрібна IT-допомога з виїздом у Варшаві? Допомагаємо з мережами, Wi-Fi, комп’ютерами та налаштуванням обладнання вдома й у невеликих офісах. Консультація українською.",
+      "url": "https://naserwis.pl/uk/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "uk",
+      "topic": "general",
+      "channel": "telegram",
+      "copy": "Потрібна IT-допомога з виїздом у Варшаві? Допомагаємо з мережами, Wi-Fi, комп’ютерами та налаштуванням обладнання вдома й у невеликих офісах. Консультація українською.",
+      "url": "https://naserwis.pl/uk/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=uk_general"
+    },
+    {
+      "language": "en",
+      "topic": "wifi",
+      "channel": "google_business_profile",
+      "copy": "Unstable Wi-Fi or poor coverage at home or in a small office? We diagnose networks and configure routers and Mesh systems in Warsaw. Describe the issue and we will agree the next step.",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "topic": "wifi",
+      "channel": "facebook",
+      "copy": "Unstable Wi-Fi or poor coverage at home or in a small office? We diagnose networks and configure routers and Mesh systems in Warsaw. Describe the issue and we will agree the next step.",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "topic": "wifi",
+      "channel": "telegram",
+      "copy": "Unstable Wi-Fi or poor coverage at home or in a small office? We diagnose networks and configure routers and Mesh systems in Warsaw. Describe the issue and we will agree the next step.",
+      "url": "https://naserwis.pl/en/naprawa-wifi/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_wifi"
+    },
+    {
+      "language": "en",
+      "topic": "network",
+      "channel": "google_business_profile",
+      "copy": "Need LAN, RJ45 or network cabling installed or repaired in Warsaw? Send a short description of the job. We agree the scope and terms before work starts.",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "topic": "network",
+      "channel": "facebook",
+      "copy": "Need LAN, RJ45 or network cabling installed or repaired in Warsaw? Send a short description of the job. We agree the scope and terms before work starts.",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "topic": "network",
+      "channel": "telegram",
+      "copy": "Need LAN, RJ45 or network cabling installed or repaired in Warsaw? Send a short description of the job. We agree the scope and terms before work starts.",
+      "url": "https://naserwis.pl/en/naprawa-sieci/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_network"
+    },
+    {
+      "language": "en",
+      "topic": "general",
+      "channel": "google_business_profile",
+      "copy": "Need on-site IT help in Warsaw? We support networks, Wi-Fi, computers and equipment setup for homes and small offices, with service available in English.",
+      "url": "https://naserwis.pl/en/?utm_source=google_business_profile&utm_medium=organic&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "topic": "general",
+      "channel": "facebook",
+      "copy": "Need on-site IT help in Warsaw? We support networks, Wi-Fi, computers and equipment setup for homes and small offices, with service available in English.",
+      "url": "https://naserwis.pl/en/?utm_source=facebook&utm_medium=social&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    },
+    {
+      "language": "en",
+      "topic": "general",
+      "channel": "telegram",
+      "copy": "Need on-site IT help in Warsaw? We support networks, Wi-Fi, computers and equipment setup for homes and small offices, with service available in English.",
+      "url": "https://naserwis.pl/en/?utm_source=telegram&utm_medium=community&utm_campaign=non_pl_quick_2026_09&utm_content=en_general"
+    }
+  ]
+}

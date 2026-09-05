@@ -1,12 +1,15 @@
 # Google Ads build pack
 
-> **Policy blocker (2026-08-23): do not import or enable the keyword and ad
-> drafts in this directory.** Google Ads prohibits third-party online and
-> offline technical support for consumer technology, including connectivity,
-> installations, maintenance, software installation and hardware repair. Only
-> the four paused campaign shells and their ad groups were created in Google
-> Ads. A future paid-search build must use a genuinely B2B-only offer and
-> destinations before new keywords or ads are submitted for review.
+> **Current operating constraint (updated 2026-09-05):** the owner reports that
+> manually created NaSerwis campaigns passed Google review. Do not import these
+> repository drafts over that live structure or create duplicate campaigns.
+> Approval of existing entities does not guarantee approval after edits; review
+> statuses again after every material ad, keyword or destination change.
+
+For the owner-approved NaSerwis-only RU/UK/EN acquisition work, use
+`non-pl-existing-campaign-optimization.md` for the existing approved campaigns
+and the complementary owned/community/referral pack in `../marketing/`. Both
+exclude Polish and ITBIZ and do not change these paused Search drafts.
 
 All campaigns and entities in this folder are deliberately **paused**. Do not
 import or enable them until advertiser verification, consent/conversion QA,

@@ -92,3 +92,10 @@ never with destructive reset/force-push. No DNS changes are needed.
 API requests without submitting leads. For browser regression against production,
 set `PLAYWRIGHT_BASE_URL=https://naserwis.pl`; valid form delivery stays mocked
 and third-party measurement/chat requests are blocked in those tests.
+
+The NaSerwis-only RU/UK/EN quick-acquisition pack lives in `marketing/` and is
+regenerated with `npm run outreach:build`. It contains localized tracked links
+and ready-to-publish copy for owned profiles, permitted communities and referral
+partners. Polish and ITBIZ are excluded. The owner-reported approved Google Ads
+campaigns must be optimized in place using `ads/non-pl-existing-campaign-optimization.md`;
+the paused repository drafts must not be imported as duplicates.

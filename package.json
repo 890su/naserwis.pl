@@ -6,6 +6,7 @@
   "description": "Static NaSerwis.pl website for Cloudflare Pages",
   "scripts": {
     "ads:build": "node scripts/build-google-ads.mjs",
+    "outreach:build": "node scripts/build-non-pl-outreach.mjs",
     "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-cro.mjs",
     "export:live": "node scripts/export-live-site.mjs",
     "cro:generate": "node scripts/apply-cro.mjs",
