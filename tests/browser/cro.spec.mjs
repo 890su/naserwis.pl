@@ -73,7 +73,7 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
   }
 }
 
-test('consent is a grey split row below the usable contact button; settings stay modal', async ({ page }) => {
+test('consent is a centred grey split card below the usable contact button; settings stay modal', async ({ page }) => {
   await isolate(page); await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
   const panel = page.locator('.consent-panel');
@@ -94,8 +94,10 @@ test('consent is a grey split row below the usable contact button; settings stay
       const style = getComputedStyle(button);
       return { x: box.x, y: box.y, bottom: box.bottom, background: style.backgroundColor, border: style.borderTopWidth };
     });
-    return { panel: { x: panel.x, y: panel.y, width: panel.width }, heading: { x: heading.x }, actions: { x: actions.x }, buttons };
+    return { panel: { x: panel.x, y: panel.y, width: panel.width, right: panel.right }, viewport: innerWidth, heading: { x: heading.x }, actions: { x: actions.x }, buttons };
   });
+  expect(Math.abs(layout.panel.x - (layout.viewport - layout.panel.width) / 2)).toBeLessThan(2);
+  expect(layout.panel.width).toBeLessThan(layout.viewport);
   expect(layout.heading.x).toBeLessThan(layout.panel.x + layout.panel.width / 2);
   expect(layout.actions.x).toBeGreaterThanOrEqual(layout.panel.x + layout.panel.width * .45);
   expect(Math.max(...layout.buttons.map(button => button.y)) - Math.min(...layout.buttons.map(button => button.y))).toBeLessThan(2);

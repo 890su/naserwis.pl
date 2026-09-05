@@ -2,7 +2,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const version = '20260905-modal6';
+const version = '20260905-consent7';
 const copy = {
   pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie', modalTitle: 'Wyślij zapytanie', modalIntro: 'Krótko opisz problem. Oddzwonimy, aby ustalić szczegóły i możliwy termin.', name: 'Imię', phone: 'Telefon', message: 'Co możemy naprawić?', mobileRequest: 'Wyślij zapytanie' },
   ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу', modalTitle: 'Отправить запрос', modalIntro: 'Кратко опишите проблему. Перезвоним, чтобы уточнить детали и возможное время визита.', name: 'Имя', phone: 'Телефон', message: 'Что нужно исправить?', mobileRequest: 'Отправить запрос' },

@@ -8,7 +8,7 @@
     pointer-events: none;
 }
 #consent-dialog:not(.consent-overlay-settings) .consent-panel {
-    width: min(1180px, 100%);
+    width: min(920px, 100%);
     padding: 14px 16px;
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

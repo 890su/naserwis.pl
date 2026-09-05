@@ -1,6 +1,14 @@
 # CRO v1 release — 2026-09-05
 
-## Latest revision: modal enquiry paths and mobile contact dock
+## Latest revision: compact bottom-centred consent card
+
+Asset revision `20260905-consent7` constrains the initial grey consent notice to
+a compact card at the bottom centre on desktop and mobile. Its two-part row,
+three visible actions and non-modal behavior remain; detailed settings still use
+the accessible modal. The contact launcher remains above the notice. This is a
+layout-only change with no consent, analytics, Ads, form, SEO or route changes.
+
+## Previous revision: modal enquiry paths and mobile contact dock
 
 Asset revision `20260905-modal6` changes the launcher to one short animation
 every three seconds after 2.5 idle seconds and restores that behavior after its

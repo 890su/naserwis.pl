@@ -4,7 +4,16 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Current revision — modal enquiry paths and mobile contact dock
+## Current revision — compact centred consent card
+
+Owner update, 2026-09-05 (`20260905-consent7`): keep the initial consent notice
+at the bottom centre on desktop and mobile, but constrain it to a compact card
+instead of a full-width bar. Preserve the grey contrast, 50/50 copy/action row,
+three explicit buttons, non-modal page access, detailed settings modal and the
+contact launcher's clear position above the notice. No consent, measurement, SEO
+or form semantics change.
+
+## Previous revision — modal enquiry paths and mobile contact dock
 
 Owner update, 2026-09-05 (`20260905-modal6`): change the attention cycle to one
 short rock/pulse every three seconds after the existing 2.5-second idle delay.

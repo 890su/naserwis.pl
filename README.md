@@ -60,8 +60,12 @@ npm run test:e2e
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
 The owner's preferred original round launcher/channel buttons are retained.
-Revision `20260905-modal6` runs one short rock/pulse every three seconds after
-2.5 idle seconds and resumes after the contact menu closes. A fifth enquiry
+Revision `20260905-consent7` keeps the initial grey consent notice as a compact
+bottom-centred card instead of a viewport-wide bar. Its two-part copy/action row
+and three explicit buttons remain; detailed privacy settings still open as a
+modal. The contact launcher remains above the notice and runs one short
+rock/pulse every three seconds after 2.5 idle seconds. It resumes after the
+contact menu closes. A fifth enquiry
 choice, every existing `#contact` CTA and the two-action mobile dock open the same
 short modal form; the original page forms remain. Successful modal submissions
 reuse the existing primary lead conversion, while channel conversions stay
