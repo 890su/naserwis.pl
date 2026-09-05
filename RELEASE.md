@@ -16,6 +16,13 @@ primary lead conversion; phone and other contact methods retain their existing
 secondary conversions. Static/unit checks and 28 browser scenarios cover all
 four locales, CTA interception, modal focus, mobile layout and event uniqueness.
 
+Implementation commit `111e3ca058bfc815adef3a3cd1492063fb5a96c7` was pushed to
+`origin/main` and published by the existing Cloudflare Pages Git integration as
+deployment `71453307-c746-491a-a9c2-1ab05e73535f` (successful). Production
+verification passed: 24-page SEO/UI and exact-asset smoke checks plus all 28
+browser scenarios against `https://naserwis.pl`. Browser form requests were
+intercepted, so no production lead was submitted during QA.
+
 ## Previous revision: idle contact motion and form visibility
 
 Asset revision `20260904-idle5` keeps the circular launcher visible while a user
