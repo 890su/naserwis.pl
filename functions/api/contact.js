@@ -3,7 +3,7 @@ const MAX_PHONE_LENGTH = 60;
 const MAX_MESSAGE_LENGTH = 4_000;
 const MAX_ATTRIBUTION_LENGTH = 300;
 const ALLOWED_LANGUAGES = new Set(["pl", "ru", "uk", "en"]);
-const ALLOWED_FORM_TYPES = new Set(["hero-form", "final-form", "review"]);
+const ALLOWED_FORM_TYPES = new Set(["hero-form", "final-form", "quick-form", "review"]);
 
 const messages = {
   pl: { success: "Dziękujemy! Otrzymaliśmy zapytanie. Oddzwonimy, aby uzgodnić szczegóły i możliwy termin.", invalid: "Proszę poprawnie wypełnić formularz.", spam: "Nie udało się zweryfikować formularza. Spróbuj ponownie." },

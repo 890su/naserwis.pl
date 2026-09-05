@@ -60,11 +60,12 @@ npm run test:e2e
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
 The owner's preferred original round launcher/channel buttons are retained.
-Revision `20260904-idle5` keeps the launcher visible during form input. It stops
-moving during scroll and resumes a continuous one-second rock/pulse cycle after
-2.5 idle seconds; reduced motion remains static. The localized invitation and
-channel descriptions remain, as does the grey 50/50 cookie row. The two rejected
-homepage hero buttons stay removed without changing service-page conversion links.
+Revision `20260905-modal6` runs one short rock/pulse every three seconds after
+2.5 idle seconds and resumes after the contact menu closes. A fifth enquiry
+choice, every existing `#contact` CTA and the two-action mobile dock open the same
+short modal form; the original page forms remain. Successful modal submissions
+reuse the existing primary lead conversion, while channel conversions stay
+secondary. Reduced motion remains static and SEO routes/content are unchanged.
 `compliance:generate` regenerates legal pages and reapplies CRO markup.
 Run generators only for intentional source updates, inspect their diff and rerun
 checks. The immutable pre-CRO SEO/Ads fixture works in shallow CI checkouts.

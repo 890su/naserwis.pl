@@ -9,6 +9,8 @@
     const fallback = container.querySelector('.contact-fallback');
     const status = container.querySelector('.contact-status');
     const invitation = container.querySelector('.contact-invitation');
+    const quickModal = document.getElementById('quick-contact-modal');
+    const mobileDock = document.querySelector('.mobile-contact-dock');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
     const invitationKey = 'naserwis-contact-invitation-dismissed-v3';
     let invitationDismissed = false;
@@ -21,6 +23,9 @@
     let chatTimer;
     let updateQueued = false;
     let menuOpen = false;
+    let quickModalOpener = null;
+    let previousBodyOverflow = '';
+    const quickModalBackground = new Map();
 
     const language = (document.documentElement.lang || 'pl').split('-')[0];
     const chatErrors = {
@@ -35,6 +40,7 @@
     }
 
     function setOpen(open, source = toggle, restoreFocus = false) {
+        const wasOpen = menuOpen;
         menuOpen = open;
         if (open) opener = source;
         container.classList.toggle('open', open);
@@ -43,10 +49,14 @@
         toggle.setAttribute('aria-label', open ? toggle.dataset.closeLabel : toggleLabel);
         if (!open) fallback.hidden = true;
         if (open) {
+            pauseMotion();
             dismissInvitation();
             track('naserwis_contact_open', { placement: 'floating' });
             menu.querySelector('a, button')?.focus({ preventScroll: true });
-        } else if (restoreFocus && opener?.offsetParent !== null) opener?.focus({ preventScroll: true });
+        } else {
+            if (restoreFocus && opener?.offsetParent !== null) opener?.focus({ preventScroll: true });
+            if (wasOpen) queueIdleMotion();
+        }
     }
 
     toggle.addEventListener('click', () => setOpen(!menuOpen, toggle));
@@ -87,13 +97,18 @@
     function stopMotion() {
         toggle.classList.remove('contact-attention');
     }
+    function pauseMotion() {
+        clearTimeout(idleMotionTimer);
+        idleMotionTimer = undefined;
+        stopMotion();
+    }
     function queueIdleMotion() {
         clearTimeout(idleMotionTimer);
         stopMotion();
-        if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden || container.matches(':hover, :focus-within')) return;
+        if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden) return;
         idleMotionTimer = setTimeout(() => {
             idleMotionTimer = undefined;
-            if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden || container.matches(':hover, :focus-within')) return;
+            if (reducedMotion.matches || menuOpen || container.dataset.suppressed === 'true' || document.hidden) return;
             toggle.classList.add('contact-attention');
         }, 2500);
     }
@@ -116,27 +131,28 @@
             observeImpressions();
         }, 6000);
     }
-    container.addEventListener('pointerenter', stopMotion);
+    container.addEventListener('pointerenter', pauseMotion);
     container.addEventListener('pointerleave', scheduleUpdate);
-    container.addEventListener('focusin', stopMotion);
+    container.addEventListener('focusin', pauseMotion);
     container.addEventListener('focusout', scheduleUpdate);
     reducedMotion.addEventListener('change', scheduleUpdate);
     document.addEventListener('visibilitychange', scheduleUpdate);
 
     function update() {
         updateQueued = false;
-        const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active');
+        const modal = document.querySelector('.mobile-menu-overlay.active, #review-modal.active, #quick-contact-modal:not([hidden])');
         const initialConsent = consentVisible() && !consentSettingsVisible();
         const panelHeight = initialConsent ? document.querySelector('.consent-panel')?.getBoundingClientRect().height || 0 : 0;
+        const dockHeight = !initialConsent && mobileDock && getComputedStyle(mobileDock).display !== 'none' ? mobileDock.getBoundingClientRect().height : 0;
         if (initialConsent && panelHeight) container.style.bottom = `${Math.ceil(panelHeight + 24)}px`;
+        else if (dockHeight) container.style.bottom = `${Math.ceil(dockHeight + 16)}px`;
         else container.style.removeProperty('bottom');
         const suppressed = consentSettingsVisible() || Boolean(modal) || chatOpen || document.hidden;
         container.dataset.suppressed = String(suppressed);
         if (suppressed) {
             setOpen(false);
             pauseInvitation();
-            clearTimeout(idleMotionTimer);
-            stopMotion();
+            pauseMotion();
         } else {
             if (initialConsent) pauseInvitation();
             else queueInvitation();
@@ -148,8 +164,7 @@
         if (!updateQueued) { updateQueued = true; requestAnimationFrame(update); }
     }
     addEventListener('scroll', () => {
-        clearTimeout(idleMotionTimer);
-        stopMotion();
+        pauseMotion();
         scheduleUpdate();
     }, { passive: true });
     addEventListener('resize', scheduleUpdate);
@@ -169,7 +184,68 @@
     window.addEventListener('naserwis:consent-ui', observeConsentPanel);
     document.addEventListener('DOMContentLoaded', observeConsentPanel);
     const modalObserver = new MutationObserver(scheduleUpdate);
-    document.querySelectorAll('.mobile-menu-overlay, #review-modal').forEach(element => modalObserver.observe(element, { attributes: true, attributeFilter: ['class', 'hidden'] }));
+    document.querySelectorAll('.mobile-menu-overlay, #review-modal, #quick-contact-modal').forEach(element => modalObserver.observe(element, { attributes: true, attributeFilter: ['class', 'hidden'] }));
+
+    function setQuickModalBackground(inert) {
+        if (inert) {
+            [...document.body.children].forEach(element => {
+                if (element === quickModal || element.tagName === 'SCRIPT') return;
+                quickModalBackground.set(element, element.inert);
+                element.inert = true;
+            });
+        } else {
+            quickModalBackground.forEach((value, element) => { element.inert = value; });
+            quickModalBackground.clear();
+        }
+    }
+    function closeQuickModal() {
+        if (!quickModal || quickModal.hidden) return;
+        quickModal.hidden = true;
+        document.body.classList.remove('quick-contact-open');
+        document.body.style.overflow = previousBodyOverflow;
+        setQuickModalBackground(false);
+        const restore = quickModalOpener;
+        quickModalOpener = null;
+        if (restore?.offsetParent !== null) restore.focus({ preventScroll: true });
+        scheduleUpdate();
+    }
+    function openQuickModal(source) {
+        if (!quickModal) return false;
+        setOpen(false);
+        quickModalOpener = source?.closest('.fab-menu') ? toggle : source || document.activeElement;
+        previousBodyOverflow = document.body.style.overflow;
+        quickModal.hidden = false;
+        document.body.classList.add('quick-contact-open');
+        document.body.style.overflow = 'hidden';
+        setQuickModalBackground(true);
+        requestAnimationFrame(() => quickModal.querySelector('.quick-contact-close')?.focus({ preventScroll: true }));
+        scheduleUpdate();
+        return true;
+    }
+    quickModal?.addEventListener('click', event => {
+        if (event.target.closest('[data-quick-contact-close]')) closeQuickModal();
+    });
+    document.addEventListener('keydown', event => {
+        if (!quickModal || quickModal.hidden) return;
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            closeQuickModal();
+            return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = [...quickModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled])')]
+            .filter(element => element.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
 
     function failChat() {
         if (!chatPending) return;
@@ -215,8 +291,9 @@
     // Exposure is counted only when analytics consent exists and the control is
     // actually visible (not underneath the consent UI). No retroactive events.
     const seen = new WeakSet();
-    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle, [data-contact-invite]')];
+    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle, [data-contact-invite], [data-contact-modal]')];
     function placement(element) {
+        if (element.closest('.mobile-contact-dock')) return 'sticky';
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('.contact-checkpoint')) return 'checkpoint';
         return 'content';
@@ -228,12 +305,16 @@
             if (element.closest('.fab-container') && container.dataset.suppressed === 'true') return;
             if (element.closest('.fab-menu') && !menuOpen) return;
             seen.add(element);
-            track('naserwis_cta_view', { placement: placement(element), action: element.matches('.fab-toggle, button') ? 'contact_menu' : element.getAttribute('href')?.startsWith('tel:') ? 'phone' : 'form' });
+            const action = element.matches('a[href="#contact"], [data-contact-modal]') ? 'form' : element.matches('.fab-toggle, button') ? 'contact_menu' : element.getAttribute('href')?.startsWith('tel:') ? 'phone' : 'form';
+            track('naserwis_cta_view', { placement: placement(element), action });
         });
     }
     document.addEventListener('click', (event) => {
-        const target = event.target.closest('a[href="#contact"]');
-        if (target) track('naserwis_cta_click', { placement: placement(target), action: 'form' });
+        const target = event.target.closest('a[href="#contact"], [data-contact-modal]');
+        if (!target) return;
+        event.preventDefault();
+        track('naserwis_cta_click', { placement: placement(target), action: 'form' });
+        openQuickModal(target);
     });
     scheduleUpdate();
 })();

@@ -25,10 +25,17 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
       await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-label', /Napisz|Напишите|Напишіть|Message/);
+      await expect(page.locator('.mobile-contact-dock')).toBeVisible();
+      await expect(page.locator('.mobile-contact-dock > *')).toHaveCount(2);
+      await expect.poll(async () => {
+        const circle = await page.locator('.fab-toggle').boundingBox();
+        const dock = await page.locator('.mobile-contact-dock').boundingBox();
+        return circle.y + circle.height < dock.y - 7;
+      }).toBe(true);
       await page.locator('.fab-toggle').click();
       await expect(page.locator('.fab-menu')).toBeVisible();
       await expect(page.locator('.fab-phone')).toHaveAttribute('href', 'tel:+48453327678');
-      await expect(page.locator('.fab-menu > .fab')).toHaveCount(4);
+      await expect(page.locator('.fab-menu > .fab')).toHaveCount(5);
       await expect(page.locator('.contact-choice-label, .contact-toggle-label, .contact-bar, .contact-hint')).toHaveCount(0);
       for (const tip of await page.locator('.contact-tip').all()) {
         await expect(tip).toBeVisible();
@@ -52,6 +59,15 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.fab-toggle')).toBeFocused();
       await page.locator('#final-form').scrollIntoViewIfNeeded();
       await expect(page.locator('.fab-toggle')).toBeVisible();
+      await expect(page.locator('#final-form')).toHaveCount(1);
+      const scrollBeforeModal = await page.evaluate(() => scrollY);
+      await page.locator('a[href="#contact"]').first().evaluate(element => element.click());
+      await expect(page.locator('#quick-contact-modal')).toBeVisible();
+      await expect(page.locator('.quick-contact-dialog')).toHaveAttribute('aria-modal', 'true');
+      await page.waitForTimeout(150);
+      expect(await page.evaluate(() => scrollY)).toBe(scrollBeforeModal);
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#quick-contact-modal')).toBeHidden();
       expect(errors).toEqual([]);
     });
   }
@@ -143,6 +159,46 @@ test('form validates locally, preserves errors, counts one success and no PII', 
   await expect(page.locator('#final-form-message')).toContainText('Test accepted');
 });
 
+test('mobile dock and modal form preserve secondary phone and primary lead conversions', async ({ page }) => {
+  await isolate(page); await consent(page, { analytics: true, marketing: true });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/naprawa-wifi/?utm_source=google&gclid=modal-test');
+  await page.evaluate(() => document.addEventListener('click', event => {
+    if (event.target.closest('a[href^="tel:"]')) event.preventDefault();
+  }));
+  await page.locator('.mobile-contact-call').click();
+  expect((await events(page, 'phone_click')).length).toBe(1);
+  let conversions = await page.evaluate(() => window.dataLayer.filter(x => x[0] === 'event' && x[1] === 'conversion').map(x => x[2].send_to));
+  expect(conversions).toEqual(['AW-18394870871/kLzqCNjw8uscENforcNE']);
+
+  let payload;
+  await page.route('**/api/contact', async route => {
+    payload = route.request().postDataJSON();
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Test accepted', leadId: 'modal-lead-id' }) });
+  });
+  const opener = page.locator('.mobile-contact-request');
+  await opener.click();
+  await expect(page.locator('#quick-contact-modal')).toBeVisible();
+  await expect(page.locator('.quick-contact-close')).toBeFocused();
+  await expect(page.locator('#main-content')).toHaveAttribute('inert', '');
+  await page.locator('#quick-name').fill('QA Person');
+  await page.locator('#quick-phone').fill('+48 000 000 000');
+  await page.locator('#quick-message').fill('Modal test message');
+  await page.locator('#quick-form button[type=submit]').click();
+  await expect(page.locator('#quick-form-message')).toContainText('Test accepted');
+  expect(payload.formType).toBe('quick-form');
+  expect(payload.attribution.gclid).toBe('modal-test');
+  expect((await events(page, 'naserwis_lead_submit')).length).toBe(1);
+  expect((await events(page, 'naserwis_form_success')).length).toBe(1);
+  conversions = await page.evaluate(() => window.dataLayer.filter(x => x[0] === 'event' && x[1] === 'conversion').map(x => x[2].send_to));
+  expect(conversions).toEqual(['AW-18394870871/kLzqCNjw8uscENforcNE', 'AW-18394870871/WpLcCOaejeMcENforcNE']);
+  await page.locator('.quick-contact-close').click();
+  await expect(page.locator('#quick-contact-modal')).toBeHidden();
+  await expect(opener).toBeFocused();
+  await expect(page.locator('#main-content')).not.toHaveAttribute('inert');
+  await expect(page.locator('#final-form')).toHaveCount(1);
+});
+
 test('chat consent grants open once after ready; reject never counts as chat open', async ({ page }) => {
   await isolate(page); await consent(page); await page.goto('/naprawa-sieci/');
   await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
@@ -215,6 +271,9 @@ test('restored circular visuals, navigation suppression and visibility during fo
   await page.locator('.fab-toggle').click();
   await page.screenshot({ path: 'outputs/visual/mobile-contact.png', animations: 'disabled' });
   await page.keyboard.press('Escape');
+  await page.locator('.mobile-contact-request').click();
+  await page.screenshot({ path: 'outputs/visual/mobile-quick-modal.png', animations: 'disabled' });
+  await page.keyboard.press('Escape');
   await page.locator('.service-content').evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
   await expect(page.locator('.fab-toggle')).toBeVisible();
   await page.screenshot({ path: 'outputs/visual/mobile-round.png', animations: 'disabled' });
@@ -233,6 +292,9 @@ test('restored circular visuals, navigation suppression and visibility during fo
     expect(await button.evaluate(e => [getComputedStyle(e).width, getComputedStyle(e).height, getComputedStyle(e).borderRadius])).toEqual(['56px', '56px', '50%']);
   }
   await page.screenshot({ path: 'outputs/visual/desktop-contact.png', animations: 'disabled' });
+  await page.locator('.fab-form').click();
+  await page.screenshot({ path: 'outputs/visual/desktop-quick-modal.png', animations: 'disabled' });
+  await page.keyboard.press('Escape');
 });
 
 test('idle motion starts after 2.5s, stops while scrolling, and invitation dismissal persists', async ({ page }) => {
@@ -246,7 +308,7 @@ test('idle motion starts after 2.5s, stops while scrolling, and invitation dismi
   await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
   await page.clock.runFor(200);
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
-  await expect(page.locator('.fab-toggle')).toHaveCSS('animation-duration', '1s');
+  await expect(page.locator('.fab-toggle')).toHaveCSS('animation-duration', '3s');
   await page.clock.runFor(3500);
   await expect(page.locator('.contact-invitation')).toBeVisible();
   await expect(page.locator('[data-contact-invite]')).toContainText('Есть вопрос?');
@@ -283,6 +345,15 @@ test('idle motion starts after 2.5s, stops while scrolling, and invitation dismi
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
   await page.reload(); await page.clock.runFor(2600);
   await expect(page.locator('.contact-invitation')).toBeHidden();
+  await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
+  await page.locator('.fab-toggle').click();
+  await expect(page.locator('.fab-menu')).toBeVisible();
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  await page.locator('.fab-toggle').click();
+  await expect(page.locator('.fab-menu')).toBeHidden();
+  await page.clock.runFor(2400);
+  await expect(page.locator('.fab-toggle')).not.toHaveClass(/contact-attention/);
+  await page.clock.runFor(200);
   await expect(page.locator('.fab-toggle')).toHaveClass(/contact-attention/);
 });
 

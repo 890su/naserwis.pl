@@ -4,7 +4,25 @@ Approved scope: NaSerwis.pl only. ITBIZ.PL has a separate deferred plan.
 Baseline: production commit `19c7187`; historical analytics are January–February
 2026, not evidence of current conversion performance.
 
-## Current revision — persistent idle contact motion
+## Current revision — modal enquiry paths and mobile contact dock
+
+Owner update, 2026-09-05 (`20260905-modal6`): change the attention cycle to one
+short rock/pulse every three seconds after the existing 2.5-second idle delay.
+Closing the contact menu restarts the idle timer and resumes animation.
+
+Add a fifth localized `Wyślij zapytanie` option to the circular menu. It opens an
+accessible short modal form without changing scroll position. All existing
+`#contact` CTAs open the same modal when JavaScript works and retain their anchor
+fallback; the hero/final forms remain in page source and layout. On mobile, show
+a fixed two-action dock for phone and modal enquiry, with the circular launcher
+raised above it. Hide the dock during consent and modal/navigation overlays.
+
+The modal reuses the same validation, bot protection, Pages Function, attribution
+and successful-lead measurement. Only successful submissions emit the existing
+primary Ads lead action; mobile phone and existing channel clicks retain their
+secondary observation conversions. No SEO content, URLs or schemas change.
+
+## Previous revision — persistent idle contact motion
 
 Owner update, 2026-09-04 (`20260904-idle5`): focusing or typing in a form field
 must not hide the circular contact launcher. Scroll activity immediately stops

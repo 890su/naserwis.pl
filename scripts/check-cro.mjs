@@ -48,8 +48,11 @@ if (record) {
       assert.equal(html.split(value).length - 1, 1, `${file}: ${value}`);
     }
     assert.equal((html.match(/class="contact-(?:choice-label|toggle-label|bar|hint)"/g) || []).length, 0, file);
-    assert.equal((html.match(/class="fab fab-(?:phone|whatsapp|telegram|chat)"/g) || []).length, 4, file);
-    assert.equal((html.match(/class="contact-tip"/g) || []).length, 4, file);
+    assert.equal((html.match(/class="fab fab-(?:phone|whatsapp|telegram|chat|form)"/g) || []).length, 5, file);
+    assert.equal((html.match(/class="contact-tip"/g) || []).length, 5, file);
+    assert.equal((html.match(/id="quick-form"/g) || []).length, 1, file);
+    assert.equal((html.match(/class="mobile-contact-dock"/g) || []).length, 1, file);
+    assert.equal((html.match(/id="quick-contact-modal"/g) || []).length, 1, file);
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
     if (/^public(?:\/(?:ru|uk|en))?\/index\.html$/.test(file)) {
       assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);

@@ -37,12 +37,14 @@ test('success requires provider acceptance, keeps lead id, locale and allowed at
   const sent = [];
   t.mock.method(globalThis, 'fetch', async (url, options) => { sent.push(JSON.parse(options.body)); return Response.json({ ok: true }); });
   for (const lang of ['pl', 'ru', 'uk', 'en']) {
-    const response = await call({ ...valid, lang, attribution: { gclid: 'qa-click', secret: 'must-not-forward' } }, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' });
+    const formType = lang === 'en' ? 'quick-form' : valid.formType;
+    const response = await call({ ...valid, formType, lang, attribution: { gclid: 'qa-click', secret: 'must-not-forward' } }, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' });
     assert.equal(response.status, 200);
     const result = await response.json();
     assert.equal(result.success, true); assert.match(result.leadId, /^[0-9a-f-]{36}$/);
     assert.ok(sent.at(-1).text.includes(result.leadId));
     assert.ok(sent.at(-1).text.includes('gclid: qa-click'));
+    assert.ok(sent.at(-1).text.includes(`Form: ${formType}`));
     assert.ok(!sent.at(-1).text.includes('must-not-forward'));
   }
   t.mock.restoreAll();

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Consent Mode v2 must be initialised before Google tags. -->
-    <script src="/consent.js?v=20260904-idle5"></script>
+    <script src="/consent.js?v=20260905-modal6"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVC64PTKR3"></script>
     <script>
       gtag('js', new Date());
@@ -84,9 +84,9 @@
     </style>
 
     <!-- Main stylesheet with deferred loading -->
-    <link rel="stylesheet" href="/styles.css?v=20260904-idle5" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="/styles.css?v=20260904-idle5"></noscript>
-    <link rel="stylesheet" href="/custom.css?v=20260904-idle5">
+    <link rel="stylesheet" href="/styles.css?v=20260905-modal6" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles.css?v=20260905-modal6"></noscript>
+    <link rel="stylesheet" href="/custom.css?v=20260905-modal6">
 
     <script type="application/ld+json">
     {
@@ -123,7 +123,7 @@
       ]
     }
     </script>
-    <link rel="stylesheet" href="/contact-ui.css?v=20260904-idle5">
+    <link rel="stylesheet" href="/contact-ui.css?v=20260905-modal6">
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
 <header id="header" role="banner">
@@ -534,8 +534,30 @@
             </div>
         </div>
     </footer>
+    <!-- QUICK CONTACT UI START -->
+    <nav class="mobile-contact-dock" aria-label="Choose how to contact us">
+        <a href="tel:+48453327678" class="mobile-contact-call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.3.54 3.5.54a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.18 2.4.54 3.5a1 1 0 0 1-.24 1l-2.2 2.3Z"/></svg><span>Call</span></a>
+        <button type="button" data-contact-modal class="mobile-contact-request"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm2 4v2h12V7H6Zm0 4v2h12v-2H6Zm0 4v2h7v-2H6Z"/></svg><span>Send enquiry</span></button>
+    </nav>
+    <div class="quick-contact-modal" id="quick-contact-modal" hidden>
+        <div class="quick-contact-backdrop" data-quick-contact-close></div>
+        <section class="quick-contact-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-contact-title">
+            <button type="button" class="quick-contact-close" data-quick-contact-close aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+            <div class="quick-contact-heading"><span>Contact form</span><h2 id="quick-contact-title">Send an enquiry</h2><p>Briefly describe the issue. We will call to discuss the details and a possible visit time.</p></div>
+            <form id="quick-form" aria-label="Send an enquiry">
+                <div class="quick-contact-fields">
+                    <div class="form-group"><label for="quick-name">Name</label><input type="text" id="quick-name" name="name" required aria-required="true" minlength="2" maxlength="120" autocomplete="name"></div>
+                    <div class="form-group"><label for="quick-phone">Phone</label><input type="tel" id="quick-phone" name="phone" required aria-required="true" minlength="5" maxlength="60" autocomplete="tel" inputmode="tel"></div>
+                    <div class="form-group quick-contact-message"><label for="quick-message">What can we fix?</label><textarea id="quick-message" name="message" required aria-required="true" minlength="3" maxlength="4000" aria-describedby="quick-form-help"></textarea><small id="quick-form-help" class="contact-field-help">A short description of the symptoms and your town is enough — we can discuss the details by phone.</small></div>
+                </div>
+                <button type="submit" class="btn btn-primary form-submit">Request a callback</button>
+                <div id="quick-form-message" role="alert" aria-live="polite"></div>
+            </form>
+        </section>
+    </div>
+    <!-- QUICK CONTACT UI END -->
 
-    <!-- Floating Action Buttons for Quick Contact -->
+<!-- Floating Action Buttons for Quick Contact -->
         <div class="fab-container" aria-label="Quick contact"><div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>Have a question?</strong><span>Message us →</span></button><button type="button" data-contact-dismiss aria-label="Hide invitation and animation" title="Hide invitation and animation">×</button></div><div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">Contact form →</a></div>
         <div class="fab-menu" id="contact-menu">
             <a href="tel:+48453327678" class="fab fab-phone" aria-label="Call" aria-describedby="contact-tip-phone"><span class="contact-tip" id="contact-tip-phone" role="tooltip"><strong>Call us</strong><span>Discuss the issue by phone</span></span>
@@ -558,6 +580,9 @@
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
                 </svg>
             </button>
+            <button type="button" class="fab fab-form" data-contact-modal aria-label="Send an enquiry" aria-describedby="contact-tip-form"><span class="contact-tip" id="contact-tip-form" role="tooltip"><strong>Send an enquiry</strong><span>Open the short form</span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm2 4v2h12V7H6Zm0 4v2h12v-2H6Zm0 4v2h7v-2H6Z"/></svg>
+            </button>
         </div>
         <button type="button" class="fab fab-toggle" aria-label="Message us" aria-expanded="false" aria-controls="contact-menu" data-close-label="Close">
             <svg class="fab-toggle-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -567,8 +592,8 @@
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             </svg>
         </button>
-    </div><script src="/script.js?v=20260904-idle5"></script>
+    </div><script src="/script.js?v=20260905-modal6"></script>
 
-    <script src="/contact-ui.js?v=20260904-idle5"></script>
+    <script src="/contact-ui.js?v=20260905-modal6"></script>
 </body>
 </html>

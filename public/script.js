@@ -321,6 +321,10 @@
                 return;
             }
 
+            // With enhanced UI, contact CTAs open the short modal form. Keeping
+            // the hash preserves a native scroll fallback if that UI fails.
+            if (href === '#contact' && document.getElementById('quick-contact-modal')) return;
+
             // Check if target element exists
             const target = document.querySelector(href);
             if (!target) return; // Let browser handle invalid anchors
@@ -398,7 +402,7 @@
         const originalLabel = form.querySelector('button[type="submit"]')?.textContent;
         let sending = false;
         let started = false;
-        const formParameters = { form_id: formId, placement: formId === 'hero-form' ? 'hero' : 'final' };
+        const formParameters = { form_id: formId, placement: formId === 'hero-form' ? 'hero' : formId === 'quick-form' ? 'modal' : 'final' };
         const shortMessages = {
             pl: 'Uzupełnij pole — minimalna liczba znaków: ',
             ru: 'Дополните поле — минимум символов: ',
@@ -1106,9 +1110,9 @@
             device_category: matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop'
         };
         const allowed = {
-            placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final'],
+            placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final', 'modal'],
             action: ['form', 'contact_menu', 'phone'],
-            form_id: ['hero-form', 'final-form'],
+            form_id: ['hero-form', 'final-form', 'quick-form'],
             field: ['name', 'phone', 'message'],
             reason: ['required', 'too_short_or_invalid', 'server', 'network']
         };
@@ -1141,7 +1145,7 @@
     }
 
     function contactPlacement(element) {
-        if (element.closest('.contact-bar')) return 'sticky';
+        if (element.closest('.contact-bar, .mobile-contact-dock')) return 'sticky';
         if (element.closest('.contact-alternatives')) return 'form';
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('header')) return 'header';
@@ -1260,6 +1264,7 @@
         // Initialize form handlers
         handleFormSubmit('hero-form', 'hero-form-message');
         handleFormSubmit('final-form', 'final-form-message');
+        handleFormSubmit('quick-form', 'quick-form-message');
 
         // Log performance in development
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {

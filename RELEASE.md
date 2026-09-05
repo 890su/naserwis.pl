@@ -1,6 +1,22 @@
-# CRO v1 release — 2026-09-04
+# CRO v1 release — 2026-09-05
 
-## Latest revision: idle contact motion and form visibility
+## Latest revision: modal enquiry paths and mobile contact dock
+
+Asset revision `20260905-modal6` changes the launcher to one short animation
+every three seconds after 2.5 idle seconds and restores that behavior after its
+contact menu closes. A fifth localized enquiry option opens a keyboard-contained
+modal form. All existing `#contact` CTAs use the modal without scrolling while
+retaining native anchor fallback; the original page forms remain unchanged.
+
+Mobile pages now have a restrained two-button fixed dock for phone and enquiry,
+with the circular launcher positioned above it. The dock yields to consent,
+navigation and modal UI. The new form reuses the existing endpoint, validation,
+bot protection and attribution. Successful modal submissions use the same single
+primary lead conversion; phone and other contact methods retain their existing
+secondary conversions. Static/unit checks and 28 browser scenarios cover all
+four locales, CTA interception, modal focus, mobile layout and event uniqueness.
+
+## Previous revision: idle contact motion and form visibility
 
 Asset revision `20260904-idle5` keeps the circular launcher visible while a user
 focuses or types in any form field. Scrolling stops the animation immediately;

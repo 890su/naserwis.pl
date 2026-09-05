@@ -51,7 +51,7 @@ The following events require analytics consent and are not new Ads conversions:
 | Event | Meaning |
 | --- | --- |
 | `naserwis_cta_view` | Each CTA becomes visible once per page load |
-| `naserwis_cta_click` | In-page link to the contact form |
+| `naserwis_cta_click` | CTA opens the short contact form or its native fallback |
 | `naserwis_contact_open` | Visitor expands channel choices |
 | `naserwis_form_start` | First edit in that form, after consent |
 | `naserwis_form_validation_error` | Local validation blocks submission |
@@ -69,6 +69,12 @@ preserved; the website does not edit account bidding goals or campaign status.
 The subsequent `20260904-round2` visual revision restores the circular contact
 widget and removes the mobile strip. New sticky impressions/clicks are therefore
 no longer emitted; retain that value when interpreting earlier release data.
+
+Revision `20260905-modal6` adds a new mobile contact dock, so `sticky` events are
+emitted again from that release onward. Its phone link uses the unchanged
+secondary phone action. `quick-form` start/error/success diagnostics use
+`placement=modal`; a successful response emits the same primary lead action as
+`hero-form` and `final-form`, never an additional conversion type.
 
 No retroactive diagnostic events are replayed after consent. Consent selection
 therefore affects the observed funnel; report its coverage, not just aggregate

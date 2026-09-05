@@ -2,19 +2,19 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
-const version = '20260904-idle5';
+const version = '20260905-modal6';
 const copy = {
-  pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie' },
-  ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу' },
-  uk: { write: 'Напишіть нам', call: 'Зателефонувати', close: 'Закрити', channels: 'Виберіть спосіб зв’язку', hint: 'Є питання? Опишіть проблему.', form: 'Форма заявки', chat: 'Чат на сайті', next: 'Опишіть проблему й місце розташування. Передзвонимо, щоб узгодити обсяг роботи та можливий час візиту.', help: 'Достатньо коротко описати симптоми й указати місто — деталі обговоримо під час дзвінка.', submit: 'Попросити зв’язатися', more: 'Є питання про обсяг роботи чи ціну?', request: 'Описати завдання' },
-  en: { write: 'Message us', call: 'Call', close: 'Close', channels: 'Choose how to contact us', hint: 'Have a question? Describe the issue.', form: 'Contact form', chat: 'Website chat', next: 'Describe the issue and location. We will call to agree the scope and a possible visit time.', help: 'A short description of the symptoms and your town is enough — we can discuss the details by phone.', submit: 'Request a callback', more: 'A question about the scope or price?', request: 'Describe the job' }
+  pl: { write: 'Napisz do nas', call: 'Zadzwoń', close: 'Zamknij', channels: 'Wybierz sposób kontaktu', hint: 'Masz pytanie? Opisz problem.', form: 'Formularz kontaktowy', chat: 'Czat na stronie', next: 'Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.', help: 'Wystarczy krótki opis objawów i miejscowość — szczegóły ustalimy podczas rozmowy.', submit: 'Poproś o kontakt', more: 'Masz pytanie o zakres lub cenę?', request: 'Opisz zadanie', modalTitle: 'Wyślij zapytanie', modalIntro: 'Krótko opisz problem. Oddzwonimy, aby ustalić szczegóły i możliwy termin.', name: 'Imię', phone: 'Telefon', message: 'Co możemy naprawić?', mobileRequest: 'Wyślij zapytanie' },
+  ru: { write: 'Напишите нам', call: 'Позвонить', close: 'Закрыть', channels: 'Выберите способ связи', hint: 'Есть вопрос? Опишите проблему.', form: 'Форма заявки', chat: 'Чат на сайте', next: 'Опишите проблему и местоположение. Перезвоним, чтобы согласовать объём работы и возможное время визита.', help: 'Достаточно кратко описать симптомы и указать город — детали обсудим при звонке.', submit: 'Попросить связаться', more: 'Есть вопрос об объёме работы или цене?', request: 'Описать задачу', modalTitle: 'Отправить запрос', modalIntro: 'Кратко опишите проблему. Перезвоним, чтобы уточнить детали и возможное время визита.', name: 'Имя', phone: 'Телефон', message: 'Что нужно исправить?', mobileRequest: 'Отправить запрос' },
+  uk: { write: 'Напишіть нам', call: 'Зателефонувати', close: 'Закрити', channels: 'Виберіть спосіб зв’язку', hint: 'Є питання? Опишіть проблему.', form: 'Форма заявки', chat: 'Чат на сайті', next: 'Опишіть проблему й місце розташування. Передзвонимо, щоб узгодити обсяг роботи та можливий час візиту.', help: 'Достатньо коротко описати симптоми й указати місто — деталі обговоримо під час дзвінка.', submit: 'Попросити зв’язатися', more: 'Є питання про обсяг роботи чи ціну?', request: 'Описати завдання', modalTitle: 'Надіслати запит', modalIntro: 'Коротко опишіть проблему. Передзвонимо, щоб уточнити деталі й можливий час візиту.', name: 'Ім’я', phone: 'Телефон', message: 'Що потрібно виправити?', mobileRequest: 'Надіслати запит' },
+  en: { write: 'Message us', call: 'Call', close: 'Close', channels: 'Choose how to contact us', hint: 'Have a question? Describe the issue.', form: 'Contact form', chat: 'Website chat', next: 'Describe the issue and location. We will call to agree the scope and a possible visit time.', help: 'A short description of the symptoms and your town is enough — we can discuss the details by phone.', submit: 'Request a callback', more: 'A question about the scope or price?', request: 'Describe the job', modalTitle: 'Send an enquiry', modalIntro: 'Briefly describe the issue. We will call to discuss the details and a possible visit time.', name: 'Name', phone: 'Phone', message: 'What can we fix?', mobileRequest: 'Send enquiry' }
 };
 
 const contactCopy = {
-  pl: { question: 'Masz pytanie?', dismiss: 'Ukryj podpowiedź i animację', phone: ['Zadzwoń', 'Porozmawiajmy o problemie'], whatsapp: ['Napisz na WhatsApp', 'Wyślij opis lub zdjęcie'], telegram: ['Bot na Telegramie', 'Opisz zadanie w bocie'], chat: ['Czat na stronie', 'Napisz bez opuszczania strony'] },
-  ru: { question: 'Есть вопрос?', dismiss: 'Скрыть подсказку и анимацию', phone: ['Позвонить', 'Обсудим задачу по телефону'], whatsapp: ['Написать в WhatsApp', 'Отправьте описание или фото'], telegram: ['Бот в Telegram', 'Опишите задачу в боте'], chat: ['Чат на сайте', 'Напишите прямо на странице'] },
-  uk: { question: 'Є питання?', dismiss: 'Приховати підказку й анімацію', phone: ['Зателефонувати', 'Обговоримо завдання телефоном'], whatsapp: ['Написати у WhatsApp', 'Надішліть опис або фото'], telegram: ['Бот у Telegram', 'Опишіть завдання в боті'], chat: ['Чат на сайті', 'Напишіть прямо на сторінці'] },
-  en: { question: 'Have a question?', dismiss: 'Hide invitation and animation', phone: ['Call us', 'Discuss the issue by phone'], whatsapp: ['Message on WhatsApp', 'Send a description or photo'], telegram: ['Telegram bot', 'Describe the job in our bot'], chat: ['Website chat', 'Message us on this page'] }
+  pl: { question: 'Masz pytanie?', dismiss: 'Ukryj podpowiedź i animację', phone: ['Zadzwoń', 'Porozmawiajmy o problemie'], whatsapp: ['Napisz na WhatsApp', 'Wyślij opis lub zdjęcie'], telegram: ['Bot na Telegramie', 'Opisz zadanie w bocie'], chat: ['Czat na stronie', 'Napisz bez opuszczania strony'], form: ['Wyślij zapytanie', 'Otwórz krótki formularz'] },
+  ru: { question: 'Есть вопрос?', dismiss: 'Скрыть подсказку и анимацию', phone: ['Позвонить', 'Обсудим задачу по телефону'], whatsapp: ['Написать в WhatsApp', 'Отправьте описание или фото'], telegram: ['Бот в Telegram', 'Опишите задачу в боте'], chat: ['Чат на сайте', 'Напишите прямо на странице'], form: ['Отправить запрос', 'Открыть короткую форму'] },
+  uk: { question: 'Є питання?', dismiss: 'Приховати підказку й анімацію', phone: ['Зателефонувати', 'Обговоримо завдання телефоном'], whatsapp: ['Написати у WhatsApp', 'Надішліть опис або фото'], telegram: ['Бот у Telegram', 'Опишіть завдання в боті'], chat: ['Чат на сайті', 'Напишіть прямо на сторінці'], form: ['Надіслати запит', 'Відкрити коротку форму'] },
+  en: { question: 'Have a question?', dismiss: 'Hide invitation and animation', phone: ['Call us', 'Discuss the issue by phone'], whatsapp: ['Message on WhatsApp', 'Send a description or photo'], telegram: ['Telegram bot', 'Describe the job in our bot'], chat: ['Website chat', 'Message us on this page'], form: ['Send an enquiry', 'Open the short form'] }
 };
 
 async function pages(root) {
@@ -62,6 +62,36 @@ for (const file of await pages('public')) {
       html = html.replace(new RegExp(`(<(?:a|button)[^>]*class="fab fab-${channel}"[^>]*)(>)`), (_all, attrs) =>
         `${attrs.replace(/ title="[^"]*"/, '').replace(/ aria-describedby="[^"]*"/, '')} aria-describedby="contact-tip-${channel}"><span class="contact-tip" id="contact-tip-${channel}" role="tooltip"><strong>${contact[channel][0]}</strong><span>${contact[channel][1]}</span></span>`);
     }
+    html = html.replace(/\s*<button type="button" class="fab fab-form"[\s\S]*?<\/button>/g, '');
+    const formButton = `
+            <button type="button" class="fab fab-form" data-contact-modal aria-label="${contact.form[0]}" aria-describedby="contact-tip-form"><span class="contact-tip" id="contact-tip-form" role="tooltip"><strong>${contact.form[0]}</strong><span>${contact.form[1]}</span></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm2 4v2h12V7H6Zm0 4v2h12v-2H6Zm0 4v2h7v-2H6Z"/></svg>
+            </button>`;
+    html = html.replace(/(\s*<\/div>\s*<button type="button" class="fab fab-toggle")/, `${formButton}$1`);
+    html = html.replace(/\s*<!-- QUICK CONTACT UI START -->[\s\S]*?<!-- QUICK CONTACT UI END -->\s*/g, '\n');
+    const quickUi = `    <!-- QUICK CONTACT UI START -->
+    <nav class="mobile-contact-dock" aria-label="${t.channels}">
+        <a href="tel:+48453327678" class="mobile-contact-call"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24c1.1.36 2.3.54 3.5.54a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.6 21 3 13.4 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.18 2.4.54 3.5a1 1 0 0 1-.24 1l-2.2 2.3Z"/></svg><span>${t.call}</span></a>
+        <button type="button" data-contact-modal class="mobile-contact-request"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm2 4v2h12V7H6Zm0 4v2h12v-2H6Zm0 4v2h7v-2H6Z"/></svg><span>${t.mobileRequest}</span></button>
+    </nav>
+    <div class="quick-contact-modal" id="quick-contact-modal" hidden>
+        <div class="quick-contact-backdrop" data-quick-contact-close></div>
+        <section class="quick-contact-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-contact-title">
+            <button type="button" class="quick-contact-close" data-quick-contact-close aria-label="${t.close}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+            <div class="quick-contact-heading"><span>${t.form}</span><h2 id="quick-contact-title">${t.modalTitle}</h2><p>${t.modalIntro}</p></div>
+            <form id="quick-form" aria-label="${t.modalTitle}">
+                <div class="quick-contact-fields">
+                    <div class="form-group"><label for="quick-name">${t.name}</label><input type="text" id="quick-name" name="name" required aria-required="true" minlength="2" maxlength="120" autocomplete="name"></div>
+                    <div class="form-group"><label for="quick-phone">${t.phone}</label><input type="tel" id="quick-phone" name="phone" required aria-required="true" minlength="5" maxlength="60" autocomplete="tel" inputmode="tel"></div>
+                    <div class="form-group quick-contact-message"><label for="quick-message">${t.message}</label><textarea id="quick-message" name="message" required aria-required="true" minlength="3" maxlength="4000" aria-describedby="quick-form-help"></textarea><small id="quick-form-help" class="contact-field-help">${t.help}</small></div>
+                </div>
+                <button type="submit" class="btn btn-primary form-submit">${t.submit}</button>
+                <div id="quick-form-message" role="alert" aria-live="polite"></div>
+            </form>
+        </section>
+    </div>
+    <!-- QUICK CONTACT UI END -->`;
+    html = html.replace(/([\t ]*<!-- Floating Action Buttons for Quick Contact -->)/, `${quickUi}\n\n$1`);
     // Remove only the two owner-rejected homepage hero links. Other content and
     // service-specific conversion links remain unchanged.
     html = html.replace(/\s*<div class="cta-buttons">\s*<a href="#contact"[^>]*>[\s\S]*?<\/a>\s*<a href="#services"[^>]*>[\s\S]*?<\/a>\s*<\/div>/, '');
