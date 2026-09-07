@@ -1,7 +1,7 @@
 # NaSerwis.pl on Cloudflare Pages
 
-Production source: `public/` (16 landing pages and 8 legal pages, PL/RU/UK/EN),
-with `functions/api/contact.js` for form delivery. The ignored legacy PHP files
+Production source: `public/` (20 landing/tool pages and 8 legal pages, PL/RU/UK/EN),
+with Pages Functions for contact delivery, weather and connection diagnostics. The ignored legacy PHP files
 are a local migration archive, not the deployment source.
 
 Release plan: [CRO_PLAN.md](CRO_PLAN.md). Measurement contract:
@@ -23,7 +23,7 @@ Both apex and www DNS records point to `naserwis-pl.pages.dev`.
 | Build command | `npm run check` |
 | Build output directory | `public` |
 
-Cloudflare discovers `functions/api/contact.js` automatically. It receives requests from all contact forms and the review modal at `POST /api/contact`.
+Cloudflare discovers Pages Functions automatically. `POST /api/contact` receives contact forms. `GET /api/weather` proxies and caches the Warsaw forecast from MET Norway; `GET /api/network` reflects the current connection without storage; and `GET /api/network-probe` serves the explicit lightweight latency/download test with a 256 KiB cap.
 
 ## Required production secrets
 
@@ -52,6 +52,7 @@ set `PLAYWRIGHT_CHANNEL` to another installed supported channel if needed.
 ```powershell
 npm ci
 npm run cro:generate
+npm run tools:generate
 npm run check
 npm test
 npm run test:e2e
@@ -73,6 +74,14 @@ secondary. Reduced motion remains static and SEO routes/content are unchanged.
 `compliance:generate` regenerates legal pages and reapplies CRO markup.
 Run generators only for intentional source updates, inspect their diff and rerun
 checks. The immutable pre-CRO SEO/Ads fixture works in shallow CI checkouts.
+
+`tools:generate` rebuilds the four localized “weather outside / weather online”
+pages and their internal navigation. The public IP is intentionally shown only
+inside the diagnostic page, never embedded into the menu, homepage HTML, URL or
+analytics. Network API responses use `no-store`; the browser starts the 256 KiB
+probe only after an explicit click. Forecast data is attributed to MET Norway
+under CC BY 4.0 and is fetched server-side so the visitor does not contact the
+provider directly.
 
 The static QA server (`node scripts/serve-test.mjs`, localhost:8846) deliberately
 does not deliver forms. Browser traces and visual captures are in ignored

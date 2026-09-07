@@ -19,6 +19,11 @@ const pages = [
   "public/consent.js",
   "public/script.js",
   "functions/api/contact.js"
+  ,"functions/api/weather.js"
+  ,"functions/api/network.js"
+  ,"functions/api/network-probe.js"
+  ,"public/weather-network.js"
+  ,"public/weather-network.css"
 ];
 
 for (const file of pages) await access(file);
@@ -70,6 +75,19 @@ for (const language of languages) {
     if (!html.includes('<link rel="canonical" href="https://naserwis.pl/')) {
       throw new Error(`SEO landing page is missing its canonical URL: ${file}.`);
     }
+  }
+}
+
+const toolPages = [
+  "public/pogoda-internet-warszawa/index.html",
+  "public/ru/pogoda-internet-varshava/index.html",
+  "public/uk/pohoda-internet-varshava/index.html",
+  "public/en/weather-internet-warsaw/index.html",
+];
+for (const file of toolPages) {
+  const html = await readFile(file, "utf8");
+  for (const hook of ["data-network-weather", "/weather-network.js", "rel=\"canonical\"", "hreflang=\"x-default\""]) {
+    if (!html.includes(hook)) throw new Error(`Missing tool or SEO hook ${hook} in ${file}.`);
   }
 }
 console.log("Static Pages files and form endpoint are ready.");

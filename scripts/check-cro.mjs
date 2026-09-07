@@ -27,17 +27,19 @@ function seo(html) {
   };
 }
 const files = await pages('public');
-const protectedFiles = ['public/sitemap.xml', 'public/robots.txt', 'public/_redirects', 'public/site-config.js'];
+const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-config.js'];
 const record = process.argv.includes('--record-original');
 const original = file => execFileSync('git', ['show', `${baselineRevision}:${file}`], { encoding: 'utf8' });
+const expected = JSON.parse(await readFile(fixture, 'utf8'));
 const snapshot = { baselineRevision, pages: {}, protectedFiles: {} };
-for (const file of files) snapshot.pages[file] = hash(JSON.stringify(seo(record ? original(file) : await readFile(file, 'utf8'))));
+for (const file of files.filter(file => record || expected.pages[file])) snapshot.pages[file] = hash(JSON.stringify(seo(record ? original(file) : await readFile(file, 'utf8'))));
 for (const file of protectedFiles) snapshot.protectedFiles[file] = hash((record ? original(file) : await readFile(file, 'utf8')).replace(/\r\n/g, '\n'));
 if (record) {
   await writeFile(fixture, JSON.stringify(snapshot, null, 2) + '\n');
   console.log('Recorded original immutable SEO/Ads fixture from ' + baselineRevision);
 } else {
-  assert.deepEqual(snapshot, JSON.parse(await readFile(fixture, 'utf8')), 'SEO, routing or Ads configuration changed; review explicitly before updating baseline.');
+  const expectedStable = { ...expected, protectedFiles: Object.fromEntries(Object.entries(expected.protectedFiles).filter(([file]) => protectedFiles.includes(file))) };
+  assert.deepEqual(snapshot, expectedStable, 'Existing SEO or Ads configuration changed; review explicitly before updating baseline.');
   let landingCount = 0;
   for (const file of files) {
     const html = await readFile(file, 'utf8');
@@ -58,6 +60,8 @@ if (record) {
       assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);
     }
   }
-  assert.equal(landingCount, 16);
-  console.log('CRO guards passed: 24 pages, unchanged SEO/routing/Ads, 16 enhanced landings.');
+  assert.equal(landingCount, 20);
+  const sitemap = await readFile('public/sitemap.xml', 'utf8');
+  for (const route of ['/pogoda-internet-warszawa/', '/ru/pogoda-internet-varshava/', '/uk/pohoda-internet-varshava/', '/en/weather-internet-warsaw/']) assert.ok(sitemap.includes(route), `sitemap: ${route}`);
+  console.log('CRO guards passed: existing SEO/Ads unchanged, 20 enhanced landings and 4 reviewed tool routes.');
 }

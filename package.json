@@ -10,6 +10,7 @@
     "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-cro.mjs",
     "export:live": "node scripts/export-live-site.mjs",
     "cro:generate": "node scripts/apply-cro.mjs",
+    "tools:generate": "node scripts/build-weather-network-pages.mjs && node scripts/apply-tool-navigation.mjs",
     "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs && node scripts/check-cro.mjs",
     "test": "node --test tests/unit/*.test.mjs",
     "test:e2e": "playwright test",

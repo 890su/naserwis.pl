@@ -186,4 +186,41 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Pogoda i diagnostyka internetu -->
+  <url>
+    <loc>https://naserwis.pl/pogoda-internet-warszawa/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/pogoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/pohoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://naserwis.pl/en/weather-internet-warsaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <lastmod>2026-09-06</lastmod><changefreq>daily</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://naserwis.pl/ru/pogoda-internet-varshava/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/pogoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/pohoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://naserwis.pl/en/weather-internet-warsaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <lastmod>2026-09-06</lastmod><changefreq>daily</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://naserwis.pl/uk/pohoda-internet-varshava/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/pogoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/pohoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://naserwis.pl/en/weather-internet-warsaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <lastmod>2026-09-06</lastmod><changefreq>daily</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://naserwis.pl/en/weather-internet-warsaw/</loc>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/pogoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/pohoda-internet-varshava/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://naserwis.pl/en/weather-internet-warsaw/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://naserwis.pl/pogoda-internet-warszawa/"/>
+    <lastmod>2026-09-06</lastmod><changefreq>daily</changefreq><priority>0.7</priority>
+  </url>
 </urlset>

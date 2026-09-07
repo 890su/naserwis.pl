@@ -172,3 +172,14 @@ No uplift is claimed. Obtain fresh 28/90-day GA4/GSC and qualified-lead records;
 review the first full week's consent-segmented funnel and run a controlled
 experiment only when traffic supports it. Do not alter Ads bidding based on
 button clicks alone. See [CRO_PLAN.md](CRO_PLAN.md) for evidence-gated next steps.
+# 2026-09-06 — weather and connection utility
+
+- Added localized PL/RU/UK/EN pages combining the Warsaw forecast with an
+  explicit lightweight connection diagnostic.
+- Added server-side MET Norway proxy caching and required CC BY 4.0 attribution.
+- Added no-store IP/ASN/edge reflection and a user-triggered probe capped at
+  256 KiB; values are not persisted or sent to analytics.
+- Added menu and homepage entry points, reciprocal hreflang, sitemap entries,
+  privacy disclosures, generation scripts and API tests.
+- Preserved all previous SEO/Ads metadata for existing pages and left Ads files
+  unchanged.
