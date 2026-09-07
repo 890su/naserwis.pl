@@ -19,7 +19,7 @@ const copy = {
     lead: 'Dwa szybkie odczyty w jednym miejscu: prognoza na najbliższe godziny oraz prywatna diagnostyka połączenia. Wyniki są tylko dla Ciebie — nie zapisujemy adresu IP ani pomiarów.',
     outside: 'Na zewnątrz', now: 'Teraz w Warszawie', feels: 'Odczuwalna', humidity: 'Wilgotność', wind: 'Wiatr', pressure: 'Ciśnienie', rain: 'Opady',
     online: 'W sieci', connection: 'Twoje połączenie', ip: 'Publiczny adres IP', provider: 'Dostawca / sieć', location: 'Przybliżona lokalizacja', edge: 'Punkt sieci',
-    test: 'Uruchom lekki test', testing: 'Trwa pomiar…', latency: 'Opóźnienie HTTP', jitter: 'Jitter', speed: 'Pobieranie', copyResult: 'Kopiuj wynik', copied: 'Skopiowano',
+    test: 'Uruchom lekki test', testing: 'Trwa pomiar…', latency: 'Opóźnienie HTTP', jitter: 'Jitter', speed: 'Pobieranie', fullTests: 'Pełny test łącza', call: 'Zadzwoń',
     testNote: 'Test pobiera około 256 KB. Wynik jest orientacyjny i mierzy drogę do najbliższego węzła Cloudflare, nie pełny test łącza operatora.',
     forecast: 'Prognoza dla Warszawy na 24 godziny', dataBy: 'Dane pogodowe: MET Norway, licencja CC BY 4.0.',
     why: 'Co mówi ten pomiar?', whyText: 'Pogoda może wpływać na łącza radiowe, urządzenia na zewnątrz i zasilanie, ale wolny internet częściej wynika z Wi‑Fi, przeciążenia sieci lub problemu operatora. Dlatego pokazujemy warunki i stan połączenia obok siebie — bez udawania, że jeden wynik wyjaśnia drugi.',
@@ -36,7 +36,7 @@ const copy = {
     kicker: 'Погода на улице · погода в интернете', h1: 'Проверьте погоду в Варшаве и состояние интернета',
     lead: 'Два полезных показателя в одном месте: прогноз на ближайшие часы и приватная диагностика соединения. Результаты видите только вы — мы не сохраняем IP и измерения.',
     outside: 'На улице', now: 'Сейчас в Варшаве', feels: 'Ощущается', humidity: 'Влажность', wind: 'Ветер', pressure: 'Давление', rain: 'Осадки', online: 'В сети', connection: 'Ваше соединение', ip: 'Публичный IP-адрес', provider: 'Провайдер / сеть', location: 'Примерное местоположение', edge: 'Сетевой узел',
-    test: 'Запустить лёгкий тест', testing: 'Идёт измерение…', latency: 'HTTP-задержка', jitter: 'Джиттер', speed: 'Загрузка', copyResult: 'Копировать результат', copied: 'Скопировано',
+    test: 'Запустить лёгкий тест', testing: 'Идёт измерение…', latency: 'HTTP-задержка', jitter: 'Джиттер', speed: 'Загрузка', fullTests: 'Полный тест соединения', call: 'Позвонить',
     testNote: 'Тест загружает около 256 КБ. Результат ориентировочный: измеряется путь до ближайшего узла Cloudflare, а не вся линия оператора.',
     forecast: 'Прогноз для Варшавы на 24 часа', dataBy: 'Данные о погоде: MET Norway, лицензия CC BY 4.0.',
     why: 'Что показывает измерение?', whyText: 'Погода может влиять на радиоканалы, наружное оборудование и питание, но медленный интернет чаще связан с Wi‑Fi, нагрузкой сети или оператором. Поэтому мы показываем условия и соединение рядом, не подменяя причину совпадением.',
@@ -53,7 +53,7 @@ const copy = {
     kicker: 'Погода надворі · погода в інтернеті', h1: 'Перевірте погоду у Варшаві та стан інтернету',
     lead: 'Два корисні показники в одному місці: прогноз на найближчі години та приватна діагностика з’єднання. Результати бачите лише ви — ми не зберігаємо IP і вимірювання.',
     outside: 'Надворі', now: 'Зараз у Варшаві', feels: 'Відчувається', humidity: 'Вологість', wind: 'Вітер', pressure: 'Тиск', rain: 'Опади', online: 'У мережі', connection: 'Ваше з’єднання', ip: 'Публічна IP-адреса', provider: 'Провайдер / мережа', location: 'Приблизне розташування', edge: 'Мережевий вузол',
-    test: 'Запустити легкий тест', testing: 'Триває вимірювання…', latency: 'HTTP-затримка', jitter: 'Джиттер', speed: 'Завантаження', copyResult: 'Копіювати результат', copied: 'Скопійовано',
+    test: 'Запустити легкий тест', testing: 'Триває вимірювання…', latency: 'HTTP-затримка', jitter: 'Джиттер', speed: 'Завантаження', fullTests: 'Повний тест з’єднання', call: 'Зателефонувати',
     testNote: 'Тест завантажує близько 256 КБ. Результат орієнтовний: вимірюється шлях до найближчого вузла Cloudflare, а не вся лінія оператора.',
     forecast: 'Прогноз для Варшави на 24 години', dataBy: 'Дані про погоду: MET Norway, ліцензія CC BY 4.0.',
     why: 'Що показує вимірювання?', whyText: 'Погода може впливати на радіоканали, зовнішнє обладнання та живлення, але повільний інтернет частіше пов’язаний із Wi‑Fi, навантаженням мережі або оператором. Тому ми показуємо умови та з’єднання поруч, не видаючи збіг за причину.',
@@ -70,7 +70,7 @@ const copy = {
     kicker: 'Weather outside · weather online', h1: 'Check the weather in Warsaw and your internet connection',
     lead: 'Two useful readings in one place: the next hours outdoors and a private connection diagnostic. Only you see the result — we do not store your IP address or measurements.',
     outside: 'Outside', now: 'Now in Warsaw', feels: 'Feels like', humidity: 'Humidity', wind: 'Wind', pressure: 'Pressure', rain: 'Rain', online: 'Online', connection: 'Your connection', ip: 'Public IP address', provider: 'Provider / network', location: 'Approximate location', edge: 'Network edge',
-    test: 'Run a light test', testing: 'Measuring…', latency: 'HTTP latency', jitter: 'Jitter', speed: 'Download', copyResult: 'Copy result', copied: 'Copied',
+    test: 'Run a light test', testing: 'Measuring…', latency: 'HTTP latency', jitter: 'Jitter', speed: 'Download', fullTests: 'Full connection test', call: 'Call us',
     testNote: 'The test downloads about 256 KB. It is indicative and measures the path to the nearest Cloudflare edge, not your provider’s entire connection.',
     forecast: '24-hour forecast for Warsaw', dataBy: 'Weather data: MET Norway, licensed under CC BY 4.0.',
     why: 'What does this measurement mean?', whyText: 'Weather can affect radio links, outdoor equipment and power, but slow internet is more often caused by Wi‑Fi, congestion or the provider. We show conditions and connectivity side by side without implying that one automatically explains the other.',
@@ -87,17 +87,17 @@ const escapeHtml = (value) => String(value).replaceAll('&', '&amp;').replaceAll(
 function main(c) {
   const faq = c.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('');
   const faqSchema = c.faq.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } }));
-  const settings = escapeHtml(JSON.stringify({ unavailable: c.unavailable, unknown: c.unknown, dateLocale: c.dateLocale, unitWind: c.unitWind, testing: c.testing, test: c.test, copied: c.copied }));
+  const settings = escapeHtml(JSON.stringify({ unavailable: c.unavailable, unknown: c.unknown, dateLocale: c.dateLocale, unitWind: c.unitWind, testing: c.testing, test: c.test }));
   return `<main id="main-content" class="weather-network-page" data-network-weather data-settings="${settings}">
   <section class="nw-hero"><div class="container"><p class="nw-kicker">${c.kicker}</p><h1>${c.h1}</h1><p class="nw-lead">${c.lead}</p>
     <div class="nw-dashboard">
-      <article class="nw-panel nw-weather-panel" aria-labelledby="weather-title"><div class="nw-panel-head"><div><span>${c.outside}</span><h2 id="weather-title">${c.now}</h2></div><div class="nw-sky-orbit" aria-hidden="true"><span></span></div></div><div class="nw-temperature"><strong data-weather-temperature>—</strong><span>°C</span><small data-weather-symbol>…</small></div><dl class="nw-metrics"><div><dt>${c.feels}</dt><dd data-weather-feels>—</dd></div><div><dt>${c.humidity}</dt><dd data-weather-humidity>—</dd></div><div><dt>${c.wind}</dt><dd data-weather-wind>—</dd></div><div><dt>${c.pressure}</dt><dd data-weather-pressure>—</dd></div><div><dt>${c.rain}</dt><dd data-weather-rain>—</dd></div></dl><p class="nw-status" data-weather-status role="status" aria-live="polite"></p></article>
-      <article class="nw-panel nw-network-panel" aria-labelledby="network-title"><div class="nw-panel-head"><div><span>${c.online}</span><h2 id="network-title">${c.connection}</h2></div><div class="nw-signal" aria-hidden="true"><i></i><i></i><i></i></div></div><dl class="nw-network-data"><div><dt>${c.ip}</dt><dd data-network-ip>—</dd></div><div><dt>${c.provider}</dt><dd data-network-provider>—</dd></div><div><dt>${c.location}</dt><dd data-network-location>—</dd></div><div><dt>${c.edge}</dt><dd data-network-edge>—</dd></div></dl><p class="nw-status" data-network-status role="status" aria-live="polite"></p><button class="btn btn-primary nw-test-button" type="button" data-network-test>${c.test}</button><p class="nw-test-note">${c.testNote}</p><div class="nw-test-results" data-test-results hidden><div><span>${c.latency}</span><strong data-test-latency>—</strong></div><div><span>${c.jitter}</span><strong data-test-jitter>—</strong></div><div><span>${c.speed}</span><strong data-test-speed>—</strong></div><button type="button" data-copy-result>${c.copyResult}</button></div></article>
+      <article class="nw-panel nw-weather-panel" aria-labelledby="weather-title"><div class="nw-panel-head"><div><span>${c.outside}</span><h2 id="weather-title">${c.now}</h2></div><div class="nw-sky-orbit" aria-hidden="true"><span></span></div></div><div class="nw-temperature"><strong data-weather-temperature>—</strong><span>°C</span><div class="nw-temperature-context"><small data-weather-symbol>…</small><p><span>${c.feels}</span><strong data-weather-feels>—</strong></p></div></div><dl class="nw-metrics"><div><dt>${c.humidity}</dt><dd data-weather-humidity>—</dd></div><div><dt>${c.wind}</dt><dd data-weather-wind>—</dd></div><div><dt>${c.pressure}</dt><dd data-weather-pressure>—</dd></div><div><dt>${c.rain}</dt><dd data-weather-rain>—</dd></div></dl><p class="nw-status" data-weather-status role="status" aria-live="polite"></p></article>
+      <article class="nw-panel nw-network-panel" aria-labelledby="network-title"><div class="nw-panel-head"><div><span>${c.online}</span><h2 id="network-title">${c.connection}</h2></div><div class="nw-signal" aria-hidden="true"><i></i><i></i><i></i></div></div><dl class="nw-network-data"><div><dt>${c.ip}</dt><dd data-network-ip>—</dd></div><div><dt>${c.provider}</dt><dd data-network-provider>—</dd></div><div><dt>${c.location}</dt><dd data-network-location>—</dd></div><div><dt>${c.edge}</dt><dd data-network-edge>—</dd></div></dl><p class="nw-status" data-network-status role="status" aria-live="polite"></p><button class="btn btn-primary nw-test-button" type="button" data-network-test>${c.test}</button><p class="nw-test-note">${c.testNote}</p><div class="nw-test-results" data-test-results hidden><div><span>${c.latency}</span><strong data-test-latency>—</strong></div><div><span>${c.jitter}</span><strong data-test-jitter>—</strong></div><div><span>${c.speed}</span><strong data-test-speed>—</strong></div></div><nav class="nw-full-tests" aria-label="${c.fullTests}"><span>${c.fullTests}</span><a href="https://www.speedtest.net/" target="_blank" rel="noopener noreferrer">Speedtest by Ookla ↗</a><a href="https://speed.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Speed Test ↗</a></nav></article>
     </div></div></section>
   <section class="nw-forecast-section"><div class="container"><div class="nw-section-heading"><p>24 H</p><h2>${c.forecast}</h2></div><div class="nw-forecast" data-weather-forecast aria-live="polite"></div><p class="nw-attribution"><a href="https://api.met.no/" rel="external">${c.dataBy}</a></p></div></section>
   <section class="nw-explain"><div class="container nw-explain-grid"><article><p class="nw-kicker">DIAG</p><h2>${c.why}</h2><p>${c.whyText}</p><ul>${c.list.map((item) => `<li>${item}</li>`).join('')}</ul></article><aside><h3>${c.stepsTitle}</h3><ol>${c.steps.map((item) => `<li>${item}</li>`).join('')}</ol></aside></div></section>
   <section class="nw-faq"><div class="container"><h2>${c.faqTitle}</h2><div class="nw-faq-list">${faq}</div></div></section>
-  <section class="nw-cta"><div class="container"><div><h2>${c.ctaTitle}</h2><p>${c.ctaText}</p></div><button type="button" class="btn btn-primary" data-contact-modal>${c.cta}</button></div></section>
+  <section class="nw-cta"><div class="container"><div><h2>${c.ctaTitle}</h2><p>${c.ctaText}</p></div><div class="nw-cta-actions"><button type="button" class="btn btn-primary" data-contact-modal>${c.cta}</button><a class="btn nw-call-button" href="tel:+48453327678">${c.call}: +48 453 327 678</a></div></div></section>
   <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqSchema })}</script>
 </main>`;
 }
@@ -117,7 +117,7 @@ function replaceMeta(html, c, route) {
   html = html.replace(/<meta property="twitter:url" content="[^"]*">/, `<meta property="twitter:url" content="https://naserwis.pl${route}">`);
   html = html.replace(/<meta property="twitter:title" content="[^"]*">/, `<meta property="twitter:title" content="${escapeHtml(c.title)}">`);
   html = html.replace(/<meta property="twitter:description" content="[^"]*">/, `<meta property="twitter:description" content="${escapeHtml(c.description)}">`);
-  html = html.replace('</head>', '    <link rel="stylesheet" href="/weather-network.css?v=20260906-1">\n</head>');
+  html = html.replace('</head>', '    <link rel="stylesheet" href="/weather-network.css?v=20260907-2">\n</head>');
   return html;
 }
 
@@ -129,7 +129,7 @@ for (const [locale, c] of Object.entries(copy)) {
     html = html.replace(new RegExp(`href="[^"]*" data-lang="${target}"`, 'g'), `href="${route}" data-lang="${target}"`);
     html = html.replace(new RegExp(`href="[^"]*" class="mobile-lang-btn([^\"]*)" hreflang="${target}"`, 'g'), `href="${route}" class="mobile-lang-btn$1" hreflang="${target}"`);
   }
-  html = html.replace('</body>', '    <script src="/weather-network.js?v=20260906-1" defer></script>\n</body>');
+  html = html.replace('</body>', '    <script src="/weather-network.js?v=20260907-2" defer></script>\n</body>');
   const output = join(new URL('.', root).pathname.slice(1), routes[locale], 'index.html');
   await mkdir(dirname(output), { recursive: true });
   await writeFile(output, html);

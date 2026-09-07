@@ -1,3 +1,11 @@
+# 2026-09-07 — weather card refinement
+
+- Moved perceived temperature beside the main reading and enlarged the remaining
+  four weather metrics into a 2×2 grid.
+- Added enquiry and telephone actions below the diagnostic content.
+- Replaced result-copy UI with new-tab links to the official Ookla and Cloudflare
+  full connection tests; the lightweight local diagnostic remains available.
+
 # CRO v1 release — 2026-09-05
 
 ## Latest revision: compact bottom-centred consent card

@@ -49,6 +49,5 @@
     finally { button.disabled = false; button.textContent = settings.test; }
   }
   root.querySelector('[data-network-test]')?.addEventListener('click', (event) => runTest(event.currentTarget));
-  root.querySelector('[data-copy-result]')?.addEventListener('click', async (event) => { const values = [...root.querySelectorAll('.nw-test-results > div')].map((node) => node.innerText.trim()).join(' · '); await navigator.clipboard.writeText(values); const button = event.currentTarget; const original = button.textContent; button.textContent = settings.copied; setTimeout(() => { button.textContent = original; }, 1600); });
   loadWeather(); loadNetwork();
 })();

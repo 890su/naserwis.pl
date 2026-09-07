@@ -17,6 +17,10 @@ for (const route of routes) {
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('[data-weather-temperature]')).toHaveText('18');
     await expect(page.locator('[data-network-ip]')).toContainText('198.51.100.10');
+    await expect(page.locator('.nw-metrics > div')).toHaveCount(4);
+    await expect(page.locator('.nw-temperature-context [data-weather-feels]')).toHaveText('17 °C');
+    await expect(page.locator('.nw-full-tests a[target="_blank"]')).toHaveCount(2);
+    await expect(page.locator('.nw-cta-actions')).toContainText('+48 453 327 678');
     await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(5);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
     expect(await page.evaluate(() => (window.dataLayer || []).some((item) => JSON.stringify(item).includes('198.51.100.10')))).toBe(false);
