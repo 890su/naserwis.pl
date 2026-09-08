@@ -1,7 +1,8 @@
 # Search indexing cleanup — 2026-09-08
 
-- Added permanent redirects from trailing-slash service URLs to the canonical
-  no-slash URLs already used by page metadata and the sitemap.
+- Aligned service-page canonical, hreflang, social metadata, sitemap entries and
+  internal links with Cloudflare Pages' served trailing-slash URLs. Pages keeps
+  the no-slash variants consolidated through its automatic permanent redirect.
 - Added a branded, `noindex, follow` `404.html`, so unknown paths return a real
   HTTP 404 instead of the homepage with a misleading 200 response.
 - Extended production smoke checks to cover canonical redirects and the custom
