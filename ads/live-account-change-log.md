@@ -1,5 +1,23 @@
 # Google Ads live account change log
 
+## Search PL query-control update — 2026-09-08
+
+Campaign: `Search PL Naprawa sieci Warszawa`
+
+- Paused all 25 active broad-match service keywords after Google flagged the
+  account for overly general matching. Existing paused broad keywords remained
+  paused.
+- Added 55 phrase/exact replacements across `Naprawa WiFi` and
+  `Naprawa sieci`, preserving the same NaSerwis service intent and Warsaw
+  targeting. No landing URL was changed and no ITBIZ URL was introduced.
+- Added campaign-level negatives for research, DIY and diagnostic-only intent:
+  `speedtest`, `192.168`, `pinout`, `crimper`, `how to`, `what to do`,
+  `instrukcja`, `co zrobić`, `rj45 tool`, plus exact-match `router`.
+- Kept AI Max disabled. Campaign budget, schedule, location/language targeting,
+  bids and ads were not changed.
+- Per owner instruction, conversion actions and event delivery were not checked
+  or edited in this pass.
+
 Account: `671-474-3535`  
 Applied: 2026-09-05  
 Scope: NaSerwis.pl EN/UK only

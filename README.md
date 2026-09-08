@@ -97,6 +97,11 @@ that SHA, then verify `https://naserwis.pl` and the deployed asset content. Roll
 back with the previous successful Pages deployment or a reviewed Git revert,
 never with destructive reset/force-push. No DNS changes are needed.
 
+Canonical service URLs do not end with `/`. `public/_redirects` permanently
+redirects their slash variants (and legacy `.php` routes) to the canonical URL.
+Keep `public/404.html`: Cloudflare Pages uses it to return a real HTTP 404 for
+unknown paths instead of serving the homepage as a soft 404.
+
 `npm run smoke:production` verifies the deployed page/asset content and rejected
 API requests without submitting leads. For browser regression against production,
 set `PLAYWRIGHT_BASE_URL=https://naserwis.pl`; valid form delivery stays mocked

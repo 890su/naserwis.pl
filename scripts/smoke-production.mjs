@@ -52,7 +52,20 @@ for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js
     assert.equal(live.slice(0, -local.length).trim(), local.slice(0, marker).trim(), 'Unexpected Cloudflare robots prefix');
   } else assert.equal(live, local, `Production asset mismatch: ${asset}`);
 }
+for (const [source, destination] of [
+  ['/naprawa-wifi/', '/naprawa-wifi'],
+  ['/ru/naprawa-sieci/', '/ru/naprawa-sieci'],
+  ['/uk/montaz-sieci/', '/uk/montaz-sieci'],
+  ['/en/naprawa-wifi/', '/en/naprawa-wifi'],
+]) {
+  const response = await fetch(origin + source, { redirect: 'manual', signal: AbortSignal.timeout(20000) });
+  assert.equal(response.status, 301, `${source} should permanently redirect`);
+  assert.equal(new URL(response.headers.get('location'), origin).pathname, destination, `${source} redirect target`);
+}
+const missingPage = await fetch(origin + '/__naserwis_missing_page_check__', { redirect: 'manual', signal: AbortSignal.timeout(20000) });
+assert.equal(missingPage.status, 404, 'Unknown paths must return a real 404');
+assert.match(await missingPage.text(), /<meta name="robots" content="noindex, follow">/, '404 page must stay out of the index');
 assert.equal((await fetch(origin + '/api/contact', { signal: AbortSignal.timeout(20000) })).status, 405);
 const invalid = await fetch(origin + '/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: '{}', signal: AbortSignal.timeout(20000) });
 assert.equal(invalid.status, 400); assert.equal((await invalid.json()).success, false);
-console.log('Production smoke passed: 24 page SEO/UI checks, 8 exact assets + unchanged robots with verified managed prefix, API 405/400. No leads submitted.');
+console.log('Production smoke passed: page SEO/UI checks, exact assets, canonical redirects, real 404, API 405/400. No leads submitted.');

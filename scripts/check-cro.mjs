@@ -28,6 +28,10 @@ function seo(html) {
 }
 const files = await pages('public');
 const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-config.js'];
+const reviewedProtectedFileHashes = {
+  // 2026-09-08: reviewed canonical trailing-slash redirects; see RELEASE.md.
+  'public/_redirects': '5767ef2a0a4277af272c541776b6cbf86be10d7b28a7432359f5570073b4d580'
+};
 const record = process.argv.includes('--record-original');
 const original = file => execFileSync('git', ['show', `${baselineRevision}:${file}`], { encoding: 'utf8' });
 const expected = JSON.parse(await readFile(fixture, 'utf8'));
@@ -39,6 +43,7 @@ if (record) {
   console.log('Recorded original immutable SEO/Ads fixture from ' + baselineRevision);
 } else {
   const expectedStable = { ...expected, protectedFiles: Object.fromEntries(Object.entries(expected.protectedFiles).filter(([file]) => protectedFiles.includes(file))) };
+  for (const [file, reviewedHash] of Object.entries(reviewedProtectedFileHashes)) expectedStable.protectedFiles[file] = reviewedHash;
   assert.deepEqual(snapshot, expectedStable, 'Existing SEO or Ads configuration changed; review explicitly before updating baseline.');
   let landingCount = 0;
   for (const file of files) {
@@ -63,5 +68,8 @@ if (record) {
   assert.equal(landingCount, 20);
   const sitemap = await readFile('public/sitemap.xml', 'utf8');
   for (const route of ['/pogoda-internet-warszawa/', '/ru/pogoda-internet-varshava/', '/uk/pohoda-internet-varshava/', '/en/weather-internet-warsaw/']) assert.ok(sitemap.includes(route), `sitemap: ${route}`);
+  const notFound = await readFile('public/404.html', 'utf8');
+  assert.ok(notFound.includes('<meta name="robots" content="noindex, follow">'), '404 page must remain noindex, follow');
+  assert.ok(notFound.includes('href="/"'), '404 page must link back to the homepage');
   console.log('CRO guards passed: existing SEO/Ads unchanged, 20 enhanced landings and 4 reviewed tool routes.');
 }

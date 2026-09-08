@@ -1,3 +1,13 @@
+# Search indexing cleanup — 2026-09-08
+
+- Added permanent redirects from trailing-slash service URLs to the canonical
+  no-slash URLs already used by page metadata and the sitemap.
+- Added a branded, `noindex, follow` `404.html`, so unknown paths return a real
+  HTTP 404 instead of the homepage with a misleading 200 response.
+- Extended production smoke checks to cover canonical redirects and the custom
+  404 response. Intentional `noindex` directives on privacy/cookie pages remain
+  unchanged.
+
 # 2026-09-07 — weather card refinement
 
 - Moved perceived temperature beside the main reading and enlarged the remaining
