@@ -34,6 +34,20 @@ Campaign: `Search PL Naprawa sieci Warszawa`
 - Per owner instruction, conversion actions and event delivery were not checked
   or edited in this pass.
 
+## Conversion delivery verification — 2026-09-09
+
+- Google Tag Assistant found the live Google Ads destination
+  `AW-18394870871` and GA4 destination `G-FVC64PTKR3` on NaSerwis.pl.
+- A navigation-blocked diagnostic check confirmed production delivery for
+  phone, WhatsApp, Telegram and Chatwoot-open conversion labels. No contact
+  message, telephone call or form submission was made.
+- Google Ads still displayed `Nieaktywny` for phone, WhatsApp and Telegram
+  immediately after the check. Its status explanation says verification may
+  take up to three hours after a tag trigger.
+- The `Kontakt` goal remains excluded from all 42 campaigns, so these secondary
+  actions do not affect bidding. The account-default form-submission goal was
+  not changed.
+
 Account: `671-474-3535`  
 Applied: 2026-09-05  
 Scope: NaSerwis.pl EN/UK only

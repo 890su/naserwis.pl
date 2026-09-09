@@ -98,3 +98,24 @@ campaign parameters and click identifiers in session storage only after
 marketing consent, and includes them in a successfully submitted lead for
 source reconciliation. Verify redirects and analytics attribution after every
 tracking-template change.
+
+## Live delivery verification (2026-09-09)
+
+Google Tag Assistant detected both configured destinations on production:
+Google Ads `AW-18394870871` and GA4 `G-FVC64PTKR3`. An isolated browser check
+then intercepted the contact navigation before any call or message could be
+started and confirmed one Google Ads `conversion` request for each configured
+secondary action:
+
+| Action | Verified production label |
+| --- | --- |
+| `Klik — telefon` | `kLzqCNjw8uscENforcNE` |
+| `Klik — WhatsApp` | `9W2RCNvw8uscENforcNE` |
+| `Klik — Telegram` | `OTU7CN7w8uscENforcNE` |
+| `Otwarcie — czat` | `LFeICJj-_escENforcNE` |
+
+The diagnostic session had no Google Ads click identifier, did not submit a
+lead and did not send a message or place a call. Google Ads reported the three
+inactive click actions as unverified and states that status processing can take
+up to three hours after the tag is triggered. The four `Kontakt` actions remain
+excluded from account-default goals and campaign bidding by design.
