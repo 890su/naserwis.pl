@@ -69,6 +69,12 @@ for (const language of languages) {
     if (html.includes('googletagmanager.com/ns.html') || html.includes('googletagmanager.com/gtm.js') || html.includes('packs/js/sdk.js')) {
       throw new Error(`A third-party loader bypasses consent in ${file}.`);
     }
+    if (!html.includes('googletagmanager.com/gtag/js?id=AW-18394870871')) {
+      throw new Error(`Google Ads must be the primary gtag.js destination in ${file}.`);
+    }
+    if (!html.includes("gtag('config', 'AW-18394870871')") || !html.includes("gtag('config', 'G-FVC64PTKR3')")) {
+      throw new Error(`Google Ads and GA4 destinations must both be configured in ${file}.`);
+    }
     if (!html.includes('<meta name="robots" content="index, follow">')) {
       throw new Error(`SEO landing page is not explicitly indexable: ${file}.`);
     }

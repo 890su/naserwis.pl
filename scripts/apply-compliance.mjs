@@ -28,11 +28,11 @@ const safeCopyReplacements = [
 
 const measurementBlock = `    <!-- Consent Mode v2 must be initialised before Google tags. -->
     <script src="/consent.js?v=20260823c"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVC64PTKR3"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394870871"></script>
     <script>
       gtag('js', new Date());
-      gtag('config', 'G-FVC64PTKR3');
       gtag('config', 'AW-18394870871');
+      gtag('config', 'G-FVC64PTKR3');
     </script>
 `;
 

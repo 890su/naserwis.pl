@@ -1,3 +1,12 @@
+# Google Ads tag activation — 2026-09-09
+
+- Switched the single `gtag.js` loader from the GA4 measurement ID to Google
+  Ads destination `AW-18394870871`, matching the Ads installation wizard.
+- Kept GA4 `G-FVC64PTKR3` as a second destination on the same tag and preserved
+  Consent Mode v2 denied defaults before the Google script loads.
+- Added a build guard so future generated pages cannot silently revert the Ads
+  loader or drop either destination.
+
 # Search indexing cleanup — 2026-09-08
 
 - Aligned service-page canonical, hreflang, social metadata, sitemap entries and

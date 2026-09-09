@@ -7,6 +7,11 @@ Before Google tags load, the site sends denied defaults for
 Visitors can accept, reject or customise optional categories and can reopen the
 panel from the footer. Chatwoot loads only after support/chat consent.
 
+The single `gtag.js` loader uses the Google Ads destination
+`AW-18394870871`; the same tag then configures GA4 destination
+`G-FVC64PTKR3`. This matches the Ads installation wizard while keeping one
+Google tag per page and preserving the denied Consent Mode defaults.
+
 ## Events emitted by the website
 
 - `generate_lead` and `naserwis_lead_submit` — only after a successful lead API
