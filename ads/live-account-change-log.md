@@ -1,5 +1,21 @@
 # Google Ads live account change log
 
+## Google tag activation — 2026-09-09
+
+- Published the Google Ads destination `AW-18394870871` as the single primary
+  `gtag.js` loader on NaSerwis.pl; GA4 `G-FVC64PTKR3` remains configured as the
+  second destination on the same tag.
+- Confirmed the installed Google tag in the Google Ads setup flow for
+  `Klik — telefon`.
+- Verified in production that the browser sends an Ads `page_view` measurement
+  to `AW-18394870871` and a GA4 `page_view` to `G-FVC64PTKR3` with the existing
+  Consent Mode v2 defaults.
+- Verified that the live `Klik — telefon` event snippet uses
+  `AW-18394870871/kLzqCNjw8uscENforcNE`, matching `public/site-config.js`.
+- No synthetic conversion or test lead was sent. Google Ads can continue to
+  show `Nieaktywny` or `Brak konwersji w ostatnim czasie` until it receives and
+  processes a real eligible interaction.
+
 ## Search PL query-control update — 2026-09-08
 
 Campaign: `Search PL Naprawa sieci Warszawa`
