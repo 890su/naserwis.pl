@@ -27,6 +27,10 @@ legal identity and budget approval are complete.
   pages.
 - `responsive-search-ads.csv` — one paused RSA asset set per campaign/ad group;
   text is validated against the 30/90 character limits.
+- `search-ru-sitelinks.csv` — six campaign-level Russian sitelinks prepared for
+  the existing live `Search RU Сети Варшава` campaign. They point only to RU
+  service pages, prices, the contact form and reviews on NaSerwis.pl. The
+  weather/network SEO utility is intentionally excluded from paid traffic.
 - `negative-keywords.csv` — language-specific exclusions to review before use.
 - `non-pl-core-ad-groups.csv`, `non-pl-core-keywords.csv` and
   `non-pl-core-responsive-search-ads.csv` — bulk-upload content used for the
