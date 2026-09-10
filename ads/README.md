@@ -31,6 +31,11 @@ legal identity and budget approval are complete.
   the existing live `Search RU Сети Варшава` campaign. They point only to RU
   service pages, prices, the contact form and reviews on NaSerwis.pl. The
   weather/network SEO utility is intentionally excluded from paid traffic.
+- `search-other-language-sitelinks.csv` — six campaign-level sitelinks each for
+  `Search PL Naprawa sieci Warszawa`, `SRCH-EN-A-CORE` and `SRCH-UK-A-CORE`.
+  Every link stays on the matching NaSerwis language version and uses a service
+  page, prices, contact or reviews destination; weather/network pages remain
+  excluded from paid traffic.
 - `negative-keywords.csv` — language-specific exclusions to review before use.
 - `non-pl-core-ad-groups.csv`, `non-pl-core-keywords.csv` and
   `non-pl-core-responsive-search-ads.csv` — bulk-upload content used for the

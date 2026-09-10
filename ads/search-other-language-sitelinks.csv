@@ -1,0 +1,19 @@
+Campaign,Link text,Final URL,Description line 1,Description line 2,Platform targeting,Device preference,Status
+Search PL Naprawa sieci Warszawa,Naprawa Wi-Fi,https://naserwis.pl/naprawa-wifi/,Konfiguracja routera i Mesh,Lepszy zasięg i stabilność,All,All,Enabled
+Search PL Naprawa sieci Warszawa,Naprawa sieci LAN,https://naserwis.pl/naprawa-sieci/,Znajdziemy przerwę lub usterkę,"Kable, porty i gniazda RJ45",All,All,Enabled
+Search PL Naprawa sieci Warszawa,Montaż sieci LAN,https://naserwis.pl/montaz-sieci/,Sieć kablowa dla domu i biura,Gniazda RJ45 i szafy RACK,All,All,Enabled
+Search PL Naprawa sieci Warszawa,Cennik usług,https://naserwis.pl/#services,Zobacz podstawowe ceny,Koszt uzgadniamy przed pracą,All,All,Enabled
+Search PL Naprawa sieci Warszawa,Wyślij zapytanie,https://naserwis.pl/#contact,Krótko opisz swój problem,Oddzwonimy i ustalimy termin,All,All,Enabled
+Search PL Naprawa sieci Warszawa,Opinie klientów,https://naserwis.pl/#reviews,Opinie o pracy naszego serwisu,Zobacz oceny klientów,All,All,Enabled
+SRCH-EN-A-CORE,Wi-Fi Repair,https://naserwis.pl/en/naprawa-wifi/,Router and Mesh configuration,Improve coverage and stability,All,All,Enabled
+SRCH-EN-A-CORE,LAN Network Repair,https://naserwis.pl/en/naprawa-sieci/,Find cable and network faults,"Cables, ports and RJ45 sockets",All,All,Enabled
+SRCH-EN-A-CORE,LAN Network Installation,https://naserwis.pl/en/montaz-sieci/,Wired networks for home and office,RJ45 sockets and RACK cabinets,All,All,Enabled
+SRCH-EN-A-CORE,Service Prices,https://naserwis.pl/en/#services,See our standard service prices,Cost agreed before work starts,All,All,Enabled
+SRCH-EN-A-CORE,Send an Enquiry,https://naserwis.pl/en/#contact,Briefly describe the problem,We'll call to arrange a time,All,All,Enabled
+SRCH-EN-A-CORE,Customer Reviews,https://naserwis.pl/en/#reviews,See feedback about our service,Read ratings from our customers,All,All,Enabled
+SRCH-UK-A-CORE,Ремонт Wi-Fi,https://naserwis.pl/uk/naprawa-wifi/,Налаштування роутера та Mesh,Покращимо покриття і стабільність,All,All,Enabled
+SRCH-UK-A-CORE,Ремонт мережі LAN,https://naserwis.pl/uk/naprawa-sieci/,Знайдемо обрив або несправність,"Кабелі, порти та розетки RJ45",All,All,Enabled
+SRCH-UK-A-CORE,Монтаж мережі LAN,https://naserwis.pl/uk/montaz-sieci/,Кабельна мережа для дому й офісу,Розетки RJ45 та шафи RACK,All,All,Enabled
+SRCH-UK-A-CORE,Ціни на послуги,https://naserwis.pl/uk/#services,Перегляньте основні ціни,Вартість узгодимо до початку робіт,All,All,Enabled
+SRCH-UK-A-CORE,Надіслати заявку,https://naserwis.pl/uk/#contact,Коротко опишіть проблему,Передзвонимо та узгодимо час,All,All,Enabled
+SRCH-UK-A-CORE,Відгуки клієнтів,https://naserwis.pl/uk/#reviews,Відгуки про роботу сервісу,Перегляньте оцінки клієнтів,All,All,Enabled
