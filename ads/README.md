@@ -1,19 +1,24 @@
 # Google Ads build pack
 
-> **Current operating constraint (updated 2026-09-05):** the owner reports that
+> **Current operating constraint (updated 2026-09-10):** the owner reports that
 > manually created NaSerwis campaigns passed Google review. Do not import these
 > repository drafts over that live structure or create duplicate campaigns.
 > Approval of existing entities does not guarantee approval after edits; review
 > statuses again after every material ad, keyword or destination change.
+> The live PL, RU, EN and UK campaigns are currently active with a combined
+> configured budget of 70 PLN/day; their verified state is recorded in
+> `live-account-change-log.md`.
 
 For the owner-approved NaSerwis-only RU/UK/EN acquisition work, use
 `non-pl-existing-campaign-optimization.md` for the existing approved campaigns
 and the complementary owned/community/referral pack in `../marketing/`. Both
 exclude Polish and ITBIZ and do not change these paused Search drafts.
 
-All campaigns and entities in this folder are deliberately **paused**. Do not
-import or enable them until advertiser verification, consent/conversion QA,
-legal identity and budget approval are complete.
+The campaign-build drafts in this folder are deliberately **paused**. Do not
+import or enable those drafts until advertiser verification,
+consent/conversion QA, legal identity and budget approval are complete. Files
+whose names start with `live-import-` are exact deltas already applied to the
+live account and are retained for auditability and repeatable review.
 
 ## Files
 
@@ -36,6 +41,9 @@ legal identity and budget approval are complete.
   Every link stays on the matching NaSerwis language version and uses a service
   page, prices, contact or reviews destination; weather/network pages remain
   excluded from paid traffic.
+- `live-import-sitelinks-2026-09-10.csv` — the exact 22-row Google Ads bulk
+  upload applied on 2026-09-10. It omits the two Polish sitelinks that already
+  existed in the live account; Google accepted all 22 rows.
 - `negative-keywords.csv` — language-specific exclusions to review before use.
 - `non-pl-core-ad-groups.csv`, `non-pl-core-keywords.csv` and
   `non-pl-core-responsive-search-ads.csv` — bulk-upload content used for the

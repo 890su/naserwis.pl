@@ -1,5 +1,34 @@
 # Google Ads live account change log
 
+## Multilingual campaign sitelinks — 2026-09-10
+
+Account: `671-474-3535`
+
+- Applied `live-import-sitelinks-2026-09-10.csv` through Google Ads bulk
+  uploads. Google completed the upload with 22 spreadsheet rows and the
+  downloaded result reported `# OK` for all 22 rows (0 rejected rows).
+- Created and associated campaign-level sitelink assets as follows:
+  - 4 new Polish sitelinks for `Search PL Naprawa sieci Warszawa`; together
+    with the 2 existing Polish sitelinks, the campaign now has the planned set
+    of 6.
+  - 6 Russian sitelinks for `Search RU Сети Варшава`.
+  - 6 English sitelinks for `SRCH-EN-A-CORE`.
+  - 6 Ukrainian sitelinks for `SRCH-UK-A-CORE`.
+- All destinations stay on the matching language version of NaSerwis.pl and
+  point to service pages, prices, contact or reviews. The weather/network SEO
+  utility was intentionally excluded from paid traffic.
+- The upload changed only sitelink assets. Campaign budgets, bid strategies,
+  keywords, ads, schedules, languages and geo targeting were not changed.
+- Live campaign state after the import:
+  - `Search PL Naprawa sieci Warszawa` — active, 25 PLN/day.
+  - `Search RU Сети Варшава` — active, 25 PLN/day.
+  - `SRCH-EN-A-CORE` — active, 10 PLN/day, Manual CPC.
+  - `SRCH-UK-A-CORE` — active, 10 PLN/day, Manual CPC.
+  - Combined configured daily budget: 70 PLN/day.
+- Google currently reports low ad strength for the Russian campaign and a
+  learning bid strategy for the Polish campaign. These pre-existing campaign
+  diagnostics were not changed by the sitelink upload.
+
 ## Google tag activation — 2026-09-09
 
 - Published the Google Ads destination `AW-18394870871` as the single primary
