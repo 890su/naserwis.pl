@@ -57,6 +57,10 @@ live account and are retained for auditability and repeatable review.
   launch gates. RU is excluded from this import because the account already has
   an active manually created Russian campaign.
 - `measurement.md` — conversion, consent and UTM implementation contract.
+- `search-term-landing-page-map-2026-09-16.md` — evidence-based map from the
+  latest disclosed Google Ads terms and Search Console queries to intent,
+  existing landing pages, safe dynamic hero variants and future ad groups. It
+  is a research/implementation plan and does not represent a live Ads change.
 
 Regenerate the CSV and negative-list source files with `npm run ads:build`.
 
