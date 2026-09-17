@@ -14,6 +14,11 @@
   all four languages, malicious values, form payloads and conversion labels.
 - Fixed the local QA server so a missing static file returns 404 without first
   sending a 200 header.
+- Published commit `b6f9916` through the existing Cloudflare Pages Git
+  integration and passed production smoke plus six focused browser checks.
+- Prepared a separate paused Google Ads bulk package with 20 intent groups,
+  240 phrase/exact keywords and 20 localized RSAs. It is not yet applied to the
+  live account; budgets, targeting, schedules and conversions remain unchanged.
 
 # Google Ads tag activation — 2026-09-09
 

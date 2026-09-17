@@ -54,6 +54,38 @@ test('Google Ads import pack targets only the existing empty EN/UK shells', asyn
   }
 });
 
+test('intent Ads pack is paused, narrow-match and limited to reviewed NaSerwis URLs', async () => {
+  const allowedCampaigns = [
+    'SRCH-EN-A-CORE',
+    'SRCH-UK-A-CORE',
+    'Search PL Naprawa sieci Warszawa',
+    'Search RU Сети Варшава',
+  ];
+  const allowedIntents = ['lan-install', 'lan-repair', 'no-internet', 'router-setup', 'weak-wifi'];
+
+  const groupRows = parseCsv(await readFile(new URL('../../ads/intent-ad-groups-2026-09-17.csv', import.meta.url), 'utf8'));
+  assert.equal(groupRows.length, 21);
+  assert.deepEqual([...new Set(groupRows.slice(1).map((row) => row[0]))].sort(), allowedCampaigns);
+  assert.ok(groupRows.slice(1).every((row) => row[2] === 'Paused'));
+
+  const keywordRows = parseCsv(await readFile(new URL('../../ads/intent-keywords-2026-09-17.csv', import.meta.url), 'utf8'));
+  assert.equal(keywordRows.length, 241);
+  assert.deepEqual([...new Set(keywordRows.slice(1).map((row) => row[3]))].sort(), ['Exact', 'Phrase']);
+  for (const row of keywordRows.slice(1)) {
+    const url = new URL(row[5]);
+    assert.equal(url.hostname, 'naserwis.pl');
+    assert.ok(allowedIntents.includes(url.searchParams.get('intent')));
+  }
+
+  const adRows = parseCsv(await readFile(new URL('../../ads/intent-responsive-search-ads-2026-09-17.csv', import.meta.url), 'utf8'));
+  assert.equal(adRows.length, 21);
+  assert.ok(adRows.slice(1).every((row) => row[3] === 'Responsive search ad'));
+  for (const row of adRows.slice(1)) {
+    assert.ok(row.slice(7, 17).every((headline) => [...headline].length <= 30));
+    assert.ok(row.slice(17, 21).every((description) => [...description].length <= 90));
+  }
+});
+
 test('outreach copy avoids unverifiable service promises', async () => {
   const pack = JSON.parse(await readFile(new URL('../../marketing/non-pl-pack.json', import.meta.url), 'utf8'));
   const forbidden = /24\s*\/\s*7|same[ -]?day|guarantee|гарант|гарантовано|сегодня|сьогодні/i;

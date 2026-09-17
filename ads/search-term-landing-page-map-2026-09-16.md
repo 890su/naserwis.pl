@@ -19,7 +19,10 @@ The site-side prerequisite is implemented and published from the repository:
 - canonical URLs, forms and all existing Google Ads conversion labels remain
   unchanged.
 
-Live Google Ads ad groups, keywords, suffixes and negatives are still pending.
+The paused bulk-upload package for 20 intent groups, 240 phrase/exact keywords
+and 20 localized RSAs is prepared in the repository. It has not been applied to
+the live account. Campaign negatives and the staged enable/pause cutover remain
+pending.
 
 ## Evidence used
 
@@ -145,10 +148,12 @@ not necessarily the person's search term. It is therefore optional and should
 only be tested inside tightly controlled phrase/exact groups with safe fallback
 headlines. Static, intent-specific RSA headlines are the safer first version.
 
-For the landing page, set a reviewed custom parameter per ad group, such as
-`{_intent}=weak-wifi`, and append `intent={_intent}` through the final URL
-suffix. Keep the existing UTM and `gclid` flow. Test the combined URL before
-publishing any account change.
+For the landing page, use only a reviewed allowlisted value. The staged import
+uses that value directly in the final URL, for example `?intent=weak-wifi`, so
+it does not depend on account-level suffix configuration. A reviewed custom
+parameter such as `{_intent}=weak-wifi` with `intent={_intent}` in the final URL
+suffix remains a valid later alternative. Keep Google auto-tagging and test the
+combined URL before publishing any account change.
 
 Official references:
 
@@ -182,10 +187,11 @@ no conversions.
    URLs, canonical tags, forms and conversion events stable.
 3. **Completed 2026-09-17:** implement and test the allowlisted `intent` hero switch and hidden form
    topic. Invalid or absent values must show the normal page.
-4. Create the five intent-specific ad groups inside the existing language
-   campaigns. Reuse only keywords that match the group's service and language.
-5. Add reviewed RSA headlines. Test keyword insertion only after the static
-   version has clean search-term data.
+4. **Prepared 2026-09-17, not applied:** create the five intent-specific ad
+   groups inside the existing language campaigns with phrase/exact keywords.
+5. **Prepared 2026-09-17, not applied:** add reviewed localized RSA headlines.
+   Test keyword insertion only after the static version has clean search-term
+   data.
 6. Measure qualified enquiries and booked work by language, intent and service.
    CTR is a diagnostic metric, not the optimisation target.
 7. Consider a separate router setup or computer repair page only after the

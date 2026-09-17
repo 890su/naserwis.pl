@@ -52,6 +52,7 @@ set `PLAYWRIGHT_CHANNEL` to another installed supported channel if needed.
 ```powershell
 npm ci
 npm run intent:generate
+npm run ads:intent:check
 npm run cro:generate
 npm run tools:generate
 npm run check
@@ -63,6 +64,10 @@ npm run test:e2e
 installation deliverables across the 12 localized service pages. The runtime
 accepts only five reviewed `intent` values, keeps clean canonical URLs and
 passes the selected non-PII topic into contact forms and measurement.
+`ads:intent:generate` builds the paused Google Ads migration package for the
+five intent groups in each active language campaign. `ads:intent:check` checks
+row counts, phrase/exact matching, URL allowlisting and Google RSA text limits
+without changing the live Ads account.
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
 The owner's preferred original round launcher/channel buttons are retained.

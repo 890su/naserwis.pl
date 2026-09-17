@@ -101,7 +101,10 @@ Use a campaign-level final URL suffix such as:
 Define `{_lang}` at campaign level and the reviewed `{_intent}` at ad-group
 level. Allowed intent values are `weak-wifi`, `no-internet`, `router-setup`,
 `lan-repair` and `lan-install`. Unknown values are ignored and never rendered or
-forwarded with a lead. The browser stores the
+forwarded with a lead. The staged 2026-09-17 bulk package places the same
+allowlisted value directly in each final URL (`?intent=...`) instead of
+depending on a campaign suffix; Google auto-tagging can still append `gclid`
+normally. The browser stores the
 campaign parameters and click identifiers in session storage only after
 marketing consent, and includes them in a successfully submitted lead for
 source reconciliation. Verify redirects and analytics attribution after every
