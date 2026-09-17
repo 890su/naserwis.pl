@@ -1,5 +1,29 @@
 # Google Ads live account change log
 
+## Intent-matched groups, keywords and ads — 2026-09-17
+
+Account: `671-474-3535`
+
+- Applied 20 `INTENT-` ad groups across the four existing PL/RU/UK/EN Search
+  campaigns, five groups per campaign.
+- Google created the imported groups as active despite the CSV `Paused` value.
+  Immediately filtered by the unique `INTENT-` prefix, selected all 20 and
+  changed their status to `Wstrzymana`; the resulting 20-row view confirmed the
+  paused state and zero impressions, clicks and cost for the new groups.
+- Applied 240 phrase/exact keywords. No broad-match keyword was added.
+- Six rows were rejected twice with Google's generic error: phrase and exact
+  variants of `internet nie działa`, `naprawa internetu warszawa` and
+  `internet repair warsaw`. They were replaced with phrase and exact variants
+  of `problem z wifi warszawa`, `awaria wifi warszawa` and
+  `wifi technician warsaw`; Google accepted all six replacement rows with 0
+  errors. The rejected phrases remain excluded from the repeatable source pack.
+- Applied 20 localized responsive search ads with 0 rejected rows.
+- The obsolete pre-fix 18-row group preview remains unapplied and must not be
+  used; the corrected 20-row upload is the applied source of truth.
+- Existing groups, budgets, bidding, geo/language targeting, schedules, goals
+  and conversion actions were not changed. A separate confirmation is required
+  before enabling any `INTENT-` group or pausing an existing group.
+
 ## Multilingual campaign sitelinks — 2026-09-10
 
 Account: `671-474-3535`

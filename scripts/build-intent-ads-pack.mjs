@@ -78,9 +78,9 @@ const definitions = {
         keywords: [
           "wifi nie działa",
           "brak internetu wifi",
-          "internet nie działa",
+          "problem z wifi warszawa",
           "naprawa wifi warszawa",
-          "naprawa internetu warszawa",
+          "awaria wifi warszawa",
           "wifi połączone bez internetu",
         ],
         headlines: [
@@ -488,7 +488,7 @@ const definitions = {
           "no internet wifi",
           "connected no internet",
           "wifi repair warsaw",
-          "internet repair warsaw",
+          "wifi technician warsaw",
           "intermittent wifi repair",
         ],
         headlines: [

@@ -16,9 +16,11 @@
   sending a 200 header.
 - Published commit `b6f9916` through the existing Cloudflare Pages Git
   integration and passed production smoke plus six focused browser checks.
-- Prepared a separate paused Google Ads bulk package with 20 intent groups,
-  240 phrase/exact keywords and 20 localized RSAs. It is not yet applied to the
-  live account; budgets, targeting, schedules and conversions remain unchanged.
+- Imported a separate Google Ads bulk package with 20 intent groups, 240
+  accepted phrase/exact keywords and 20 localized RSAs. All 20 groups are
+  paused after import; budgets, targeting, schedules and conversions remain
+  unchanged. Six rejected rows were replaced with more specific service terms
+  and the replacements were accepted with no errors.
 
 # Google Ads tag activation — 2026-09-09
 

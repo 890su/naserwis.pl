@@ -1,8 +1,9 @@
 # Search-term to landing-page map — 2026-09-16
 
 Scope: NaSerwis.pl only. This document maps real Google Ads search terms and
-Search Console queries to user intent, existing landing pages and proposed ad
-groups. It does not record a live account change.
+Search Console queries to user intent, existing landing pages and the staged
+Google Ads structure. Live changes are recorded in
+`live-account-change-log.md`.
 
 ## Implementation status — 2026-09-17
 
@@ -19,10 +20,12 @@ The site-side prerequisite is implemented and published from the repository:
 - canonical URLs, forms and all existing Google Ads conversion labels remain
   unchanged.
 
-The paused bulk-upload package for 20 intent groups, 240 phrase/exact keywords
-and 20 localized RSAs is prepared in the repository. It has not been applied to
-the live account. Campaign negatives and the staged enable/pause cutover remain
-pending.
+The bulk-upload package has been applied to the live account: 20 intent groups,
+240 accepted phrase/exact keywords and 20 localized RSAs. All 20 groups are
+paused. Google repeatedly rejected both match variants of three broad phrases;
+they were replaced with more specific Wi-Fi service terms, and all six
+replacement rows were accepted. Campaign negatives and the staged enable/pause
+cutover remain pending.
 
 ## Evidence used
 
@@ -187,9 +190,9 @@ no conversions.
    URLs, canonical tags, forms and conversion events stable.
 3. **Completed 2026-09-17:** implement and test the allowlisted `intent` hero switch and hidden form
    topic. Invalid or absent values must show the normal page.
-4. **Prepared 2026-09-17, not applied:** create the five intent-specific ad
-   groups inside the existing language campaigns with phrase/exact keywords.
-5. **Prepared 2026-09-17, not applied:** add reviewed localized RSA headlines.
+4. **Completed 2026-09-17, paused:** create the five intent-specific ad groups
+   inside each existing language campaign with phrase/exact keywords.
+5. **Completed 2026-09-17, paused:** add reviewed localized RSA headlines.
    Test keyword insertion only after the static version has clean search-term
    data.
 6. Measure qualified enquiries and booked work by language, intent and service.

@@ -62,16 +62,17 @@ live account and are retained for auditability and repeatable review.
   existing landing pages, safe dynamic hero variants and future ad groups. It
   is a research/implementation plan and does not represent a live Ads change.
 - `intent-ad-groups-2026-09-17.csv`, `intent-keywords-2026-09-17.csv` and
-  `intent-responsive-search-ads-2026-09-17.csv` — staged, paused intent-group
-  import for the four existing active language campaigns. The pack contains 20
-  groups, 240 phrase/exact keywords and 20 localized RSAs. It uses only
+  `intent-responsive-search-ads-2026-09-17.csv` — repeatable source for the
+  intent-group import applied to the four existing active language campaigns.
+  The pack contains 20 groups, 240 accepted phrase/exact keywords and 20
+  localized RSAs. It uses only
   NaSerwis service pages and reviewed `intent` query values. Unique `INTENT-`
-  group names keep the staged entities separate from existing live groups.
+  group names keep the paused entities separate from existing live groups.
 - `intent-ads-import-2026-09-17.md` — live-account audit, upload checks and the
-  campaign-by-campaign cutover order. The package is prepared but not applied.
+  campaign-by-campaign cutover order, including the applied import outcome.
 
 Regenerate the CSV and negative-list source files with `npm run ads:build`.
-Regenerate the staged intent package with `npm run ads:intent:generate` and
+Regenerate the intent package with `npm run ads:intent:generate` and
 verify that committed CSVs match the reviewed source with
 `npm run ads:intent:check`.
 

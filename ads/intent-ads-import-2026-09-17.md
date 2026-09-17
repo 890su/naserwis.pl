@@ -1,7 +1,7 @@
 # Intent Ads import plan — 2026-09-17
 
-Scope: the four active NaSerwis.pl Search campaigns only. This package is
-prepared for Google Ads bulk upload but has not been uploaded or applied.
+Scope: the four active NaSerwis.pl Search campaigns only. The package has been
+uploaded and applied; all new groups remain paused.
 
 ## Live-account audit before the import
 
@@ -46,9 +46,11 @@ npm run ads:intent:check
 
 ## Preview and cutover gates
 
-1. Upload the group, keyword and RSA files in that order. The preview must show
-   20 groups, 240 keywords and 20 ads with no rejected rows. Apply only while
-   every new group remains paused.
+1. **Completed 2026-09-17:** uploaded the group, keyword and RSA files in that
+   order. Google accepted 20 groups, 240 keywords and 20 ads. The importer
+   initially created the groups as active despite the source status, so all 20
+   `INTENT-` groups were selected and paused immediately; the live table then
+   confirmed `Wstrzymana` for the filtered 20-row set.
 2. Wait for Google policy review and inspect the live destinations. Do not
    change budgets, geo targeting, language targeting, schedules, bidding or
    conversion goals as part of this import.
@@ -71,9 +73,24 @@ npm run ads:intent:check
 The launch actions above change public ad delivery. They require a separate
 live-account confirmation immediately before the Google Ads apply/enable step.
 
-## Google Ads preview result
+## Google Ads import result
 
-On 2026-09-17 Google Ads accepted the corrected ad-group file in preview as
-20 changes, 20 introduced and 0 errors. The first preview exposed two existing
-EN/UK `LAN-INSTALL` name collisions; adding the `INTENT-` prefix removed those
-collisions. No preview was applied and the live account remains unchanged.
+On 2026-09-17 Google Ads accepted and applied the corrected ad-group file as
+20 changes with 0 errors. The first, older preview exposed two existing EN/UK
+`LAN-INSTALL` name collisions; adding the `INTENT-` prefix removed them. That
+obsolete 18-row preview was not applied.
+
+The first keyword upload applied 234 of 240 rows. Google returned a generic
+error for both phrase and exact variants of `internet nie działa`,
+`naprawa internetu warszawa` and `internet repair warsaw`. A separate six-row
+retry produced the same 0 accepted / 6 rejected result. The three phrases were
+therefore replaced with the more specific service terms
+`problem z wifi warszawa`, `awaria wifi warszawa` and
+`wifi technician warsaw`. Google accepted all six phrase/exact replacement
+rows with 0 errors, bringing the applied and repeatable package to 240
+keywords. No rejected row was applied.
+
+The RSA upload applied 20 of 20 rows with 0 errors. Campaign budgets, bids,
+locations, languages, schedules, goals, conversion actions and existing ad
+groups were not changed. No new group is delivering until a separate staged
+cutover is confirmed and executed.

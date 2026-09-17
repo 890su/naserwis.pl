@@ -71,6 +71,8 @@ test('intent Ads pack is paused, narrow-match and limited to reviewed NaSerwis U
   const keywordRows = parseCsv(await readFile(new URL('../../ads/intent-keywords-2026-09-17.csv', import.meta.url), 'utf8'));
   assert.equal(keywordRows.length, 241);
   assert.deepEqual([...new Set(keywordRows.slice(1).map((row) => row[3]))].sort(), ['Exact', 'Phrase']);
+  const rejectedByGoogle = new Set(['internet nie działa', 'naprawa internetu warszawa', 'internet repair warsaw']);
+  assert.ok(keywordRows.slice(1).every((row) => !rejectedByGoogle.has(row[2])));
   for (const row of keywordRows.slice(1)) {
     const url = new URL(row[5]);
     assert.equal(url.hostname, 'naserwis.pl');
