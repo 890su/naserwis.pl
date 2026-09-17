@@ -65,7 +65,8 @@ live account and are retained for auditability and repeatable review.
   `intent-responsive-search-ads-2026-09-17.csv` — staged, paused intent-group
   import for the four existing active language campaigns. The pack contains 20
   groups, 240 phrase/exact keywords and 20 localized RSAs. It uses only
-  NaSerwis service pages and reviewed `intent` query values.
+  NaSerwis service pages and reviewed `intent` query values. Unique `INTENT-`
+  group names keep the staged entities separate from existing live groups.
 - `intent-ads-import-2026-09-17.md` — live-account audit, upload checks and the
   campaign-by-campaign cutover order. The package is prepared but not applied.
 

@@ -48,7 +48,7 @@ const definitions = {
     ],
     intents: {
       "weak-wifi": {
-        group: "WIFI-COVERAGE",
+        group: "INTENT-WIFI-COVERAGE",
         paths: ["wifi", "zasieg"],
         keywords: [
           "słaby zasięg wifi",
@@ -73,7 +73,7 @@ const definitions = {
         ],
       },
       "no-internet": {
-        group: "WIFI-NO-INTERNET",
+        group: "INTENT-WIFI-NO-INTERNET",
         paths: ["wifi", "naprawa"],
         keywords: [
           "wifi nie działa",
@@ -98,7 +98,7 @@ const definitions = {
         ],
       },
       "router-setup": {
-        group: "ROUTER-SETUP",
+        group: "INTENT-ROUTER-SETUP",
         paths: ["router", "konfiguracja"],
         keywords: [
           "konfiguracja routera",
@@ -123,7 +123,7 @@ const definitions = {
         ],
       },
       "lan-repair": {
-        group: "LAN-REPAIR",
+        group: "INTENT-LAN-REPAIR",
         paths: ["lan", "naprawa"],
         keywords: [
           "serwis sieci komputerowych",
@@ -148,7 +148,7 @@ const definitions = {
         ],
       },
       "lan-install": {
-        group: "LAN-INSTALL",
+        group: "INTENT-LAN-INSTALL",
         paths: ["lan", "montaz"],
         keywords: [
           "montaż sieci lan",
@@ -184,7 +184,7 @@ const definitions = {
     ],
     intents: {
       "weak-wifi": {
-        group: "WIFI-COVERAGE",
+        group: "INTENT-WIFI-COVERAGE",
         paths: ["wifi", "signal"],
         keywords: [
           "слабый сигнал wifi",
@@ -209,7 +209,7 @@ const definitions = {
         ],
       },
       "no-internet": {
-        group: "WIFI-NO-INTERNET",
+        group: "INTENT-WIFI-NO-INTERNET",
         paths: ["wifi", "remont"],
         keywords: [
           "не работает wifi",
@@ -234,7 +234,7 @@ const definitions = {
         ],
       },
       "router-setup": {
-        group: "ROUTER-SETUP",
+        group: "INTENT-ROUTER-SETUP",
         paths: ["router", "setup"],
         keywords: [
           "настройка роутера",
@@ -259,7 +259,7 @@ const definitions = {
         ],
       },
       "lan-repair": {
-        group: "LAN-REPAIR",
+        group: "INTENT-LAN-REPAIR",
         paths: ["lan", "remont"],
         keywords: [
           "ремонт компьютерной сети",
@@ -284,7 +284,7 @@ const definitions = {
         ],
       },
       "lan-install": {
-        group: "LAN-INSTALL",
+        group: "INTENT-LAN-INSTALL",
         paths: ["lan", "montazh"],
         keywords: [
           "монтаж локальной сети",
@@ -320,7 +320,7 @@ const definitions = {
     ],
     intents: {
       "weak-wifi": {
-        group: "WIFI-COVERAGE",
+        group: "INTENT-WIFI-COVERAGE",
         paths: ["wifi", "signal"],
         keywords: [
           "слабкий сигнал wifi",
@@ -345,7 +345,7 @@ const definitions = {
         ],
       },
       "no-internet": {
-        group: "WIFI-NO-INTERNET",
+        group: "INTENT-WIFI-NO-INTERNET",
         paths: ["wifi", "remont"],
         keywords: [
           "не працює wifi",
@@ -370,7 +370,7 @@ const definitions = {
         ],
       },
       "router-setup": {
-        group: "ROUTER-SETUP",
+        group: "INTENT-ROUTER-SETUP",
         paths: ["router", "setup"],
         keywords: [
           "налаштування роутера",
@@ -395,7 +395,7 @@ const definitions = {
         ],
       },
       "lan-repair": {
-        group: "LAN-REPAIR",
+        group: "INTENT-LAN-REPAIR",
         paths: ["lan", "remont"],
         keywords: [
           "ремонт комп'ютерної мережі",
@@ -420,7 +420,7 @@ const definitions = {
         ],
       },
       "lan-install": {
-        group: "LAN-INSTALL",
+        group: "INTENT-LAN-INSTALL",
         paths: ["lan", "montazh"],
         keywords: [
           "монтаж локальної мережі",
@@ -456,7 +456,7 @@ const definitions = {
     ],
     intents: {
       "weak-wifi": {
-        group: "WIFI-COVERAGE",
+        group: "INTENT-WIFI-COVERAGE",
         paths: ["wifi", "coverage"],
         keywords: [
           "weak wifi signal",
@@ -481,7 +481,7 @@ const definitions = {
         ],
       },
       "no-internet": {
-        group: "WIFI-NO-INTERNET",
+        group: "INTENT-WIFI-NO-INTERNET",
         paths: ["wifi", "repair"],
         keywords: [
           "wifi not working",
@@ -506,7 +506,7 @@ const definitions = {
         ],
       },
       "router-setup": {
-        group: "ROUTER-SETUP",
+        group: "INTENT-ROUTER-SETUP",
         paths: ["router", "setup"],
         keywords: [
           "router setup",
@@ -531,7 +531,7 @@ const definitions = {
         ],
       },
       "lan-repair": {
-        group: "LAN-REPAIR",
+        group: "INTENT-LAN-REPAIR",
         paths: ["lan", "repair"],
         keywords: [
           "network repair warsaw",
@@ -556,7 +556,7 @@ const definitions = {
         ],
       },
       "lan-install": {
-        group: "LAN-INSTALL",
+        group: "INTENT-LAN-INSTALL",
         paths: ["lan", "install"],
         keywords: [
           "lan installation",

@@ -23,7 +23,9 @@ prepared for Google Ads bulk upload but has not been uploaded or applied.
 
 - `intent-ad-groups-2026-09-17.csv`: 20 groups, five per campaign. Every group
   is created paused. EN/UK retain the existing 3 PLN default max CPC; PL/RU do
-  not override the campaign bidding setup.
+  not override the campaign bidding setup. Every staging name starts with
+  `INTENT-`, so existing EN/UK `LAN-INSTALL` groups cannot be updated by
+  accident.
 - `intent-keywords-2026-09-17.csv`: 240 enabled keywords inside the paused
   groups. Every phrase has one phrase-match and one exact-match row. There are
   no broad-match rows.
@@ -51,9 +53,11 @@ npm run ads:intent:check
    change budgets, geo targeting, language targeting, schedules, bidding or
    conversion goals as part of this import.
 3. Migrate campaign by campaign:
-   - PL: first enable `WIFI-COVERAGE`, `ROUTER-SETUP` and `LAN-INSTALL`. Keep
+   - PL: first enable `INTENT-WIFI-COVERAGE`, `INTENT-ROUTER-SETUP` and
+     `INTENT-LAN-INSTALL`. Keep
      the converting `Naprawa sieci` group and the existing `Naprawa WiFi`
-     group as controls. Leave the new `WIFI-NO-INTERNET` and `LAN-REPAIR`
+     group as controls. Leave the new `INTENT-WIFI-NO-INTERNET` and
+     `INTENT-LAN-REPAIR`
      paused until search-term overlap is reviewed.
    - RU: after the five new groups are eligible, pause the two old broad-match
      groups and enable the five intent groups in the same change window.
@@ -66,3 +70,10 @@ npm run ads:intent:check
 
 The launch actions above change public ad delivery. They require a separate
 live-account confirmation immediately before the Google Ads apply/enable step.
+
+## Google Ads preview result
+
+On 2026-09-17 Google Ads accepted the corrected ad-group file in preview as
+20 changes, 20 introduced and 0 errors. The first preview exposed two existing
+EN/UK `LAN-INSTALL` name collisions; adding the `INTENT-` prefix removed those
+collisions. No preview was applied and the live account remains unchanged.
