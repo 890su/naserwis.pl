@@ -9,6 +9,10 @@ createServer(async (request, response) => {
   if (pathname.startsWith('/api/')) { response.writeHead(503, { 'Content-Type': 'application/json' }); response.end('{"success":false,"message":"Local QA: no delivery"}'); return; }
   const path = resolve(root, '.' + decodeURIComponent(pathname), extname(pathname) ? '' : 'index.html');
   if (!path.startsWith(root + sep)) { response.writeHead(403); response.end(); return; }
-  try { response.writeHead(200, { 'Content-Type': types[extname(path)] || 'text/plain', 'Cache-Control': 'no-store' }); response.end(await readFile(path)); }
+  try {
+    const body = await readFile(path);
+    response.writeHead(200, { 'Content-Type': types[extname(path)] || 'text/plain', 'Cache-Control': 'no-store' });
+    response.end(body);
+  }
   catch { response.writeHead(404); response.end(); }
 }).listen(8846, '127.0.0.1', () => console.log('QA server: http://127.0.0.1:8846'));

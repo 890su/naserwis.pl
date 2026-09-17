@@ -452,6 +452,7 @@
                 name: formData.get('name'),
                 phone: formData.get('phone'),
                 message: formData.get('message'),
+                intent: formData.get('intent'),
                 website: formData.get('website'),
                 turnstileToken: formData.get('cf-turnstile-response'),
                 formType: formId,
@@ -491,12 +492,14 @@
                         form_type: formId,
                         language: currentLang,
                         service: getPageService(),
+                        search_intent: getSearchIntent(),
                         page_path: window.location.pathname
                     });
                     pushMeasurementEvent('generate_lead', {
                         form_id: formId,
                         language: currentLang,
                         service: getPageService(),
+                        search_intent: getSearchIntent(),
                         transaction_id: result.leadId || undefined
                     });
                     sendGoogleAdsConversion('lead', result.leadId);
@@ -1026,10 +1029,149 @@
         return 'it_general';
     }
 
+    const INTENT_VARIANTS = {
+        pl: {
+            wifi_repair: {
+                'weak-wifi': {
+                    title: 'Słaby zasięg Wi‑Fi?<br><span class="accent-text">Poprawimy pokrycie i stabilność.</span>',
+                    subtitle: 'Mierzymy sygnał, lokalizujemy zakłócenia i dobieramy ustawienia, punkty dostępowe lub Mesh do konkretnego mieszkania albo biura.',
+                    cta: 'Zamów diagnozę zasięgu',
+                    context: 'Wybrany temat: słaby zasięg Wi‑Fi'
+                },
+                'no-internet': {
+                    title: 'Wi‑Fi jest, ale internet nie działa?<br><span class="accent-text">Znajdziemy źródło problemu.</span>',
+                    subtitle: 'Sprawdzimy router, kabel, DHCP i DNS oraz odróżnimy awarię operatora od problemu w Twojej sieci.',
+                    cta: 'Zgłoś brak internetu',
+                    context: 'Wybrany temat: Wi‑Fi bez dostępu do internetu'
+                },
+                'router-setup': {
+                    title: 'Konfiguracja routera lub Mesh?<br><span class="accent-text">Ustawimy bezpieczną i stabilną sieć.</span>',
+                    subtitle: 'Konfigurujemy routery, punkty dostępowe, sieci gościnne i płynne przełączanie między punktami Wi‑Fi.',
+                    cta: 'Zamów konfigurację',
+                    context: 'Wybrany temat: konfiguracja routera lub Mesh'
+                }
+            },
+            lan_cctv_repair: {
+                'lan-repair': {
+                    title: 'Awaria sieci LAN lub kabla?<br><span class="accent-text">Zmierzymy linię i usuniemy usterkę.</span>',
+                    subtitle: 'Diagnozujemy gniazda RJ45, przewody, porty switcha i niestabilne połączenia. Zakres naprawy uzgadniamy przed pracą.',
+                    cta: 'Zgłoś awarię LAN',
+                    context: 'Wybrany temat: naprawa sieci LAN lub kabla'
+                }
+            },
+            lan_install: {
+                'lan-install': {
+                    title: 'Projekt i montaż sieci LAN?<br><span class="accent-text">Od trasy kabli do pomiarów.</span>',
+                    subtitle: 'Wykonujemy okablowanie, gniazda, szafy RACK, oznaczenia i dokumentację dla domu lub firmy.',
+                    cta: 'Poproś o wycenę instalacji',
+                    context: 'Wybrany temat: projekt i montaż sieci LAN'
+                }
+            }
+        },
+        ru: {
+            wifi_repair: {
+                'weak-wifi': { title: 'Слабый сигнал Wi‑Fi?<br><span class="accent-text">Улучшим покрытие и стабильность.</span>', subtitle: 'Измерим сигнал, найдём помехи и подберём настройки, точки доступа или Mesh для квартиры либо офиса.', cta: 'Заказать диагностику покрытия', context: 'Выбранная тема: слабый сигнал Wi‑Fi' },
+                'no-internet': { title: 'Wi‑Fi есть, но интернет не работает?<br><span class="accent-text">Найдём источник проблемы.</span>', subtitle: 'Проверим роутер, кабель, DHCP и DNS и отличим сбой провайдера от неисправности вашей сети.', cta: 'Сообщить об отсутствии интернета', context: 'Выбранная тема: Wi‑Fi без доступа к интернету' },
+                'router-setup': { title: 'Нужно настроить роутер или Mesh?<br><span class="accent-text">Создадим безопасную и стабильную сеть.</span>', subtitle: 'Настраиваем роутеры, точки доступа, гостевые сети и бесшовное переключение между точками Wi‑Fi.', cta: 'Заказать настройку', context: 'Выбранная тема: настройка роутера или Mesh' }
+            },
+            lan_cctv_repair: { 'lan-repair': { title: 'Неисправна сеть LAN или кабель?<br><span class="accent-text">Измерим линию и устраним проблему.</span>', subtitle: 'Проверяем розетки RJ45, кабели, порты коммутатора и нестабильные соединения. Объём ремонта согласуем заранее.', cta: 'Сообщить о неисправности LAN', context: 'Выбранная тема: ремонт сети LAN или кабеля' } },
+            lan_install: { 'lan-install': { title: 'Проектирование и монтаж LAN?<br><span class="accent-text">От кабельных трасс до измерений.</span>', subtitle: 'Выполняем разводку, розетки, шкафы RACK, маркировку и документацию для дома или компании.', cta: 'Запросить расчёт монтажа', context: 'Выбранная тема: проектирование и монтаж LAN' } }
+        },
+        uk: {
+            wifi_repair: {
+                'weak-wifi': { title: 'Слабкий сигнал Wi‑Fi?<br><span class="accent-text">Покращимо покриття та стабільність.</span>', subtitle: 'Виміряємо сигнал, знайдемо перешкоди та підберемо налаштування, точки доступу або Mesh для квартири чи офісу.', cta: 'Замовити діагностику покриття', context: 'Обрана тема: слабкий сигнал Wi‑Fi' },
+                'no-internet': { title: 'Wi‑Fi є, але інтернет не працює?<br><span class="accent-text">Знайдемо джерело проблеми.</span>', subtitle: 'Перевіримо роутер, кабель, DHCP і DNS та відрізнимо збій провайдера від несправності вашої мережі.', cta: 'Повідомити про відсутність інтернету', context: 'Обрана тема: Wi‑Fi без доступу до інтернету' },
+                'router-setup': { title: 'Потрібно налаштувати роутер або Mesh?<br><span class="accent-text">Створимо безпечну та стабільну мережу.</span>', subtitle: 'Налаштовуємо роутери, точки доступу, гостьові мережі та безшовне перемикання між точками Wi‑Fi.', cta: 'Замовити налаштування', context: 'Обрана тема: налаштування роутера або Mesh' }
+            },
+            lan_cctv_repair: { 'lan-repair': { title: 'Несправна мережа LAN або кабель?<br><span class="accent-text">Виміряємо лінію та усунемо проблему.</span>', subtitle: 'Перевіряємо розетки RJ45, кабелі, порти комутатора та нестабільні з’єднання. Обсяг ремонту погоджуємо заздалегідь.', cta: 'Повідомити про несправність LAN', context: 'Обрана тема: ремонт мережі LAN або кабелю' } },
+            lan_install: { 'lan-install': { title: 'Проєктування та монтаж LAN?<br><span class="accent-text">Від кабельних трас до вимірювань.</span>', subtitle: 'Виконуємо розведення, розетки, шафи RACK, маркування та документацію для дому чи компанії.', cta: 'Запросити розрахунок монтажу', context: 'Обрана тема: проєктування та монтаж LAN' } }
+        },
+        en: {
+            wifi_repair: {
+                'weak-wifi': { title: 'Weak Wi‑Fi signal?<br><span class="accent-text">We will improve coverage and stability.</span>', subtitle: 'We measure signal, locate interference and select the right settings, access points or Mesh for the property.', cta: 'Book a coverage diagnosis', context: 'Selected issue: weak Wi‑Fi coverage' },
+                'no-internet': { title: 'Wi‑Fi connects, but there is no internet?<br><span class="accent-text">We will find the source.</span>', subtitle: 'We check the router, cable, DHCP and DNS and distinguish a provider outage from a fault in your network.', cta: 'Report no internet', context: 'Selected issue: Wi‑Fi without internet access' },
+                'router-setup': { title: 'Router or Mesh setup?<br><span class="accent-text">We will configure a secure, stable network.</span>', subtitle: 'We configure routers, access points, guest networks and seamless roaming between Wi‑Fi points.', cta: 'Book router setup', context: 'Selected issue: router or Mesh setup' }
+            },
+            lan_cctv_repair: { 'lan-repair': { title: 'LAN or cable fault?<br><span class="accent-text">We will test the line and repair it.</span>', subtitle: 'We diagnose RJ45 sockets, cables, switch ports and unstable links. We agree the repair scope before work starts.', cta: 'Report a LAN fault', context: 'Selected issue: LAN or cable repair' } },
+            lan_install: { 'lan-install': { title: 'LAN design and installation?<br><span class="accent-text">From cable routes to test results.</span>', subtitle: 'We install cabling, sockets and racks, then label, test and document the network for a home or business.', cta: 'Request an installation quote', context: 'Selected issue: LAN design and installation' } }
+        }
+    };
+
+    const SEARCH_INTENTS = ['weak-wifi', 'no-internet', 'router-setup', 'lan-repair', 'lan-install'];
+
+    function getSearchIntent() {
+        const value = document.documentElement.dataset.searchIntent || '';
+        return SEARCH_INTENTS.includes(value) ? value : '';
+    }
+
+    function intentVariant(value) {
+        const language = (document.documentElement.lang || 'pl').split('-')[0];
+        return INTENT_VARIANTS[language]?.[getPageService()]?.[value] || null;
+    }
+
+    function syncIntentForms(intent, context) {
+        document.querySelectorAll('form:not(#review-form)').forEach(function (form) {
+            let input = form.querySelector('input[name="intent"]');
+            if (!input) {
+                input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'intent';
+                form.appendChild(input);
+            }
+            input.value = intent;
+            let notice = form.querySelector('.intent-context');
+            if (!notice) {
+                notice = document.createElement('p');
+                notice.className = 'intent-context';
+                notice.setAttribute('aria-live', 'polite');
+                const nextStep = form.querySelector('.contact-next-step');
+                if (nextStep) nextStep.insertAdjacentElement('afterend', notice);
+                else form.prepend(notice);
+            }
+            notice.textContent = context;
+        });
+    }
+
+    function applyIntentVariant(intent, updateUrl) {
+        const variant = intentVariant(intent);
+        if (!variant) return false;
+        const title = document.querySelector('.hero-large-title');
+        const subtitle = document.querySelector('.hero-large-subtitle');
+        const cta = document.querySelector('.hero-cta-wrapper .btn');
+        if (!title || !subtitle || !cta) return false;
+        title.innerHTML = variant.title;
+        subtitle.textContent = variant.subtitle;
+        cta.textContent = variant.cta;
+        document.documentElement.dataset.searchIntent = intent;
+        document.querySelectorAll('[data-intent-select]').forEach(function (button) {
+            button.setAttribute('aria-pressed', String(button.dataset.intentSelect === intent));
+        });
+        syncIntentForms(intent, variant.context);
+        if (updateUrl) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('intent', intent);
+            history.replaceState(null, '', url);
+            pendingAttribution = attributionFromUrl();
+            persistAttribution(pendingAttribution);
+            trackFunnelEvent('naserwis_intent_select', { search_intent: intent });
+        }
+        return true;
+    }
+
+    function initIntentLanding() {
+        const requested = new URLSearchParams(window.location.search).get('intent') || '';
+        applyIntentVariant(requested, false);
+        document.querySelectorAll('[data-intent-select]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                applyIntentVariant(button.dataset.intentSelect || '', true);
+            });
+        });
+    }
+
     const ATTRIBUTION_STORAGE_KEY = 'naserwis-attribution-v1';
     const ATTRIBUTION_KEYS = [
         'utm_source', 'utm_medium', 'utm_campaign', 'utm_id', 'utm_adgroup',
-        'utm_term', 'utm_content', 'matchtype', 'device', 'network', 'lang',
+        'utm_term', 'utm_content', 'matchtype', 'device', 'network', 'lang', 'intent',
         'gclid', 'wbraid', 'gbraid'
     ];
     let pendingAttribution = null;
@@ -1044,6 +1186,7 @@
         const attribution = {};
         ATTRIBUTION_KEYS.forEach(function (key) {
             const value = parameters.get(key);
+            if (key === 'intent' && value && !SEARCH_INTENTS.includes(value)) return;
             if (value) attribution[key] = value.slice(0, 300);
         });
         if (Object.keys(attribution).length === 0) return null;
@@ -1084,6 +1227,8 @@
             language: document.documentElement.lang || 'pl',
             service: getPageService()
         };
+        const intent = getSearchIntent();
+        if (intent) base.intent = intent;
         if (!hasMarketingConsent()) return base;
         return Object.assign(base, storedAttribution() || pendingAttribution || {});
     }
@@ -1098,7 +1243,7 @@
 
     function trackFunnelEvent(eventName, parameters = {}) {
         if (!window.NASERWIS_CONSENT?.get()?.analytics) return false;
-        const allowedEvents = ['naserwis_cta_view', 'naserwis_cta_click', 'naserwis_contact_open',
+        const allowedEvents = ['naserwis_cta_view', 'naserwis_cta_click', 'naserwis_contact_open', 'naserwis_intent_select',
             'naserwis_form_start', 'naserwis_form_validation_error', 'naserwis_form_error',
             'naserwis_form_success', 'naserwis_chat_error'];
         if (!allowedEvents.includes(eventName)) return false;
@@ -1109,6 +1254,8 @@
             release: 'cro-v1',
             device_category: matchMedia('(max-width: 768px)').matches ? 'mobile' : 'desktop'
         };
+        const intent = getSearchIntent();
+        if (intent) safe.search_intent = intent;
         const allowed = {
             placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final', 'modal'],
             action: ['form', 'contact_menu', 'phone'],
@@ -1160,6 +1307,7 @@
             contact_placement: contactPlacement(element),
             language: document.documentElement.lang || 'pl',
             service: getPageService(),
+            search_intent: getSearchIntent(),
             page_path: window.location.pathname
         };
     }
@@ -1256,6 +1404,7 @@
         initInteractiveStars();
         initReviewModal();
         initAttribution();
+        initIntentLanding();
         initFunnelTracking();
         initAllBotProtection();
         initContactTracking();

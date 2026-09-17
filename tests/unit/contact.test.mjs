@@ -38,16 +38,34 @@ test('success requires provider acceptance, keeps lead id, locale and allowed at
   t.mock.method(globalThis, 'fetch', async (url, options) => { sent.push(JSON.parse(options.body)); return Response.json({ ok: true }); });
   for (const lang of ['pl', 'ru', 'uk', 'en']) {
     const formType = lang === 'en' ? 'quick-form' : valid.formType;
-    const response = await call({ ...valid, formType, lang, attribution: { gclid: 'qa-click', secret: 'must-not-forward' } }, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' });
+    const response = await call({ ...valid, formType, lang, intent: 'weak-wifi', attribution: { gclid: 'qa-click', intent: 'weak-wifi', secret: 'must-not-forward' } }, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' });
     assert.equal(response.status, 200);
     const result = await response.json();
     assert.equal(result.success, true); assert.match(result.leadId, /^[0-9a-f-]{36}$/);
     assert.ok(sent.at(-1).text.includes(result.leadId));
     assert.ok(sent.at(-1).text.includes('gclid: qa-click'));
+    assert.ok(sent.at(-1).text.includes('Intent: weak-wifi'));
     assert.ok(sent.at(-1).text.includes(`Form: ${formType}`));
     assert.ok(!sent.at(-1).text.includes('must-not-forward'));
   }
   t.mock.restoreAll();
   t.mock.method(globalThis, 'fetch', async () => new Response('unavailable', { status: 503 }));
   assert.equal((await call(valid, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' })).status, 502);
+});
+
+test('intent is allowlisted in both the lead and attribution payload', async t => {
+  let delivery;
+  t.mock.method(globalThis, 'fetch', async (_url, options) => {
+    delivery = JSON.parse(options.body);
+    return Response.json({ ok: true });
+  });
+  const response = await call({
+    ...valid,
+    intent: '<img src=x onerror=alert(1)>',
+    attribution: { intent: '<script>alert(1)</script>', gclid: 'safe-click' }
+  }, { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only' });
+  assert.equal(response.status, 200);
+  assert.ok(delivery.text.includes('gclid: safe-click'));
+  assert.ok(!delivery.text.includes('img src'));
+  assert.ok(!delivery.text.includes('script'));
 });

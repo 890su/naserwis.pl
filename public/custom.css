@@ -17,6 +17,251 @@
   --accent-glow: rgba(0, 212, 170, .25);
 }
 
+/* ===================================================
+   INTENT LANDINGS – symptom-led service selection
+   =================================================== */
+.intent-cluster,
+.service-proof,
+.delivery-panel {
+  margin: 34px 0 40px;
+  padding: 28px;
+  border: 1px solid rgba(10, 37, 64, .12);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(145deg, #fff 0%, #f5fafb 100%);
+  box-shadow: var(--shadow-card);
+}
+
+.intent-cluster-heading,
+.service-proof-heading,
+.delivery-panel-heading {
+  max-width: 720px;
+  margin-bottom: 22px;
+}
+
+.intent-cluster-eyebrow,
+.service-proof-heading > span,
+.delivery-panel-heading > span {
+  display: block;
+  margin-bottom: 7px;
+  color: #087d68;
+  font: 700 .74rem/1.3 'IBM Plex Sans', sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.intent-cluster h3,
+.service-proof h3,
+.delivery-panel h3 {
+  margin: 0 0 9px;
+  color: var(--primary);
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  line-height: 1.18;
+}
+
+.intent-cluster-heading p,
+.service-proof-heading p,
+.delivery-panel-heading p {
+  margin: 0;
+  color: #4f6577;
+}
+
+.intent-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.intent-option {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 172px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #d5e2e7;
+  border-radius: var(--radius);
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(10, 37, 64, .04);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition), background var(--transition);
+}
+
+.intent-option::after {
+  content: '→';
+  position: absolute;
+  right: 18px;
+  bottom: 15px;
+  color: #087d68;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+.intent-option:hover,
+.intent-option[aria-pressed='true'] {
+  border-color: rgba(0, 168, 130, .62);
+  background: #f0fbf8;
+  box-shadow: 0 8px 24px rgba(10, 37, 64, .09);
+  transform: translateY(-3px);
+}
+
+.intent-option:focus-visible {
+  outline: 3px solid rgba(0, 212, 170, .35);
+  outline-offset: 3px;
+}
+
+.intent-option-tag {
+  display: inline-flex;
+  margin-bottom: 16px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #e5f7f2;
+  color: #087d68;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.intent-option strong {
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 1rem;
+  line-height: 1.25;
+}
+
+.intent-option > span:last-child {
+  padding-right: 14px;
+  color: #556b7c;
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
+.service-proof-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.service-proof-flow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 11px;
+  min-width: 0;
+  padding: 14px 16px 14px 0;
+}
+
+.service-proof-flow li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 31px;
+  right: 8px;
+  width: 18px;
+  height: 1px;
+  background: #a9c8c1;
+}
+
+.service-proof-flow li > span {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--primary);
+  color: var(--accent);
+  font-size: .75rem;
+  font-weight: 800;
+}
+
+.service-proof-flow strong,
+.delivery-grid strong {
+  display: block;
+  margin: 1px 0 5px;
+  color: var(--primary);
+}
+
+.service-proof-flow p {
+  margin: 0;
+  color: #556b7c;
+  font-size: .87rem;
+  line-height: 1.45;
+}
+
+.delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.delivery-grid li {
+  min-width: 0;
+  padding: 17px 18px 17px 20px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: #fff;
+}
+
+.delivery-grid span {
+  display: block;
+  color: #556b7c;
+  font-size: .9rem;
+  line-height: 1.45;
+}
+
+.intent-context {
+  margin: 0 0 18px;
+  padding: 10px 13px;
+  border: 1px solid rgba(0, 168, 130, .28);
+  border-radius: var(--radius-sm);
+  background: #eaf8f4;
+  color: #075f50;
+  font-size: .86rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .intent-options,
+  .service-proof-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .service-proof-flow li:nth-child(2)::after { display: none; }
+}
+
+@media (max-width: 560px) {
+  .intent-cluster,
+  .service-proof,
+  .delivery-panel {
+    margin: 26px 0 32px;
+    padding: 20px;
+  }
+  .intent-options,
+  .service-proof-flow,
+  .delivery-grid {
+    grid-template-columns: 1fr;
+  }
+  .intent-option { min-height: 0; }
+  .service-proof-flow li { padding-right: 0; }
+  .service-proof-flow li::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intent-option { transition: none; }
+  .intent-option:hover,
+  .intent-option[aria-pressed='true'] { transform: none; }
+}
+
 /* ---- Typography refinements ---- */
 body {
   letter-spacing: -.01em;

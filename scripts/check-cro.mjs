@@ -74,6 +74,20 @@ if (record) {
     assert.equal((html.match(/class="mobile-contact-dock"/g) || []).length, 1, file);
     assert.equal((html.match(/id="quick-contact-modal"/g) || []).length, 1, file);
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
+    if (/^public(?:\/(?:ru|uk|en))?\/(?:naprawa-wifi|naprawa-sieci|montaz-sieci)\/index\.html$/.test(file)) {
+      assert.equal((html.match(/INTENT LANDING CONTENT START/g) || []).length, 1, `${file}: intent content marker`);
+      assert.ok(html.includes('/script.js?v=20260916-intent1'), `${file}: intent script cache version`);
+      assert.ok(html.includes('/custom.css?v=20260916-intent1'), `${file}: intent styles cache version`);
+      if (file.includes('/naprawa-wifi/')) {
+        assert.equal((html.match(/data-intent-select=/g) || []).length, 3, `${file}: three Wi-Fi intents`);
+        assert.equal((html.match(/data-intent-select="[^"]+" data-contact-modal/g) || []).length, 3, `${file}: intent options open the enquiry modal`);
+        assert.equal((html.match(/class="intent-cluster"/g) || []).length, 1, `${file}: symptom selector`);
+      } else if (file.includes('/naprawa-sieci/')) {
+        assert.equal((html.match(/class="service-proof"/g) || []).length, 1, `${file}: repair process`);
+      } else {
+        assert.equal((html.match(/class="delivery-panel"/g) || []).length, 1, `${file}: installation deliverables`);
+      }
+    }
     if (/^public(?:\/(?:ru|uk|en))?\/index\.html$/.test(file)) {
       assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);
     }

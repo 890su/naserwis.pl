@@ -22,6 +22,9 @@ Google tag per page and preserving the denied Consent Mode defaults.
 - `chatwoot_open` — after the SDK opens the chat widget, not when a visitor merely
   requests chat consent. Consent rejection and SDK timeout never count as opens.
 - `naserwis_review_submit` — only after a successful review API response.
+- `naserwis_intent_select` — after analytics consent when a visitor selects one
+  of the reviewed service symptoms on the Wi-Fi page. It is a diagnostic event,
+  not an Ads conversion.
 
 ## Google Ads conversion setup
 
@@ -63,9 +66,11 @@ The following events require analytics consent and are not new Ads conversions:
 | `naserwis_form_error` | Server rejection or transport failure |
 | `naserwis_form_success` | Successful API response with a lead ID |
 | `naserwis_chat_error` | Requested chat cannot load/open |
+| `naserwis_intent_select` | Visitor selects a reviewed symptom/intent variant |
 
-Parameters are allowlisted: `placement`, `action`, `form_id`, `field`, `reason`,
-plus language/service/path, `release=cro-v1`, and a viewport-based device label.
+Parameters are allowlisted: `placement`, `action`, `form_id`, `field`, `reason`
+and `search_intent`, plus language/service/path, `release=cro-v1`, and a
+viewport-based device label.
 No field values, names, telephone numbers, message text or raw query strings.
 New `sticky` and `form` placements also identify existing contact-link events.
 Existing event names, conversion labels and Consent Mode transport semantics are
@@ -91,9 +96,12 @@ Ads conversions. Compare qualified leads, not chat/button opens.
 
 Use a campaign-level final URL suffix such as:
 
-`utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_id={campaignid}&utm_adgroup={adgroupid}&utm_term={keyword}&utm_content={creative}&matchtype={matchtype}&device={device}&network={network}&lang={_lang}`
+`utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_id={campaignid}&utm_adgroup={adgroupid}&utm_term={keyword}&utm_content={creative}&matchtype={matchtype}&device={device}&network={network}&lang={_lang}&intent={_intent}`
 
-Define `{_lang}` as a campaign custom parameter. The browser stores the
+Define `{_lang}` at campaign level and the reviewed `{_intent}` at ad-group
+level. Allowed intent values are `weak-wifi`, `no-internet`, `router-setup`,
+`lan-repair` and `lan-install`. Unknown values are ignored and never rendered or
+forwarded with a lead. The browser stores the
 campaign parameters and click identifiers in session storage only after
 marketing consent, and includes them in a successfully submitted lead for
 source reconciliation. Verify redirects and analytics attribution after every

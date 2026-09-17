@@ -2,6 +2,7 @@ const MAX_NAME_LENGTH = 120;
 const MAX_PHONE_LENGTH = 60;
 const MAX_MESSAGE_LENGTH = 4_000;
 const MAX_ATTRIBUTION_LENGTH = 300;
+const ALLOWED_INTENTS = new Set(["", "weak-wifi", "no-internet", "router-setup", "lan-repair", "lan-install"]);
 const ALLOWED_LANGUAGES = new Set(["pl", "ru", "uk", "en"]);
 const ALLOWED_FORM_TYPES = new Set(["hero-form", "final-form", "quick-form", "review"]);
 
@@ -29,11 +30,13 @@ function cleanAttribution(value) {
   const allowed = [
     "utm_source", "utm_medium", "utm_campaign", "utm_id", "utm_adgroup",
     "utm_term", "utm_content", "matchtype", "device", "network", "lang",
-    "gclid", "wbraid", "gbraid", "landing_page", "captured_at", "language", "service"
+    "gclid", "wbraid", "gbraid", "landing_page", "captured_at", "language", "service", "intent"
   ];
-  return Object.fromEntries(allowed
+  const cleaned = Object.fromEntries(allowed
     .map((key) => [key, clean(value[key], MAX_ATTRIBUTION_LENGTH)])
     .filter(([, item]) => item));
+  if (cleaned.intent && !ALLOWED_INTENTS.has(cleaned.intent)) delete cleaned.intent;
+  return cleaned;
 }
 
 function attributionText(attribution) {
@@ -42,10 +45,11 @@ function attributionText(attribution) {
   return `\n\n📊 Attribution\n${entries.map(([key, value]) => `${key}: ${value}`).join("\n")}`;
 }
 
-function telegramText({ leadId, name, phone, message, formType, rating, lang, attribution }) {
+function telegramText({ leadId, name, phone, message, formType, rating, lang, intent, attribution }) {
   const title = formType === "review" ? "📝 New private review" : "📩 New contact request";
   const review = formType === "review" ? `\n⭐ Rating: ${rating}/5` : "";
-  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name}\n📞 ${phone}\n💬 ${message}\n📋 Form: ${formType}\n🌐 Language: ${lang}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
+  const intentLine = intent ? `\n🎯 Intent: ${intent}` : "";
+  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name}\n📞 ${phone}\n💬 ${message}\n📋 Form: ${formType}\n🌐 Language: ${lang}${intentLine}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
 }
 
 async function validateTurnstile(token, request, env) {
@@ -106,6 +110,7 @@ export async function onRequestPost(context) {
     name: clean(payload.name, MAX_NAME_LENGTH),
     phone: clean(payload.phone, MAX_PHONE_LENGTH),
     message: clean(payload.message, MAX_MESSAGE_LENGTH),
+    intent: ALLOWED_INTENTS.has(payload.intent) ? payload.intent : "",
     formType: ALLOWED_FORM_TYPES.has(payload.formType) ? payload.formType : "hero-form",
     rating: Math.min(5, Math.max(1, Number.parseInt(payload.rating, 10) || 1)),
     attribution: cleanAttribution(payload.attribution),

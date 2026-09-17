@@ -4,6 +4,23 @@ Scope: NaSerwis.pl only. This document maps real Google Ads search terms and
 Search Console queries to user intent, existing landing pages and proposed ad
 groups. It does not record a live account change.
 
+## Implementation status — 2026-09-17
+
+The site-side prerequisite is implemented and published from the repository:
+
+- the 12 PL/RU/UK/EN service pages contain localized symptom, diagnostic or
+  deliverable content without adding routes;
+- `weak-wifi`, `no-internet`, `router-setup`, `lan-repair` and `lan-install`
+  are the only accepted dynamic intent values;
+- reviewed intent copy updates the hero, CTA and visible form topic, and a
+  symptom selection opens the existing enquiry modal; unknown
+  values cannot become HTML or attribution data;
+- the selected intent is sent as a non-PII lead field and analytics dimension;
+- canonical URLs, forms and all existing Google Ads conversion labels remain
+  unchanged.
+
+Live Google Ads ad groups, keywords, suffixes and negatives are still pending.
+
 ## Evidence used
 
 - Google Ads search-term report for 2026-08-17 through 2026-09-14:
@@ -161,9 +178,9 @@ no conversions.
 1. Add negatives for provider names, outage-only terms, speed tests, equipment
    models, shopping/components and instruction-only queries. Review the 34
    zero-click terms marked `MANUAL-REVIEW` before deciding.
-2. Expand the three existing landing pages in all four languages while keeping
+2. **Completed 2026-09-17:** expand the three existing landing pages in all four languages while keeping
    URLs, canonical tags, forms and conversion events stable.
-3. Implement and test the allowlisted `intent` hero switch and hidden form
+3. **Completed 2026-09-17:** implement and test the allowlisted `intent` hero switch and hidden form
    topic. Invalid or absent values must show the normal page.
 4. Create the five intent-specific ad groups inside the existing language
    campaigns. Reuse only keywords that match the group's service and language.
@@ -186,4 +203,3 @@ no conversions.
   group;
 - after launch, search terms are reviewed twice weekly and results are judged
   by qualified lead cost.
-

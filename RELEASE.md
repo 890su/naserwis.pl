@@ -1,3 +1,20 @@
+# Intent-matched service landings — 2026-09-17
+
+- Added localized, indexable symptom guidance to all four Wi-Fi pages and
+  concrete diagnostic/delivery content to all LAN repair and installation
+  pages. No routes, canonical tags or existing forms were removed.
+- Added five allowlisted `intent` variants that can change only reviewed hero,
+  CTA and form-context copy. A symptom selection opens the existing enquiry
+  modal. Unknown URL values are ignored and cannot be rendered or forwarded
+  with a lead.
+- Added the selected non-PII intent to lead delivery and consent-aware
+  diagnostics. Existing primary form and secondary phone, WhatsApp, Telegram
+  and chat conversion labels remain unchanged.
+- Added generator/static guards, API sanitization tests and browser coverage for
+  all four languages, malicious values, form payloads and conversion labels.
+- Fixed the local QA server so a missing static file returns 404 without first
+  sending a 200 header.
+
 # Google Ads tag activation — 2026-09-09
 
 - Switched the single `gtag.js` loader from the GA4 measurement ID to Google

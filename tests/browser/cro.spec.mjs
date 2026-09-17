@@ -161,6 +161,75 @@ test('form validates locally, preserves errors, counts one success and no PII', 
   await expect(page.locator('#final-form-message')).toContainText('Test accepted');
 });
 
+for (const [locale, expected] of [
+  ['', 'Wi‑Fi jest, ale internet nie działa'],
+  ['ru/', 'Wi‑Fi есть, но интернет не работает'],
+  ['uk/', 'Wi‑Fi є, але інтернет не працює'],
+  ['en/', 'Wi‑Fi connects, but there is no internet'],
+]) {
+  test(`allowlisted no-internet hero and form context /${locale}`, async ({ page }) => {
+    await isolate(page); await consent(page, { analytics: true, marketing: true });
+    await page.goto(`/${locale}naprawa-wifi/?intent=no-internet&utm_source=google`);
+    await expect(page.locator('.hero-large-title')).toContainText(expected);
+    await expect(page.locator('html')).toHaveAttribute('data-search-intent', 'no-internet');
+    await expect(page.locator('[data-intent-select="no-internet"]')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('input[name="intent"]')).toHaveCount(2);
+    await expect(page.locator('input[name="intent"]').first()).toHaveValue('no-internet');
+    await expect(page.locator('.intent-context')).toHaveCount(2);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', new RegExp(`/${locale}naprawa-wifi/$`));
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(await page.evaluate(() => innerWidth));
+  });
+}
+
+test('intent selector updates the hero, URL, lead payload and analytics without changing conversion labels', async ({ page }) => {
+  await isolate(page); await consent(page, { analytics: true, marketing: true });
+  await page.goto('/naprawa-wifi/?utm_source=google&gclid=intent-test');
+  await page.locator('[data-intent-select="weak-wifi"]').click();
+  await expect(page).toHaveURL(/intent=weak-wifi/);
+  await expect(page.locator('#quick-contact-modal')).toBeVisible();
+  await expect(page.locator('.hero-large-title')).toContainText('Słaby zasięg Wi‑Fi');
+  await expect(page.locator('[data-intent-select="weak-wifi"]')).toHaveAttribute('aria-pressed', 'true');
+  expect((await events(page, 'naserwis_intent_select')).length).toBe(1);
+  let payload;
+  await page.route('**/api/contact', async route => {
+    payload = route.request().postDataJSON();
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Test accepted', leadId: 'intent-lead-id' }) });
+  });
+  await page.locator('#quick-name').fill('QA Person');
+  await page.locator('#quick-phone').fill('+48 000 000 000');
+  await page.locator('#quick-message').fill('Coverage test');
+  await page.locator('#quick-form button[type=submit]').click();
+  await expect(page.locator('#quick-form-message')).toContainText('Test accepted');
+  expect(payload.formType).toBe('quick-form');
+  expect(payload.intent).toBe('weak-wifi');
+  expect(payload.attribution.intent).toBe('weak-wifi');
+  expect(payload.attribution.gclid).toBe('intent-test');
+  const conversions = await page.evaluate(() => window.dataLayer.filter(x => x[0] === 'event' && x[1] === 'conversion').map(x => x[2].send_to));
+  expect(conversions).toEqual(['AW-18394870871/WpLcCOaejeMcENforcNE']);
+});
+
+test('unknown intent cannot alter HTML, forms or attribution', async ({ page }) => {
+  await isolate(page); await consent(page, { analytics: true, marketing: true });
+  const original = 'Wolne WiFi? Znikający zasięg?';
+  await page.goto('/naprawa-wifi/?intent=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E&utm_source=google');
+  await expect(page.locator('.hero-large-title')).toContainText(original);
+  await expect(page.locator('html')).not.toHaveAttribute('data-search-intent');
+  await expect(page.locator('input[name="intent"]')).toHaveCount(0);
+  await expect(page.locator('.intent-context')).toHaveCount(0);
+  expect(await page.locator('img[src="x"]').count()).toBe(0);
+  let payload;
+  await page.route('**/api/contact', async route => {
+    payload = route.request().postDataJSON();
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Test accepted', leadId: 'invalid-intent-id' }) });
+  });
+  await page.locator('#final-name').fill('QA Person');
+  await page.locator('#final-phone').fill('+48 000 000 000');
+  await page.locator('#final-message').fill('Invalid intent test');
+  await page.locator('#final-form button[type=submit]').click();
+  expect(payload.intent).toBeNull();
+  expect(payload.attribution.intent).toBeUndefined();
+});
+
 test('mobile dock and modal form preserve secondary phone and primary lead conversions', async ({ page }) => {
   await isolate(page); await consent(page, { analytics: true, marketing: true });
   await page.setViewportSize({ width: 390, height: 844 });

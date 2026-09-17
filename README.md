@@ -51,6 +51,7 @@ set `PLAYWRIGHT_CHANNEL` to another installed supported channel if needed.
 
 ```powershell
 npm ci
+npm run intent:generate
 npm run cro:generate
 npm run tools:generate
 npm run check
@@ -58,10 +59,14 @@ npm test
 npm run test:e2e
 ```
 
+`intent:generate` synchronizes the symptom selector, LAN repair process and LAN
+installation deliverables across the 12 localized service pages. The runtime
+accepts only five reviewed `intent` values, keeps clean canonical URLs and
+passes the selected non-PII topic into contact forms and measurement.
 `cro:generate` maintains localized additive markup on the committed HTML;
 `public/contact-ui.js` and `public/contact-ui.css` implement the contact UI.
 The owner's preferred original round launcher/channel buttons are retained.
-Revision `20260905-consent7` keeps the initial grey consent notice as a compact
+Revision `20260916-intent1` keeps the initial grey consent notice as a compact
 bottom-centred card instead of a viewport-wide bar. Its two-part copy/action row
 and three explicit buttons remain; detailed privacy settings still open as a
 modal. The contact launcher remains above the notice and runs one short
@@ -71,7 +76,7 @@ choice, every existing `#contact` CTA and the two-action mobile dock open the sa
 short modal form; the original page forms remain. Successful modal submissions
 reuse the existing primary lead conversion, while channel conversions stay
 secondary. Reduced motion remains static and SEO routes/content are unchanged.
-`compliance:generate` regenerates legal pages and reapplies CRO markup.
+`compliance:generate` regenerates legal pages, intent content and CRO markup.
 Run generators only for intentional source updates, inspect their diff and rerun
 checks. The immutable pre-CRO SEO/Ads fixture works in shallow CI checkouts.
 
