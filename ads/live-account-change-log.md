@@ -1,5 +1,24 @@
 # Google Ads live account change log
 
+## First staged intent rollout — 2026-09-19
+
+Account: `671-474-3535`
+
+- Enabled 12 previously paused `INTENT-` ad groups: the
+  `INTENT-WIFI-COVERAGE`, `INTENT-ROUTER-SETUP` and `INTENT-LAN-INSTALL`
+  groups in each of `Search PL Naprawa sieci Warszawa`,
+  `Search RU Сети Варшава`, `SRCH-EN-A-CORE` and `SRCH-UK-A-CORE`.
+- Google Ads confirmed each four-group bulk operation with
+  `Włączono 4 grupy reklam`. The filtered live rows then showed `Aktywna` and
+  `Odpowiednia` for all 12 enabled groups.
+- Kept all eight `INTENT-WIFI-NO-INTERNET` and `INTENT-LAN-REPAIR` groups
+  paused. Separate four-row checks for both names showed `Wstrzymana` in all
+  four language campaigns.
+- Existing ad groups were not paused or otherwise edited. Campaign budgets,
+  bidding, geo/language targeting, schedules, goals and conversion actions
+  were not changed; the four campaigns retain their existing combined
+  configured daily budget of 70 PLN/day.
+
 ## Intent-matched groups, keywords and ads — 2026-09-17
 
 Account: `671-474-3535`

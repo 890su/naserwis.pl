@@ -17,10 +17,13 @@
 - Published commit `b6f9916` through the existing Cloudflare Pages Git
   integration and passed production smoke plus six focused browser checks.
 - Imported a separate Google Ads bulk package with 20 intent groups, 240
-  accepted phrase/exact keywords and 20 localized RSAs. All 20 groups are
-  paused after import; budgets, targeting, schedules and conversions remain
-  unchanged. Six rejected rows were replaced with more specific service terms
-  and the replacements were accepted with no errors.
+  accepted phrase/exact keywords and 20 localized RSAs. On 2026-09-19, enabled
+  the first staged wave of 12 groups: Wi-Fi coverage, router setup and LAN
+  installation in each of the PL/RU/EN/UK campaigns. The eight Wi-Fi-no-
+  internet and LAN-repair groups remain paused. Existing groups, budgets,
+  targeting, schedules and conversions remain unchanged. Six rejected rows
+  were replaced with more specific service terms and the replacements were
+  accepted with no errors.
 
 # Google Ads tag activation — 2026-09-09
 

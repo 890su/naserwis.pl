@@ -1,7 +1,8 @@
 # Intent Ads import plan — 2026-09-17
 
 Scope: the four active NaSerwis.pl Search campaigns only. The package has been
-uploaded and applied; all new groups remain paused.
+uploaded and applied. As of 2026-09-19, the first staged rollout has enabled
+12 groups; the remaining eight groups stay paused.
 
 ## Live-account audit before the import
 
@@ -51,22 +52,17 @@ npm run ads:intent:check
    initially created the groups as active despite the source status, so all 20
    `INTENT-` groups were selected and paused immediately; the live table then
    confirmed `Wstrzymana` for the filtered 20-row set.
-2. Wait for Google policy review and inspect the live destinations. Do not
+2. **Completed 2026-09-19:** policy and live-entity checks found all 20 ads and
+   all 240 keywords present without policy rejection. Enabled the first common
+   test wave across all four campaigns: `INTENT-WIFI-COVERAGE`,
+   `INTENT-ROUTER-SETUP` and `INTENT-LAN-INSTALL` (12 groups total). Google
+   confirmed three four-group operations, and the live rows showed all 12 as
+   active and eligible.
+3. Keep all old groups as controls during the first measurement window. The
+   eight new `INTENT-WIFI-NO-INTERNET` and `INTENT-LAN-REPAIR` groups remain
+   paused until search-term overlap and lead quality are reviewed. Do not
    change budgets, geo targeting, language targeting, schedules, bidding or
-   conversion goals as part of this import.
-3. Migrate campaign by campaign:
-   - PL: first enable `INTENT-WIFI-COVERAGE`, `INTENT-ROUTER-SETUP` and
-     `INTENT-LAN-INSTALL`. Keep
-     the converting `Naprawa sieci` group and the existing `Naprawa WiFi`
-     group as controls. Leave the new `INTENT-WIFI-NO-INTERNET` and
-     `INTENT-LAN-REPAIR`
-     paused until search-term overlap is reviewed.
-   - RU: after the five new groups are eligible, pause the two old broad-match
-     groups and enable the five intent groups in the same change window.
-   - EN/UK: when the new groups are eligible, pause the overlapping
-     `WIFI-REPAIR`, `LAN-INSTALL` and `LAN-CCTV-REPAIR` groups as the new intent
-     groups are enabled. Keep unrelated groups separate; pause PC/general IT
-     themes if they still lack a dedicated matching NaSerwis landing page.
+   conversion goals as part of this rollout.
 4. Review search terms twice weekly. Compare qualified enquiries and booked
    work by language and intent; do not judge the migration from CTR alone.
 
@@ -92,5 +88,6 @@ keywords. No rejected row was applied.
 
 The RSA upload applied 20 of 20 rows with 0 errors. Campaign budgets, bids,
 locations, languages, schedules, goals, conversion actions and existing ad
-groups were not changed. No new group is delivering until a separate staged
-cutover is confirmed and executed.
+groups were not changed. The separately confirmed first cutover on 2026-09-19
+enabled 12 groups while leaving the other eight paused and retaining every old
+group unchanged.
