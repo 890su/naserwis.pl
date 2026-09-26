@@ -54,8 +54,8 @@
             eyebrow: 'Prywatność pod kontrolą',
             title: 'Twoja prywatność',
             intro: 'Używamy niezbędnych technologii do działania strony. Analitykę, reklamę i czat uruchamiamy zgodnie z Twoim wyborem.',
-            accept: 'Akceptuję wszystkie', reject: 'Odrzucam opcjonalne', settings: 'Ustawienia', save: 'Zapisz wybór',
-            close: 'Zamknij i pozostaw tylko niezbędne',
+            accept: 'Akceptuję wszystkie', reject: 'Tylko niezbędne', settings: 'Ustawienia', save: 'Zapisz wybór',
+            close: 'Zamknij bez zapisywania',
             changeAnytime: 'Wybór możesz zmienić w dowolnej chwili w stopce strony.',
             alwaysOn: 'Zawsze aktywne',
             necessary: 'Niezbędne', necessaryDesc: 'Bezpieczeństwo, formularze i zapis ustawień prywatności.',
@@ -68,8 +68,8 @@
             eyebrow: 'Конфиденциальность под контролем',
             title: 'Ваша конфиденциальность',
             intro: 'Мы используем необходимые технологии для работы сайта. Аналитика, реклама и чат включаются в соответствии с вашим выбором.',
-            accept: 'Принять все', reject: 'Отклонить необязательные', settings: 'Настроить', save: 'Сохранить выбор',
-            close: 'Закрыть и оставить только необходимые',
+            accept: 'Принять все', reject: 'Только обязательные', settings: 'Настроить', save: 'Сохранить выбор',
+            close: 'Закрыть без сохранения',
             changeAnytime: 'Выбор можно изменить в любой момент через ссылку внизу сайта.',
             alwaysOn: 'Всегда включены',
             necessary: 'Необходимые', necessaryDesc: 'Безопасность, формы и сохранение настроек конфиденциальности.',
@@ -82,8 +82,8 @@
             eyebrow: 'Конфіденційність під контролем',
             title: 'Ваша конфіденційність',
             intro: 'Ми використовуємо необхідні технології для роботи сайту. Аналітика, реклама та чат вмикаються відповідно до вашого вибору.',
-            accept: 'Прийняти все', reject: 'Відхилити необов’язкові', settings: 'Налаштувати', save: 'Зберегти вибір',
-            close: 'Закрити й залишити лише необхідні',
+            accept: 'Прийняти все', reject: 'Лише необхідні', settings: 'Налаштувати', save: 'Зберегти вибір',
+            close: 'Закрити без збереження',
             changeAnytime: 'Вибір можна змінити будь-коли через посилання внизу сайту.',
             alwaysOn: 'Завжди активні',
             necessary: 'Необхідні', necessaryDesc: 'Безпека, форми та збереження налаштувань конфіденційності.',
@@ -96,8 +96,8 @@
             eyebrow: 'Privacy under your control',
             title: 'Your privacy',
             intro: 'We use essential technologies to operate the site. Analytics, advertising and chat are enabled according to your choice.',
-            accept: 'Accept all', reject: 'Reject optional', settings: 'Customise', save: 'Save choice',
-            close: 'Close and keep only necessary',
+            accept: 'Accept all', reject: 'Necessary only', settings: 'Customise', save: 'Save choice',
+            close: 'Close without saving',
             changeAnytime: 'You can change your choice at any time from the site footer.',
             alwaysOn: 'Always active',
             necessary: 'Necessary', necessaryDesc: 'Security, forms and storing your privacy settings.',
@@ -266,9 +266,12 @@
             notifyVisibility();
         }
 
-        function closeWithNecessary() {
-            if (!readConsent()) applyConsent({ analytics: false, marketing: false, support: false }, true);
+        function cancel() {
             close();
+            window.dispatchEvent(new CustomEvent('naserwis:consent-cancel'));
+            // Dismissing settings is not a choice. Keep asking until the user
+            // explicitly accepts, rejects optional categories or saves settings.
+            if (!readConsent()) show(false);
         }
 
         function onKeydown(event) {
@@ -276,7 +279,7 @@
             if (!overlay.classList.contains('consent-overlay-settings')) return;
             if (event.key === 'Escape') {
                 event.preventDefault();
-                closeWithNecessary();
+                cancel();
                 return;
             }
             if (event.key !== 'Tab') return;
@@ -319,7 +322,7 @@
             }, true);
             close();
         });
-        closeButton.addEventListener('click', closeWithNecessary);
+        closeButton.addEventListener('click', cancel);
 
         document.querySelectorAll('[data-consent-settings]').forEach(function (button) {
             button.addEventListener('click', function (event) {
@@ -337,7 +340,7 @@
                     loadChatwoot();
                     return true;
                 }
-                show(true);
+                show(false);
                 return false;
             }
         };

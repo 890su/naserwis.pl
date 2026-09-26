@@ -282,6 +282,10 @@
     });
     window.addEventListener('chatwoot:ready', openChat);
     window.addEventListener('chatwoot:closed', () => { chatOpen = false; scheduleUpdate(); });
+    window.addEventListener('naserwis:consent-cancel', () => {
+        chatPending = false;
+        clearTimeout(chatTimer);
+    });
     window.addEventListener('naserwis:consent', (event) => {
         if (event.detail.support) openChat();
         else { chatPending = false; chatOpen = false; clearTimeout(chatTimer); window.$chatwoot?.toggle('close'); }
