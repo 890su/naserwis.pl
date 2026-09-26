@@ -7,9 +7,10 @@
   "scripts": {
     "ads:build": "node scripts/build-google-ads.mjs",
     "outreach:build": "node scripts/build-non-pl-outreach.mjs",
-    "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-intent-landings.mjs && node scripts/apply-cro.mjs",
+    "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-intent-landings.mjs && node scripts/apply-cro.mjs && node scripts/apply-starting-prices.mjs",
     "export:live": "node scripts/export-live-site.mjs",
-    "cro:generate": "node scripts/apply-cro.mjs",
+    "cro:generate": "node scripts/apply-cro.mjs && node scripts/apply-starting-prices.mjs",
+    "prices:generate": "node scripts/apply-starting-prices.mjs",
     "intent:generate": "node scripts/apply-intent-landings.mjs",
     "ads:intent:generate": "node scripts/build-intent-ads-pack.mjs",
     "ads:intent:check": "node scripts/build-intent-ads-pack.mjs --check",
