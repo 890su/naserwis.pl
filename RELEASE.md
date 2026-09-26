@@ -238,3 +238,16 @@ button clicks alone. See [CRO_PLAN.md](CRO_PLAN.md) for evidence-gated next step
   privacy disclosures, generation scripts and API tests.
 - Preserved all previous SEO/Ads metadata for existing pages and left Ads files
   unchanged.
+# 2026-09-26 — единая панель согласия для чата
+
+Опубликован коммит `3926c2a` через существующую Pages/Git интеграцию.
+Cloudflare Pages deployment `0ee10552-e5bc-4ffd-83d4-cb649a7a8bc0` завершился
+успешно. Кнопка чата показывает компактную общую панель согласия. Закрытие
+настроек без выбора ничего не сохраняет и возвращает начальный баннер.
+Явный выбор только обязательных и отдельное разрешение чата сохранены.
+
+Статические проверки и 12 unit-тестов прошли. Production smoke подтвердил
+точные исходники ресурсов, страницы/SEO, редиректы, 404, API 405/400.
+В браузере проверены ранее разрешённый чат на основном домене и сценарий
+без сохранённого согласия на URL того же выпуска. Заявки и сообщения не
+отправлялись. Детали: `docs/consent-chat-fix-2026-09-26.md`.
