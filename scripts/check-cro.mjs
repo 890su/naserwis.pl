@@ -29,20 +29,21 @@ function seo(html) {
 const files = await pages('public');
 const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-config.js'];
 const reviewedPageHashes = {
-  // 2026-09-26: reviewed price-only schema changes: first-hour visit 250 PLN
-  // and localized from/to project estimates. Other SEO fields are unchanged.
+  // 2026-10-04: reviewed WiFi diagnosis schema changes to match the 250 PLN
+  // Warsaw visit minimum. Other SEO fields are unchanged.
+  // 2026-09-26: reviewed first-hour visit and project estimate schema changes.
   // 2026-09-08: metadata aligned with Cloudflare Pages' trailing-slash URLs.
   'public/montaz-sieci/index.html': '26a8a423ed2264895a2d5a633dd781b1c678df6ee4a665db8a15872f95a91e2e',
-  'public/naprawa-wifi/index.html': 'dd8f57e51ed702b35b786728114c01ed3c41cfcc6f9781cfb6ddeb2ca275516f',
+  'public/naprawa-wifi/index.html': 'a6a6131c8578e3c120de1d6f93aa7f3d65ef0b8307e62827e02548ee78ff51da',
   'public/naprawa-sieci/index.html': '05fad22614ed8310af874cf1b6c1d57c725cb585d53a6fa0a35169a12f26adb1',
   'public/ru/montaz-sieci/index.html': '33dd2164df3c5a6014a31adde22b89f59ef2970c5c0f12bff3564f398870e0d5',
-  'public/ru/naprawa-wifi/index.html': '49d69adc9bd659335a2c92deb76877ed41a6eb64e87a9949f0eec6195aeedb9b',
+  'public/ru/naprawa-wifi/index.html': 'cbf8152774b63e24cc9fde59eaf128e5d8895903cdd9ec5e6d3c5f6f1e064310',
   'public/ru/naprawa-sieci/index.html': '8ddd2dd06eb11a28671dde37e405aa4291898136e0f0fa38a175cc5de2f94ee2',
   'public/uk/montaz-sieci/index.html': 'e925e2424a8a33dc3ae1340819bc7515e989366f8a8299585f7428a375239892',
-  'public/uk/naprawa-wifi/index.html': 'c2650f97fadf0726b463a4fa2374cdec7883cf7b2b7bdeb9c30340595da53d34',
+  'public/uk/naprawa-wifi/index.html': 'a7d20e0a81baf67a4fcc2750d2e7ed37458a3f163f2143e13da99c1792805597',
   'public/uk/naprawa-sieci/index.html': '00d10fa5ffcd186ed0dc2117defbbbd4b75c2c35daa2c61cf50a10a358fa4e5c',
   'public/en/montaz-sieci/index.html': 'b5778f84d77b4a61df7ff05999dfe4a825c8489f967842cc125b2b1d09397324',
-  'public/en/naprawa-wifi/index.html': 'f474e447907e79f56a516cff5e9a0829dfa016ac88bccea0cf04b6393e3e3014',
+  'public/en/naprawa-wifi/index.html': 'ec1794ed6f883cd2ae1c1e10af55a1646e444fdfbb41309882f68e6229dc195c',
   'public/en/naprawa-sieci/index.html': '936810897ddca1fc7752fe911552f309497ca14f7c8a33e83ec6f646d33e7763'
 };
 const reviewedProtectedFileHashes = {};

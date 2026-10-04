@@ -273,10 +273,12 @@ test('mobile dock and modal form preserve secondary phone and primary lead conve
 test('chat consent grants open once after ready; reject never counts as chat open', async ({ page }) => {
   await isolate(page); await consent(page); await page.goto('/naprawa-sieci/');
   await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
-  await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'dialog');
+  await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'region');
   expect((await events(page, 'chatwoot_open')).length).toBe(0);
   await page.locator('.consent-reject').click();
   await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
+  await page.locator('.consent-customise').click();
+  await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'dialog');
   await page.locator('label').filter({ has: page.locator('input[name=support]') }).click();
   await expect(page.locator('input[name=support]')).toBeChecked();
   await page.locator('.consent-save').click();
