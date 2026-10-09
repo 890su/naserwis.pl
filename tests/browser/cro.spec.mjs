@@ -210,9 +210,10 @@ test('intent selector updates the hero, URL, lead payload and analytics without 
 
 test('unknown intent cannot alter HTML, forms or attribution', async ({ page }) => {
   await isolate(page); await consent(page, { analytics: true, marketing: true });
-  const original = 'Wolne WiFi? Znikający zasięg?';
+  await page.goto('/naprawa-wifi/');
+  const original = await page.locator('.hero-large-title').textContent();
   await page.goto('/naprawa-wifi/?intent=%3Cimg%20src%3Dx%20onerror%3Dalert(1)%3E&utm_source=google');
-  await expect(page.locator('.hero-large-title')).toContainText(original);
+  await expect(page.locator('.hero-large-title')).toHaveText(original);
   await expect(page.locator('html')).not.toHaveAttribute('data-search-intent');
   await expect(page.locator('input[name="intent"]')).toHaveCount(0);
   await expect(page.locator('.intent-context')).toHaveCount(0);

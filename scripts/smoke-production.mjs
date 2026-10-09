@@ -28,7 +28,7 @@ for (let index = 0; index < files.length; index += 4) {
     const route = file.replace(/^public/, '').replace(/index.html$/, '');
     const live = await get(route);
     assert.deepEqual(seo(live), seo(local), `Production SEO mismatch: ${route}`);
-    assert.ok(live.includes('/contact-ui.css?v=20260916-intent1'), route);
+    assert.ok(live.includes('/contact-ui.css?v=20261009-home1'), route);
     if (local.includes('class="fab-container"')) {
       assert.ok(!live.includes('class="contact-toggle-label"'), route);
       assert.ok(!live.includes('class="contact-bar"'), route);
@@ -36,11 +36,11 @@ for (let index = 0; index < files.length; index += 4) {
       assert.equal((live.match(/class="contact-tip"/g) || []).length, 5, route);
       assert.ok(live.includes('id="quick-contact-modal"'), route);
       assert.ok(live.includes('class="mobile-contact-dock"'), route);
-      assert.ok(live.includes('/contact-ui.js?v=20260916-intent1'), route);
+      assert.ok(live.includes('/contact-ui.js?v=20261009-home1'), route);
     }
   }));
 }
-for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
+for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
   const live = normalized(await get('/' + asset));
   const local = normalized(await readFile('public/' + asset, 'utf8'));
   if (asset === 'robots.txt' && live !== local) {
@@ -57,6 +57,10 @@ for (const [source, destination] of [
   ['/ru/naprawa-sieci', '/ru/naprawa-sieci/'],
   ['/uk/montaz-sieci', '/uk/montaz-sieci/'],
   ['/en/naprawa-wifi', '/en/naprawa-wifi/'],
+  ['/naprawa-wifi.php', '/naprawa-wifi/'],
+  ['/ru/naprawa-sieci.php', '/ru/naprawa-sieci/'],
+  ['/uk/montaz-sieci.php', '/uk/montaz-sieci/'],
+  ['/en/naprawa-wifi.php', '/en/naprawa-wifi/'],
 ]) {
   const response = await fetch(origin + source, { redirect: 'manual', signal: AbortSignal.timeout(20000) });
   assert.ok([301, 308].includes(response.status), `${source} should permanently redirect`);

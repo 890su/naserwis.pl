@@ -1033,8 +1033,8 @@
         pl: {
             wifi_repair: {
                 'weak-wifi': {
-                    title: 'Słaby zasięg Wi‑Fi?<br><span class="accent-text">Poprawimy pokrycie i stabilność.</span>',
-                    subtitle: 'Mierzymy sygnał, lokalizujemy zakłócenia i dobieramy ustawienia, punkty dostępowe lub Mesh do konkretnego mieszkania albo biura.',
+                    title: 'Słaby zasięg Wi‑Fi?<br><span class="accent-text">Sprawdzimy zasięg w Twoim domu.</span>',
+                    subtitle: 'Mierzymy sygnał, lokalizujemy zakłócenia i dobieramy ustawienia, punkty dostępowe lub Mesh do konkretnego mieszkania albo domu.',
                     cta: 'Zamów diagnozę zasięgu',
                     context: 'Wybrany temat: słaby zasięg Wi‑Fi'
                 },
@@ -1045,15 +1045,15 @@
                     context: 'Wybrany temat: Wi‑Fi bez dostępu do internetu'
                 },
                 'router-setup': {
-                    title: 'Konfiguracja routera lub Mesh?<br><span class="accent-text">Ustawimy bezpieczną i stabilną sieć.</span>',
-                    subtitle: 'Konfigurujemy routery, punkty dostępowe, sieci gościnne i płynne przełączanie między punktami Wi‑Fi.',
+                    title: 'Konfiguracja routera lub Mesh?<br><span class="accent-text">Dobierzemy ustawienia domowej sieci.</span>',
+                    subtitle: 'Konfigurujemy routery, punkty dostępowe, sieci gościnne i ustawienia Wi‑Fi dopasowane do zgodnych urządzeń.',
                     cta: 'Zamów konfigurację',
                     context: 'Wybrany temat: konfiguracja routera lub Mesh'
                 }
             },
             lan_cctv_repair: {
                 'lan-repair': {
-                    title: 'Awaria sieci LAN lub kabla?<br><span class="accent-text">Zmierzymy linię i usuniemy usterkę.</span>',
+                    title: 'Awaria sieci LAN lub kabla?<br><span class="accent-text">Zmierzymy linię i uzgodnimy naprawę.</span>',
                     subtitle: 'Diagnozujemy gniazda RJ45, przewody, porty switcha i niestabilne połączenia. Zakres naprawy uzgadniamy przed pracą.',
                     cta: 'Zgłoś awarię LAN',
                     context: 'Wybrany temat: naprawa sieci LAN lub kabla'
@@ -1062,7 +1062,7 @@
             lan_install: {
                 'lan-install': {
                     title: 'Projekt i montaż sieci LAN?<br><span class="accent-text">Od trasy kabli do pomiarów.</span>',
-                    subtitle: 'Wykonujemy okablowanie, gniazda, szafy RACK, oznaczenia i dokumentację dla domu lub firmy.',
+                    subtitle: 'Planujemy domowe punkty LAN, wykonujemy okablowanie i gniazda, opisujemy oraz sprawdzamy połączenia.',
                     cta: 'Poproś o wycenę instalacji',
                     context: 'Wybrany temat: projekt i montaż sieci LAN'
                 }
@@ -1070,30 +1070,30 @@
         },
         ru: {
             wifi_repair: {
-                'weak-wifi': { title: 'Слабый сигнал Wi‑Fi?<br><span class="accent-text">Улучшим покрытие и стабильность.</span>', subtitle: 'Измерим сигнал, найдём помехи и подберём настройки, точки доступа или Mesh для квартиры либо офиса.', cta: 'Заказать диагностику покрытия', context: 'Выбранная тема: слабый сигнал Wi‑Fi' },
+                'weak-wifi': { title: 'Слабый сигнал Wi‑Fi?<br><span class="accent-text">Проверим покрытие в вашем доме.</span>', subtitle: 'Измерим сигнал, найдём помехи и подберём настройки, точки доступа или Mesh для квартиры или дома.', cta: 'Заказать диагностику покрытия', context: 'Выбранная тема: слабый сигнал Wi‑Fi' },
                 'no-internet': { title: 'Wi‑Fi есть, но интернет не работает?<br><span class="accent-text">Найдём источник проблемы.</span>', subtitle: 'Проверим роутер, кабель, DHCP и DNS и отличим сбой провайдера от неисправности вашей сети.', cta: 'Сообщить об отсутствии интернета', context: 'Выбранная тема: Wi‑Fi без доступа к интернету' },
-                'router-setup': { title: 'Нужно настроить роутер или Mesh?<br><span class="accent-text">Создадим безопасную и стабильную сеть.</span>', subtitle: 'Настраиваем роутеры, точки доступа, гостевые сети и бесшовное переключение между точками Wi‑Fi.', cta: 'Заказать настройку', context: 'Выбранная тема: настройка роутера или Mesh' }
+                'router-setup': { title: 'Нужно настроить роутер или Mesh?<br><span class="accent-text">Подберём настройки домашней сети.</span>', subtitle: 'Настраиваем роутеры, точки доступа, гостевые сети и настройки Wi‑Fi для совместимых устройств.', cta: 'Заказать настройку', context: 'Выбранная тема: настройка роутера или Mesh' }
             },
-            lan_cctv_repair: { 'lan-repair': { title: 'Неисправна сеть LAN или кабель?<br><span class="accent-text">Измерим линию и устраним проблему.</span>', subtitle: 'Проверяем розетки RJ45, кабели, порты коммутатора и нестабильные соединения. Объём ремонта согласуем заранее.', cta: 'Сообщить о неисправности LAN', context: 'Выбранная тема: ремонт сети LAN или кабеля' } },
-            lan_install: { 'lan-install': { title: 'Проектирование и монтаж LAN?<br><span class="accent-text">От кабельных трасс до измерений.</span>', subtitle: 'Выполняем разводку, розетки, шкафы RACK, маркировку и документацию для дома или компании.', cta: 'Запросить расчёт монтажа', context: 'Выбранная тема: проектирование и монтаж LAN' } }
+            lan_cctv_repair: { 'lan-repair': { title: 'Неисправна сеть LAN или кабель?<br><span class="accent-text">Измерим линию и согласуем ремонт.</span>', subtitle: 'Проверяем розетки RJ45, кабели, порты коммутатора и нестабильные соединения. Объём ремонта согласуем заранее.', cta: 'Сообщить о неисправности LAN', context: 'Выбранная тема: ремонт сети LAN или кабеля' } },
+            lan_install: { 'lan-install': { title: 'Проектирование и монтаж LAN?<br><span class="accent-text">От кабельных трасс до измерений.</span>', subtitle: 'Планируем домашние точки LAN, прокладываем кабели, монтируем розетки, маркируем и проверяем соединения.', cta: 'Запросить расчёт монтажа', context: 'Выбранная тема: проектирование и монтаж LAN' } }
         },
         uk: {
             wifi_repair: {
-                'weak-wifi': { title: 'Слабкий сигнал Wi‑Fi?<br><span class="accent-text">Покращимо покриття та стабільність.</span>', subtitle: 'Виміряємо сигнал, знайдемо перешкоди та підберемо налаштування, точки доступу або Mesh для квартири чи офісу.', cta: 'Замовити діагностику покриття', context: 'Обрана тема: слабкий сигнал Wi‑Fi' },
+                'weak-wifi': { title: 'Слабкий сигнал Wi‑Fi?<br><span class="accent-text">Перевіримо покриття у вашому домі.</span>', subtitle: 'Виміряємо сигнал, знайдемо перешкоди та підберемо налаштування, точки доступу або Mesh для квартири чи будинку.', cta: 'Замовити діагностику покриття', context: 'Обрана тема: слабкий сигнал Wi‑Fi' },
                 'no-internet': { title: 'Wi‑Fi є, але інтернет не працює?<br><span class="accent-text">Знайдемо джерело проблеми.</span>', subtitle: 'Перевіримо роутер, кабель, DHCP і DNS та відрізнимо збій провайдера від несправності вашої мережі.', cta: 'Повідомити про відсутність інтернету', context: 'Обрана тема: Wi‑Fi без доступу до інтернету' },
-                'router-setup': { title: 'Потрібно налаштувати роутер або Mesh?<br><span class="accent-text">Створимо безпечну та стабільну мережу.</span>', subtitle: 'Налаштовуємо роутери, точки доступу, гостьові мережі та безшовне перемикання між точками Wi‑Fi.', cta: 'Замовити налаштування', context: 'Обрана тема: налаштування роутера або Mesh' }
+                'router-setup': { title: 'Потрібно налаштувати роутер або Mesh?<br><span class="accent-text">Підберемо налаштування домашньої мережі.</span>', subtitle: 'Налаштовуємо роутери, точки доступу, гостьові мережі та налаштування Wi‑Fi для сумісних пристроїв.', cta: 'Замовити налаштування', context: 'Обрана тема: налаштування роутера або Mesh' }
             },
-            lan_cctv_repair: { 'lan-repair': { title: 'Несправна мережа LAN або кабель?<br><span class="accent-text">Виміряємо лінію та усунемо проблему.</span>', subtitle: 'Перевіряємо розетки RJ45, кабелі, порти комутатора та нестабільні з’єднання. Обсяг ремонту погоджуємо заздалегідь.', cta: 'Повідомити про несправність LAN', context: 'Обрана тема: ремонт мережі LAN або кабелю' } },
-            lan_install: { 'lan-install': { title: 'Проєктування та монтаж LAN?<br><span class="accent-text">Від кабельних трас до вимірювань.</span>', subtitle: 'Виконуємо розведення, розетки, шафи RACK, маркування та документацію для дому чи компанії.', cta: 'Запросити розрахунок монтажу', context: 'Обрана тема: проєктування та монтаж LAN' } }
+            lan_cctv_repair: { 'lan-repair': { title: 'Несправна мережа LAN або кабель?<br><span class="accent-text">Виміряємо лінію та погодимо ремонт.</span>', subtitle: 'Перевіряємо розетки RJ45, кабелі, порти комутатора та нестабільні з’єднання. Обсяг ремонту погоджуємо заздалегідь.', cta: 'Повідомити про несправність LAN', context: 'Обрана тема: ремонт мережі LAN або кабелю' } },
+            lan_install: { 'lan-install': { title: 'Проєктування та монтаж LAN?<br><span class="accent-text">Від кабельних трас до вимірювань.</span>', subtitle: 'Плануємо домашні точки LAN, прокладаємо кабелі, монтуємо розетки, маркуємо й перевіряємо з’єднання.', cta: 'Запросити розрахунок монтажу', context: 'Обрана тема: проєктування та монтаж LAN' } }
         },
         en: {
             wifi_repair: {
-                'weak-wifi': { title: 'Weak Wi‑Fi signal?<br><span class="accent-text">We will improve coverage and stability.</span>', subtitle: 'We measure signal, locate interference and select the right settings, access points or Mesh for the property.', cta: 'Book a coverage diagnosis', context: 'Selected issue: weak Wi‑Fi coverage' },
+                'weak-wifi': { title: 'Weak Wi‑Fi signal?<br><span class="accent-text">We will check coverage in your home.</span>', subtitle: 'We measure signal, locate interference and select the right settings, access points or Mesh for your home.', cta: 'Book a coverage diagnosis', context: 'Selected issue: weak Wi‑Fi coverage' },
                 'no-internet': { title: 'Wi‑Fi connects, but there is no internet?<br><span class="accent-text">We will find the source.</span>', subtitle: 'We check the router, cable, DHCP and DNS and distinguish a provider outage from a fault in your network.', cta: 'Report no internet', context: 'Selected issue: Wi‑Fi without internet access' },
-                'router-setup': { title: 'Router or Mesh setup?<br><span class="accent-text">We will configure a secure, stable network.</span>', subtitle: 'We configure routers, access points, guest networks and seamless roaming between Wi‑Fi points.', cta: 'Book router setup', context: 'Selected issue: router or Mesh setup' }
+                'router-setup': { title: 'Router or Mesh setup?<br><span class="accent-text">Settings suited to your home network.</span>', subtitle: 'We configure routers, access points, guest networks and Wi‑Fi settings for compatible devices.', cta: 'Book router setup', context: 'Selected issue: router or Mesh setup' }
             },
-            lan_cctv_repair: { 'lan-repair': { title: 'LAN or cable fault?<br><span class="accent-text">We will test the line and repair it.</span>', subtitle: 'We diagnose RJ45 sockets, cables, switch ports and unstable links. We agree the repair scope before work starts.', cta: 'Report a LAN fault', context: 'Selected issue: LAN or cable repair' } },
-            lan_install: { 'lan-install': { title: 'LAN design and installation?<br><span class="accent-text">From cable routes to test results.</span>', subtitle: 'We install cabling, sockets and racks, then label, test and document the network for a home or business.', cta: 'Request an installation quote', context: 'Selected issue: LAN design and installation' } }
+            lan_cctv_repair: { 'lan-repair': { title: 'LAN or cable fault?<br><span class="accent-text">We will test the line and agree the repair.</span>', subtitle: 'We diagnose RJ45 sockets, cables, switch ports and unstable links. We agree the repair scope before work starts.', cta: 'Report a LAN fault', context: 'Selected issue: LAN or cable repair' } },
+            lan_install: { 'lan-install': { title: 'LAN design and installation?<br><span class="accent-text">From cable routes to test results.</span>', subtitle: 'We plan home LAN points, install cables and sockets, then label and test connections.', cta: 'Request an installation quote', context: 'Selected issue: LAN design and installation' } }
         }
     };
 

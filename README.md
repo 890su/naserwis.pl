@@ -124,3 +124,10 @@ and ready-to-publish copy for owned profiles, permitted communities and referral
 partners. Polish and ITBIZ are excluded. The owner-reported approved Google Ads
 campaigns must be optimized in place using `ads/non-pl-existing-campaign-optimization.md`;
 the paused repository drafts must not be imported as duplicates.
+
+The 2026-10-09 home-service SEO update separates the available scope from billing
+in all four languages and removes NaSerwis business subscriptions. See
+`docs/SEO-WEEKS-1-3-2026-10-09.md` for query ownership, billing and validation.
+Use `npm run seo:generate` after editing `scripts/home-service-copy.mjs`.
+Compliance/CRO/price/intent generation preserves this source; the immutable
+pre-CRO fixture stays unchanged and reviewed SEO hashes remain explicit.

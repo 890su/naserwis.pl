@@ -28,25 +28,30 @@ function seo(html) {
 }
 const files = await pages('public');
 const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-config.js'];
+// 2026-10-09: home-only scope, revised metadata/H1, matching FAQ/schema.
+// Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
-  // 2026-10-04: reviewed WiFi diagnosis schema changes to match the 250 PLN
-  // Warsaw visit minimum. Other SEO fields are unchanged.
-  // 2026-09-26: reviewed first-hour visit and project estimate schema changes.
-  // 2026-09-08: metadata aligned with Cloudflare Pages' trailing-slash URLs.
-  'public/montaz-sieci/index.html': '26a8a423ed2264895a2d5a633dd781b1c678df6ee4a665db8a15872f95a91e2e',
-  'public/naprawa-wifi/index.html': 'a6a6131c8578e3c120de1d6f93aa7f3d65ef0b8307e62827e02548ee78ff51da',
-  'public/naprawa-sieci/index.html': '05fad22614ed8310af874cf1b6c1d57c725cb585d53a6fa0a35169a12f26adb1',
-  'public/ru/montaz-sieci/index.html': '33dd2164df3c5a6014a31adde22b89f59ef2970c5c0f12bff3564f398870e0d5',
-  'public/ru/naprawa-wifi/index.html': 'cbf8152774b63e24cc9fde59eaf128e5d8895903cdd9ec5e6d3c5f6f1e064310',
-  'public/ru/naprawa-sieci/index.html': '8ddd2dd06eb11a28671dde37e405aa4291898136e0f0fa38a175cc5de2f94ee2',
-  'public/uk/montaz-sieci/index.html': 'e925e2424a8a33dc3ae1340819bc7515e989366f8a8299585f7428a375239892',
-  'public/uk/naprawa-wifi/index.html': 'a7d20e0a81baf67a4fcc2750d2e7ed37458a3f163f2143e13da99c1792805597',
-  'public/uk/naprawa-sieci/index.html': '00d10fa5ffcd186ed0dc2117defbbbd4b75c2c35daa2c61cf50a10a358fa4e5c',
-  'public/en/montaz-sieci/index.html': 'b5778f84d77b4a61df7ff05999dfe4a825c8489f967842cc125b2b1d09397324',
-  'public/en/naprawa-wifi/index.html': 'ec1794ed6f883cd2ae1c1e10af55a1646e444fdfbb41309882f68e6229dc195c',
-  'public/en/naprawa-sieci/index.html': '936810897ddca1fc7752fe911552f309497ca14f7c8a33e83ec6f646d33e7763'
+  "public/index.html": "7e28a44935d91b0d6ee85ed7fe4f67eecad40d95ef4a22df06bc47acd82ec562",
+  "public/naprawa-wifi/index.html": "484550efda9672e918be14be40aa26e78a5c330920b6d34789102d6e70134b6d",
+  "public/naprawa-sieci/index.html": "86bff41e757f95b6329f37cbe7e4ee59bca0e213ff52e0243c1ff2eec1bce11d",
+  "public/montaz-sieci/index.html": "3da2b36af913671d60cf635e86cf49b2abfd194afb5122bfc10f3e5fac9d1226",
+  "public/ru/index.html": "edf1fae8c2e0a124f7bc540c9dc58abbaaa4efed26a1479fb71a013221afa8dd",
+  "public/ru/naprawa-wifi/index.html": "dbf44021d01bcfa51191580c0c867f5b23a48f3bcffe0b3050aa1e073d7181f5",
+  "public/ru/naprawa-sieci/index.html": "8c80f86195a6bd533a7f641f76c47e86c13dac0c41e318e33aa13d3dd52af8e9",
+  "public/ru/montaz-sieci/index.html": "6d8d7151a77a71fa59a9360788941788600afbf17ee8f95e5e73b6c03e14deda",
+  "public/uk/index.html": "3fb9b274699dce39491382a702d08c728424935d9a89a7062a1d4ef8cb04c858",
+  "public/uk/naprawa-wifi/index.html": "9055c65b67c3743b668fcb0cd6dfc8ed35e5eaf103eb8e6419bc7e350bc19786",
+  "public/uk/naprawa-sieci/index.html": "01904af35a537e1a8f54d7203fed19e3ca5e0a62a98f99087924ec0a867aaa1f",
+  "public/uk/montaz-sieci/index.html": "fe6b2b6a3ef4d14aa5b5703e9b1445cdebc6b94cbadaad0995e57932177e85d5",
+  "public/en/index.html": "f67ff55a447654f59885e29f7138052caf2abc30b277f2ad67cfacc4acb0e7f5",
+  "public/en/naprawa-wifi/index.html": "459257950cc0b0246e2b5603c3c1fad824b2a30dd413e126b1c47ebfd9ceb1a5",
+  "public/en/naprawa-sieci/index.html": "81c4f7fb6e96e6fe24941b6abd5d26ac5a52420be904209eb0ed9c02430bae9e",
+  "public/en/montaz-sieci/index.html": "18b683d8f926536ad72f6307d1cf04a2d7436db1f31e292261e077a6f5e90916"
 };
-const reviewedProtectedFileHashes = {};
+// Legacy PHP routes now redirect directly to their established canonical URLs.
+const reviewedProtectedFileHashes = {
+  "public/_redirects": "ceeadef331a2b44237d1254c0ed9e5bd068d8be5004f8773e8883afe66f97058"
+};
 const record = process.argv.includes('--record-original');
 const original = file => execFileSync('git', ['show', `${baselineRevision}:${file}`], { encoding: 'utf8' });
 const expected = JSON.parse(await readFile(fixture, 'utf8'));
@@ -79,8 +84,8 @@ if (record) {
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
     if (/^public(?:\/(?:ru|uk|en))?\/(?:naprawa-wifi|naprawa-sieci|montaz-sieci)\/index\.html$/.test(file)) {
       assert.equal((html.match(/INTENT LANDING CONTENT START/g) || []).length, 1, `${file}: intent content marker`);
-      assert.ok(html.includes('/script.js?v=20260916-intent1'), `${file}: intent script cache version`);
-      assert.ok(html.includes('/custom.css?v=20260916-intent1'), `${file}: intent styles cache version`);
+      assert.ok(html.includes('/script.js?v=20261009-home1'), `${file}: intent script cache version`);
+      assert.ok(html.includes('/custom.css?v=20261009-home1'), `${file}: intent styles cache version`);
       if (file.includes('/naprawa-wifi/')) {
         assert.equal((html.match(/data-intent-select=/g) || []).length, 3, `${file}: three Wi-Fi intents`);
         assert.equal((html.match(/data-intent-select="[^"]+" data-contact-modal/g) || []).length, 3, `${file}: intent options open the enquiry modal`);
@@ -107,5 +112,5 @@ if (record) {
   const notFound = await readFile('public/404.html', 'utf8');
   assert.ok(notFound.includes('<meta name="robots" content="noindex, follow">'), '404 page must remain noindex, follow');
   assert.ok(notFound.includes('href="/"'), '404 page must link back to the homepage');
-  console.log('CRO guards passed: existing SEO/Ads unchanged, 20 enhanced landings and 4 reviewed tool routes.');
+  console.log('CRO guards passed: reviewed home-service SEO, preserved Ads configuration, 20 landings and 4 tool routes.');
 }

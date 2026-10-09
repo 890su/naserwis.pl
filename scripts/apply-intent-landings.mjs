@@ -12,7 +12,7 @@ const copy = {
       options: [
         ['weak-wifi', 'Zasięg', 'Słaby sygnał Wi‑Fi', 'Martwe strefy, wolne pokoje, zakłócenia i zrywające połączenie.'],
         ['no-internet', 'Połączenie', 'Wi‑Fi jest, internetu nie ma', 'Urządzenie łączy się z routerem, ale strony nie działają lub połączenie zanika.'],
-        ['router-setup', 'Konfiguracja', 'Router albo Mesh do ustawienia', 'Bezpieczna konfiguracja, punkty dostępowe, sieć gościnna i płynny roaming.'],
+        ['router-setup', 'Konfiguracja', 'Router albo Mesh do ustawienia', 'Bezpieczna konfiguracja, punkty dostępowe, sieć gościnna i ustawienia zgodnych urządzeń.'],
       ],
     },
     repair: {
@@ -34,7 +34,7 @@ const copy = {
         ['Projekt trasy', 'Rozmieszczenie punktów, długości i sposób prowadzenia przewodów.'],
         ['Opisane porty', 'Gniazda, patch panel i przewody oznaczone zgodnie ze schematem.'],
         ['Pomiary', 'Test każdego toru po zakończeniu montażu i usunięcie błędów.'],
-        ['Dokumentacja', 'Schemat i lista punktów dla firmy lub właściciela domu.'],
+        ['Dokumentacja', 'Uzgodniony schemat i lista punktów dla właściciela domu.'],
       ],
     },
   },
@@ -44,7 +44,7 @@ const copy = {
       options: [
         ['weak-wifi', 'Покрытие', 'Слабый сигнал Wi‑Fi', 'Мёртвые зоны, низкая скорость в комнатах, помехи и обрывы.'],
         ['no-internet', 'Подключение', 'Wi‑Fi есть, интернета нет', 'Устройство подключено к роутеру, но сайты не открываются или связь пропадает.'],
-        ['router-setup', 'Настройка', 'Нужно настроить роутер или Mesh', 'Безопасная конфигурация, точки доступа, гостевая сеть и бесшовный роуминг.'],
+        ['router-setup', 'Настройка', 'Нужно настроить роутер или Mesh', 'Безопасная конфигурация, точки доступа, гостевая сеть и настройки совместимых устройств.'],
       ],
     },
     repair: {
@@ -62,7 +62,7 @@ const copy = {
         ['Проект трасс', 'Расположение точек, длины и способ прокладки кабелей.'],
         ['Маркировка портов', 'Розетки, патч-панель и кабели обозначены по схеме.'],
         ['Измерения', 'Тест каждой линии после монтажа и устранение обнаруженных ошибок.'],
-        ['Документация', 'Схема и перечень точек для компании или владельца дома.'],
+        ['Документация', 'Согласованная схема и перечень точек для владельца дома.'],
       ],
     },
   },
@@ -72,7 +72,7 @@ const copy = {
       options: [
         ['weak-wifi', 'Покриття', 'Слабкий сигнал Wi‑Fi', 'Мертві зони, низька швидкість у кімнатах, перешкоди та обриви.'],
         ['no-internet', 'Підключення', 'Wi‑Fi є, інтернету немає', 'Пристрій підключений до роутера, але сайти не відкриваються або зв’язок зникає.'],
-        ['router-setup', 'Налаштування', 'Потрібно налаштувати роутер або Mesh', 'Безпечна конфігурація, точки доступу, гостьова мережа та безшовний роумінг.'],
+        ['router-setup', 'Налаштування', 'Потрібно налаштувати роутер або Mesh', 'Безпечна конфігурація, точки доступу, гостьова мережа та налаштування сумісних пристроїв.'],
       ],
     },
     repair: {
@@ -90,7 +90,7 @@ const copy = {
         ['Проєкт трас', 'Розташування точок, довжини та спосіб прокладання кабелів.'],
         ['Маркування портів', 'Розетки, патч-панель і кабелі позначені за схемою.'],
         ['Вимірювання', 'Тест кожної лінії після монтажу та усунення знайдених помилок.'],
-        ['Документація', 'Схема та перелік точок для компанії або власника будинку.'],
+        ['Документація', 'Погоджена схема та перелік точок для власника будинку.'],
       ],
     },
   },
@@ -100,7 +100,7 @@ const copy = {
       options: [
         ['weak-wifi', 'Coverage', 'Weak Wi‑Fi signal', 'Dead zones, slow rooms, interference and a connection that keeps dropping.'],
         ['no-internet', 'Connection', 'Wi‑Fi connects, but there is no internet', 'The device reaches the router, but pages do not load or the connection disappears.'],
-        ['router-setup', 'Setup', 'Router or Mesh needs configuring', 'Secure setup, access points, guest network and seamless roaming.'],
+        ['router-setup', 'Setup', 'Router or Mesh needs configuring', 'Secure setup, access points, guest network and compatible device settings.'],
       ],
     },
     repair: {
@@ -118,7 +118,7 @@ const copy = {
         ['Route plan', 'Outlet locations, cable lengths and the agreed installation method.'],
         ['Labelled ports', 'Sockets, patch panel and cables marked against the network plan.'],
         ['Measurements', 'Every run tested after installation and faults corrected.'],
-        ['Documentation', 'A diagram and outlet list for the business or homeowner.'],
+        ['Documentation', 'The agreed diagram and outlet list for the homeowner.'],
       ],
     },
   },

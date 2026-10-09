@@ -23,6 +23,9 @@ async function pages(dir) {
 let changed = 0;
 for (const file of await pages('public')) {
   const original = await readFile(file, 'utf8');
+  // These commercial pages have a single scope/billing source. Do not restore
+  // old per-service fees or strip the explanation of alternative billing.
+  if (original.includes('/home-services.css?')) continue;
   const locale = original.match(/<html[^>]*lang="([^"]+)"/)?.[1]?.split('-')[0];
   const prefix = prefixes[locale];
   if (!prefix) continue;
