@@ -165,3 +165,6 @@ on 41 pages. Lighthouse 13.4.1 medians and remaining limitations are recorded in
 For publication, verify the Cloudflare Pages check and deployed resources, then
 re-test Cloudflare behavior and Google Rich Results. The uncompressed 15 KB JS budget and full WCAG
 conformance are not claimed.
+
+The first-visit language banner and contrast correction is documented in
+[docs/CONTRAST-CLS-2026-10-10.md](docs/CONTRAST-CLS-2026-10-10.md).

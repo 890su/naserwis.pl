@@ -2,7 +2,10 @@
 
 `naserwis-social.png`, `/favicon.png` and `/favicon.ico` are deterministic
 raster renderings of the existing two-colour text wordmark from the site's
-header: `Na` in #0a2540 and `Serwis` in #00d4aa. They use system typography,
+original header: `Na` in #0a2540 and `Serwis` in #00d4aa. The page header
+uses a darker #087860 text variant for contrast on its light background;
+the previously published raster brand assets retain their original colours.
+They use system typography,
 without stock media, new symbols or factual marketing claims.
 
 Source and build recipe: `scripts/apply-technical-seo.mjs` (sharp 0.35.2).

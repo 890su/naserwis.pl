@@ -377,9 +377,9 @@ header {
   -webkit-backdrop-filter: blur(14px);
 }
 
-/* Logo colour tweak for consistency */
+/* Accessible wordmark text on the light header. */
 .logo span {
-  color: var(--accent);
+  color: #087860;
 }
 
 /* Phone link */

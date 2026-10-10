@@ -13,6 +13,14 @@ await mkdir(output, { recursive: true });
 const digest = value => createHash('sha256').update(value).digest('hex').slice(0, 16);
 const systemFont = 'system-ui, -apple-system, "Segoe UI", Arial, sans-serif';
 const skipText = { pl: 'Przejdź do treści', ru: 'Перейти к содержимому', uk: 'Перейти до вмісту', en: 'Skip to content' };
+// Render the existing runtime notice before first paint, so forms do not grow after JS loads.
+const privacyNotice = {
+  pl: 'Dane służą do odpowiedzi na zapytanie. Administrator: Ihar Shestsiuk.',
+  ru: 'Данные нужны для ответа на запрос. Администратор: Ihar Shestsiuk.',
+  uk: 'Дані потрібні для відповіді на запит. Адміністратор: Ihar Shestsiuk.',
+  en: 'We use the data to answer your enquiry. Controller: Ihar Shestsiuk.'
+};
+const privacyLabel = { pl: 'Prywatność', ru: 'Конфиденциальность', uk: 'Конфіденційність', en: 'Privacy' };
 
 // Rasterize the existing two-colour NaSerwis wordmark; no new brand symbol.
 const wordmark = (width, height, fontSize) => `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="${fontSize}" font-weight="700" fill="#0a2540">Na<tspan fill="#00d4aa">Serwis</tspan></text></svg>`;
@@ -76,6 +84,13 @@ async function processDirectory(directory) {
     html = html.replace(/(<footer\b[\s\S]*?<\/footer>)/g, block => block.replace(/<h4\b/g, '<h3').replace(/<\/h4>/g, '</h3>'));
     html = html.replace(/<a([^>]*?) href="mailto:([^"<>]+)" itemprop="email"([^>]*)>/g, '<meta itemprop="email" content="$2"><a$1 href="mailto:$2"$3>');
     const locale = html.match(/<html[^>]*lang="([a-z]+)/)?.[1] || 'pl';
+    html = html.replace(/(<form\b[^>]*>)([\s\S]*?)(<\/form>)/g, (form, start, body, end) => {
+      if (!body.includes('name="phone"') || body.includes('class="form-privacy-notice"')) return form;
+      const prefix = locale === 'pl' ? '' : '/' + locale;
+      const notice = `<p class="form-privacy-notice">${privacyNotice[locale]} <a href="${prefix}/privacy">${privacyLabel[locale]}</a>.</p>`;
+      const alert = body.match(/<[^>]+\brole="alert"[^>]*>/)?.[0];
+      return start + (alert ? body.replace(alert, notice + alert) : body + notice) + end;
+    });
     html = html.replace(/<main\b[^>]*id="(?:main-content|legal-main)"[^>]*>/g, tag => tag.includes('tabindex=') ? tag : tag.replace('>', ' tabindex="-1">'));
     if (!/href="#(?:main-content|legal-main)"/.test(html)) {
       if (html.includes('id="main-content"')) html = html.replace(/(<body\b[^>]*>)/, `$1\n<a class="site-skip-link" href="#main-content">${skipText[locale] || skipText.pl}</a>`);

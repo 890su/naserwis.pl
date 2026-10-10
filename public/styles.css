@@ -4,6 +4,13 @@
 
 /* Language Suggestion Banner */
 #lang-suggestion {
+    position: fixed;
+    top: 84px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 990;
+    width: max-content;
+    max-width: calc(100% - 24px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,6 +21,8 @@
     font-size: 14px;
     text-align: center;
     flex-wrap: wrap;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(10, 37, 64, .18);
 }
 
 /* Consent centre */
@@ -424,14 +433,27 @@ body.legal-page { background: var(--bg-alt); }
     color: #fff;
     font-size: 20px;
     cursor: pointer;
-    padding: 0 4px;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 4px;
     line-height: 1;
-    opacity: 0.7;
+    opacity: 1;
     transition: opacity 0.2s;
 }
 
 #lang-suggestion .lang-banner-close:hover {
     opacity: 1;
+}
+
+@media (max-width: 480px) {
+    #lang-suggestion {
+        top: 62px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 0;
+        padding: 0 12px;
+    }
+    #lang-suggestion .lang-banner-btn { grid-column: 1 / -1; grid-row: 2; padding: 2px 12px; }
 }
 
 /* CSS Variables */
@@ -532,7 +554,7 @@ header nav {
 }
 
 .logo span {
-    color: var(--accent);
+    color: #087860;
 }
 
 .nav-right {
