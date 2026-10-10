@@ -7,6 +7,41 @@ async function isolate(page) {
   await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, updatedAt: new Date().toISOString() })));
 }
 for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
+  test(`shared site style and navigation /${prefix}`, async ({ page }) => {
+    await isolate(page);
+    await page.setViewportSize({ width: 1280, height: 900 });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    const chromeStyle = () => page.locator('#header').evaluate(header => {
+      const style = getComputedStyle(header);
+      const logo = getComputedStyle(header.querySelector('.logo'));
+      return [style.position, style.backgroundColor, style.backdropFilter, logo.fontSize, logo.color, logo.fontFamily];
+    });
+    await page.goto('/' + prefix);
+    const expectedStyle = await chromeStyle();
+    for (const route of ['', 'naprawa-wifi/', 'poradnik/']) {
+      await page.goto('/' + prefix + route);
+      await expect(page.locator('.services-dropdown + .guides-nav-link')).toBeVisible();
+      await expect(page.locator('.services-menu .guides-nav-link')).toHaveCount(0);
+      await expect.poll(chromeStyle).toEqual(expectedStyle);
+    }
+    await page.locator('.guide-cards h2 a').first().click();
+    await page.locator('.services-btn').click();
+    await expect(page.locator('.services-menu')).toHaveAttribute('aria-hidden', 'false');
+    await page.keyboard.press('Escape');
+    await page.locator('#select-technical').click();
+    await page.setViewportSize({ width: 320, height: 740 });
+    await page.locator('#mobile-menu-toggle').click();
+    await expect(page.locator('#mobile-menu-overlay')).toHaveClass(/active/);
+    await expect(page.locator('#mobile-menu-overlay .guides-nav-link')).toBeVisible();
+    await page.locator('.mobile-lang-btn[hreflang=ru]').click();
+    await expect(page).toHaveURL(new RegExp(`/ru/poradnik/${wifi}#technical$`));
+    await expect(page.locator('#technical')).toBeVisible();
+    await page.locator('#mobile-menu-toggle').click();
+    await page.locator('#mobile-menu-overlay .guides-nav-link').click();
+    await expect(page).toHaveURL(/\/ru\/poradnik\/$/);
+    expect(errors).toEqual([]);
+  });
   for (const slug of [wifi, lan]) {
     test(`reading levels, keyboard and mobile /${prefix}${slug}`, async ({ page }) => {
       await isolate(page);
@@ -24,7 +59,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       expect(await page.locator('#select-technical').evaluate(element => getComputedStyle(element).color)).toBe('rgb(255, 255, 255)');
       expect(await page.locator('link[rel=canonical]').getAttribute('href')).toBe(canonical);
       await expect(page).toHaveURL(/#technical$/);
-      expect(await page.locator('[hreflang=ru][data-guide-language]').getAttribute('href')).toContain('#technical');
+      expect(await page.locator('[hreflang=ru][data-guide-language]').first().getAttribute('href')).toContain('#technical');
       await page.reload();
       await expect(page.locator('#technical')).toBeVisible();
       await page.locator('#select-simple').click();

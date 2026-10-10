@@ -397,6 +397,23 @@ header {
   transition: background var(--transition), border-color var(--transition);
 }
 
+.desktop-nav > .guides-nav-link {
+  padding: 8px 15px;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.desktop-nav > .guides-nav-link:hover,
+.desktop-nav > .guides-nav-link[aria-current="page"] {
+  background: var(--bg-alt);
+  color: var(--primary);
+}
+
 /* ===================================================
    HERO – refinements
    =================================================== */

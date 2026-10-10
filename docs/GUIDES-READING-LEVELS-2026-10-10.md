@@ -46,6 +46,14 @@ affiliate IDs, promotional prices or product review/rating schema in this releas
 
 ## Maintenance
 
+Guides load the same `styles.css`, `custom.css`, fonts and `script.js` as the
+commercial pages. `scripts/site-chrome.mjs` reuses each localized homepage's
+header, mobile menu and footer. `guides.css` is scoped to article layout and
+reading controls; it does not override the shared chrome or brand variables.
+Poradnik is a top-level link immediately after Usługi, with a separate mobile
+menu block, across all home, service, tool and guide pages. Language links in
+the shared menus preserve the article and selected reading level.
+
 Edit `scripts/guide-copy-{pl,ru,uk,en}.mjs`, then run `npm run guides:generate`.
 `scripts/build-guides.mjs` renders pages, navigation/teasers and sitemap. Generation
 is repeatable; compliance/CRO/price/SEO pipelines finish by regenerating guides.
@@ -53,7 +61,8 @@ The root legacy migration sitemap is not the deployment source.
 
 Run `npm run check`, `npm test`, and `npm run test:e2e`. Browser checks cover both
 reading levels, keyboard navigation, technical deep links, reload/Back, language
-links, no-JavaScript reading, service routing and 320px layout. Screenshots are in
+links, no-JavaScript reading, service routing, shared header styles, desktop and
+mobile menus, and 320px layout. Screenshots are in
 ignored `outputs/guides-2026-10-10/`. Tests block measurement and mock valid leads.
 
 Publishing follows the existing main → Cloudflare Pages process, with a successful

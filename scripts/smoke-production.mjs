@@ -28,6 +28,10 @@ for (let index = 0; index < files.length; index += 4) {
     const route = file.replace(/^public/, '').replace(/index.html$/, '');
     const live = await get(route);
     assert.deepEqual(seo(live), seo(local), `Production SEO mismatch: ${route}`);
+    if (local.includes('id="header"')) {
+      assert.equal(normalized(live).match(/<header id="header"[\s\S]*?<\/header>/)?.[0], normalized(local).match(/<header id="header"[\s\S]*?<\/header>/)?.[0], `Production header mismatch: ${route}`);
+      assert.equal(normalized(live).match(/<div class="mobile-menu-overlay"[\s\S]*?(?=<main)/)?.[0], normalized(local).match(/<div class="mobile-menu-overlay"[\s\S]*?(?=<main)/)?.[0], `Production mobile navigation mismatch: ${route}`);
+    }
     if (route.includes('/poradnik/')) {
       assert.equal(normalized(live).match(/<main\b[\s\S]*?<\/main>/)?.[0], normalized(local).match(/<main\b[\s\S]*?<\/main>/)?.[0], `Production guide content mismatch: ${route}`);
     }

@@ -84,8 +84,8 @@ if (record) {
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
     if (/^public(?:\/(?:ru|uk|en))?\/(?:naprawa-wifi|naprawa-sieci|montaz-sieci)\/index\.html$/.test(file)) {
       assert.equal((html.match(/INTENT LANDING CONTENT START/g) || []).length, 1, `${file}: intent content marker`);
-      assert.ok(html.includes('/script.js?v=20261009-home1'), `${file}: intent script cache version`);
-      assert.ok(html.includes('/custom.css?v=20261009-home1'), `${file}: intent styles cache version`);
+      assert.ok(html.includes('/script.js?v=20261010-guide3'), `${file}: shared script cache version`);
+      assert.ok(html.includes('/custom.css?v=20261010-guide3'), `${file}: shared styles cache version`);
       if (file.includes('/naprawa-wifi/')) {
         assert.equal((html.match(/data-intent-select=/g) || []).length, 3, `${file}: three Wi-Fi intents`);
         assert.equal((html.match(/data-intent-select="[^"]+" data-contact-modal/g) || []).length, 3, `${file}: intent options open the enquiry modal`);

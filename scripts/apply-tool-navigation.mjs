@@ -26,9 +26,9 @@ for (const file of await htmlFiles(publicDir)) {
   const locale = html.match(/<html lang="([a-z]{2})/)?.[1] ?? 'pl';
   const t = tools[locale] ?? tools.pl;
   html = html.replace(/\s*<a class="lang-option tool-nav-option"[\s\S]*?<\/a>/, '');
-  html = html.replace(/(\s*<\/div>\s*<\/div>\s*\n\s*<a href="tel:[^"]+" class="phone")/, `\n                        <a class="lang-option tool-nav-option" role="menuitem" href="${t.route}"><span class="lang-flag" aria-hidden="true">⌁</span><span class="lang-name">${t.label}</span></a>$1`);
+  html = html.replace(/(<div class="lang-menu services-menu"[^>]*>[\s\S]*?)(\s*<\/div>)/, `$1\n                        <a class="lang-option tool-nav-option" role="menuitem" href="${t.route}"><span class="lang-flag" aria-hidden="true">⌁</span><span class="lang-name">${t.label}</span></a>$2`);
   html = html.replace(/\s*<a href="[^"]+" class="mobile-nav-link tool-nav-link">[\s\S]*?<\/a>/, '');
-  html = html.replace(/(\s*<\/div>\s*<div class="mobile-nav-block">\s*<span class="mobile-nav-label">)/, `\n            <a href="${t.route}" class="mobile-nav-link tool-nav-link"><span class="mobile-nav-icon" aria-hidden="true">⌁</span>${t.label}</a>$1`);
+  html = html.replace(/(<div class="mobile-menu-overlay"[^>]*>\s*<div class="mobile-nav-block">[\s\S]*?)(\s*<\/div>)/, `$1\n            <a href="${t.route}" class="mobile-nav-link tool-nav-link"><span class="mobile-nav-icon" aria-hidden="true">⌁</span>${t.label}</a>$2`);
   await writeFile(file, html);
 }
 

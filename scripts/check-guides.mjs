@@ -8,6 +8,10 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
   for (const slug of ['', 'jak-wzmocnic-sygnal-wifi-w-domu/', 'siec-lan-w-domu-przed-remontem/']) {
     const path = `${prefix}poradnik/${slug}`;
     const html = await readFile(`public${path}index.html`, 'utf8');
+    for (const asset of ['styles.css', 'custom.css', 'script.js']) assert.ok(html.includes(`/${asset}?v=20261010-guide3`), `Shared asset ${asset}: ${path}`);
+    assert.ok(html.includes('id="header"') && html.includes('id="mobile-menu-toggle"') && html.includes('class="footer-content"'), `Shared chrome: ${path}`);
+    assert.ok(!/guide-header|guide-brand|guide-footer/.test(html), `No separate guide chrome: ${path}`);
+    assert.ok(/<\/div>\s*<a class="guides-nav-link"/.test(html), `Top-level guide navigation: ${path}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, path);
     assert.ok(html.includes(`rel="canonical" href="https://naserwis.pl${path}"`), path);
     assert.ok(locs.includes('https://naserwis.pl' + path), path);

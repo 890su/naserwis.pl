@@ -312,6 +312,8 @@
         document.addEventListener('click', function (e) {
             const anchor = e.target.closest('a[href^="#"]');
             if (!anchor) return;
+            // The guide reader owns its tabs and native section hashes.
+            if (anchor.closest('.guide-shell')) return;
 
             const href = anchor.getAttribute('href');
 

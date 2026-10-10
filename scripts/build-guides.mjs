@@ -3,6 +3,7 @@ import pl from './guide-copy-pl.mjs';
 import ru from './guide-copy-ru.mjs';
 import uk from './guide-copy-uk.mjs';
 import en from './guide-copy-en.mjs';
+import { siteChrome, syncGuideNavigation } from './site-chrome.mjs';
 const copies = { pl, ru, uk, en };
 const legal = {
   pl: ['Polityka prywatności', 'Polityka cookies', 'Ustawienia prywatności', 'Kable: sprawdź kategorię, materiał żył i przeznaczenie'],
@@ -13,7 +14,7 @@ const legal = {
 for (const [locale, c] of Object.entries(copies)) c.lan.equipmentLinks.unshift(['https://www.belden.com/products/cable/ethernet-cable', legal[locale][3]]);
 const slugs = { wifi: 'jak-wzmocnic-sygnal-wifi-w-domu', lan: 'siec-lan-w-domu-przed-remontem' };
 const root = 'https://naserwis.pl';
-const version = '20261010-guide2';
+const version = '20261010-guide3';
 const date = '2026-10-10';
 const esc = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const prefix = locale => locale === 'pl' ? '/' : `/${locale}/`;
@@ -45,14 +46,14 @@ function shared(c, type) {
   const facts = type === 'wifi' ? `<section class="guide-section" id="obstacles"><h2>${esc(c.tableTitle)}</h2><p>${esc(c.tableIntro)}</p>${table(c.tableHeaders, c.obstacles)}</section>` : `<section class="guide-section" id="speeds"><h2>${esc(c.speedsTitle)}</h2>${table(c.speedHeaders, c.speeds)}<p class="guide-caption">${esc(c.speedNote)}</p></section>`;
   return `${diagram}${facts}<section class="guide-section guide-equipment"><h2>${esc(c.equipment)}</h2><p>${esc(c.externalNote)}</p>${links(a.equipmentLinks)}</section><section class="guide-section guide-sources"><h2>${esc(c.sources)}</h2>${links(sources[type])}</section>`;
 }
-function page(locale, type = '') {
+async function page(locale, type = '') {
   const c = copies[locale], a = type ? c[type] : null;
   const title = a?.title || c.indexTitle, description = a?.description || c.indexDescription;
   const url = root + route(locale, type);
   const breadcrumbs = [{ '@type': 'ListItem', position: 1, name: c.home, item: root + prefix(locale) }, { '@type': 'ListItem', position: 2, name: c.label, item: root + route(locale) }];
   if (a) breadcrumbs.push({ '@type': 'ListItem', position: 3, name: a.h1, item: url });
   const schema = { '@context': 'https://schema.org', '@graph': [{ '@type': 'BreadcrumbList', itemListElement: breadcrumbs }, a ? { '@type': 'Article', '@id': url + '#article', mainEntityOfPage: url, url, headline: a.h1, description, inLanguage: locale, datePublished: date, dateModified: date, author: { '@type': 'Organization', name: c.author, url: root }, publisher: { '@type': 'Organization', name: 'NaSerwis', url: root } } : { '@type': 'CollectionPage', url, name: title, description, inLanguage: locale, hasPart: Object.keys(slugs).map(t => ({ '@type': 'Article', headline: c[t].h1, url: root + route(locale, t) })) }] };
-  const langs = Object.keys(copies).map(l => `<a href="${route(l, type)}" hreflang="${l}" lang="${l}" data-guide-language${l === locale ? ' aria-current="page"' : ''}>${l === 'uk' ? 'UA' : l.toUpperCase()}</a>`).join('');
+  const chrome = await siteChrome(locale, type, route, legal[locale]);
   const content = a ? `<article><div class="guide-reader" data-reader><nav class="reader-switch" aria-label="${esc(c.choose)}"><span>${esc(c.choose)}</span><div><a href="#simple" id="select-simple" data-mode="simple">${esc(c.plain)}</a><a href="#technical" id="select-technical" data-mode="technical">${esc(c.technical)}</a></div><p>${esc(c.switchHelp)}</p></nav>${sections(a.plainSections, 'simple', c)}${sections(a.technicalSections, 'technical', c)}</div>${shared(c, type)}<aside class="guide-service"><h2>${esc(a.cta)}</h2><p>${esc(a.ctaText)}</p><a class="guide-action" href="${prefix(locale)}${a.service}">${esc(a.serviceLabel)} →</a></aside><nav class="guide-next" aria-label="${esc(c.label)}"><a href="${route(locale, type === 'wifi' ? 'lan' : 'wifi')}">${esc(c[type === 'wifi' ? 'lan' : 'wifi'].h1)} →</a></nav></article>` : `<div class="guide-cards">${Object.keys(slugs).map(t => `<article><span class="guide-topic">${t === 'wifi' ? 'Wi-Fi' : 'LAN'}</span><h2><a href="${route(locale, t)}">${esc(c[t].h1)}</a></h2><p>${esc(c[t].lead)}</p><p class="guide-caption">${esc(c.plain)} / ${esc(c.technical)}</p><a class="guide-action" href="${route(locale, t)}">${esc(c.read)} →</a></article>`).join('')}</div>`;
   return `<!DOCTYPE html>
 <html lang="${locale}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -61,19 +62,20 @@ function page(locale, type = '') {
 <title>${esc(title)} | NaSerwis</title><meta name="description" content="${esc(description)}"><meta name="robots" content="index, follow">
 <link rel="canonical" href="${url}">${alternatives(type)}
 <meta property="og:type" content="${a ? 'article' : 'website'}"><meta property="og:url" content="${url}"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}">
-<link rel="stylesheet" href="/custom.css?v=20261009-home1"><link rel="stylesheet" href="/contact-ui.css?v=20261009-home1"><link rel="stylesheet" href="/guides.css?v=${version}">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script><script src="/guides.js?v=${version}" defer></script></head>
-<body class="guide-page"><a class="guide-skip" href="#main-content">${esc(c.read)}</a><header class="guide-header"><a class="guide-brand" href="${prefix(locale)}">Na<span>Serwis</span></a><nav aria-label="${esc(c.label)}"><a href="${route(locale)}">${esc(c.label)}</a><a href="tel:+48453327678">+48 453 327 678</a></nav><nav class="guide-languages" aria-label="PL / RU / UA / EN">${langs}</nav></header>
+<link rel="stylesheet" href="/styles.css?v=${version}"><link rel="stylesheet" href="/custom.css?v=${version}"><link rel="stylesheet" href="/contact-ui.css?v=20261009-home1"><link rel="stylesheet" href="/guides.css?v=${version}">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Roboto:wght@400;500&subset=latin,cyrillic&display=swap" rel="stylesheet">
+<script type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script><script src="/script.js?v=${version}" defer></script><script src="/guides.js?v=${version}" defer></script></head>
+<body class="guide-page"><a class="guide-skip" href="#main-content">${esc(c.read)}</a>${chrome.header}
 <main id="main-content" class="guide-shell"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="${prefix(locale)}">${esc(c.home)}</a><span aria-hidden="true">/</span>${a ? `<a href="${route(locale)}">${esc(c.label)}</a>` : `<span>${esc(c.label)}</span>`}</nav>
-<div class="guide-heading"><span class="guide-topic">${a ? type === 'wifi' ? 'Wi-Fi' : 'LAN' : esc(c.label)}</span><h1>${esc(a?.h1 || title)}</h1><p class="guide-lead">${esc(a?.lead || c.intro)}</p>${a ? `<p class="guide-caption">${esc(c.author)} · ${esc(c.updated)}: <time datetime="${date}">10.10.2026</time></p>` : ''}</div>${content}</main>
-<footer class="guide-footer"><a href="${prefix(locale)}">NaSerwis</a><a href="${prefix(locale)}privacy/">${esc(legal[locale][0])}</a><a href="${prefix(locale)}cookies/">${esc(legal[locale][1])}</a><button type="button" data-consent-settings>${esc(legal[locale][2])}</button></footer></body></html>\n`;
+<div class="guide-heading"><span class="guide-topic">${a ? type === 'wifi' ? 'Wi-Fi' : 'LAN' : esc(c.label)}</span><h1>${esc(a?.h1 || title)}</h1><p class="guide-lead">${esc(a?.lead || c.intro)}</p>${a ? `<p class="guide-caption">${esc(c.author)} · ${esc(c.updated)}: <time datetime="${date}">10.10.2026</time></p>` : ''}</div>${content.replaceAll('class="guide-action"', 'class="btn btn-primary guide-action"')}</main>
+${chrome.footer}</body></html>\n`;
 }
+await syncGuideNavigation(copies, 'public', version);
 for (const locale of Object.keys(copies)) {
   for (const type of ['', 'wifi', 'lan']) {
     const dir = 'public' + route(locale, type);
     await mkdir(dir, { recursive: true });
-    await writeFile(dir + 'index.html', page(locale, type));
+    await writeFile(dir + 'index.html', await page(locale, type));
   }
   // Idempotent integration. Keep existing commercial routes, anchors and forms.
   for (const service of ['', 'naprawa-wifi/', 'naprawa-sieci/', 'montaz-sieci/']) {
@@ -83,9 +85,6 @@ for (const locale of Object.keys(copies)) {
     const c = copies[locale], types = service === 'naprawa-wifi/' ? ['wifi'] : service ? ['lan'] : ['wifi', 'lan'];
     const block = `<section class="guides-teaser"><div class="container"><h2>${esc(c.label)}</h2><p>${esc(c.intro)}</p><ul>${types.map(t => `<li><a href="${route(locale, t)}">${esc(c[t].h1)} →</a></li>`).join('')}</ul><a href="${route(locale)}">${esc(c.label)} →</a></div></section>`;
     html = html.replace('</main>', `\n<!-- GUIDES TEASER START -->\n${block}\n<!-- GUIDES TEASER END -->\n</main>`);
-    html = html.replace(/\s*<a class="lang-option guides-nav-option"[\s\S]*?<\/a>/g, '').replace(/\s*<a class="mobile-nav-link guides-nav-link"[\s\S]*?<\/a>/g, '');
-    html = html.replace(/(<a class="lang-option tool-nav-option")/, `<a class="lang-option guides-nav-option" role="menuitem" href="${route(locale)}"><span class="lang-name">${esc(c.label)}</span></a>\n$1`);
-    html = html.replace(/(<a href="[^"]+" class="mobile-nav-link tool-nav-link")/, `<a class="mobile-nav-link guides-nav-link" href="${route(locale)}">${esc(c.label)}</a>\n$1`);
     if (!html.includes('/guides.css?')) html = html.replace('</head>', `<link rel="stylesheet" href="/guides.css?v=${version}">\n</head>`);
     html = html.replace(/\/guides\.css\?v=[^"\s]+/g, `/guides.css?v=${version}`);
     await writeFile(file, html);
