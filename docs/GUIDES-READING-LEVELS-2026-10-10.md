@@ -54,6 +54,13 @@ Poradnik is a top-level link immediately after Usługi, with a separate mobile
 menu block, across all home, service, tool and guide pages. Language links in
 the shared menus preserve the article and selected reading level.
 
+All shared stylesheets load before the initial render. The former inline
+critical CSS and `media="print"`/`onload` base-CSS loading caused visible
+unstyled menus while `styles.css` was pending and have been removed. The
+navigation synchronizer preserves this rule during regeneration; browser
+coverage holds the stylesheet response to verify that no incomplete frame
+is painted on desktop or mobile.
+
 Edit `scripts/guide-copy-{pl,ru,uk,en}.mjs`, then run `npm run guides:generate`.
 `scripts/build-guides.mjs` renders pages, navigation/teasers and sitemap. Generation
 is repeatable; compliance/CRO/price/SEO pipelines finish by regenerating guides.

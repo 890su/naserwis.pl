@@ -22,7 +22,14 @@ export async function syncGuideNavigation(copies, directory, version) {
       if (!html.includes('services-menu')) continue;
       const locale = html.match(/<html lang="([a-z]{2})/)?.[1] || 'pl';
       const updated = guideNavigation(html, locale, copies[locale].label)
-        .replace(/\/(custom\.css|script\.js)\?v=[^"\s]+/g, `/$1?v=${version}`);
+        // Incomplete inline styles + print/onload CSS exposed unstyled menus
+        // on cold loads. Keep one render-blocking source for the base styles.
+        .replace(/<!-- Critical CSS: Above-the-fold styles inlined for faster LCP -->\s*<style>[\s\S]*?<\/style>\r?\n/g, '')
+        .replace(/<!-- Main stylesheet with deferred loading -->/g, '<!-- Shared styles load before the first render. -->')
+        .replace(/[\t ]*<noscript><link rel="stylesheet" href="\/styles\.css[^"]*"><\/noscript>\r?\n/g, '')
+        .replace(/(<link rel="stylesheet" href="\/styles\.css[^"]*") media="print" onload="[^"]*">/g, '$1>')
+        .replace(/\/(styles\.css|custom\.css|script\.js)\?v=[^"\s]+/g, `/$1?v=${version}`)
+        .replace(/[\t ]+$/gm, '');
       await writeFile(path, updated);
     }
   }
