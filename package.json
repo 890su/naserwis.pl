@@ -7,16 +7,17 @@
   "scripts": {
     "ads:build": "node scripts/build-google-ads.mjs",
     "outreach:build": "node scripts/build-non-pl-outreach.mjs",
-    "compliance:generate": "node scripts/apply-compliance.mjs && node scripts/apply-intent-landings.mjs && node scripts/apply-cro.mjs && node scripts/apply-starting-prices.mjs && node scripts/apply-home-service-seo.mjs && node scripts/build-guides.mjs",
+    "compliance:generate": "node scripts/generate-site.mjs apply-compliance.mjs apply-intent-landings.mjs apply-cro.mjs apply-starting-prices.mjs apply-home-service-seo.mjs build-guides.mjs",
     "export:live": "node scripts/export-live-site.mjs",
-    "cro:generate": "node scripts/apply-cro.mjs && node scripts/apply-starting-prices.mjs && node scripts/apply-home-service-seo.mjs && node scripts/build-guides.mjs",
-    "prices:generate": "node scripts/apply-starting-prices.mjs && node scripts/apply-home-service-seo.mjs && node scripts/build-guides.mjs",
-    "intent:generate": "node scripts/apply-home-service-seo.mjs && node scripts/build-guides.mjs",
-    "seo:generate": "node scripts/apply-home-service-seo.mjs && node scripts/build-guides.mjs",
-    "guides:generate": "node scripts/build-guides.mjs",
+    "cro:generate": "node scripts/generate-site.mjs apply-cro.mjs apply-starting-prices.mjs apply-home-service-seo.mjs build-guides.mjs",
+    "prices:generate": "node scripts/generate-site.mjs apply-starting-prices.mjs apply-home-service-seo.mjs build-guides.mjs",
+    "intent:generate": "node scripts/generate-site.mjs apply-home-service-seo.mjs build-guides.mjs",
+    "seo:generate": "node scripts/generate-site.mjs apply-home-service-seo.mjs build-guides.mjs",
+    "guides:generate": "node scripts/generate-site.mjs build-guides.mjs",
+    "technical:generate": "node scripts/apply-technical-seo.mjs",
     "ads:intent:generate": "node scripts/build-intent-ads-pack.mjs",
     "ads:intent:check": "node scripts/build-intent-ads-pack.mjs --check",
-    "tools:generate": "node scripts/build-weather-network-pages.mjs && node scripts/apply-tool-navigation.mjs",
+    "tools:generate": "node scripts/generate-site.mjs build-weather-network-pages.mjs apply-tool-navigation.mjs",
     "check": "node scripts/check-static-site.mjs && node scripts/check-static-links.mjs && node scripts/check-home-service-seo.mjs && node scripts/check-cro.mjs && node scripts/check-guides.mjs",
     "test": "node --test tests/unit/*.test.mjs",
     "test:e2e": "playwright test",
@@ -24,6 +25,8 @@
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",
+    "esbuild": "0.28.1",
+    "sharp": "0.35.2",
     "wrangler": "4.129.0"
   }
 }

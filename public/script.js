@@ -121,7 +121,9 @@
             '<a href="' + targetUrl + '" class="lang-banner-btn">' + bt.switchLabel + '</a>' +
             '<button class="lang-banner-close" aria-label="' + closeLabel + '">&times;</button>';
 
-        document.body.prepend(banner);
+        const skipLink = document.querySelector('.site-skip-link, .guide-skip, .legal-skip-link');
+        if (skipLink?.parentElement === document.body) skipLink.insertAdjacentElement('afterend', banner);
+        else document.body.prepend(banner);
 
         banner.querySelector('.lang-banner-close').addEventListener('click', function () {
             banner.remove();
@@ -316,6 +318,8 @@
             if (anchor.closest('.guide-shell')) return;
 
             const href = anchor.getAttribute('href');
+            // Skip links use native fragment navigation, including keyboard focus.
+            if (href === '#main-content' || href === '#legal-main') return;
 
             // Skip if href is just "#" or empty
             if (href === '#' || !href) {
@@ -539,6 +543,8 @@
     // Scroll Animations
     // ===================================
     function initScrollAnimations() {
+        const motion = matchMedia('(prefers-reduced-motion: reduce)');
+        if (motion.matches) return;
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -558,6 +564,14 @@
         document.querySelectorAll('.problem-card, .step, .package-card, .benefit').forEach(el => {
             el.style.opacity = '0';
             observer.observe(el);
+        });
+        motion.addEventListener('change', function () {
+            if (!motion.matches) return;
+            observer.disconnect();
+            document.querySelectorAll('.problem-card, .step, .package-card, .benefit').forEach(el => {
+                el.style.opacity = '1';
+                el.style.animation = 'none';
+            });
         });
     }
 
@@ -595,7 +609,7 @@
             const gap = 30;
             track.scrollTo({
                 left: currentIndex * (cardWidth + gap),
-                behavior: 'smooth'
+                behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
             });
         }
 
@@ -609,11 +623,7 @@
             updateSlider();
         });
 
-        // Auto-play slider
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalCards;
-            updateSlider();
-        }, 5000);
+        // Reviews advance only through the accessible controls, without an autoplay timer.
     }
 
     // ===================================
@@ -1238,7 +1248,7 @@
     function pushMeasurementEvent(eventName, parameters) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push(Object.assign({ event: eventName }, parameters || {}));
-        if (typeof window.gtag === 'function') {
+        if (window.NASERWIS_CONSENT?.get()?.analytics && typeof window.gtag === 'function') {
             window.gtag('event', eventName, parameters || {});
         }
     }
@@ -1286,6 +1296,7 @@
     }
 
     function sendGoogleAdsConversion(type, transactionId) {
+        if (!hasMarketingConsent()) return;
         const sendTo = window.NASERWIS_CONFIG?.googleAdsConversions?.[type];
         if (!sendTo || typeof window.gtag !== 'function') return;
         const payload = { send_to: sendTo };

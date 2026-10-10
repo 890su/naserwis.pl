@@ -3,6 +3,8 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import assert from 'node:assert/strict';
+import { assetManifest, pageAssets } from './site-assets.mjs';
+const manifest = await assetManifest();
 const baselineRevision = '19c718796d749613deed8bd634745359883372e7';
 const fixture = new URL('../tests/fixtures/seo-before-cro.json', import.meta.url);
 const hash = value => createHash('sha256').update(value).digest('hex');
@@ -28,25 +30,26 @@ function seo(html) {
 }
 const files = await pages('public');
 const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-config.js'];
-// 2026-10-09: home-only scope, revised metadata/H1, matching FAQ/schema.
+// 2026-10-10 technical SEO candidate: LocalBusiness image, remove unsupported inLanguage, WebSite on four home pages.
+// Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
-  "public/index.html": "7e28a44935d91b0d6ee85ed7fe4f67eecad40d95ef4a22df06bc47acd82ec562",
-  "public/naprawa-wifi/index.html": "484550efda9672e918be14be40aa26e78a5c330920b6d34789102d6e70134b6d",
-  "public/naprawa-sieci/index.html": "86bff41e757f95b6329f37cbe7e4ee59bca0e213ff52e0243c1ff2eec1bce11d",
-  "public/montaz-sieci/index.html": "3da2b36af913671d60cf635e86cf49b2abfd194afb5122bfc10f3e5fac9d1226",
-  "public/ru/index.html": "edf1fae8c2e0a124f7bc540c9dc58abbaaa4efed26a1479fb71a013221afa8dd",
-  "public/ru/naprawa-wifi/index.html": "dbf44021d01bcfa51191580c0c867f5b23a48f3bcffe0b3050aa1e073d7181f5",
-  "public/ru/naprawa-sieci/index.html": "8c80f86195a6bd533a7f641f76c47e86c13dac0c41e318e33aa13d3dd52af8e9",
-  "public/ru/montaz-sieci/index.html": "6d8d7151a77a71fa59a9360788941788600afbf17ee8f95e5e73b6c03e14deda",
-  "public/uk/index.html": "3fb9b274699dce39491382a702d08c728424935d9a89a7062a1d4ef8cb04c858",
-  "public/uk/naprawa-wifi/index.html": "9055c65b67c3743b668fcb0cd6dfc8ed35e5eaf103eb8e6419bc7e350bc19786",
-  "public/uk/naprawa-sieci/index.html": "01904af35a537e1a8f54d7203fed19e3ca5e0a62a98f99087924ec0a867aaa1f",
-  "public/uk/montaz-sieci/index.html": "fe6b2b6a3ef4d14aa5b5703e9b1445cdebc6b94cbadaad0995e57932177e85d5",
-  "public/en/index.html": "f67ff55a447654f59885e29f7138052caf2abc30b277f2ad67cfacc4acb0e7f5",
-  "public/en/naprawa-wifi/index.html": "459257950cc0b0246e2b5603c3c1fad824b2a30dd413e126b1c47ebfd9ceb1a5",
-  "public/en/naprawa-sieci/index.html": "81c4f7fb6e96e6fe24941b6abd5d26ac5a52420be904209eb0ed9c02430bae9e",
-  "public/en/montaz-sieci/index.html": "18b683d8f926536ad72f6307d1cf04a2d7436db1f31e292261e077a6f5e90916"
+  "public/index.html": "2f5660c8468a846853426390444f92adbf5bf647baaa91cdc0bb179cefa33361",
+  "public/naprawa-wifi/index.html": "b25d9d44190d8824346524e7686d71dd211631a152f425b351ffa3dd53bc2c12",
+  "public/naprawa-sieci/index.html": "baa4817c660590f6d7dd079d13a04fe9ad374f773aeafff9339aab3d7f5cdb94",
+  "public/montaz-sieci/index.html": "dfa5b6ca3206ca4b802cee752d8ebe82ba1ccf8631b100e1cc254749dbb97af1",
+  "public/ru/index.html": "e59a16f0035aacf50fffcc5253b9244797755ffa197983f82b1cccab51a4740c",
+  "public/ru/naprawa-wifi/index.html": "149e3da9233ae4a36a404187dd510ffe2de6ea10114ffd911f0d2163d5e1fb78",
+  "public/ru/naprawa-sieci/index.html": "1eddf44975085e0efe74a13cb24389dcfec22572478f0bd71cf6661a946207a2",
+  "public/ru/montaz-sieci/index.html": "559db6e34f2a82b377c9273a35822c0cf391d68157045e0d39d953fa84cce729",
+  "public/uk/index.html": "6b4297a2c855ed4662ddb13f001f942c382e47dfbb5d1ebfc5c66a71894c4a72",
+  "public/uk/naprawa-wifi/index.html": "532b2004e31bcc9b811bbf224f383b435d64589c46e12cc8c9d0a34fa18fdd40",
+  "public/uk/naprawa-sieci/index.html": "f7c3e4e02e7b57bc330571ef387885327d3afa68d39fa6622142b211d04cc9d7",
+  "public/uk/montaz-sieci/index.html": "716cfa3ef31af2f256947d86844f91f1ed92de4867ee58ad64dd72f037f6f070",
+  "public/en/index.html": "b9ff0acfe3a9e0f97a0a54f7d2bfaea063b0fd10b014e58ae22ba7054c277afd",
+  "public/en/naprawa-wifi/index.html": "865db1c709bd19bef08232b365ac705da7962f2bf719d5d447af56ce9207f8d3",
+  "public/en/naprawa-sieci/index.html": "6e29336fa380428c7fa8181d57c9f7fcafc858342146e0fc840453a4daeaf4d2",
+  "public/en/montaz-sieci/index.html": "b97d2b14362e6c876f6ba913563bc413228d03b364b56af275149650975669c6"
 };
 // Legacy PHP routes now redirect directly to their established canonical URLs.
 const reviewedProtectedFileHashes = {
@@ -69,10 +72,12 @@ if (record) {
   let landingCount = 0;
   for (const file of files) {
     const html = await readFile(file, 'utf8');
-    assert.equal((html.match(/href="\/contact-ui.css/g) || []).length, 1, file);
+    const assets = pageAssets(html, manifest);
+    assert.equal(assets.filter(asset => asset.startsWith('/contact-ui.css')).length, 1, file);
     if (!html.includes('class="fab-container"')) continue;
     landingCount++;
-    for (const value of ['id="contact-menu"', 'class="contact-fallback"', 'class="contact-invitation"', 'src="/contact-ui.js']) {
+    assert.equal(assets.filter(asset => asset.startsWith('/contact-ui.js')).length, 1, file);
+    for (const value of ['id="contact-menu"', 'class="contact-fallback"', 'class="contact-invitation"']) {
       assert.equal(html.split(value).length - 1, 1, `${file}: ${value}`);
     }
     assert.equal((html.match(/class="contact-(?:choice-label|toggle-label|bar|hint)"/g) || []).length, 0, file);
@@ -84,8 +89,8 @@ if (record) {
     assert.equal((html.match(/class="contact-next-step"/g) || []).length, (html.match(/<form id="(?:hero-form|final-form)"/g) || []).length, file);
     if (/^public(?:\/(?:ru|uk|en))?\/(?:naprawa-wifi|naprawa-sieci|montaz-sieci)\/index\.html$/.test(file)) {
       assert.equal((html.match(/INTENT LANDING CONTENT START/g) || []).length, 1, `${file}: intent content marker`);
-      assert.ok(html.includes('/script.js?v=20261010-guide3'), `${file}: shared script cache version`);
-      assert.ok(html.includes('/custom.css?v=20261010-guide3'), `${file}: shared styles cache version`);
+      assert.ok(assets.includes('/script.js?v=20261010-guide3'), `${file}: shared script cache version`);
+      assert.ok(assets.includes('/custom.css?v=20261010-guide3'), `${file}: shared styles cache version`);
       if (file.includes('/naprawa-wifi/')) {
         assert.equal((html.match(/data-intent-select=/g) || []).length, 3, `${file}: three Wi-Fi intents`);
         assert.equal((html.match(/data-intent-select="[^"]+" data-contact-modal/g) || []).length, 3, `${file}: intent options open the enquiry modal`);

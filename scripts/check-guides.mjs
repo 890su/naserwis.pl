@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { assetManifest, pageAssets } from './site-assets.mjs';
+const manifest = await assetManifest();
 const sitemap = await readFile('public/sitemap.xml', 'utf8');
 const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
 assert.equal(new Set(locs).size, locs.length, 'Duplicate sitemap URLs');
@@ -8,7 +10,7 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
   for (const slug of ['', 'jak-wzmocnic-sygnal-wifi-w-domu/', 'siec-lan-w-domu-przed-remontem/']) {
     const path = `${prefix}poradnik/${slug}`;
     const html = await readFile(`public${path}index.html`, 'utf8');
-    for (const asset of ['styles.css', 'custom.css', 'script.js']) assert.ok(html.includes(`/${asset}?v=20261010-guide3`), `Shared asset ${asset}: ${path}`);
+    for (const asset of ['styles.css', 'custom.css', 'script.js']) assert.ok(pageAssets(html, manifest).includes(`/${asset}?v=20261010-guide3`), `Shared asset ${asset}: ${path}`);
     assert.ok(html.includes('id="header"') && html.includes('id="mobile-menu-toggle"') && html.includes('class="footer-content"'), `Shared chrome: ${path}`);
     assert.ok(!/guide-header|guide-brand|guide-footer/.test(html), `No separate guide chrome: ${path}`);
     assert.ok(/<\/div>\s*<a class="guides-nav-link"/.test(html), `Top-level guide navigation: ${path}`);

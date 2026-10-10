@@ -1,6 +1,7 @@
 node_modules/
 .dev.vars*
 .env*
+reports/
 !.env.example
 .wrangler/
 *.log

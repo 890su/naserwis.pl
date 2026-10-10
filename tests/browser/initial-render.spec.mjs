@@ -9,7 +9,7 @@ for (const width of [390, 1280]) {
       let release, requested;
       const pending = new Promise(resolve => { release = resolve; });
       const intercepted = new Promise(resolve => { requested = resolve; });
-      await page.route('**/styles.css?*', async request => {
+      await page.route(/\/assets\/site-[a-f0-9]+\.css$/, async request => {
         requested();
         await pending;
         await request.continue();

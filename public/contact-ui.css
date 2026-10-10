@@ -213,13 +213,13 @@ form .contact-alternatives { display: flex; justify-content: center; gap: 14px; 
 @media (max-width: 700px) {
     body:has(#consent-dialog:not([hidden]):not(.consent-overlay-settings)) .fab-container { bottom: 230px; }
     #consent-dialog.consent-overlay:not(.consent-overlay-settings) { padding: 8px; }
-    #consent-dialog:not(.consent-overlay-settings) .consent-panel { padding: 10px; column-gap: 10px; border-radius: 12px; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-panel { padding: 10px; column-gap: 10px; grid-template-columns: minmax(0, .45fr) minmax(0, .55fr); border-radius: 12px; }
     #consent-dialog:not(.consent-overlay-settings) .consent-panel h2 { font-size: 13px; }
     #consent-dialog:not(.consent-overlay-settings) .consent-heading { grid-template-columns: minmax(0, 1fr); }
     #consent-dialog:not(.consent-overlay-settings) .consent-summary > p:first-child { font-size: 10.5px; line-height: 1.25; }
     #consent-dialog:not(.consent-overlay-settings) .consent-policy-links { font-size: 9.5px; line-height: 1.2; }
     #consent-dialog:not(.consent-overlay-settings) .consent-actions { gap: 4px; }
-    #consent-dialog:not(.consent-overlay-settings) .consent-button { padding: 6px 2px; min-height: 52px; font-size: 9.5px; hyphens: auto; overflow-wrap: anywhere; }
+    #consent-dialog:not(.consent-overlay-settings) .consent-button { padding: 6px 2px; min-height: 52px; font-size: 9.5px; hyphens: auto; overflow-wrap: normal; }
 }
 @media (max-width: 768px) {
     body:has(.mobile-contact-dock) { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }

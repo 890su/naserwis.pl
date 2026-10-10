@@ -49,6 +49,29 @@
     window.gtag('set', 'ads_data_redaction', true);
     window.gtag('set', 'url_passthrough', true);
 
+    // Basic Consent Mode: no Google network requests until an optional category is granted.
+    let googleLoaded = false;
+    const configuredDestinations = new Set();
+    function loadGoogle(preferences) {
+        if (!preferences || (!preferences.analytics && !preferences.marketing)) return;
+        if (!googleLoaded) {
+            googleLoaded = true;
+            window.gtag('js', new Date());
+            const loader = document.createElement('script');
+            loader.async = true;
+            loader.dataset.googleConsentLoader = 'true';
+            loader.src = 'https://www.googletagmanager.com/gtag/js?id=' + (preferences.marketing ? 'AW-18394870871' : 'G-FVC64PTKR3');
+            document.head.appendChild(loader);
+        }
+        for (const [enabled, destination] of [[preferences.marketing, 'AW-18394870871'], [preferences.analytics, 'G-FVC64PTKR3']]) {
+            if (enabled && !configuredDestinations.has(destination)) {
+                configuredDestinations.add(destination);
+                window.gtag('config', destination);
+            }
+        }
+    }
+    loadGoogle(initialConsent);
+
     const TEXT = {
         pl: {
             eyebrow: 'Prywatność pod kontrolą',
@@ -151,6 +174,7 @@
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(value)); } catch (_error) { /* Contact must work with storage disabled. */ }
         }
         window.gtag('consent', 'update', googleConsent(value));
+        loadGoogle(value);
         if (value.support) loadChatwoot();
         window.dispatchEvent(new CustomEvent('naserwis:consent', { detail: value }));
         return value;
@@ -216,7 +240,8 @@
 
         function modalMode(active) {
             document.body.classList.toggle('consent-open', active);
-            panel.setAttribute('aria-modal', String(active));
+            if (active) panel.setAttribute('aria-modal', 'true');
+            else panel.removeAttribute('aria-modal');
             panel.setAttribute('role', active ? 'dialog' : 'region');
             if (active) {
                 Array.from(document.body.children).forEach(function (element) {
@@ -248,7 +273,7 @@
             overlay.classList.remove('consent-overlay-settings');
             modalMode(false);
             document.removeEventListener('keydown', onKeydown);
-            if (previouslyFocused && previouslyFocused !== document.body && previouslyFocused.offsetParent !== null && typeof previouslyFocused.focus === 'function') previouslyFocused.focus();
+            if (previouslyFocused && previouslyFocused !== document.body && previouslyFocused.getClientRects().length > 0 && getComputedStyle(previouslyFocused).visibility !== 'hidden' && !previouslyFocused.closest('[inert], [hidden]')) previouslyFocused.focus();
             notifyVisibility();
         }
 

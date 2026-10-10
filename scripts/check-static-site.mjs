@@ -1,4 +1,6 @@
 import { access, readFile } from "node:fs/promises";
+import { assetManifest, pageAssets } from './site-assets.mjs';
+const manifest = await assetManifest();
 
 const pages = [
   "public/index.html",
@@ -50,7 +52,7 @@ for (const language of ["", "ru/", "uk/", "en/"]) {
     const file = `public/${language}${type}/index.html`;
     const html = await readFile(file, "utf8");
     for (const hook of ["custom.css", "legal-language", "legal-settings-button", "data-consent-settings"]) {
-      if (!html.includes(hook)) throw new Error(`Missing legal interface hook ${hook} in ${file}.`);
+      if (!html.includes(hook) && !pageAssets(html, manifest).some(asset => asset.includes(hook))) throw new Error(`Missing legal interface hook ${hook} in ${file}.`);
     }
   }
 }
@@ -61,20 +63,13 @@ for (const language of languages) {
   for (const service of services) {
     const file = `public/${language}${service}index.html`;
     const html = await readFile(file, "utf8");
-    const consentPosition = html.indexOf('/consent.js');
-    const googlePosition = html.indexOf('googletagmanager.com/gtag/js');
-    if (consentPosition < 0 || googlePosition < 0 || consentPosition > googlePosition) {
-      throw new Error(`Consent must load before Google tags in ${file}.`);
-    }
+    const assets = pageAssets(html, manifest);
+    if (!assets.some(asset => asset.startsWith('/consent.js')) || assets.indexOf(assets.find(asset => asset.startsWith('/consent.js'))) > assets.indexOf(assets.find(asset => asset.startsWith('/script.js')))) throw new Error(`Consent must initialize before page measurement in ${file}.`);
     if (html.includes('googletagmanager.com/ns.html') || html.includes('googletagmanager.com/gtm.js') || html.includes('packs/js/sdk.js')) {
       throw new Error(`A third-party loader bypasses consent in ${file}.`);
     }
-    if (!html.includes('googletagmanager.com/gtag/js?id=AW-18394870871')) {
-      throw new Error(`Google Ads must be the primary gtag.js destination in ${file}.`);
-    }
-    if (!html.includes("gtag('config', 'AW-18394870871')") || !html.includes("gtag('config', 'G-FVC64PTKR3')")) {
-      throw new Error(`Google Ads and GA4 destinations must both be configured in ${file}.`);
-    }
+    if (/https:\/\/(?:fonts\.(?:googleapis|gstatic)\.com|www\.googletagmanager\.com)/.test(html)) throw new Error(`Optional external dependency in initial HTML: ${file}.`);
+    if (!consent.includes('AW-18394870871') || !consent.includes('G-FVC64PTKR3') || !consent.includes('loadGoogle(value)')) throw new Error('Consent-gated Ads and GA4 destinations are missing.');
     if (!html.includes('<meta name="robots" content="index, follow">')) {
       throw new Error(`SEO landing page is not explicitly indexable: ${file}.`);
     }
@@ -93,7 +88,7 @@ const toolPages = [
 for (const file of toolPages) {
   const html = await readFile(file, "utf8");
   for (const hook of ["data-network-weather", "/weather-network.js", "rel=\"canonical\"", "hreflang=\"x-default\""]) {
-    if (!html.includes(hook)) throw new Error(`Missing tool or SEO hook ${hook} in ${file}.`);
+    if (!html.includes(hook) && !pageAssets(html, manifest).some(asset => asset.startsWith(hook))) throw new Error(`Missing tool or SEO hook ${hook} in ${file}.`);
   }
 }
 console.log("Static Pages files and form endpoint are ready.");

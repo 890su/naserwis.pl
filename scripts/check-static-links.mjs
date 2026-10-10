@@ -16,8 +16,8 @@ const missing = new Set();
 for (const file of files) {
   const html = await readFile(file, "utf8");
   if (html.includes('id="header"')) {
-    const styles = [...html.matchAll(/<link\b[^>]*href="\/styles\.css[^"]*"[^>]*>/g)];
-    if (styles.length !== 1 || /\b(?:media|onload)=/.test(styles[0][0])) throw new Error(`Base CSS must block the initial render: ${file}`);
+    const styles = [...html.matchAll(/<link\b(?=[^>]*rel="stylesheet")(?=[^>]*href="\/assets\/site-)[^>]*>/g)];
+    if (styles.length !== 1 || /\b(?:media|onload)=/.test(styles[0][0])) throw new Error(`Exactly one complete CSS bundle must block the initial render: ${file}`);
     if (html.includes('Critical CSS: Above-the-fold')) throw new Error(`Stale inline styles returned: ${file}`);
   }
   for (const match of html.matchAll(/(?:src|href)=["']([^"']+)["']/gi)) {

@@ -26,6 +26,7 @@
     let quickModalOpener = null;
     let previousBodyOverflow = '';
     const quickModalBackground = new Map();
+    const canRestoreFocus = element => element && element.getClientRects().length > 0 && getComputedStyle(element).visibility !== 'hidden' && !element.closest('[inert], [hidden]');
 
     const language = (document.documentElement.lang || 'pl').split('-')[0];
     const chatErrors = {
@@ -54,7 +55,7 @@
             track('naserwis_contact_open', { placement: 'floating' });
             menu.querySelector('a, button')?.focus({ preventScroll: true });
         } else {
-            if (restoreFocus && opener?.offsetParent !== null) opener?.focus({ preventScroll: true });
+            if (restoreFocus && canRestoreFocus(opener)) opener.focus({ preventScroll: true });
             if (wasOpen) queueIdleMotion();
         }
     }
@@ -206,8 +207,11 @@
         setQuickModalBackground(false);
         const restore = quickModalOpener;
         quickModalOpener = null;
-        if (restore?.offsetParent !== null) restore.focus({ preventScroll: true });
-        scheduleUpdate();
+        // Restore the launcher's visibility before focusing it; it was suppressed by the dialog.
+        update();
+        requestAnimationFrame(() => {
+            if (canRestoreFocus(restore)) restore.focus({ preventScroll: true });
+        });
     }
     function openQuickModal(source) {
         if (!quickModal) return false;
@@ -234,7 +238,7 @@
         }
         if (event.key !== 'Tab') return;
         const focusable = [...quickModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled])')]
-            .filter(element => element.offsetParent !== null);
+                .filter(element => element.tabIndex >= 0 && !element.closest('[aria-hidden="true"], [inert], [hidden]') && element.getClientRects().length > 0);
         if (!focusable.length) return;
         const first = focusable[0];
         const last = focusable[focusable.length - 1];

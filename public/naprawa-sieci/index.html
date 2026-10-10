@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="pl" prefix="og: http://ogp.me/ns#">
 <head>
-    <script src="/site-config.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Consent Mode v2 must be initialised before Google tags. -->
-    <script src="/consent.js?v=20261009-home1"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394870871"></script>
-    <script>
-      gtag('js', new Date());
-      gtag('config', 'AW-18394870871');
-      gtag('config', 'G-FVC64PTKR3');
-    </script>
+    <!-- Optional Google tags are loaded by consent.js after permission. -->
 
     <title>Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl</title>
     <meta name="title" content="Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl">
@@ -46,14 +39,7 @@
     <meta property="twitter:title" content="Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl">
     <meta property="twitter:description" content="Naprawa domowej sieci LAN w Warszawie: diagnostyka kabli i portów, gniazda RJ45 oraz test po naprawie. Dojazd i zakres prac uzgadniamy przed wizytą.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Roboto:wght@400;500&subset=latin,cyrillic&display=swap" rel="stylesheet">
-
-
     <!-- Shared styles load before the first render. -->
-    <link rel="stylesheet" href="/styles.css?v=20261010-guide3">
-    <link rel="stylesheet" href="/custom.css?v=20261010-guide3">
 
     <script type="application/ld+json">
 {
@@ -64,7 +50,6 @@
   "url": "https://naserwis.pl",
   "telephone": "+48453327678",
   "email": "iharshastsiuk@gmail.com",
-  "inLanguage": "pl",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Warszawa",
@@ -113,14 +98,23 @@
     "https://www.facebook.com/naserwis",
     "https://www.linkedin.com/company/naserwis"
   ],
-  "description": "Naprawa Wi-Fi, konfiguracja routera i montaż domowej sieci LAN w Warszawie i okolicy. Zakres i koszt uzgadniamy przed wizytą. Pomoc dla klientów prywatnych."
+  "description": "Naprawa Wi-Fi, konfiguracja routera i montaż domowej sieci LAN w Warszawie i okolicy. Zakres i koszt uzgadniamy przed wizytą. Pomoc dla klientów prywatnych.",
+  "image": "https://naserwis.pl/assets/naserwis-social.png"
 }
-    </script>
-    <link rel="stylesheet" href="/home-services.css?v=20261009-home1">
-<link rel="stylesheet" href="/guides.css?v=20261010-guide3">
-    <link rel="stylesheet" href="/contact-ui.css?v=20261009-home1">
+</script>
+
+<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png">
+<meta property="og:image" content="https://naserwis.pl/assets/naserwis-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NaSerwis">
+<meta name="twitter:image" content="https://naserwis.pl/assets/naserwis-social.png">
+<meta name="twitter:image:alt" content="NaSerwis">
+
+<link rel="stylesheet" href="/assets/site-bd4a76941bf43bbc.css">
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
+<a class="site-skip-link" href="#main-content">Przejdź do treści</a>
 <header id="header" role="banner">
         <nav class="container" role="navigation" aria-label="Główna nawigacja">
             <a href="/" class="logo" aria-label="NaSerwis.pl">Na<span>Serwis</span></a>
@@ -224,7 +218,7 @@
             <a href="tel:+48453327678" class="mobile-call-btn">&#128222; +48 453 327 678</a>
         </div>
     </div>
-<main id="main-content">
+<main id="main-content" tabindex="-1">
     <!-- Service Schema -->
     <script type="application/ld+json">
 {
@@ -237,7 +231,8 @@
   "provider": {
     "@type": "LocalBusiness",
     "@id": "https://naserwis.pl",
-    "name": "NaSerwis.pl"
+    "name": "NaSerwis.pl",
+    "image": "https://naserwis.pl/assets/naserwis-social.png"
   },
   "areaServed": {
     "@type": "City",
@@ -274,7 +269,7 @@
     ]
   }
 }
-    </script>
+</script>
 
     <section class="hero hero-centered">
         <div class="container">
@@ -375,7 +370,7 @@
     }
   ]
 }
-    </script>
+</script>
 
     <aside class="contact-checkpoint"><p>Masz pytanie o zakres lub cenę?</p><a class="btn btn-primary" href="#contact">Opisz zadanie</a></aside>
 <section class="faq-section"><div class="container"><h2 class="faq-title">Pytania przed wizytą</h2><div class="faq-container"><details class="faq-item"><summary class="faq-question">Czy trzeba wymienić cały kabel?</summary><p class="faq-answer">Nie zawsze. Najpierw sprawdzamy przewód i zakończenia. Możliwość naprawy zależy od uszkodzenia i dostępu do instalacji.</p></details>
@@ -417,12 +412,12 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section" itemscope itemtype="https://schema.org/ContactPoint">
-                    <h4>Kontakt</h4>
-                    <p><a href="mailto:iharshastsiuk@gmail.com" itemprop="email">Email: iharshastsiuk@gmail.com</a></p>
+                    <h3>Kontakt</h3>
+                    <p><meta itemprop="email" content="iharshastsiuk@gmail.com"><a href="mailto:iharshastsiuk@gmail.com">Email: iharshastsiuk@gmail.com</a></p>
                     <p><a href="tel:+48453327678" itemprop="telephone">Tel: +48 453 327 678</a></p>
                 </div>
                 <div class="footer-section">
-                    <h4>Obszar działania</h4>
+                    <h3>Obszar działania</h3>
                     <div class="footer-districts">
                                                     <span class="district-tag">Ursynów</span>
                                                     <span class="district-tag">Wilanów</span>
@@ -441,14 +436,14 @@
                                             </div>
                 </div>
                 <div class="footer-section">
-                    <h4>Usługi</h4>
+                    <h3>Usługi</h3>
                     <p>Montaż sieci LAN/WiFi</p>
                     <p>Monitoring</p>
                     <p>Konfiguracja sprzętu</p>
                     <p>Wsparcie IT</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Język</h4>
+                    <h3>Język</h3>
                     <p><a href="/naprawa-sieci/" hreflang="pl">Polski (PL)</a></p>
                     <p><a href="/ru/naprawa-sieci/" hreflang="ru">Русский (RU)</a></p>
                     <p><a href="/uk/naprawa-sieci/" hreflang="uk">Українська (UA)</a></p>
@@ -484,7 +479,7 @@
     <!-- QUICK CONTACT UI END -->
 
 <!-- Floating Action Buttons for Quick Contact -->
-        <div class="fab-container" aria-label="Szybki kontakt"><div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>Masz pytanie?</strong><span>Napisz do nas →</span></button><button type="button" data-contact-dismiss aria-label="Ukryj podpowiedź i animację" title="Ukryj podpowiedź i animację">×</button></div><div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">Formularz kontaktowy →</a></div>
+        <div class="fab-container" role="group" aria-label="Szybki kontakt"><div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>Masz pytanie?</strong><span>Napisz do nas →</span></button><button type="button" data-contact-dismiss aria-label="Ukryj podpowiedź i animację" title="Ukryj podpowiedź i animację">×</button></div><div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">Formularz kontaktowy →</a></div>
         <div class="fab-menu" id="contact-menu">
             <a href="tel:+48453327678" class="fab fab-phone" aria-label="Zadzwoń" aria-describedby="contact-tip-phone"><span class="contact-tip" id="contact-tip-phone" role="tooltip"><strong>Zadzwoń</strong><span>Porozmawiajmy o problemie</span></span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -518,8 +513,7 @@
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             </svg>
         </button>
-    </div><script src="/script.js?v=20261010-guide3"></script>
-
-    <script src="/contact-ui.js?v=20261009-home1"></script>
+    </div>
+<script defer src="/assets/site-863899a1747e7e2a.js"></script>
 </body>
 </html>

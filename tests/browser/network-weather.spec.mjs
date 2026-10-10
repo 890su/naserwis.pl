@@ -26,3 +26,14 @@ for (const route of routes) {
     expect(await page.evaluate(() => (window.dataLayer || []).some((item) => JSON.stringify(item).includes('198.51.100.10')))).toBe(false);
   });
 }
+
+test('missing weather measurements stay unknown rather than becoming zero', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, support: false })));
+  await page.route('**/api/weather', route => route.fulfill({ json: { current: { temperature: 0, feelsLike: null, humidity: null, windSpeed: null, pressure: null, precipitation: 0, symbol: 'unknown' }, forecast: [] } }));
+  await page.route('**/api/network', route => route.fulfill({ json: {} }));
+  await page.goto('/pogoda-internet-warszawa/');
+  await expect(page.locator('[data-weather-temperature]')).toHaveText('0');
+  await expect(page.locator('[data-weather-feels]')).toHaveText('— °C');
+  await expect(page.locator('[data-weather-humidity]')).toHaveText('—%');
+  await expect(page.locator('[data-weather-pressure]')).toHaveText('— hPa');
+});

@@ -1,6 +1,8 @@
 // Safe production verification: only GETs and an invalid POST, never a lead.
 import { readFile, readdir } from 'node:fs/promises';
 import assert from 'node:assert/strict';
+import { assetManifest, pageAssets } from './site-assets.mjs';
+const manifest = await assetManifest();
 const origin = 'https://naserwis.pl';
 async function pages(dir) {
   const result = [];
@@ -35,7 +37,8 @@ for (let index = 0; index < files.length; index += 4) {
     if (route.includes('/poradnik/')) {
       assert.equal(normalized(live).match(/<main\b[\s\S]*?<\/main>/)?.[0], normalized(local).match(/<main\b[\s\S]*?<\/main>/)?.[0], `Production guide content mismatch: ${route}`);
     }
-    assert.ok(live.includes('/contact-ui.css?v=20261009-home1'), route);
+    assert.ok(pageAssets(live, manifest).some(asset => asset.startsWith('/contact-ui.css')), route);
+    for (const bundle of local.matchAll(/(?:src|href)="(\/assets\/site-[^"]+)"/g)) assert.ok(live.includes(bundle[1]), `Production bundle mismatch: ${route}`);
     if (local.includes('class="fab-container"')) {
       assert.ok(!live.includes('class="contact-toggle-label"'), route);
       assert.ok(!live.includes('class="contact-bar"'), route);
@@ -43,11 +46,11 @@ for (let index = 0; index < files.length; index += 4) {
       assert.equal((live.match(/class="contact-tip"/g) || []).length, 5, route);
       assert.ok(live.includes('id="quick-contact-modal"'), route);
       assert.ok(live.includes('class="mobile-contact-dock"'), route);
-      assert.ok(live.includes('/contact-ui.js?v=20261009-home1'), route);
+      assert.ok(pageAssets(live, manifest).some(asset => asset.startsWith('/contact-ui.js')), route);
     }
   }));
 }
-for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
+for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml', ...Object.keys(manifest).map(path => path.slice(1))]) {
   const live = normalized(await get('/' + asset));
   const local = normalized(await readFile('public/' + asset, 'utf8'));
   if (asset === 'robots.txt' && live !== local) {

@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <script src="/site-config.js"></script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Consent Mode v2 must be initialised before Google tags. -->
-    <script src="/consent.js?v=20261009-home1"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18394870871"></script>
-    <script>
-      gtag('js', new Date());
-      gtag('config', 'AW-18394870871');
-      gtag('config', 'G-FVC64PTKR3');
-    </script>
+    <!-- Optional Google tags are loaded by consent.js after permission. -->
+
 
     <title>Warsaw weather and internet test: IP, latency, provider | NaSerwis.pl</title>
     <meta name="title" content="Warsaw weather and internet test: IP, latency, provider | NaSerwis.pl">
@@ -44,14 +38,10 @@
     <meta property="twitter:title" content="Warsaw weather and internet test: IP, latency, provider | NaSerwis.pl">
     <meta property="twitter:description" content="Current Warsaw weather and forecast plus a privacy-minded internet check: public IP, provider, latency, jitter and indicative download speed.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=Roboto:wght@400;500&subset=latin,cyrillic&display=swap" rel="stylesheet">
-
 
     <!-- Shared styles load before the first render. -->
-    <link rel="stylesheet" href="/styles.css?v=20261010-guide3">
-    <link rel="stylesheet" href="/custom.css?v=20261010-guide3">
+
+
 
     <script type="application/ld+json">
 {
@@ -62,7 +52,6 @@
   "url": "https://naserwis.pl",
   "telephone": "+48453327678",
   "email": "iharshastsiuk@gmail.com",
-  "inLanguage": "en",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Warszawa",
@@ -111,13 +100,23 @@
     "https://www.facebook.com/naserwis",
     "https://www.linkedin.com/company/naserwis"
   ],
-  "description": "Wi-Fi repair, router setup and home LAN installation in Warsaw and nearby areas. We agree scope and cost before a visit. For private customers."
+  "description": "Wi-Fi repair, router setup and home LAN installation in Warsaw and nearby areas. We agree scope and cost before a visit. For private customers.",
+  "image": "https://naserwis.pl/assets/naserwis-social.png"
 }
-    </script>
-    <link rel="stylesheet" href="/weather-network.css?v=20260907-2">
-    <link rel="stylesheet" href="/contact-ui.css?v=20261009-home1">
+</script>
+
+<link rel="icon" type="image/png" sizes="256x256" href="/favicon.png">
+<meta property="og:image" content="https://naserwis.pl/assets/naserwis-social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NaSerwis">
+<meta name="twitter:image" content="https://naserwis.pl/assets/naserwis-social.png">
+<meta name="twitter:image:alt" content="NaSerwis">
+
+<link rel="stylesheet" href="/assets/site-4ebf735e9aed0900.css">
 </head>
 <body itemscope itemtype="https://schema.org/WebPage">
+<a class="site-skip-link" href="#main-content">Skip to content</a>
 <header id="header" role="banner">
         <nav class="container" role="navigation" aria-label="Main navigation">
             <a href="/en/" class="logo" aria-label="NaSerwis.pl">Na<span>Serwis</span></a>
@@ -221,7 +220,7 @@
             <a href="tel:+48453327678" class="mobile-call-btn">&#128222; +48 453 327 678</a>
         </div>
     </div>
-    <main id="main-content" class="weather-network-page" data-network-weather data-settings="{&quot;unavailable&quot;:&quot;Data is temporarily unavailable&quot;,&quot;unknown&quot;:&quot;No data&quot;,&quot;dateLocale&quot;:&quot;en-GB&quot;,&quot;unitWind&quot;:&quot;m/s&quot;,&quot;testing&quot;:&quot;Measuring…&quot;,&quot;test&quot;:&quot;Run a light test&quot;}">
+    <main id="main-content" class="weather-network-page" data-network-weather data-settings="{&quot;unavailable&quot;:&quot;Data is temporarily unavailable&quot;,&quot;unknown&quot;:&quot;No data&quot;,&quot;dateLocale&quot;:&quot;en-GB&quot;,&quot;unitWind&quot;:&quot;m/s&quot;,&quot;testing&quot;:&quot;Measuring…&quot;,&quot;test&quot;:&quot;Run a light test&quot;}" tabindex="-1">
   <section class="nw-hero"><div class="container"><p class="nw-kicker">Weather outside · weather online</p><h1>Check the weather in Warsaw and your internet connection</h1><p class="nw-lead">Two useful readings in one place: the next hours outdoors and a private connection diagnostic. Only you see the result — we do not store your IP address or measurements.</p>
     <div class="nw-dashboard">
       <article class="nw-panel nw-weather-panel" aria-labelledby="weather-title"><div class="nw-panel-head"><div><span>Outside</span><h2 id="weather-title">Now in Warsaw</h2></div><div class="nw-sky-orbit" aria-hidden="true"><span></span></div></div><div class="nw-temperature"><strong data-weather-temperature>—</strong><span>°C</span><div class="nw-temperature-context"><small data-weather-symbol>…</small><p><span>Feels like</span><strong data-weather-feels>—</strong></p></div></div><dl class="nw-metrics"><div><dt>Humidity</dt><dd data-weather-humidity>—</dd></div><div><dt>Wind</dt><dd data-weather-wind>—</dd></div><div><dt>Pressure</dt><dd data-weather-pressure>—</dd></div><div><dt>Rain</dt><dd data-weather-rain>—</dd></div></dl><p class="nw-status" data-weather-status role="status" aria-live="polite"></p></article>
@@ -232,18 +231,49 @@
   <aside class="contact-checkpoint"><p>A question about the scope or price?</p><a class="btn btn-primary" href="#contact">Describe the job</a></aside>
 <section class="nw-faq"><div class="container"><h2>Common questions</h2><div class="nw-faq-list"><details><summary>Does this page store my IP address?</summary><p>No. The address is returned only to your browser in a non-cacheable response and is not added to analytics.</p></details><details><summary>Is this a full speed test?</summary><p>No. It is deliberately lightweight. An accurate line test uses more traffic and is best run over Ethernet.</p></details><details><summary>Where does the forecast come from?</summary><p>Locationforecast by MET Norway. Our server fetches and caches the non-personal weather data.</p></details></div></div></section>
   <section class="nw-cta"><div class="container"><div><h2>Is the connection still unstable?</h2><p>Tell us the symptoms, location and test result. We can check Wi‑Fi, cabling, equipment and the provider side.</p></div><div class="nw-cta-actions"><button type="button" class="btn btn-primary" data-contact-modal>Send an enquiry</button><a class="btn nw-call-button" href="tel:+48453327678">Call us: +48 453 327 678</a></div></div></section>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does this page store my IP address?","acceptedAnswer":{"@type":"Answer","text":"No. The address is returned only to your browser in a non-cacheable response and is not added to analytics."}},{"@type":"Question","name":"Is this a full speed test?","acceptedAnswer":{"@type":"Answer","text":"No. It is deliberately lightweight. An accurate line test uses more traffic and is best run over Ethernet."}},{"@type":"Question","name":"Where does the forecast come from?","acceptedAnswer":{"@type":"Answer","text":"Locationforecast by MET Norway. Our server fetches and caches the non-personal weather data."}}]}</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does this page store my IP address?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The address is returned only to your browser in a non-cacheable response and is not added to analytics."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a full speed test?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It is deliberately lightweight. An accurate line test uses more traffic and is best run over Ethernet."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does the forecast come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Locationforecast by MET Norway. Our server fetches and caches the non-personal weather data."
+      }
+    }
+  ]
+}
+</script>
 </main>
     <footer role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section" itemscope itemtype="https://schema.org/ContactPoint">
-                    <h4>Contact</h4>
-                    <p><a href="mailto:iharshastsiuk@gmail.com" itemprop="email">Email: iharshastsiuk@gmail.com</a></p>
+                    <h3>Contact</h3>
+                    <p><meta itemprop="email" content="iharshastsiuk@gmail.com"><a href="mailto:iharshastsiuk@gmail.com">Email: iharshastsiuk@gmail.com</a></p>
                     <p><a href="tel:+48453327678" itemprop="telephone">Tel: +48 453 327 678</a></p>
                 </div>
                 <div class="footer-section">
-                    <h4>Service area</h4>
+                    <h3>Service area</h3>
                     <div class="footer-districts">
                                                     <span class="district-tag">Ursynów</span>
                                                     <span class="district-tag">Wilanów</span>
@@ -262,14 +292,14 @@
                                             </div>
                 </div>
                 <div class="footer-section">
-                    <h4>Services</h4>
+                    <h3>Services</h3>
                     <p>LAN/WiFi Installation</p>
                     <p>CCTV</p>
                     <p>Equipment Configuration</p>
                     <p>IT Support</p>
                 </div>
                 <div class="footer-section">
-                    <h4>Language</h4>
+                    <h3>Language</h3>
                     <p><a href="/" hreflang="pl">Polski (PL)</a></p>
                     <p><a href="/ru/" hreflang="ru">Русский (RU)</a></p>
                     <p><a href="/uk/" hreflang="uk">Українська (UA)</a></p>
@@ -305,7 +335,7 @@
     <!-- QUICK CONTACT UI END -->
 
 <!-- Floating Action Buttons for Quick Contact -->
-        <div class="fab-container" aria-label="Quick contact"><div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>Have a question?</strong><span>Message us →</span></button><button type="button" data-contact-dismiss aria-label="Hide invitation and animation" title="Hide invitation and animation">×</button></div><div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">Contact form →</a></div>
+        <div class="fab-container" role="group" aria-label="Quick contact"><div class="contact-invitation" hidden><button type="button" data-contact-invite><strong>Have a question?</strong><span>Message us →</span></button><button type="button" data-contact-dismiss aria-label="Hide invitation and animation" title="Hide invitation and animation">×</button></div><div class="contact-fallback" hidden><p class="contact-status" role="status" aria-live="polite"></p><a class="contact-form-link" href="#contact">Contact form →</a></div>
         <div class="fab-menu" id="contact-menu">
             <a href="tel:+48453327678" class="fab fab-phone" aria-label="Call" aria-describedby="contact-tip-phone"><span class="contact-tip" id="contact-tip-phone" role="tooltip"><strong>Call us</strong><span>Discuss the issue by phone</span></span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -339,9 +369,8 @@
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
             </svg>
         </button>
-    </div><script src="/script.js?v=20261010-guide3"></script>
+    </div>
 
-    <script src="/weather-network.js?v=20260907-2" defer></script>
-    <script src="/contact-ui.js?v=20261009-home1"></script>
+<script defer src="/assets/site-7e332060aa7a6f89.js"></script>
 </body>
 </html>

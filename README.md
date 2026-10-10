@@ -136,3 +136,32 @@ reading levels on a single canonical URL in PL/RU/UK/EN. Edit
 generation preserves the section. See `docs/GUIDES-READING-LEVELS-2026-10-10.md`.
 Compliance/CRO/price/intent generation preserves this source; the immutable
 pre-CRO fixture stays unchanged and reviewed SEO hashes remain explicit.
+
+Technical SEO and performance preparation (2026-10-10): use the documented
+`npm run ...:generate` commands, which restore bundle references before a
+generator reads shared chrome, then apply `scripts/apply-technical-seo.mjs`.
+After editing original `public/*.css` or `public/*.js`, run
+`npm run technical:generate`. Commit the generated HTML, assets and manifest
+together. Content-addressed bundles are immutable; original CSS/JS remains
+editable source. Do not call legacy generator scripts directly on bundled HTML.
+
+The technical pass uses system fonts, one complete blocking stylesheet and one
+deferred minified JS bundle per page. Google tags use Basic Consent Mode:
+fresh/necessary-only visits load no Google loader; GA4 and Ads are configured
+only for their granted categories. Existing destination IDs and conversion
+labels remain in source. This intentionally stops denied-consent Google pings;
+it changes measurement coverage for visitors who do not grant consent.
+
+`public/_headers` stages CSP in report-only mode (browser console reports;
+no collection endpoint) and HSTS for one day, without subdomain/preload opt-in.
+Hosting header behavior must be checked after deployment. No public premises
+address has been invented from the correspondence address in the legal notice.
+The existing LocalBusiness area, phone, coordinates and hours remain intact.
+
+The HTML candidate was approved and locally validated on 2026-10-10.
+Project checks, 12 unit tests and 79 browser tests passed; Nu reports zero errors
+on 41 pages. Lighthouse 13.4.1 medians and remaining limitations are recorded in
+[docs/TECHNICAL-SEO-2026-10-10.md](docs/TECHNICAL-SEO-2026-10-10.md).
+For publication, verify the Cloudflare Pages check and deployed resources, then
+re-test Cloudflare behavior and Google Rich Results. The uncompressed 15 KB JS budget and full WCAG
+conformance are not claimed.

@@ -3,7 +3,7 @@
   if (!root) return;
   const settings = JSON.parse(root.dataset.settings || '{}');
   const set = (selector, value) => { const node = root.querySelector(selector); if (node) node.textContent = value ?? settings.unknown; };
-  const number = (value, digits = 0) => Number.isFinite(Number(value)) ? Number(value).toFixed(digits) : '—';
+  const number = (value, digits = 0) => value === null || value === undefined || value === '' ? '—' : Number.isFinite(Number(value)) ? Number(value).toFixed(digits) : '—';
   const symbols = {
     clearsky: ['Bezchmurnie', 'Ясно', 'Ясно', 'Clear sky'], fair: ['Pogodnie', 'Малооблачно', 'Малохмарно', 'Fair'], partlycloudy: ['Częściowe zachmurzenie', 'Переменная облачность', 'Мінлива хмарність', 'Partly cloudy'], cloudy: ['Pochmurno', 'Облачно', 'Хмарно', 'Cloudy'], fog: ['Mgła', 'Туман', 'Туман', 'Fog'], rain: ['Deszcz', 'Дождь', 'Дощ', 'Rain'], lightrain: ['Lekki deszcz', 'Небольшой дождь', 'Невеликий дощ', 'Light rain'], heavyrain: ['Silny deszcz', 'Сильный дождь', 'Сильний дощ', 'Heavy rain'], snow: ['Śnieg', 'Снег', 'Сніг', 'Snow'], sleet: ['Deszcz ze śniegiem', 'Мокрый снег', 'Мокрий сніг', 'Sleet'], thunderstorm: ['Burza', 'Гроза', 'Гроза', 'Thunderstorm']
   };
