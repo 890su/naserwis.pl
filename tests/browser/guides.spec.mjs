@@ -20,6 +20,8 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('#technical')).toBeVisible();
       await expect(page.locator('#simple')).toBeHidden();
       await expect(page.locator('#select-technical')).toBeFocused();
+      await page.locator('#select-technical').hover();
+      expect(await page.locator('#select-technical').evaluate(element => getComputedStyle(element).color)).toBe('rgb(255, 255, 255)');
       expect(await page.locator('link[rel=canonical]').getAttribute('href')).toBe(canonical);
       await expect(page).toHaveURL(/#technical$/);
       expect(await page.locator('[hreflang=ru][data-guide-language]').getAttribute('href')).toContain('#technical');

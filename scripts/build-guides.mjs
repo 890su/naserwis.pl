@@ -13,7 +13,7 @@ const legal = {
 for (const [locale, c] of Object.entries(copies)) c.lan.equipmentLinks.unshift(['https://www.belden.com/products/cable/ethernet-cable', legal[locale][3]]);
 const slugs = { wifi: 'jak-wzmocnic-sygnal-wifi-w-domu', lan: 'siec-lan-w-domu-przed-remontem' };
 const root = 'https://naserwis.pl';
-const version = '20261010-guide1';
+const version = '20261010-guide2';
 const date = '2026-10-10';
 const esc = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const prefix = locale => locale === 'pl' ? '/' : `/${locale}/`;
@@ -87,6 +87,7 @@ for (const locale of Object.keys(copies)) {
     html = html.replace(/(<a class="lang-option tool-nav-option")/, `<a class="lang-option guides-nav-option" role="menuitem" href="${route(locale)}"><span class="lang-name">${esc(c.label)}</span></a>\n$1`);
     html = html.replace(/(<a href="[^"]+" class="mobile-nav-link tool-nav-link")/, `<a class="mobile-nav-link guides-nav-link" href="${route(locale)}">${esc(c.label)}</a>\n$1`);
     if (!html.includes('/guides.css?')) html = html.replace('</head>', `<link rel="stylesheet" href="/guides.css?v=${version}">\n</head>`);
+    html = html.replace(/\/guides\.css\?v=[^"\s]+/g, `/guides.css?v=${version}`);
     await writeFile(file, html);
   }
 }
