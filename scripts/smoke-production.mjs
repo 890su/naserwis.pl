@@ -28,6 +28,9 @@ for (let index = 0; index < files.length; index += 4) {
     const route = file.replace(/^public/, '').replace(/index.html$/, '');
     const live = await get(route);
     assert.deepEqual(seo(live), seo(local), `Production SEO mismatch: ${route}`);
+    if (route.includes('/poradnik/')) {
+      assert.equal(normalized(live).match(/<main\b[\s\S]*?<\/main>/)?.[0], normalized(local).match(/<main\b[\s\S]*?<\/main>/)?.[0], `Production guide content mismatch: ${route}`);
+    }
     assert.ok(live.includes('/contact-ui.css?v=20261009-home1'), route);
     if (local.includes('class="fab-container"')) {
       assert.ok(!live.includes('class="contact-toggle-label"'), route);
@@ -40,7 +43,7 @@ for (let index = 0; index < files.length; index += 4) {
     }
   }));
 }
-for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
+for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml']) {
   const live = normalized(await get('/' + asset));
   const local = normalized(await readFile('public/' + asset, 'utf8'));
   if (asset === 'robots.txt' && live !== local) {

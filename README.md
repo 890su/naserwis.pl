@@ -129,5 +129,10 @@ The 2026-10-09 home-service SEO update separates the available scope from billin
 in all four languages and removes NaSerwis business subscriptions. See
 `docs/SEO-WEEKS-1-3-2026-10-09.md` for query ownership, billing and validation.
 Use `npm run seo:generate` after editing `scripts/home-service-copy.mjs`.
+
+The home-network guide section contains two articles, each with plain and technical
+reading levels on a single canonical URL in PL/RU/UK/EN. Edit
+`scripts/guide-copy-*.mjs` and run `npm run guides:generate`; SEO/CRO/compliance
+generation preserves the section. See `docs/GUIDES-READING-LEVELS-2026-10-10.md`.
 Compliance/CRO/price/intent generation preserves this source; the immutable
 pre-CRO fixture stays unchanged and reviewed SEO hashes remain explicit.
