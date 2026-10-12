@@ -21,7 +21,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     const expectedStyle = await chromeStyle();
     for (const route of ['', 'naprawa-wifi/', 'poradnik/']) {
       await page.goto('/' + prefix + route);
-      await expect(page.locator('.services-dropdown + .guides-nav-link')).toBeVisible();
+      await expect(page.locator('.nav-center > .guides-nav-link')).toBeVisible();
       await expect(page.locator('.services-menu .guides-nav-link')).toHaveCount(0);
       await expect.poll(chromeStyle).toEqual(expectedStyle);
     }

@@ -38,7 +38,7 @@ export async function syncGuideNavigation(copies, directory, version) {
 export async function siteChrome(locale, type, routes, legalLabels) {
   const prefix = locale === 'pl' ? '/' : `/${locale}/`;
   const home = await readFile(`public${prefix}index.html`, 'utf8');
-  let header = home.match(/<header id="header"[\s\S]*?(?=<main id="main-content">)/)?.[0];
+  let header = home.match(/<header id="header"[\s\S]*?(?=<main\b[^>]*\bid="main-content"[^>]*>)/)?.[0];
   let footer = home.match(/<footer\b[\s\S]*?<\/footer>/)?.[0];
   if (!header || !footer) throw new Error(`Missing shared site chrome for ${locale}`);
   // Preserve the article and reading level when changing language.

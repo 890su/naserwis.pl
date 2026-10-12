@@ -414,6 +414,66 @@ header {
   color: var(--primary);
 }
 
+/* Equal side columns keep the main menu on the page's center line. */
+@media (min-width: 1200px) {
+  #header > nav.container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 16px;
+  }
+  #header .logo { justify-self: start; }
+  #header .nav-right { justify-self: end; }
+  #header .nav-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    white-space: nowrap;
+    line-height: normal;
+  }
+  #header .nav-center > * + *::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+    transform: translateY(-50%);
+  }
+  #header .nav-center > a,
+  #header .nav-center > .services-dropdown {
+    position: relative;
+  }
+  #header .nav-center > a,
+  #header .nav-center .services-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    font: 600 14px/1.4 var(--font-body, system-ui, sans-serif);
+    text-decoration: none;
+  }
+  #header .nav-center > a:hover,
+  #header .nav-center > a[aria-current="page"],
+  #header .nav-center .services-btn:hover,
+  #header .nav-center .services-btn[aria-expanded="true"] {
+    background: var(--bg-alt);
+    color: var(--primary);
+  }
+  #header .nav-center .services-menu { left: 0; right: auto; }
+  #header .nav-center a:focus-visible,
+  #header .nav-center button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+  }
+  #header .mobile-actions { display: none; }
+}
+
 /* ===================================================
    HERO – refinements
    =================================================== */
@@ -1371,7 +1431,7 @@ body.menu-open::after {
 }
 
 /* ── Breakpoint: show burger, hide desktop nav ── */
-@media (max-width: 900px) {
+@media (max-width: 1199px) {
   .desktop-nav {
     display: none !important;
   }

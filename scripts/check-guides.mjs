@@ -13,7 +13,7 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
     for (const asset of ['styles.css', 'custom.css', 'script.js']) assert.ok(pageAssets(html, manifest).includes(`/${asset}?v=20261010-guide3`), `Shared asset ${asset}: ${path}`);
     assert.ok(html.includes('id="header"') && html.includes('id="mobile-menu-toggle"') && html.includes('class="footer-content"'), `Shared chrome: ${path}`);
     assert.ok(!/guide-header|guide-brand|guide-footer/.test(html), `No separate guide chrome: ${path}`);
-    assert.ok(/<\/div>\s*<a class="guides-nav-link"/.test(html), `Top-level guide navigation: ${path}`);
+    assert.ok(/<div class="nav-center desktop-nav">[\s\S]*?<a class="guides-nav-link"/.test(html), `Top-level guide navigation: ${path}`);
     assert.equal((html.match(/<h1\b/g) || []).length, 1, path);
     assert.ok(html.includes(`rel="canonical" href="https://naserwis.pl${path}"`), path);
     assert.ok(locs.includes('https://naserwis.pl' + path), path);

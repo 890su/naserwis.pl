@@ -5,6 +5,7 @@ import { execFileSync } from 'node:child_process';
 import { transform } from 'esbuild';
 import sharp from 'sharp';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
+import './apply-header-navigation.mjs';
 
 const previousManifest = await assetManifest();
 const manifest = {};
