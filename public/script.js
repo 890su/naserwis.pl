@@ -1404,6 +1404,23 @@
         }
     }
 
+    function initActiveNavigation() {
+        const links = [...document.querySelectorAll('#header .nav-center > a')];
+        if (!links.length) return;
+        const currentPage = links.find(link => link.getAttribute('aria-current') === 'page');
+        function updateCurrent() {
+            const section = location.hash && links.find(link => {
+                const url = new URL(link.href);
+                return url.pathname === location.pathname && url.hash === location.hash;
+            });
+            links.forEach(link => link.removeAttribute('aria-current'));
+            if (section) section.setAttribute('aria-current', 'location');
+            else if (currentPage) currentPage.setAttribute('aria-current', 'page');
+        }
+        addEventListener('hashchange', updateCurrent);
+        updateCurrent();
+    }
+
     function initAll() {
         initDropdowns();
         initMobileMenu();
@@ -1412,6 +1429,7 @@
         showLanguageSuggestion();
         initSmoothScroll();
         initHeaderScroll();
+        initActiveNavigation();
         initScrollAnimations();
         initReviewsSlider();
         initInteractiveStars();

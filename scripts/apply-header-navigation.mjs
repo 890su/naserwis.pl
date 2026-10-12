@@ -20,11 +20,16 @@ async function update(directory) {
     const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
     const currentHome = canonical === `https://naserwis.pl${prefix}` ? ' aria-current="page"' : '';
     const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) ? ' aria-current="page"' : '';
+    const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/'].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
     html = html.replace(/<header id="header"[\s\S]*?<\/header>/, header => {
-      const services = header.match(/<div class="lang-dropdown services-dropdown">[\s\S]*?<\/div>\s*<\/div>/)?.[0];
+      let services = header.match(/<div class="lang-dropdown services-dropdown">[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       const phone = header.match(/<a\b[^>]*class="phone"[\s\S]*?<\/a>/)?.[0];
       const language = header.match(/<div class="lang-dropdown" role="group"[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       if (!services || !phone || !language) throw new Error(`Incomplete header: ${file}`);
+      services = services.replace(/<button class="lang-current services-btn"[^>]*>/, tag => {
+        tag = tag.replace(/ aria-current="[^"]*"/g, '');
+        return isService ? tag.replace('>', ' aria-current="page">') : tag;
+      });
       const navigation = `<div class="nav-center desktop-nav">
                 <a class="header-nav-link" href="${prefix}"${currentHome}>${home}</a>
                 ${services}

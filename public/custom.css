@@ -447,6 +447,7 @@ header {
   }
   #header .nav-center > a,
   #header .nav-center .services-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -455,15 +456,32 @@ header {
     border-radius: 6px;
     background: transparent;
     color: var(--text);
-    font: 600 14px/1.4 var(--font-body, system-ui, sans-serif);
+    font: 600 16px/1.4 var(--font-body, system-ui, sans-serif);
     text-decoration: none;
   }
+  #header .nav-center .services-label { font: inherit; }
   #header .nav-center > a:hover,
   #header .nav-center > a[aria-current="page"],
   #header .nav-center .services-btn:hover,
   #header .nav-center .services-btn[aria-expanded="true"] {
     background: var(--bg-alt);
     color: var(--primary);
+  }
+  #header .nav-center > a[aria-current],
+  #header .nav-center .services-btn[aria-current] {
+    background: var(--bg-alt);
+    color: var(--primary);
+  }
+  #header .nav-center > a[aria-current]::after,
+  #header .nav-center .services-btn[aria-current]::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 3px;
+    height: 2px;
+    border-radius: 1px;
+    background: #087860;
   }
   #header .nav-center .services-menu { left: 0; right: auto; }
   #header .nav-center a:focus-visible,
