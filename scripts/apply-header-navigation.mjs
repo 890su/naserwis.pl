@@ -19,7 +19,7 @@ async function update(directory) {
     const prefix = locale === 'pl' ? '/' : `/${locale}/`;
     const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
     const currentHome = canonical === `https://naserwis.pl${prefix}` ? ' aria-current="page"' : '';
-    const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) ? ' aria-current="page"' : '';
+    const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) || /\/(?:pogoda-internet-warszawa|pogoda-internet-varshava|pohoda-internet-varshava|weather-internet-warsaw)\/$/.test(canonical || '') ? ' aria-current="page"' : '';
     const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/'].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
     html = html.replace(/<header id="header"[\s\S]*?<\/header>/, header => {
       let services = header.match(/<div class="lang-dropdown services-dropdown">[\s\S]*?<\/div>\s*<\/div>/)?.[0];

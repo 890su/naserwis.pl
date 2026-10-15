@@ -1,13 +1,14 @@
 // Targeted technical fixes; content, prices, canonical URLs and hreflang stay in source HTML.
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { execFileSync } from 'node:child_process';
 import { transform } from 'esbuild';
 import sharp from 'sharp';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
-import './apply-header-navigation.mjs';
 import { applyRedesign } from './apply-redesign.mjs';
 
+// Both passes write shared HTML, so finish tool relocation before rebuilding headers.
+await import('./apply-tool-navigation.mjs');
+await import('./apply-header-navigation.mjs');
 await applyRedesign();
 
 const previousManifest = await assetManifest();
@@ -147,13 +148,6 @@ async function processDirectory(directory) {
 await processDirectory('public');
 await writeFile(`${output}/manifest.json`, JSON.stringify(manifest, null, 2) + '\n');
 
-// Use recorded content commits, not this script's run time, for the stale commercial dates.
-let sitemap = await readFile('public/sitemap.xml', 'utf8');
-sitemap = sitemap.replace(/<url>([\s\S]*?)<\/url>/g, (tag, body) => {
-  const url = body.match(/<loc>https:\/\/naserwis\.pl\/([^<]*)<\/loc>/)?.[1];
-  if (url === undefined || !/^(?:(?:ru|uk|en)\/)?(?:(?:naprawa-wifi|naprawa-sieci|montaz-sieci)\/)?$/.test(url)) return tag;
-  const date = execFileSync('git', ['log', '-1', '--format=%cs', '--', `public/${url}index.html`], { encoding: 'utf8' }).trim();
-  return date ? tag.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${date}</lastmod>`) : tag.replace(/\s*<lastmod>[^<]*<\/lastmod>/, '');
-});
-await writeFile('public/sitemap.xml', sitemap);
-console.log('Technical SEO prepared: approved self-hosted display fonts, one CSS and deferred JS bundle per page, consent-gated tags, accessible markup, schema, social assets and verified sitemap dates.');
+// Content generators own lastmod. A layout/asset rebuild is not a significant
+// content change and must not advance sitemap dates based on HTML commit time.
+console.log('Technical SEO prepared: self-hosted fonts, CSS/deferred JS bundles, consent-gated tags, accessible markup, schema and social assets; recorded sitemap dates preserved.');

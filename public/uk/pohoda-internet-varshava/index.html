@@ -116,7 +116,7 @@
 <link rel="preload" href="/assets/redesign/manrope-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
 
-<link rel="stylesheet" href="/assets/site-9081b76c46bc1d4e.css">
+<link rel="stylesheet" href="/assets/site-9203443a5ac3daf6.css">
 </head>
 <body itemscope itemtype="https://schema.org/WebPage" data-redesign="shared">
 <a class="site-skip-link" href="#main-content">Перейти до вмісту</a>
@@ -145,11 +145,10 @@
                             <span class="lang-flag">&#128295;</span>
                             <span class="lang-name">Ремонт мереж</span>
                         </button>
-                        <a class="lang-option tool-nav-option" role="menuitem" href="/uk/pohoda-internet-varshava/"><span class="lang-flag" aria-hidden="true">⌁</span><span class="lang-name">Погода і тест інтернету</span></a>
                     </div>
                 </div>
                 <a class="header-nav-link" href="/uk/#services">Ціни</a>
-                <a class="guides-nav-link" href="/uk/poradnik/">Порадник</a>
+                <a class="guides-nav-link" href="/uk/poradnik/" aria-current="page">Порадник</a>
                 <a class="header-nav-link" href="/uk/#contact">Контакти</a>
             </div>
             <div class="nav-right desktop-nav">
@@ -210,9 +209,8 @@
             <a href="/uk/naprawa-sieci/" class="mobile-nav-link">
                 <span class="mobile-nav-icon">&#128295;</span>
                 Ремонт мереж            </a>
-            <a href="/uk/pohoda-internet-varshava/" class="mobile-nav-link tool-nav-link"><span class="mobile-nav-icon" aria-hidden="true">⌁</span>Погода і тест інтернету</a>
         </div>
-        <div class="mobile-nav-block"><a class="mobile-nav-link guides-nav-link" href="/uk/poradnik/">Практичні поради</a></div>
+        <div class="mobile-nav-block"><a class="mobile-nav-link guides-nav-link" href="/uk/poradnik/" aria-current="page">Практичні поради</a></div>
         <div class="mobile-nav-block">
             <span class="mobile-nav-label">Мова</span>
             <div class="mobile-lang-options">
@@ -227,7 +225,8 @@
         </div>
     </div>
     <main id="main-content" class="weather-network-page" data-network-weather data-settings="{&quot;unavailable&quot;:&quot;Дані тимчасово недоступні&quot;,&quot;unknown&quot;:&quot;Немає даних&quot;,&quot;dateLocale&quot;:&quot;uk-UA&quot;,&quot;unitWind&quot;:&quot;м/с&quot;,&quot;testing&quot;:&quot;Триває вимірювання…&quot;,&quot;test&quot;:&quot;Запустити легкий тест&quot;}" tabindex="-1">
-  <section class="nw-hero"><div class="container"><p class="nw-kicker">Погода надворі · погода в інтернеті</p><h1>Перевірте погоду у Варшаві та стан інтернету</h1><p class="nw-lead">Два корисні показники в одному місці: прогноз на найближчі години та приватна діагностика з’єднання. Результати бачите лише ви — ми не зберігаємо IP і вимірювання.</p>
+  <section class="nw-hero"><div class="container"><h1>Перевірте погоду у Варшаві та стан інтернету</h1><p class="nw-lead">Два корисні показники в одному місці: прогноз на найближчі години та приватна діагностика з’єднання. Результати бачите лише ви — ми не зберігаємо IP і вимірювання.</p></div></section>
+  <section class="nw-dashboard-section"><div class="container">
     <div class="nw-dashboard">
       <article class="nw-panel nw-weather-panel" aria-labelledby="weather-title"><div class="nw-panel-head"><div><span>Надворі</span><h2 id="weather-title">Зараз у Варшаві</h2></div><div class="nw-sky-orbit" aria-hidden="true"><span></span></div></div><div class="nw-temperature"><strong data-weather-temperature>—</strong><span>°C</span><div class="nw-temperature-context"><small data-weather-symbol>…</small><p><span>Відчувається</span><strong data-weather-feels>—</strong></p></div></div><dl class="nw-metrics"><div><dt>Вологість</dt><dd data-weather-humidity>—</dd></div><div><dt>Вітер</dt><dd data-weather-wind>—</dd></div><div><dt>Тиск</dt><dd data-weather-pressure>—</dd></div><div><dt>Опади</dt><dd data-weather-rain>—</dd></div></dl><p class="nw-status" data-weather-status role="status" aria-live="polite"></p></article>
       <article class="nw-panel nw-network-panel" aria-labelledby="network-title"><div class="nw-panel-head"><div><span>У мережі</span><h2 id="network-title">Ваше з’єднання</h2></div><div class="nw-signal" aria-hidden="true"><i></i><i></i><i></i></div></div><dl class="nw-network-data"><div><dt>Публічна IP-адреса</dt><dd data-network-ip>—</dd></div><div><dt>Провайдер / мережа</dt><dd data-network-provider>—</dd></div><div><dt>Приблизне розташування</dt><dd data-network-location>—</dd></div><div><dt>Мережевий вузол</dt><dd data-network-edge>—</dd></div></dl><p class="nw-status" data-network-status role="status" aria-live="polite"></p><button class="btn btn-primary nw-test-button" type="button" data-network-test>Запустити легкий тест</button><p class="nw-test-note">Тест завантажує близько 256 КБ. Результат орієнтовний: вимірюється шлях до найближчого вузла Cloudflare, а не вся лінія оператора.</p><div class="nw-test-results" data-test-results hidden><div><span>HTTP-затримка</span><strong data-test-latency>—</strong></div><div><span>Джиттер</span><strong data-test-jitter>—</strong></div><div><span>Завантаження</span><strong data-test-speed>—</strong></div></div><nav class="nw-full-tests" aria-label="Повний тест з’єднання"><span>Повний тест з’єднання</span><a href="https://www.speedtest.net/" target="_blank" rel="noopener noreferrer">Speedtest by Ookla ↗</a><a href="https://speed.cloudflare.com/" target="_blank" rel="noopener noreferrer">Cloudflare Speed Test ↗</a></nav></article>
@@ -236,7 +235,7 @@
   <section class="nw-explain"><div class="container nw-explain-grid"><article><p class="nw-kicker">DIAG</p><h2>Що показує вимірювання?</h2><p>Погода може впливати на радіоканали, зовнішнє обладнання та живлення, але повільний інтернет частіше пов’язаний із Wi‑Fi, навантаженням мережі або оператором. Тому ми показуємо умови та з’єднання поруч, не видаючи збіг за причину.</p><ul><li>Висока затримка: дзвінки та віддалений робочий стіл реагують повільніше.</li><li>Високий джиттер: голос і відео можуть перериватися навіть за доброї швидкості.</li><li>Низька швидкість лише через Wi‑Fi: повторіть тест біля роутера або кабелем.</li></ul></article><aside><h3>Перед зверненням у підтримку</h3><ol><li>Повторіть тест без завантажень і хмарної синхронізації.</li><li>Порівняйте Wi‑Fi з кабельним підключенням, якщо можливо.</li><li>Перезапустіть роутер один раз і запишіть час проблеми.</li></ol></aside></div></section>
   <aside class="contact-checkpoint"><p>Є питання про обсяг роботи чи ціну?</p><a class="btn btn-primary" href="#contact">Описати завдання</a></aside>
 <section class="nw-faq"><div class="container"><h2>Поширені запитання</h2><div class="nw-faq-list"><details><summary>Сайт зберігає мою IP-адресу?</summary><p>Ні. Адреса повертається лише вашому браузеру у відповіді без кешування і не додається до аналітики.</p></details><details><summary>Це повний speed test?</summary><p>Ні. Це легка швидка діагностика. Точний тест потребує більше трафіку і краще працює через кабель.</p></details><details><summary>Звідки прогноз?</summary><p>Із Locationforecast MET Norway. Наш сервер отримує та кешує знеособлені погодні дані.</p></details></div></div></section>
-  <section class="nw-cta"><div class="container"><div><h2>Інтернет усе ще нестабільний?</h2><p>Опишіть симптоми, адресу та результат. Перевіримо Wi‑Fi, кабель, обладнання і сторону оператора.</p></div><div class="nw-cta-actions"><button type="button" class="btn btn-primary" data-contact-modal>Надіслати запит</button><a class="btn nw-call-button" href="tel:+48453327678">Зателефонувати: +48 453 327 678</a></div></div></section>
+  <section class="nw-cta" id="contact"><div class="container"><div><h2>Інтернет усе ще нестабільний?</h2><p>Опишіть симптоми, адресу та результат. Перевіримо Wi‑Fi, кабель, обладнання і сторону оператора.</p></div><div class="nw-cta-actions"><button type="button" class="btn btn-primary" data-contact-modal>Надіслати запит</button><a class="btn nw-call-button" href="tel:+48453327678">Зателефонувати: +48 453 327 678</a></div></div></section>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",

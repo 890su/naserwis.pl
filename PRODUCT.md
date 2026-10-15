@@ -29,6 +29,7 @@ Customers describe symptoms and location, and may share equipment details or pho
 - Existing phone, WhatsApp, Telegram, website chat and enquiry form remain functional. Preserve the circular contact launcher and its tested motion behavior.
 - Header navigation has centered Home / Services / Prices / Guides / Contact and phone/language utilities on desktop; mobile has a menu and contact actions.
 - Guides have two reading levels at one canonical URL, with language-aware navigation.
+- Weather and internet diagnostics belong to Guides / Poradnik, retain their established URLs and use the same visual system as service pages.
 - The owner has explicitly authorized committing, pushing and publishing the approved redesign through the existing GitHub `main` / Cloudflare Pages integration. Record deployment completion and production performance only when verified.
 
 ## Brand Commitments

@@ -88,7 +88,7 @@ body[data-redesign] .trust-signals{padding:30px 0;background:var(--bg-alt);borde
 body[data-redesign] .trust-heading{text-align:left;font-size:23px;margin:0 0 20px}
 body[data-redesign] .trust-grid{gap:24px}
 body[data-redesign] .trust-number{font-size:17px;color:var(--rd-ink)}
-body[data-redesign] .trust-item{padding:0;text-align:left}
+body[data-redesign] .trust-item{padding:22px;text-align:left;box-shadow:none}
 body[data-redesign] .trust-label{font-size:13px}
 body[data-redesign] .home-service-catalog,body[data-redesign] .problems,body[data-redesign] .services,body[data-redesign] .why-us,body[data-redesign] .reviews,body[data-redesign] .faq-section{padding:56px 0;background:#fff}
 body[data-redesign] .home-scope,body[data-redesign] .intent-cluster-eyebrow{display:none}
@@ -102,6 +102,7 @@ body[data-redesign] .problem-card h3{font-size:22px}
 body[data-redesign] .services{background:var(--bg-alt)}
 body[data-redesign] .price-table{box-shadow:none;border:1px solid var(--rd-line);border-radius:12px;overflow:hidden;background:#fff}
 body[data-redesign] .price-row.header{background:#e8f0fa;color:var(--rd-ink)}
+body[data-redesign] .price-row.header .price-value{color:var(--rd-ink)}
 body[data-redesign] .price-value{color:var(--rd-ink);font-variant-numeric:tabular-nums}
 body[data-redesign] .business-handoff{background:var(--bg-alt);border-top:1px solid var(--rd-line);padding-top:32px;padding-bottom:32px}
 body[data-redesign] .reviews{border-top:1px solid var(--rd-line)}
@@ -116,6 +117,7 @@ body[data-redesign] .final-cta h2{color:#fff;font-size:34px}
 body[data-redesign] .final-form{box-shadow:none;border-radius:12px}
 body[data-redesign] footer{background:#f5f8fc;color:var(--rd-muted);padding-top:44px;border-top:1px solid var(--rd-line)}
 body[data-redesign] footer a{color:var(--rd-blue)}
+body[data-redesign] footer .footer-section p{color:var(--rd-muted)}
 body[data-redesign] .footer-districts{background:none;padding:20px 0;border:0}
 body[data-redesign] .district-tag{background:#e7eef7;color:var(--rd-ink);border:0;border-radius:5px}
 body[data-redesign] .footer-bottom{border-color:var(--rd-line);color:var(--rd-muted)}
@@ -148,11 +150,11 @@ body[data-redesign] .service-sidebar .billing-rule{padding-top:14px;padding-bott
 body[data-redesign] .intent-cluster{background:var(--bg-alt);border:0;box-shadow:none;padding:28px;border-radius:12px}
 body[data-redesign] .intent-cluster-heading h3{font-size:25px}
 body[data-redesign] .intent-options{display:grid;grid-template-columns:1fr;gap:0}
-body[data-redesign] .intent-option{background:transparent;border:0;border-top:1px solid var(--rd-line);border-radius:0;box-shadow:none;text-align:left;padding:20px 0;min-height:90px;color:var(--rd-muted)}
+body[data-redesign] .intent-option{background:transparent;border:0;border-top:1px solid var(--rd-line);border-radius:0;box-shadow:none;text-align:left;padding:20px;min-height:90px;color:var(--rd-muted)}
 body[data-redesign] .intent-option strong{color:var(--rd-ink);font-size:17px}
 body[data-redesign] .intent-option:hover,body[data-redesign] .intent-option[aria-pressed=true]{background:#e9f1ff}
 body[data-redesign] .intent-option-tag{color:var(--rd-blue);background:none;padding:0;font-size:11px}
-body[data-redesign] .segment-card{background:#fff;border:0;border-top:1px solid var(--rd-line);border-radius:0;box-shadow:none;padding:24px 0}
+body[data-redesign] .segment-card{background:#fff;border:1px solid var(--rd-line);border-radius:12px;box-shadow:none;padding:24px}
 body[data-redesign] .info-box{border:0;border-top:1px solid var(--rd-line);background:#fff;padding:24px 0;border-radius:0}
 body[data-redesign] .contact-checkpoint{background:#eef5ff;box-shadow:none;border:0}
 body[data-redesign] .faq-title{font-size:30px;text-align:left}
@@ -162,6 +164,7 @@ body[data-redesign] #header .nav-center>a,body[data-redesign] #header .nav-cente
 body[data-redesign] #header .nav-center>a[aria-current],body[data-redesign] #header .nav-center .services-btn[aria-current]{color:var(--rd-blue);background:transparent}
 body[data-redesign] #header .nav-center>a[aria-current]::after,body[data-redesign] #header .nav-center .services-btn[aria-current]::after{background:var(--rd-blue);left:0;right:0;bottom:0}
 body[data-redesign] #header .nav-center{gap:28px}
+body[data-redesign] #header .nav-center>*{margin:0}
 body[data-redesign] #header .nav-center>*+*::before{display:none}
 body[data-redesign] .service-main h2{padding-left:0}
 body[data-redesign] .service-main h2::before{display:none}
@@ -193,3 +196,7 @@ body[data-redesign="service"] .hero-cta-wrapper .btn{min-height:36px;padding:5px
 body[data-redesign] .preview-final-actions{justify-content:center;margin-top:24px}
 body[data-redesign] .hero-form .intent-context{grid-column:1/-1;font-size:12px}
 body[data-redesign] #final-form{scroll-margin-top:100px}
+.guide-tools{margin-top:28px;padding:28px;border:1px solid var(--rd-line);border-radius:12px;background:var(--rd-wash)}
+.guide-tools h2{margin-top:12px}
+.guide-tools h2 a{text-decoration:none}
+@media(max-width:760px){body[data-redesign] .trust-item{padding:18px}body[data-redesign] .segment-card{padding:20px}body[data-redesign] .intent-option{padding:20px 16px}.guide-tools{padding:20px}}

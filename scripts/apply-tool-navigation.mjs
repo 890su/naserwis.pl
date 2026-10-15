@@ -1,7 +1,8 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const publicDir = new URL('../public/', import.meta.url).pathname.slice(1);
+const publicDir = fileURLToPath(new URL('../public/', import.meta.url));
 const tools = {
   pl: { route: '/pogoda-internet-warszawa/', label: 'Pogoda i test internetu', group: 'Narzędzia', teaser: 'Pogoda w Warszawie + Twój IP i lekki test internetu', action: 'Sprawdź teraz' },
   ru: { route: '/ru/pogoda-internet-varshava/', label: 'Погода и тест интернета', group: 'Инструменты', teaser: 'Погода в Варшаве + ваш IP и лёгкий тест интернета', action: 'Проверить' },
@@ -26,19 +27,18 @@ for (const file of await htmlFiles(publicDir)) {
   const locale = html.match(/<html lang="([a-z]{2})/)?.[1] ?? 'pl';
   const t = tools[locale] ?? tools.pl;
   html = html.replace(/\s*<a class="lang-option tool-nav-option"[\s\S]*?<\/a>/, '');
-  html = html.replace(/(<div class="lang-menu services-menu"[^>]*>[\s\S]*?)(\s*<\/div>)/, `$1\n                        <a class="lang-option tool-nav-option" role="menuitem" href="${t.route}"><span class="lang-flag" aria-hidden="true">⌁</span><span class="lang-name">${t.label}</span></a>$2`);
   html = html.replace(/\s*<a href="[^"]+" class="mobile-nav-link tool-nav-link">[\s\S]*?<\/a>/, '');
-  html = html.replace(/(<div class="mobile-menu-overlay"[^>]*>\s*<div class="mobile-nav-block">[\s\S]*?)(\s*<\/div>)/, `$1\n            <a href="${t.route}" class="mobile-nav-link tool-nav-link"><span class="mobile-nav-icon" aria-hidden="true">⌁</span>${t.label}</a>$2`);
+  html = html.replace(/\s*<!-- NETWORK TOOL TEASER START -->[\s\S]*?<!-- NETWORK TOOL TEASER END -->/g, '');
+  // Keep the established tool URLs; discovery now belongs to the guide index.
+  if (file === join(publicDir, locale === 'pl' ? 'poradnik/index.html' : `${locale}/poradnik/index.html`)) {
+    html = html.replace(/\s*<!-- GUIDE TOOLS START -->[\s\S]*?<!-- GUIDE TOOLS END -->/g, '');
+    const section = `\n<!-- GUIDE TOOLS START -->\n<section class="guide-tools" aria-labelledby="guide-tools-title"><span class="guide-topic">${t.group}</span><h2 id="guide-tools-title"><a href="${t.route}">${t.label}</a></h2><p>${t.teaser}</p><a class="btn btn-primary guide-action" href="${t.route}">${t.action} →</a></section>\n<!-- GUIDE TOOLS END -->\n`;
+    html = html.replace('</main>', `${section}</main>`);
+  }
+  if (html.includes(`rel="canonical" href="https://naserwis.pl${t.route}"`)) {
+    html = html.replace(/(class="mobile-nav-link guides-nav-link" href="[^"]*")(?: aria-current="page")?/g, '$1 aria-current="page"');
+  }
   await writeFile(file, html);
 }
 
-for (const [locale, t] of Object.entries(tools)) {
-  const path = join(publicDir, locale === 'pl' ? 'index.html' : `${locale}/index.html`);
-  let html = await readFile(path, 'utf8');
-  html = html.replace(/\s*<!-- NETWORK TOOL TEASER START -->[\s\S]*?<!-- NETWORK TOOL TEASER END -->/, '');
-  const teaser = `\n    <!-- NETWORK TOOL TEASER START -->\n    <section class="network-tool-teaser"><div class="container"><div><span>${t.group}</span><h2>${t.teaser}</h2></div><a class="btn btn-primary" href="${t.route}">${t.action} →</a></div></section>\n    <!-- NETWORK TOOL TEASER END -->`;
-  html = html.replace('</main>', `${teaser}\n</main>`);
-  await writeFile(path, html);
-}
-
-console.log('Tool navigation and homepage teasers updated.');
+console.log('Weather and internet tools moved from Services and homepage teasers to the four guide indexes.');

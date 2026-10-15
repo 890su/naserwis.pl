@@ -114,6 +114,14 @@ components:
 
 # Design System: NaSerwis
 
+## Navigation and utility page refinement
+
+The desktop menu uses a single 28px gap with no extra item margins. Weather and internet diagnostics are discovered through the four localized Poradnik indexes; their existing canonical URLs remain unchanged and Poradnik is active on those pages.
+
+Weather uses the shared navy title surface, Manrope typography, cobalt actions and light data panels with 14px radii. Measurements use dividers rather than nested decorative tiles. Data, API hooks, attribution, privacy copy and diagnostic controls retain their existing contracts. Diagnostic results remain hidden until the visitor runs the test.
+
+Framed content needs internal space: trust tiles use 22px (18px mobile), service scenario cards 24px (20px mobile), and selectable intent rows 20px (16px horizontal on mobile). Flat editorial rows can retain zero horizontal padding where they have no surrounding frame or colored interaction surface.
+
 ## Overview
 
 The implemented direction is a clear local technical service with direct contact and two entries: a fault or planned setup. White surfaces, dark blue headings, cobalt actions, fine dividers and restrained task surfaces carry that direction. These descriptions record the existing implementation; they do not introduce an additional creative approval.
