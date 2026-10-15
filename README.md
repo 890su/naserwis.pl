@@ -168,3 +168,26 @@ conformance are not claimed.
 
 The first-visit language banner and contrast correction is documented in
 [docs/CONTRAST-CLS-2026-10-10.md](docs/CONTRAST-CLS-2026-10-10.md).
+
+## Approved redesign — 2026-10-15
+
+The light homepage and compact dark service header are maintained by
+`scripts/apply-redesign.mjs`; the shared design source is `public/redesign.css`.
+`technical:generate` reapplies this layout and compiles one stylesheet per page,
+preserving its self-hosted Manrope font-face declarations. The two WOFF2 fonts
+total 61 KB; the responsive hero image uses AVIF/WebP with reserved dimensions.
+Fonts and images make no external requests. DESIGN.md records the actual system.
+
+The regular content generators temporarily return the service form to its
+original content boundary before regenerating sections, then reapply the design.
+Existing form IDs, intent hooks, reviews and star routing, contact launcher,
+prices, four languages and service districts remain part of the source contract.
+Run `npm run technical:generate` after editing the design; use the documented
+content-generation commands for content updates. Commit HTML, the new referenced
+bundles and `public/assets/manifest.json` together; retain older immutable bundles.
+
+Release evidence and rollback are recorded in
+[docs/REDESIGN-RELEASE-2026-10-15.md](docs/REDESIGN-RELEASE-2026-10-15.md).
+`node scripts/check-redesign-release.mjs` compares SEO and protected behavior
+against the pre-redesign revision `c1be176`; it is a release check requiring that
+revision locally, not a shallow-CI build dependency.

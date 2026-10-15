@@ -2,6 +2,8 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
+import { restoreRedesignForms } from './apply-redesign.mjs';
+await restoreRedesignForms();
 const manifest = await assetManifest();
 async function restore(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {

@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T20:21:38.578Z",
+  "title": "Design System: NaSerwis",
+  "extensions": {
+    "source": "public/redesign.css; scripts/apply-redesign.mjs reapplies the design to current HTML; scripts/apply-technical-seo.mjs integrates it and preserves @font-face while bundling one CSS file. scripts/generate-site.mjs restores service final-form before content generation. Retained base CSS and DOM remain part of the main site.",
+    "scope": "Main site implementation: 16 commercial layouts in four languages; shared skin on 41 HTML pages. Owner explicitly authorized commit, push and publication through existing GitHub main / Cloudflare Pages integration; separate local preview remains available. scripts/check-redesign-release.mjs guards 41 pages against pre-redesign c1be176 and unchanged protected JavaScript/API. Authorization does not establish completed deployment or production PageSpeed scores, and does not alter component-review receipts or formal build state.",
+    "colorMeta": {
+      "action-blue": {
+        "role": "primary",
+        "displayName": "Action blue"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Dark blue ink"
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper"
+      },
+      "body": {
+        "role": "neutral",
+        "displayName": "Body text"
+      },
+      "task-wash": {
+        "role": "neutral",
+        "displayName": "Fault task wash"
+      },
+      "task-mint": {
+        "role": "neutral",
+        "displayName": "Planned-setup task mint"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Homepage display",
+        "purpose": "Light homepage commercial H1; preserve its existing wording."
+      },
+      "service-display": {
+        "displayName": "Service display",
+        "purpose": "Existing service H1 on the dark introduction."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Manrope with Arial/sans-serif fallbacks. Static local public/assets/redesign/manrope-400.woff2 (30368 bytes) and manrope-700.woff2 (30724 bytes), converted from the same source static fonts; CSS face declarations retain requested ranges 400–600/700–800."
+      }
+    },
+    "shadows": [
+      {
+        "name": "replacement-surfaces",
+        "value": "none",
+        "purpose": "New header, buttons, forms, review cards and sidebar use tonal surfaces and borders. Inherited launcher styling remains separate."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-transition",
+        "value": "background-color .2s ease, transform .2s ease",
+        "purpose": "Shared button transition."
+      },
+      {
+        "name": "primary-hover",
+        "value": "translateY(-1px)",
+        "purpose": "Primary action hover only."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "scroll-behavior:auto!important;animation:none!important;transition:none!important",
+        "purpose": "Applied to all descendants of the redesigned body when prefers-reduced-motion is reduce."
+      }
+    ],
+    "focus": {
+      "value": "outline:3px solid #005ff5;outline-offset:4px",
+      "purpose": "Global :focus-visible treatment."
+    },
+    "breakpoints": [
+      {
+        "name": "centered-desktop-navigation",
+        "value": "min-width:1200px"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "max-width:1199px"
+      },
+      {
+        "name": "overview-and-service-hero-stack",
+        "value": "max-width:900px"
+      },
+      {
+        "name": "mobile-content-stack",
+        "value": "max-width:760px"
+      },
+      {
+        "name": "narrow-header",
+        "value": "max-width:360px"
+      }
+    ],
+    "layout": {
+      "container": "max-width:1440px; horizontal padding 40px, 26px at 1199px, 20px at 760px",
+      "homepageHero": "51% 49%; min-height:420px; stacked text and 230px image at 760px",
+      "homepageOverview": "minmax(0,1fr) 340px; gap:22px; rail 300px at 1199px; single outer column at 900px",
+      "serviceContent": "minmax(0,1fr) 340px; gap:40px; rail 300px at 1199px, 280px at 900px; one column at 760px"
+    },
+    "assetProvenance": {
+      "photo": "Illustrative AI-generated router/laptop scene; source assets/plates/hero-photo.png; prompt .impeccable/hero-photo-v2.prompt.txt; geometry reference .impeccable/references/archer-c64-front.jpg. Not a documentary service visit or test result.",
+      "derivatives": "public/assets/redesign/home-network-{720,1440}.{avif,webp}; adjacent .json sidecars contain prompt and timestamp.",
+      "font": "public/assets/redesign/font-origin.json records Google Fonts CSS/fonts.gstatic.com source URLs. Runtime files are locally converted public/assets/redesign/manrope-400.woff2 and manrope-700.woff2; no external runtime font requests."
+    },
+    "domContract": "Preserve existing localized routes, H1/SEO/schema, published prices, review text, districts, form IDs/names/validation/alerts, data-intent-select, data-contact-modal, aria-pressed, contact launcher, consent and measurement. Retained stars route 1–3 internally and 4–5 to Google. Main-site delivery contract remains unchanged; only separate local QA contact submissions do not deliver."
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Telephone or submit action; rail submit variants fill available width.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Zadzwoń do technika</button>",
+      "css": ".ds-primary{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:8px;border:1px solid var(--rd-blue,#005ff5);background:var(--rd-blue,#005ff5);color:#fff;box-shadow:none;transition:background-color .2s ease,transform .2s ease}.ds-primary:hover{background:#004ac2;transform:translateY(-1px)}.ds-primary:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none!important}}"
+    },
+    {
+      "name": "Outlined action",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary describe-the-problem action.",
+      "html": "<button class=\"ds-outline\" type=\"button\">Opisz problem</button>",
+      "css": ".ds-outline{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:8px;border:1px solid var(--rd-blue,#005ff5);background:#fff;color:var(--rd-blue,#005ff5);box-shadow:none;transition:background-color .2s ease,transform .2s ease}.ds-outline:hover{background:#edf4ff}.ds-outline:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none!important}}"
+    },
+    {
+      "name": "Enquiry field",
+      "kind": "input",
+      "refersTo": "enquiry-field",
+      "description": "Compact rail field, with existing labels and validation retained in production markup.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-phone\">Telefon</label><input class=\"ds-field\" id=\"ds-phone\" type=\"tel\" autocomplete=\"tel\">",
+      "css": ".ds-field-label{display:block;font-family:Manrope,Arial,sans-serif;font-size:12px;font-weight:600;color:var(--rd-ink,#0b1931);margin-bottom:5px}.ds-field{font-family:Manrope,Arial,sans-serif;padding:9px 12px;min-height:40px;border:1px solid #c9d5e4;background:#fff;border-radius:6px;font-size:14px;color:var(--rd-ink,#0b1931);box-shadow:none;caret-color:var(--rd-blue,#005ff5)}.ds-field:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(max-width:760px){.ds-field{font-size:16px;min-height:44px}.ds-field-label{font-size:13px}}"
+    },
+    {
+      "name": "Text navigation",
+      "kind": "nav",
+      "description": "Centered desktop text navigation with cobalt current-page feedback.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Przykład nawigacji\"><a href=\"#home\" aria-current=\"page\">Strona główna</a><a href=\"#services\">Usługi</a><a href=\"#prices\">Cennik</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:center;gap:28px}.ds-nav a{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:600;color:var(--rd-ink,#0b1931);padding-left:0;padding-right:0;border-radius:0;background:transparent;text-underline-offset:4px}.ds-nav a[aria-current]{color:var(--rd-blue,#005ff5)}.ds-nav a:focus-visible{outline:3px solid #005ff5;outline-offset:4px}"
+    },
+    {
+      "name": "Fault task group",
+      "kind": "card",
+      "refersTo": "task-card",
+      "description": "Tinted task surface with divider-separated working service links.",
+      "html": "<article class=\"ds-task\"><h2>Coś nie działa?</h2><a class=\"ds-task-link\" href=\"#wifi\"><h3>Słaby zasięg Wi-Fi</h3><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 5 7 7-7 7\"/></svg></a></article>",
+      "css": ".ds-task{font-family:Manrope,Arial,sans-serif;padding:28px 24px;border-radius:var(--rd-radius,14px);background:var(--rd-wash,#f3f8ff);min-width:0;min-height:452px}.ds-task h2{font-size:27px;line-height:1.25;margin:0 0 30px;font-weight:800;letter-spacing:-.025em;color:var(--rd-ink,#0b1931)}.ds-task-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 0;border-top:1px solid #d5e2f0;text-decoration:none;color:var(--rd-ink,#0b1931);min-height:85px}.ds-task-link h3{font-size:16px;line-height:1.55;margin:0;font-weight:600;letter-spacing:0}.ds-task-link svg{width:17px;height:17px;flex-shrink:0;color:var(--rd-blue,#005ff5)}.ds-task-link:hover h3{color:var(--rd-blue,#005ff5);text-decoration:underline}.ds-task-link:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(max-width:760px){.ds-task{min-height:0;padding:22px}.ds-task h2{font-size:24px}.ds-task-link{min-height:70px;padding:18px 0}.ds-task-link h3{font-size:15px}}"
+    },
+    {
+      "name": "District tag",
+      "kind": "chip",
+      "refersTo": "district-tag",
+      "description": "Existing service-area label; not a newly introduced interactive filter.",
+      "html": "<span class=\"ds-district\">Warszawa</span>",
+      "css": ".ds-district{font-family:Manrope,Arial,sans-serif;background:#e7eef7;color:var(--rd-ink,#0b1931);border:0;border-radius:5px}"
+    }
+  ],
+  "narrative": {
+    "overview": "The implemented direction is a clear local technical service with direct contact and two entries: a fault or planned setup. White surfaces, dark blue headings, cobalt actions, fine dividers and restrained task surfaces carry that direction. These descriptions record the existing implementation; they do not introduce an additional creative approval.",
+    "keyCharacteristics": [
+      "Direct telephone and enquiry actions.",
+      "Light homepage and compact dark service introduction.",
+      "Flat sections, thin dividers and selectively rounded task/contact surfaces.",
+      "Local font files and technically illustrative equipment imagery."
+    ],
+    "rules": [
+      {
+        "name": "The Action Rule",
+        "body": "Keep cobalt associated with actionable contact, navigation and selection feedback; retain dark ink for the reading hierarchy.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Use tonal grouping and dividers for these implemented surfaces. Do not reintroduce lifted card shadows into their replacement styles.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do extend the actual CSS palette and geometry recorded here when working on the main site.",
+      "Do preserve four-language routes, factual content, SEO metadata, canonical/hreflang, H1, structured data, prices, reviews and districts.",
+      "Do preserve form IDs, field names, intent data attributes, contact launcher, consent and measurement contracts while moving visual wrappers.",
+      "Do keep keyboard focus visible and honor reduced motion.",
+      "Do describe the equipment photo as illustrative and retain all four shipping provenance sidecars."
+    ],
+    "donts": [
+      "Don't infer new services, hardware-repair promises, guarantees, ratings or case-study evidence from the visual treatment.",
+      "Don't treat the separate local preview's mock delivery behavior as the main site's delivery contract.",
+      "Don't equate these documentation files with a component-review receipt, completed build gate, final review verdict, completed deployment or production PageSpeed certification.",
+      "Don't replace retained acquisition behavior with visually similar inert controls."
+    ]
+  }
+}

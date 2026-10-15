@@ -1,0 +1,61 @@
+# NaSerwis
+
+<!-- impeccable:product-schema 1 -->
+
+## Platform
+
+web
+
+## Users
+
+Private customers in Warsaw and nearby towns who need help with Wi-Fi, routers, Mesh, domestic LAN cabling or network faults. They may arrive with an urgent symptom or plan wiring before renovation. PL, RU, UK and EN are supported.
+
+## Product Purpose
+
+Help a resident identify the relevant service and contact NaSerwis by phone, messenger, chat or enquiry form to agree scope, cost and a possible visit time.
+
+## Positioning
+
+An on-site computer and technical service for private customers, with current published services focused on household network infrastructure. The first screen must communicate technical diagnosis and hands-on service, not residential interiors, cleaning or home decoration. Work and cost are agreed before starting. Business/office customers are directed to ITBIZ.PL.
+
+## Operating Context
+
+Customers describe symptoms and location, and may share equipment details or photographs through an appropriate contact channel. No network passwords should be requested through these forms. Diagnosis precedes equipment recommendations.
+
+## Capabilities and Constraints
+
+- Existing static HTML/CSS/JS site on the existing Cloudflare Pages Git integration; preserve routes, redirects, canonical/hreflang, structured data and indexability.
+- Preserve all four languages, current factual copy, services, prices, form delivery contracts, consent rules and conversion tracking.
+- Existing phone, WhatsApp, Telegram, website chat and enquiry form remain functional. Preserve the circular contact launcher and its tested motion behavior.
+- Header navigation has centered Home / Services / Prices / Guides / Contact and phone/language utilities on desktop; mobile has a menu and contact actions.
+- Guides have two reading levels at one canonical URL, with language-aware navigation.
+- The owner has explicitly authorized committing, pushing and publishing the approved redesign through the existing GitHub `main` / Cloudflare Pages integration. Record deployment completion and production performance only when verified.
+
+## Brand Commitments
+
+Keep the NaSerwis name. The owner explicitly requested replacement of the incumbent presentation-like visual appearance. The incumbent palette and layout are evidence, not a binding visual direction.
+
+## Evidence on Hand
+
+Existing service copy, transparent pricing terms and customer review excerpts are in public HTML. They may be preserved, not embellished. There are no supplied original service photographs, staff portraits, certificates or new customer case studies. Do not fabricate ratings, certifications, response-time guarantees, customer counts or documentary photographs.
+
+## Product Principles
+
+- Make the relevant service and next action clear quickly.
+- State scope and price conditions honestly.
+- Preserve working acquisition, contact and reading flows through the redesign.
+- Keep equivalent quality across languages and device widths.
+
+## Confirmed Decisions
+
+On 15 October 2026 the owner confirmed the audience, purpose and preservation constraints above, and chose to review visual image concepts before implementation.
+
+Later on 15 October the owner rejected the residential/interior direction: NaSerwis must be immediately recognizable as an on-site computer and technical service. Replace the initial visual concepts; do not infer new service capabilities or hardware repair promises from this positioning correction.
+
+The owner then requested research into similar technical-service websites, a written specification grounded in those examples, and exactly two visual variants. Equipment imagery must use actual Internet photographs as image-generation inputs and be checked against them for construction, cabling and plausible instrument states. Research, technical references and acceptance rules are recorded in docs/REDESIGN-TZ-RESEARCH-2026-10-15.md.
+
+The owner subsequently selected the second displayed composition for the light homepage and the fourth for the compact dark service title/phone layout, requested an isolated copy, and directly requested an HTML preview after the component-review handoff. That separate preview remains in redesign-preview-2026-10-15. The approved implementation provides 16 commercial layouts across four languages and a shared skin on 41 HTML pages. Existing H1/SEO, factual content, prices, reviews, the 1–3-star internal / 4–5-star Google flow and service districts remain binding preservation constraints.
+
+After reviewing the preview, the owner explicitly authorized committing, pushing and publishing it in the main site_naserwis.pl repository through the existing GitHub main branch and Cloudflare Pages integration. The main source tree is intentionally being updated under that authorization. The main site's contact delivery, protected JavaScript and API contracts remain unchanged; mock-only contact submissions apply to the separate local QA server.
+
+The design is reapplied during the normal content/technical-SEO build, preserving the relocated service form and self-hosted Manrope WOFF2 declarations. scripts/check-redesign-release.mjs guards the 41 pages against pre-redesign commit c1be176. Publication authorization does not fabricate a component-review receipt or change formal build-state records. Deployment completion and production PageSpeed scores have not been established by these documentation updates.

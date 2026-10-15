@@ -6,6 +6,9 @@ import { transform } from 'esbuild';
 import sharp from 'sharp';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import './apply-header-navigation.mjs';
+import { applyRedesign } from './apply-redesign.mjs';
+
+await applyRedesign();
 
 const previousManifest = await assetManifest();
 const manifest = {};
@@ -57,11 +60,17 @@ async function source(url) {
 async function bundle(tags, type) {
   if (!tags.length) return '';
   const sources = tags.map(tag => tag.match(/(?:href|src)="([^"]+)"/)[1]);
-  let code = (await Promise.all(sources.map(source))).join(type === 'js' ? '\n;\n' : '\n');
+  const parts = await Promise.all(sources.map(async url => {
+    let code = await source(url);
+    // The approved self-hosted display face and @font-face descriptors must
+    // survive the legacy system-font fallback used by the incumbent CSS.
+    if (type === 'css' && !url.startsWith('/redesign.css')) code=code.replace(/font-family\s*:[^;}]+/gi, `font-family:${systemFont}`)
+      .replace(/(['"])(?:IBM Plex Sans|Poppins|Roboto)\1\s*,\s*sans-serif/g, systemFont);
+    return code;
+  }));
+  let code = parts.join(type === 'js' ? '\n;\n' : '\n');
   if (type === 'css') {
-    code = code.replace(/font-family\s*:[^;}]+/gi, `font-family:${systemFont}`)
-      .replace(/(['"])(?:IBM Plex Sans|Poppins|Roboto)\1\s*,\s*sans-serif/g, systemFont)
-      .replace(/#718096/gi, '#566575').replace(/#888\b/gi, '#666');
+    code = code.replace(/#718096/gi, '#566575').replace(/#888\b/gi, '#666');
     code += overrides;
   }
   const compiled = await transform(code, { loader: type, minify: true, charset: 'utf8', target: ['chrome109', 'firefox115', 'safari16'], legalComments: 'none' });
@@ -147,4 +156,4 @@ sitemap = sitemap.replace(/<url>([\s\S]*?)<\/url>/g, (tag, body) => {
   return date ? tag.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${date}</lastmod>`) : tag.replace(/\s*<lastmod>[^<]*<\/lastmod>/, '');
 });
 await writeFile('public/sitemap.xml', sitemap);
-console.log('Technical SEO prepared: system fonts, one CSS and deferred JS bundle per page, consent-gated tags, accessible markup, schema, social assets and verified sitemap dates.');
+console.log('Technical SEO prepared: approved self-hosted display fonts, one CSS and deferred JS bundle per page, consent-gated tags, accessible markup, schema, social assets and verified sitemap dates.');

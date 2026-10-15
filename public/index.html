@@ -127,9 +127,12 @@
 <meta name="twitter:image" content="https://naserwis.pl/assets/naserwis-social.png">
 <meta name="twitter:image:alt" content="NaSerwis">
 
-<link rel="stylesheet" href="/assets/site-ea1c76e71fb01d90.css">
+<link rel="preload" href="/assets/redesign/manrope-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="/assets/site-63a7efac46f18117.css">
 </head>
-<body itemscope itemtype="https://schema.org/WebPage">
+<body itemscope itemtype="https://schema.org/WebPage" data-redesign="home">
 <a class="site-skip-link" href="#main-content">Przejdź do treści</a>
 <header id="header" role="banner">
         <nav class="container" role="navigation" aria-label="Główna nawigacja">
@@ -165,7 +168,7 @@
             </div>
             <div class="nav-right desktop-nav">
                 <a href="tel:+48453327678" class="phone" id="phone-link" aria-label="Zadzwoń do nas">
-                    &#128222; <span id="phone-number">+48 453 327 678</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.5v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 1.1 3.8 2 2 0 0 1 3.1 1.6h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg> <span id="phone-number">+48 453 327 678</span>
                 </a>
                 <div class="lang-dropdown" role="group" aria-label="Wybór języka">
                     <button class="lang-current" id="lang-current" aria-haspopup="true" aria-expanded="false">
@@ -245,10 +248,13 @@
                     <div class="hero-text">
                         <h1 itemprop="name">Wi-Fi i sieci domowe w Warszawie<br><span class="accent-text">Pomoc z dojazdem do domu</span></h1>
                         <p class="hero-subtitle" itemprop="description">Diagnozujemy Wi-Fi, konfigurujemy routery, montujemy i naprawiamy domowe sieci LAN. Zakres, koszt i termin uzgadniamy przed pracą.</p>
-                        <p class="hero-location" itemprop="areaServed">🎯 Obsługujemy: cała Warszawa i okoliczne miejscowości</p>
+                        <div class="preview-actions"><a class="btn btn-primary" href="tel:+48453327678"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.5v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 1.1 3.8 2 2 0 0 1 3.1 1.6h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg>Zadzwoń do technika</a><a class="btn preview-outline" href="#preview-contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 10h8M8 14h5"/></svg>Opisz problem</a></div><p class="hero-location" itemprop="areaServed">Obsługujemy: cała Warszawa i okoliczne miejscowości</p>
                     </div>
-                    <aside class="hero-form" aria-label="Formularz bezpłatnej konsultacji">
-                        <h2>Bezpłatna konsultacja</h2>
+
+                </div>
+            </div>
+        <picture class="preview-hero-photo"><source type="image/avif" srcset="/assets/redesign/home-network-720.avif 720w, /assets/redesign/home-network-1440.avif 1440w" sizes="(max-width: 760px) 100vw, 52vw"><img src="/assets/redesign/home-network-1440.webp" srcset="/assets/redesign/home-network-720.webp 720w, /assets/redesign/home-network-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 52vw" width="1440" height="793" fetchpriority="high" alt="Router i laptop — ilustracja domowej sieci"></picture></section><section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair"><article class="preview-task preview-task-fault"><div class="preview-task-heading"><span class="preview-task-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a5 5 0 0 0-6.3 6.3L2 19a2.1 2.1 0 0 0 3 3l6.4-6.4a5 5 0 0 0 6.3-6.3l-3 3-3-3 3-3Z"/></svg></span><h2>Coś nie działa?</h2></div><div class="preview-task-links"><a class="preview-task-link" href="/naprawa-wifi/"><div><h3>Diagnostyka zasięgu Wi-Fi</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/naprawa-sieci/"><div><h3>Naprawa gniazd RJ45 i kabli</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/naprawa-sieci/"><div><h3>Testowanie połączeń sieciowych</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></div></article><article class="preview-task preview-task-setup"><div class="preview-task-heading"><span class="preview-task-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M7 10V3M17 10V3M8 15h.01M12 15h.01M16 15h.01M8 23h8"/></svg></span><h2>Chcę skonfigurować lub zamontować</h2></div><div class="preview-task-links"><a class="preview-task-link" href="/naprawa-wifi/"><div><h3>Konfiguracja routera, AP i Mesh</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/montaz-sieci/"><div><h3>Montaż domowej sieci LAN</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/naprawa-wifi/"><div><h3>Podłączenie urządzeń domowych</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></div></article></div><aside id="preview-contact" class="preview-contact-rail"><aside class="hero-form" aria-label="Formularz bezpłatnej konsultacji">
+                        <h2>Szybki kontakt</h2>
                         <form id="hero-form" aria-label="Formularz bezpłatnej konsultacji"><p class="contact-next-step">Opisz problem i lokalizację. Oddzwonimy, aby uzgodnić zakres i możliwy termin.</p>
                             <div class="form-group">
                                 <label for="hero-name">Imię</label>
@@ -265,7 +271,25 @@
                             <button type="submit" class="btn btn-primary form-submit">Poproś o kontakt</button>
                             <p class="form-privacy-notice">Dane służą do odpowiedzi na zapytanie. Administrator: Ihar Shestsiuk. <a href="/privacy">Prywatność</a>.</p><div id="hero-form-message" role="alert" aria-live="polite"></div>
                         <p class="contact-alternatives"><a href="tel:+48453327678">Zadzwoń</a><span aria-hidden="true"> · </span><a href="https://wa.me/48453327678" target="_blank" rel="noopener">WhatsApp</a></p></form>
-                    </aside>
+                    </aside><div class="preview-prices"><h3>Orientacyjne ceny</h3><div><span>Dojazd + pierwsza godzina</span><strong>od 250 zł</strong></div><div><span>Kolejna godzina</span><strong>od 150 zł</strong></div><a href="#services">Warunki rozliczenia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></div></aside></div></section><section class="how-we-work" aria-labelledby="how-title">
+            <div class="container">
+                <h2 id="how-title" class="section-title">Jak pracujemy?</h2>
+                <div class="steps">
+                    <article class="step">
+                        <div class="step-number" aria-hidden="true">1</div>
+                        <h3>Zadzwoń lub napisz</h3>
+                        <p>Opowiedz nam o problemie, umówimy się na dogodny termin</p>
+                    </article>
+                    <article class="step">
+                        <div class="step-number" aria-hidden="true">2</div>
+                        <h3>Przyjeżdżamy i diagnozujemy</h3>
+                        <p>Wstępna wycena telefoniczna jest bezpłatna. Koszt wyjazdu uzgadniamy przed wizytą.</p>
+                    </article>
+                    <article class="step">
+                        <div class="step-number" aria-hidden="true">3</div>
+                        <h3>Naprawiamy na miejscu lub ustalamy termin</h3>
+                        <p>Wiele spraw rozwiązujemy podczas pierwszej wizyty. Jeśli potrzebne są części lub dłuższa praca — umawiamy kolejny termin.</p>
+                    </article>
                 </div>
             </div>
         </section>
@@ -323,28 +347,6 @@
 <p class="price-disclaimer">Ceny „od” zależą od warunków realizacji i nie stanowią oferty. Kwotę potwierdzamy przed pracą. VAT nie doliczamy.</p><a class="home-catalog-back" href="#available-services">W czym możemy pomóc <span aria-hidden="true">↑</span></a></div></section>
 
         <!-- How We Work -->
-        <section class="how-we-work" aria-labelledby="how-title">
-            <div class="container">
-                <h2 id="how-title" class="section-title">Jak pracujemy?</h2>
-                <div class="steps">
-                    <article class="step">
-                        <div class="step-number" aria-hidden="true">1</div>
-                        <h3>Zadzwoń lub napisz</h3>
-                        <p>Opowiedz nam o problemie, umówimy się na dogodny termin</p>
-                    </article>
-                    <article class="step">
-                        <div class="step-number" aria-hidden="true">2</div>
-                        <h3>Przyjeżdżamy i diagnozujemy</h3>
-                        <p>Wstępna wycena telefoniczna jest bezpłatna. Koszt wyjazdu uzgadniamy przed wizytą.</p>
-                    </article>
-                    <article class="step">
-                        <div class="step-number" aria-hidden="true">3</div>
-                        <h3>Naprawiamy na miejscu lub ustalamy termin</h3>
-                        <p>Wiele spraw rozwiązujemy podczas pierwszej wizyty. Jeśli potrzebne są części lub dłuższa praca — umawiamy kolejny termin.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
 
         <!-- Packages -->
         <section class="packages business-handoff" aria-labelledby="business-handoff-title"><div class="container"><h2 id="business-handoff-title">Potrzebujesz pomocy dla firmy?</h2><p>NaSerwis pomaga klientom prywatnym z domową infrastrukturą. Obsługę firm, biur i sprzętu zarządzanego przez pracodawcę prowadzi ITBIZ.PL.</p><a href="https://itbiz.pl/uslugi/">Usługi IT dla firm — ITBIZ.PL <span aria-hidden="true">→</span></a></div></section>

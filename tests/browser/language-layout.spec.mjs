@@ -26,6 +26,9 @@ for (const [locale, destination] of [['en-US', '/en/'], ['ru-RU', '/ru/'], ['uk-
         const navigation = page.goto(route);
         try {
           await expect(page.locator('h1')).toBeVisible();
+          // A DOM box can exist while the render-blocking stylesheet is still
+          // loading. Compare painted frames, not an unpainted default layout.
+          await page.waitForFunction(() => performance.getEntriesByName('first-contentful-paint').length > 0);
           const before = await page.locator('h1').boundingBox();
           releaseRuntime();
           await navigation;

@@ -50,7 +50,7 @@ for (let index = 0; index < files.length; index += 4) {
     }
   }));
 }
-for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml', ...Object.keys(manifest).map(path => path.slice(1))]) {
+for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'redesign.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml', ...Object.keys(manifest).map(path => path.slice(1))]) {
   const live = normalized(await get('/' + asset));
   const local = normalized(await readFile('public/' + asset, 'utf8'));
   if (asset === 'robots.txt' && live !== local) {

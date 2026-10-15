@@ -26,6 +26,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await expect.poll(chromeStyle).toEqual(expectedStyle);
     }
     await page.locator('.guide-cards h2 a').first().click();
+    await page.waitForURL(new RegExp(`/poradnik/${wifi}$`), { waitUntil: 'load' });
     await page.locator('.services-btn').click();
     await expect(page.locator('.services-menu')).toHaveAttribute('aria-hidden', 'false');
     await page.keyboard.press('Escape');
@@ -34,10 +35,13 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     await page.locator('#mobile-menu-toggle').click();
     await expect(page.locator('#mobile-menu-overlay')).toHaveClass(/active/);
     await expect(page.locator('#mobile-menu-overlay .guides-nav-link')).toBeVisible();
-    await page.locator('.mobile-lang-btn[hreflang=ru]').click();
-    await expect(page).toHaveURL(new RegExp(`/ru/poradnik/${wifi}#technical$`));
+    await Promise.all([
+      page.waitForURL(new RegExp(`/ru/poradnik/${wifi}#technical$`), { waitUntil: 'load' }),
+      page.locator('.mobile-lang-btn[hreflang=ru]').click()
+    ]);
     await expect(page.locator('#technical')).toBeVisible();
     await page.locator('#mobile-menu-toggle').click();
+    await expect(page.locator('#mobile-menu-overlay')).toHaveClass(/active/);
     await page.locator('#mobile-menu-overlay .guides-nav-link').click();
     await expect(page).toHaveURL(/\/ru\/poradnik\/$/);
     expect(errors).toEqual([]);
