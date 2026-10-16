@@ -70,7 +70,7 @@
       }
     ],
     "focus": {
-      "value": "outline:3px solid #005ff5;outline-offset:4px",
+      "value": "outline:3px solid #1d5bd0;outline-offset:4px",
       "purpose": "Global :focus-visible treatment."
     },
     "breakpoints": [
@@ -115,7 +115,7 @@
       "refersTo": "button-primary",
       "description": "Telephone or submit action; rail submit variants fill available width.",
       "html": "<button class=\"ds-primary\" type=\"button\">Zadzwoń do technika</button>",
-      "css": ".ds-primary{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:8px;border:1px solid var(--rd-blue,#005ff5);background:var(--rd-blue,#005ff5);color:#fff;box-shadow:none;transition:background-color .2s ease,transform .2s ease}.ds-primary:hover{background:#004ac2;transform:translateY(-1px)}.ds-primary:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none!important}}"
+      "css": ".ds-primary{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:6px;border:1px solid var(--rd-blue,#1d5bd0);background:var(--rd-blue,#1d5bd0);color:#fff;box-shadow:none;transition:background-color .16s ease,border-color .16s ease}.ds-primary:hover{background:#174bb0}.ds-primary:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none!important}}"
     },
     {
       "name": "Outlined action",
@@ -123,7 +123,7 @@
       "refersTo": "button-outline",
       "description": "Secondary describe-the-problem action.",
       "html": "<button class=\"ds-outline\" type=\"button\">Opisz problem</button>",
-      "css": ".ds-outline{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:8px;border:1px solid var(--rd-blue,#005ff5);background:#fff;color:var(--rd-blue,#005ff5);box-shadow:none;transition:background-color .2s ease,transform .2s ease}.ds-outline:hover{background:#edf4ff}.ds-outline:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none!important}}"
+      "css": ".ds-outline{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:700;display:inline-flex;justify-content:center;align-items:center;gap:12px;min-height:48px;padding:12px 22px;border-radius:6px;border:1px solid var(--rd-blue,#1d5bd0);background:#fff;color:var(--rd-blue,#1d5bd0);box-shadow:none;transition:background-color .16s ease,border-color .16s ease}.ds-outline:hover{background:#e8effc}.ds-outline:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}@media(prefers-reduced-motion:reduce){.ds-outline{transition:none!important}}"
     },
     {
       "name": "Enquiry field",
@@ -131,14 +131,14 @@
       "refersTo": "enquiry-field",
       "description": "Compact rail field, with existing labels and validation retained in production markup.",
       "html": "<label class=\"ds-field-label\" for=\"ds-phone\">Telefon</label><input class=\"ds-field\" id=\"ds-phone\" type=\"tel\" autocomplete=\"tel\">",
-      "css": ".ds-field-label{display:block;font-family:Manrope,Arial,sans-serif;font-size:12px;font-weight:600;color:var(--rd-ink,#0b1931);margin-bottom:5px}.ds-field{font-family:Manrope,Arial,sans-serif;padding:9px 12px;min-height:40px;border:1px solid #c9d5e4;background:#fff;border-radius:6px;font-size:14px;color:var(--rd-ink,#0b1931);box-shadow:none;caret-color:var(--rd-blue,#005ff5)}.ds-field:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(max-width:760px){.ds-field{font-size:16px;min-height:44px}.ds-field-label{font-size:13px}}"
+      "css": ".ds-field-label{display:block;font-family:Manrope,Arial,sans-serif;font-size:12px;font-weight:600;color:var(--rd-ink,#18212c);margin-bottom:5px}.ds-field{font-family:Manrope,Arial,sans-serif;padding:9px 12px;min-height:40px;border:1px solid #c4ccd5;background:#fff;border-radius:6px;font-size:14px;color:var(--rd-ink,#18212c);box-shadow:none;caret-color:var(--rd-blue,#1d5bd0)}.ds-field:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}@media(max-width:760px){.ds-field{font-size:16px;min-height:44px}.ds-field-label{font-size:13px}}"
     },
     {
       "name": "Text navigation",
       "kind": "nav",
       "description": "Centered desktop text navigation with cobalt current-page feedback.",
       "html": "<nav class=\"ds-nav\" aria-label=\"Przykład nawigacji\"><a href=\"#home\" aria-current=\"page\">Strona główna</a><a href=\"#services\">Usługi</a><a href=\"#prices\">Cennik</a></nav>",
-      "css": ".ds-nav{display:flex;align-items:center;justify-content:center;gap:28px}.ds-nav a{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:600;color:var(--rd-ink,#0b1931);padding-left:0;padding-right:0;border-radius:0;background:transparent;text-underline-offset:4px}.ds-nav a[aria-current]{color:var(--rd-blue,#005ff5)}.ds-nav a:focus-visible{outline:3px solid #005ff5;outline-offset:4px}"
+      "css": ".ds-nav{display:flex;align-items:center;justify-content:center;gap:28px}.ds-nav a{font-family:Manrope,Arial,sans-serif;font-size:15px;font-weight:600;color:var(--rd-ink,#18212c);padding-left:0;padding-right:0;border-radius:0;background:transparent;text-underline-offset:4px}.ds-nav a[aria-current]{color:var(--rd-blue,#1d5bd0)}.ds-nav a:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}"
     },
     {
       "name": "Fault task group",
@@ -146,7 +146,7 @@
       "refersTo": "task-card",
       "description": "Tinted task surface with divider-separated working service links.",
       "html": "<article class=\"ds-task\"><h2>Coś nie działa?</h2><a class=\"ds-task-link\" href=\"#wifi\"><h3>Słaby zasięg Wi-Fi</h3><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 5 7 7-7 7\"/></svg></a></article>",
-      "css": ".ds-task{font-family:Manrope,Arial,sans-serif;padding:28px 24px;border-radius:var(--rd-radius,14px);background:var(--rd-wash,#f3f8ff);min-width:0;min-height:452px}.ds-task h2{font-size:27px;line-height:1.25;margin:0 0 30px;font-weight:800;letter-spacing:-.025em;color:var(--rd-ink,#0b1931)}.ds-task-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 0;border-top:1px solid #d5e2f0;text-decoration:none;color:var(--rd-ink,#0b1931);min-height:85px}.ds-task-link h3{font-size:16px;line-height:1.55;margin:0;font-weight:600;letter-spacing:0}.ds-task-link svg{width:17px;height:17px;flex-shrink:0;color:var(--rd-blue,#005ff5)}.ds-task-link:hover h3{color:var(--rd-blue,#005ff5);text-decoration:underline}.ds-task-link:focus-visible{outline:3px solid #005ff5;outline-offset:4px}@media(max-width:760px){.ds-task{min-height:0;padding:22px}.ds-task h2{font-size:24px}.ds-task-link{min-height:70px;padding:18px 0}.ds-task-link h3{font-size:15px}}"
+      "css": ".ds-task{font-family:Manrope,Arial,sans-serif;padding:28px 24px;border-radius:var(--rd-radius,8px);background:var(--rd-wash,#fff);min-width:0;min-height:452px}.ds-task h2{font-size:27px;line-height:1.25;margin:0 0 30px;font-weight:800;letter-spacing:-.025em;color:var(--rd-ink,#18212c)}.ds-task-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 0;border-top:1px solid #dde2e8;text-decoration:none;color:var(--rd-ink,#18212c);min-height:85px}.ds-task-link h3{font-size:16px;line-height:1.55;margin:0;font-weight:600;letter-spacing:0}.ds-task-link svg{width:17px;height:17px;flex-shrink:0;color:var(--rd-blue,#1d5bd0)}.ds-task-link:hover h3{color:var(--rd-blue,#1d5bd0);text-decoration:underline}.ds-task-link:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}@media(max-width:760px){.ds-task{min-height:0;padding:22px}.ds-task h2{font-size:24px}.ds-task-link{min-height:70px;padding:18px 0}.ds-task-link h3{font-size:15px}}"
     },
     {
       "name": "District tag",
@@ -154,7 +154,7 @@
       "refersTo": "district-tag",
       "description": "Existing service-area label; not a newly introduced interactive filter.",
       "html": "<span class=\"ds-district\">Warszawa</span>",
-      "css": ".ds-district{font-family:Manrope,Arial,sans-serif;background:#e7eef7;color:var(--rd-ink,#0b1931);border:0;border-radius:5px}"
+      "css": ".ds-district{font-family:Manrope,Arial,sans-serif;background:transparent;color:var(--rd-ink,#18212c);border:0;border-radius:5px}"
     }
   ],
   "narrative": {

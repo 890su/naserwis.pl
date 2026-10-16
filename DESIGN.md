@@ -1,27 +1,27 @@
 ---
 name: NaSerwis
-description: Implemented technical-service design approved for the main site's publication on 15 October 2026.
+description: Variant B "Pomoc według zadania" (16 October 2026) applied over the technical-service implementation of 15 October 2026.
 colors:
-  action-blue: "#005ff5"
-  action-hover: "#004ac2"
-  ink: "#0b1931"
-  body: "#42516a"
-  secondary-text: "#56647b"
+  action-blue: "#1d5bd0"
+  action-hover: "#174bb0"
+  ink: "#18212c"
+  body: "#485462"
+  secondary-text: "#5d6875"
   paper: "#fff"
-  quiet-surface: "#f5f8fc"
-  line: "#dfe6ef"
-  task-wash: "#f3f8ff"
-  task-mint: "#f0faf7"
-  field-line: "#c9d5e4"
-  outline-hover: "#edf4ff"
-  intent-active: "#e9f1ff"
-  dark-support: "#d8e3f4"
-  dark-divider: "#4b5b72"
-  district-surface: "#e7eef7"
+  quiet-surface: "#f3f5f7"
+  line: "#dde2e8"
+  task-panel-line: "#c4ccd5"
+  contact-surface: "#f3f5f7"
+  field-line: "#c4ccd5"
+  outline-hover: "#e8effc"
+  intent-active: "#e8effc"
+  dark-support: "#c9d2dc"
+  dark-divider: "#3a4757"
+  district-line: "#3a4757"
 typography:
   display:
     fontFamily: "Manrope, Arial, sans-serif"
-    fontSize: "clamp(34px, 3.15vw, 47px)"
+    fontSize: "clamp(34px, 3.4vw, 50px)"
     fontWeight: 800
     lineHeight: 1.15
     letterSpacing: "-.035em"
@@ -56,12 +56,12 @@ typography:
     fontSize: "12px"
     fontWeight: 600
 rounded:
-  district: "5px"
+  district: "999px"
   field: "6px"
-  button: "8px"
-  price-inset: "10px"
-  content-card: "12px"
-  rail-task: "14px"
+  button: "6px"
+  price-inset: "8px"
+  content-card: "8px"
+  rail-task: "8px"
   circle: "50%"
 spacing:
   action-gap: "12px"
@@ -93,26 +93,42 @@ components:
     rounded: "{rounded.field}"
     padding: "9px 12px"
   task-card:
-    backgroundColor: "{colors.task-wash}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.rail-task}"
-    padding: "28px 24px"
-  setup-task-card:
-    backgroundColor: "{colors.task-mint}"
-    textColor: "{colors.ink}"
-    rounded: "{rounded.rail-task}"
-    padding: "28px 24px"
-  contact-rail:
     backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.rail-task}"
+    padding: "0 22px"
+  setup-task-card:
+    backgroundColor: "{colors.paper}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.rail-task}"
+    padding: "0 22px"
+  contact-rail:
+    backgroundColor: "{colors.contact-surface}"
     rounded: "{rounded.rail-task}"
     padding: "20px"
   district-tag:
-    backgroundColor: "{colors.district-surface}"
-    textColor: "{colors.ink}"
+    backgroundColor: "transparent"
+    textColor: "{colors.paper}"
     rounded: "{rounded.district}"
 ---
 
 # Design System: NaSerwis
+
+
+## Variant B — "Pomoc według zadania" (16 October 2026)
+
+The owner chose variant B from the two research-based mocks (`outputs/redesign-2026-10-15/v4-variants/b-zadanie.html`) and asked to rework the published design into it without changing content or SEO. Where this section and older paragraphs below disagree, this section wins.
+
+- **Homepage first screen.** The inherited H1 and subtitle sit left in a compact band; a call box on the right carries the large `tel:` number, the inherited service-area line and the call / describe-problem actions. There is no full-bleed hero photo; the H1 is the first content paint.
+- **Task panels.** "Coś nie działa?" and "Chcę skonfigurować lub zamontować" are white panels with a 1px `#c4ccd5` border and an equipment photo on top (16:9), then heading and divider-separated links copied from the localized service catalogue. The quick-contact form sits in a third `#f3f5f7` column.
+- **Conditions strip.** Directly below: "you pay for the agreed scope" plus the three published rates with their exact localized labels from the price table, and a link to the full pricing conditions. The rates are read from the page, never typed.
+- **Palette and shape.** Graphite ink `#18212c`, body `#485462`, one action blue `#1d5bd0` (hover `#174bb0`), neutral surface `#f3f5f7`, lines `#dde2e8`. Buttons 6px, panels and cards 8px. No mint/wash task tints, no decorative accent bars above section titles, no button lift on hover.
+- **Rhythm.** Steps use outlined ink numerals; trust tiles, reviews and why-us items are flat with a 2px ink top rule. Final call and footer are graphite; district tags are outlined pills on the dark footer.
+- **Service and utility pages** keep the dark title/description header with the large phone and the relocated form rail; only the palette and radii above changed.
+- **Imagery.** Fault panel: real photograph of a two-part cable tester with both plugs inserted and pair 3–6 dark (Smial, Wikimedia Commons, Free Art License 1.3; visible credit in the figcaption; derivatives `public/assets/redesign/tester-fault-{640,1200}.{avif,webp}` with `.json` provenance). Setup panel: the existing illustrative router image. Image briefs and references for future replacements live in `outputs/redesign-2026-10-15/v4-variants/index.html`.
+- **Owner refinements (16 Oct, second round).** Homepage H1 in all four languages: "Wi-Fi i sieci w Warszawie / Montaż lub naprawa z dojazdem", "Wi-Fi и сети в Варшаве / Монтаж или ремонт с выездом", "Wi-Fi та мережі у Варшаві / Монтаж або ремонт з виїздом", "Wi-Fi and networks in Warsaw / Installation or repair on site" ("or" chosen by the owner for clarity; source `scripts/home-service-copy.mjs`; reviewed hashes in `check-cro.mjs`, approved exceptions in `check-redesign-release.mjs`; titles and descriptions unchanged). The second line wraps as its own balanced block. Footer uses four columns from 1100px (two on tablets, one on phones). Reviews sit in two columns from 960px — carousel left, Google button and the rating widget right — by CSS grid only, so review markup and routing are untouched. The burger menu is generated by `scripts/apply-header-navigation.mjs` from the desktop header: same items and order (Home, Services with the three service links, Prices, Guides, Contact), same active state, language chips and a primary call button with the shared phone icon. "Opisz problem" buttons outside forms use `href="#contact"` plus `data-contact-modal`, so `contact-ui.js` opens the existing pop-up form instead of scrolling; the pop-up uses the shared palette and hides its uppercase kicker.
+- **Icons (third round).** One stroke icon family marks services: Wi-Fi, router/AP/Mesh, LAN installation, RJ45 repair, connection testing and home devices, in 44px (catalogue), 34px (task panels) and 32px (burger menu) soft-blue squares. Contact channels use the brand glyphs already shipped in the floating launcher (phone, WhatsApp, Telegram, form): every enquiry form ends with a phone · WhatsApp · Telegram row, and the burger menu has a Contact block with the call button plus WhatsApp, Telegram and the pop-up form, labels copied from the page's localized launcher. Site chat stays in the launcher because only its own button can open it.
+- **Preserved.** Titles, H1 (except the approved homepage H1s), meta, canonical/hreflang, JSON-LD, prices, factual copy, reviews markup and the star flow (1–3 internal feedback form, 4–5 Google), form IDs, consent, launcher and the 88px mobile hero offset that keeps the floating language banner off the H1.
 
 ## Navigation and utility page refinement
 

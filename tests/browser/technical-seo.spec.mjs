@@ -78,8 +78,8 @@ test('skip link moves keyboard focus past navigation to the main content', async
   await page.keyboard.press('Enter');
   await expect(page.locator('#main-content')).toBeFocused();
   await page.keyboard.press('Tab');
-  // The redesign now introduces a call action before the relocated quick form.
-  await expect(page.locator('.preview-actions a[href="tel:+48453327678"]').first()).toBeFocused();
+  // Variant B: the call box's phone number is the first action after the offer.
+  await expect(page.locator('.preview-callbox a[href="tel:+48453327678"]').first()).toBeFocused();
 });
 
 test('floating enquiry modal restores focus to the visible launcher on Escape', async ({ page }) => {

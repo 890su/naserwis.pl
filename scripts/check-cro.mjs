@@ -34,19 +34,20 @@ const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-c
 // Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
-  "public/index.html": "2f5660c8468a846853426390444f92adbf5bf647baaa91cdc0bb179cefa33361",
+  // 2026-10-16 owner-approved shorter homepage H1 in all four languages ("... / Montaż lub naprawa z dojazdem").
+  "public/index.html": "3f192c52b33350b9dad1e3e1adcd7696d89f5ac376e48a9aec1868915add4d8f",
   "public/naprawa-wifi/index.html": "b25d9d44190d8824346524e7686d71dd211631a152f425b351ffa3dd53bc2c12",
   "public/naprawa-sieci/index.html": "baa4817c660590f6d7dd079d13a04fe9ad374f773aeafff9339aab3d7f5cdb94",
   "public/montaz-sieci/index.html": "dfa5b6ca3206ca4b802cee752d8ebe82ba1ccf8631b100e1cc254749dbb97af1",
-  "public/ru/index.html": "e59a16f0035aacf50fffcc5253b9244797755ffa197983f82b1cccab51a4740c",
+  "public/ru/index.html": "2ce6744923656b8d7e310df820a22e0cc5ccc66163eb306dfe8633a31546ee89",
   "public/ru/naprawa-wifi/index.html": "149e3da9233ae4a36a404187dd510ffe2de6ea10114ffd911f0d2163d5e1fb78",
   "public/ru/naprawa-sieci/index.html": "1eddf44975085e0efe74a13cb24389dcfec22572478f0bd71cf6661a946207a2",
   "public/ru/montaz-sieci/index.html": "559db6e34f2a82b377c9273a35822c0cf391d68157045e0d39d953fa84cce729",
-  "public/uk/index.html": "6b4297a2c855ed4662ddb13f001f942c382e47dfbb5d1ebfc5c66a71894c4a72",
+  "public/uk/index.html": "f6c8388bed7a6533bfa04fa72c750c8766542ae474f3a7471f448e0e916665f9",
   "public/uk/naprawa-wifi/index.html": "532b2004e31bcc9b811bbf224f383b435d64589c46e12cc8c9d0a34fa18fdd40",
   "public/uk/naprawa-sieci/index.html": "f7c3e4e02e7b57bc330571ef387885327d3afa68d39fa6622142b211d04cc9d7",
   "public/uk/montaz-sieci/index.html": "716cfa3ef31af2f256947d86844f91f1ed92de4867ee58ad64dd72f037f6f070",
-  "public/en/index.html": "b9ff0acfe3a9e0f97a0a54f7d2bfaea063b0fd10b014e58ae22ba7054c277afd",
+  "public/en/index.html": "b3135b7df45f440d6154a9dd359d5c44b03485d0028d4f185fcb2160b4c2dc80",
   "public/en/naprawa-wifi/index.html": "865db1c709bd19bef08232b365ac705da7962f2bf719d5d447af56ce9207f8d3",
   "public/en/naprawa-sieci/index.html": "6e29336fa380428c7fa8181d57c9f7fcafc858342146e0fc840453a4daeaf4d2",
   "public/en/montaz-sieci/index.html": "b97d2b14362e6c876f6ba913563bc413228d03b364b56af275149650975669c6"

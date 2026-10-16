@@ -16,9 +16,17 @@ const seo=html=>({
 });
 async function pages(dir){const result=[];for(const e of await readdir(dir,{withFileTypes:true})){const p=`${dir}/${e.name}`;if(e.isDirectory())result.push(...await pages(p));else if(e.name.endsWith('.html'))result.push(p);}return result;}
 const normalizeMarkup=html=>html.replace(/>\s+</g,'><').trim();
+// Owner-approved copy changes after the baseline (16 Oct 2026: shorter homepage H1 in all four languages).
+const approved={
+ 'public/index.html':[['Wi-Fi i sieci domowe w Warszawie<br><span class="accent-text">Pomoc z dojazdem do domu</span>','Wi-Fi i sieci w Warszawie<br><span class="accent-text">Montaż lub naprawa z dojazdem</span>']],
+ 'public/ru/index.html':[['Wi-Fi и домашние сети в Варшаве<br><span class="accent-text">Помощь с выездом на дом</span>','Wi-Fi и сети в Варшаве<br><span class="accent-text">Монтаж или ремонт с выездом</span>']],
+ 'public/uk/index.html':[['Wi-Fi та домашні мережі у Варшаві<br><span class="accent-text">Допомога з виїздом додому</span>','Wi-Fi та мережі у Варшаві<br><span class="accent-text">Монтаж або ремонт з виїздом</span>']],
+ 'public/en/index.html':[['Wi-Fi and home networks in Warsaw<br><span class="accent-text">Help at your home</span>','Wi-Fi and networks in Warsaw<br><span class="accent-text">Installation or repair on site</span>']]
+};
 let count=0;
 for(const file of await pages('public')){
- const before=previous(file),after=await current(file);
+ let before=previous(file);const after=await current(file);
+ for(const [from,to] of approved[file]||[]) { assert.ok(before.includes(from),'Approved change baseline missing: '+file); before=before.replace(from,to); }
  assert.deepEqual(seo(after),seo(before),'SEO changed: '+file);
  for(const match of before.matchAll(/<form\b[^>]*\bid="([^"]+)"/g)) assert.ok(after.includes(`id="${match[1]}"`),'Missing form: '+file+' '+match[1]);
  for(const match of before.matchAll(/<span class="district-tag">([\s\S]*?)<\/span>/g)) assert.ok(after.includes(match[0]),'Missing district: '+file+' '+match[1]);

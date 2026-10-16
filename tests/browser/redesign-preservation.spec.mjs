@@ -36,11 +36,11 @@ for(const reducedMotion of ['no-preference','reduce']) {
     });
     await page.goto('/');
     await page.locator('.why-us').scrollIntoViewIfNeeded();
-    await expect(page.locator('.why-us .section-title')).toHaveCSS('color','rgb(11, 25, 49)');
+    await expect(page.locator('.why-us .section-title')).toHaveCSS('color','rgb(24, 33, 44)');
     for(const benefit of await page.locator('.why-us .benefit').all()) {
       await benefit.scrollIntoViewIfNeeded();
       await expect(benefit).toHaveCSS('opacity','1');
-      await expect(benefit.locator('p')).toHaveCSS('color','rgb(66, 81, 106)');
+      await expect(benefit.locator('p')).toHaveCSS('color','rgb(72, 84, 98)');
     }
   });
 }
