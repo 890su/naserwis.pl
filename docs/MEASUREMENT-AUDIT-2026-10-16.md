@@ -85,11 +85,35 @@ The existing consent-only bundle and all Ads destination labels are unchanged.
 
 ## Publication
 
-The owner explicitly approved publication on 2026-10-16. Publish only this
-audit's source/HTML/bundles/tests/docs through the existing Git integration,
-require the matching Cloudflare Pages check, then repeat the isolated production
-checks and verify the served bundle references. Deployment and verification
-evidence will be recorded after those checks complete.
+The owner explicitly approved publication on 2026-10-16. Application revision
+`e3fe3eb5400a811a06a60f190de9d4e590d9b3a2` was committed and pushed to `main`
+through the existing Git integration. Its **Cloudflare Pages** check completed
+successfully for deployment `504fe199-1ec2-48b1-bb22-8d233cc8820a`:
+[deployment details](https://dash.cloudflare.com/?to=/5354e054d53157bf5b02ce5119d08948/pages/view/naserwis-pl/504fe199-1ec2-48b1-bb22-8d233cc8820a).
+
+Production verification against `https://naserwis.pl` passed:
+
+- `npm run smoke:production`: page SEO/navigation, exact source and bundled
+  assets, permanent redirects, real 404 and rejected API requests (405/400).
+- All **49 measurement browser scenarios** passed in one production run:
+  344 phone/messenger links, 40 contact forms including every popup, all four
+  languages, alternative channels/email, consent categories, duplicate/failed
+  submissions, new choices and desktop/mobile placements.
+- Three additional existing CRO scenarios passed: mobile dock/modal lead and
+  phone actions, chat support-consent acceptance/rejection, and unavailable chat
+  without a false opening conversion. Total: **52 production browser checks**.
+- An independent GET confirmed the corrected English coverage text and the new
+  commercial runtime reference on `/en/`.
+
+API success responses and Chatwoot SDK behavior remained simulated; Google
+requests and external contact navigation remained blocked in these browser
+checks. No real lead, review, call, message or Google conversion hit was sent.
+The evidence is recorded in a documentation-only follow-up commit; it does not
+change the verified public files.
+
+Pre-release rollback: revision `ad07e0ee2b87e665e0a5c7584163c541f521d5fe`,
+successful Pages deployment `ea47fcb5-39fc-4e91-aab0-d88b4a26ab6b`. Use a reviewed
+Git revert or the previous Pages deployment; do not reset/force-push.
 No credentials, DNS, campaign goals or budgets need to change.
 
 The old redesign release guard requires byte-identical runtime JavaScript to its
