@@ -299,21 +299,35 @@
     // Exposure is counted only when analytics consent exists and the control is
     // actually visible (not underneath the consent UI). No retroactive events.
     const seen = new WeakSet();
-    const ctas = [...document.querySelectorAll('a[href="#contact"], .fab-toggle, [data-contact-invite], [data-contact-modal]')];
+    const ctas = [...document.querySelectorAll('a[href$="#contact"], .fab-toggle, [data-contact-invite], [data-contact-modal], a[href^="tel:"], a[href^="mailto:"], a[href*="wa.me/"], a[href*="t.me/"], .fab-chat')];
     function placement(element) {
         if (element.closest('.mobile-contact-dock')) return 'sticky';
         if (element.closest('.fab-container')) return 'floating';
         if (element.closest('.contact-checkpoint')) return 'checkpoint';
+        if (element.closest('.contact-alternatives')) return 'form';
+        if (element.closest('header')) return 'header';
+        if (element.closest('footer')) return 'footer';
+        if (element.closest('.mobile-menu-overlay')) return 'mobile_menu';
+        if (element.closest('.preview-service-rail')) return 'service_rail';
+        if (element.closest('.preview-contact-rail')) return 'contact_rail';
+        if (element.closest('.hero')) return 'hero';
+        if (element.closest('.final-cta')) return 'final';
         return 'content';
     }
     function observeImpressions() {
         if (!window.NASERWIS_CONSENT?.get()?.analytics || consentVisible()) return;
         ctas.forEach(element => {
             if (seen.has(element) || !inView(element) || getComputedStyle(element).visibility === 'hidden') return;
+            if (element.closest('[inert], [hidden]')) return;
+            if (element.closest('.mobile-menu-overlay:not(.active)')) return;
             if (element.closest('.fab-container') && container.dataset.suppressed === 'true') return;
             if (element.closest('.fab-menu') && !menuOpen) return;
             seen.add(element);
-            const action = element.matches('a[href="#contact"], [data-contact-modal]') ? 'form' : element.matches('.fab-toggle, button') ? 'contact_menu' : element.getAttribute('href')?.startsWith('tel:') ? 'phone' : 'form';
+            const href = element.getAttribute('href') || '';
+            const action = element.matches('a[href$="#contact"], [data-contact-modal]') ? 'form'
+                : element.matches('.fab-chat') ? 'chatwoot'
+                : href.startsWith('tel:') ? 'phone' : href.startsWith('mailto:') ? 'email' : href.includes('wa.me/') ? 'whatsapp'
+                : href.includes('t.me/') ? 'telegram' : 'contact_menu';
             track('naserwis_cta_view', { placement: placement(element), action });
         });
     }

@@ -408,7 +408,7 @@
         const originalLabel = form.querySelector('button[type="submit"]')?.textContent;
         let sending = false;
         let started = false;
-        const formParameters = { form_id: formId, placement: formId === 'hero-form' ? 'hero' : formId === 'quick-form' ? 'modal' : 'final' };
+        const formParameters = { form_id: formId, placement: formId === 'quick-form' ? 'modal' : contactPlacement(form) };
         const shortMessages = {
             pl: 'Uzupełnij pole — minimalna liczba znaków: ',
             ru: 'Дополните поле — минимум символов: ',
@@ -1257,7 +1257,7 @@
         if (!window.NASERWIS_CONSENT?.get()?.analytics) return false;
         const allowedEvents = ['naserwis_cta_view', 'naserwis_cta_click', 'naserwis_contact_open', 'naserwis_intent_select',
             'naserwis_form_start', 'naserwis_form_validation_error', 'naserwis_form_error',
-            'naserwis_form_success', 'naserwis_chat_error'];
+            'naserwis_form_success', 'naserwis_chat_error', 'naserwis_service_select', 'naserwis_pricing_click'];
         if (!allowedEvents.includes(eventName)) return false;
         const safe = {
             language: document.documentElement.lang || 'pl',
@@ -1269,8 +1269,12 @@
         const intent = getSearchIntent();
         if (intent) safe.search_intent = intent;
         const allowed = {
-            placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final', 'modal'],
-            action: ['form', 'contact_menu', 'phone'],
+            placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final', 'modal', 'form',
+                'header', 'footer', 'mobile_menu', 'contact_rail', 'service_rail', 'task_panel', 'services', 'pricing'],
+            action: ['form', 'contact_menu', 'phone', 'whatsapp', 'telegram', 'chatwoot', 'email'],
+            target_service: ['wifi_repair', 'lan_install', 'lan_cctv_repair'],
+            service_choice: ['wifi-coverage', 'router-setup', 'lan-install', 'lan-repair', 'network-test', 'device-setup'],
+            task_group: ['fault', 'setup'],
             form_id: ['hero-form', 'final-form', 'quick-form'],
             field: ['name', 'phone', 'message'],
             reason: ['required', 'too_short_or_invalid', 'server', 'network']
@@ -1293,6 +1297,32 @@
             pushMeasurementEvent('chatwoot_open', parameters);
             sendGoogleAdsConversion('chatwoot');
         });
+        // Capture before the desktop menu's inline handler starts navigation.
+        // Never forward link text or query strings.
+        document.addEventListener('click', function (event) {
+            const link = event.target.closest('a[href], .services-menu button[onclick]');
+            if (!link) return;
+            const href = link.getAttribute('href') || link.getAttribute('onclick')?.match(/^window\.location\.href='([^']+)'$/)?.[1];
+            if (!href) return;
+            const url = new URL(href, window.location.href);
+            if (url.origin !== window.location.origin) return;
+            const route = url.pathname.replace(/^\/(?:ru|uk|en)(?=\/)/, '');
+            const services = { '/naprawa-wifi/': 'wifi_repair', '/montaz-sieci/': 'lan_install', '/naprawa-sieci/': 'lan_cctv_repair' };
+            const targetService = services[route];
+            if (targetService && !url.hash) {
+                trackFunnelEvent('naserwis_service_select', {
+                    placement: contactPlacement(link), target_service: targetService,
+                    service_choice: link.dataset.serviceChoice,
+                    task_group: link.closest('.preview-task-fault') ? 'fault' : link.closest('.preview-task-setup') ? 'setup' : undefined
+                });
+            } else if (route === '/' && url.hash === '#services') {
+                trackFunnelEvent('naserwis_pricing_click', { placement: contactPlacement(link) });
+            } else if (url.hash === '#contact' && !link.matches('a[href="#contact"], [data-contact-modal]')) {
+                // Absolute/localized contact links keep their native navigation.
+                // Bare #contact and modal controls are measured by contact-ui.js.
+                trackFunnelEvent('naserwis_cta_click', { placement: contactPlacement(link), action: 'form' });
+            }
+        }, true);
     }
 
     function sendGoogleAdsConversion(type, transactionId) {
@@ -1311,6 +1341,14 @@
         if (element.closest('header')) return 'header';
         if (element.closest('footer')) return 'footer';
         if (element.closest('.mobile-menu-overlay')) return 'mobile_menu';
+        if (element.closest('.preview-service-rail')) return 'service_rail';
+        if (element.closest('.preview-contact-rail')) return 'contact_rail';
+        if (element.closest('.preview-task')) return 'task_panel';
+        if (element.closest('.home-service-catalog')) return 'services';
+        if (element.closest('.preview-prices, .preview-conditions')) return 'pricing';
+        if (element.closest('.hero')) return 'hero';
+        if (element.closest('.final-cta')) return 'final';
+        if (element.closest('.contact-checkpoint')) return 'checkpoint';
         return 'content';
     }
 
@@ -1332,6 +1370,7 @@
             const href = link.getAttribute('href') || '';
             let method = '';
             if (href.startsWith('tel:')) method = 'phone';
+            else if (href.startsWith('mailto:')) method = 'email';
             else if (href.includes('wa.me/')) method = 'whatsapp';
             else if (href.includes('t.me/')) method = 'telegram';
             if (!method) return;

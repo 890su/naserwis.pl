@@ -23,6 +23,7 @@ const brandPaths = {
 const brand = name => `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${brandPaths[name]}"/></svg>`;
 // Catalogue order from apply-home-service-seo: Wi-Fi, router/AP/Mesh, LAN install, RJ45 repair, testing, devices.
 const serviceIcons = ['wifi','router','network','port','test','laptop'];
+const serviceChoices = ['wifi-coverage','router-setup','lan-install','lan-repair','network-test','device-setup'];
 const stripServiceDecor = link => link.replace(/<span class="preview-svc-icon">[\s\S]*?<\/svg><\/span>/,'').replace(/<span(?: class="preview-svc-go")? aria-hidden="true">[\s\S]*?<\/span>/,'');
 // Channel row under every enquiry form: phone, WhatsApp and the existing Telegram bot.
 function channels(html) {
@@ -83,8 +84,12 @@ for (const [file, currentHtml] of pages) {
       newHero=newHero.replace(textBlock,textBlock+callbox);
       html=html.replace(oldHero,newHero);
       let serviceIndex=0;
-      html=html.replace(/<a class="home-service-link"[\s\S]*?<\/a>/g, link => stripServiceDecor(link).replace(/(<a class="home-service-link"[^>]*>)/,`$1<span class="preview-svc-icon">${icon(serviceIcons[serviceIndex++])}</span>`).replace(/<\/a>$/,`<span class="preview-svc-go" aria-hidden="true">${icon('arrow')}</span></a>`));
-      const links=[...home.matchAll(/<a class="home-service-link"[\s\S]*?<\/a>/g)].map(x=>x[0]);
+      const identifyService = (link, index) => link.replace(/ data-service-choice="[^"]*"/g,'').replace('class="home-service-link"',`class="home-service-link" data-service-choice="${serviceChoices[index]}"`);
+      html=html.replace(/<a class="home-service-link"[\s\S]*?<\/a>/g, link => {
+        const index = serviceIndex++;
+        return identifyService(stripServiceDecor(link), index).replace(/(<a class="home-service-link"[^>]*>)/,`$1<span class="preview-svc-icon">${icon(serviceIcons[index])}</span>`).replace(/<\/a>$/,`<span class="preview-svc-go" aria-hidden="true">${icon('arrow')}</span></a>`);
+      });
+      const links=[...home.matchAll(/<a class="home-service-link"[\s\S]*?<\/a>/g)].map((x,index)=>identifyService(x[0],index));
       const figures={
         fault:`<figure class="preview-task-photo"><picture><source type="image/avif" srcset="/assets/redesign/tester-fault-640.avif 640w, /assets/redesign/tester-fault-1200.avif 1200w" sizes="(max-width: 760px) 100vw, 30vw"><img src="/assets/redesign/tester-fault-1200.webp" srcset="/assets/redesign/tester-fault-640.webp 640w, /assets/redesign/tester-fault-1200.webp 1200w" sizes="(max-width: 760px) 100vw, 30vw" width="1200" height="675" decoding="async" alt="${w[10]}"></picture><figcaption>${w[11]} Smial, <a href="https://commons.wikimedia.org/wiki/File:Network_cable_tester_IMGP1637_smial_wp.jpg" rel="noopener" target="_blank">Wikimedia Commons</a>, <a href="https://artlibre.org/licence/lal/en/" rel="noopener license" target="_blank">FAL 1.3</a></figcaption></figure>`,
         setup:`<figure class="preview-task-photo"><picture><source type="image/avif" srcset="/assets/redesign/home-network-720.avif 720w, /assets/redesign/home-network-1440.avif 1440w" sizes="(max-width: 760px) 100vw, 30vw"><img src="/assets/redesign/home-network-1440.webp" srcset="/assets/redesign/home-network-720.webp 720w, /assets/redesign/home-network-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 30vw" width="1440" height="793" decoding="async" alt="${w[9]}"></picture></figure>`

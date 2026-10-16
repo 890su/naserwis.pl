@@ -86,7 +86,7 @@ async function processDirectory(directory) {
     const file = `${directory}/${entry.name}`;
     if (entry.isDirectory()) { if (entry.name !== 'assets') await processDirectory(file); continue; }
     if (!entry.name.endsWith('.html')) continue;
-    let html = expandAssetBundles(await readFile(file, 'utf8'), previousManifest);
+    let html = expandAssetBundles((await readFile(file, 'utf8')).replace(/\r\n/g, '\n'), previousManifest);
     html = html.replace(/\s*<link\b[^>]*href="https:\/\/fonts\.(?:googleapis|gstatic)\.com[^>]*>/g, '');
     html = html.replace(/\s*<script\b[^>]*src="https:\/\/www\.googletagmanager\.com\/gtag\/js[^>]*><\/script>/g, '');
     html = html.replace(/\s*<script>\s*gtag\('js',[\s\S]*?<\/script>/g, '');

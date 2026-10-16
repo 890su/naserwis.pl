@@ -12,6 +12,11 @@ The single `gtag.js` loader uses the Google Ads destination
 `G-FVC64PTKR3`. This matches the Ads installation wizard while keeping one
 Google tag per page and preserving the denied Consent Mode defaults.
 
+With Basic Consent Mode, no Google loader is requested until analytics or
+marketing is granted. Analytics-only consent loads/configures GA4; marketing
+consent enables Ads. Each destination is configured only for its granted
+category. Support/chat consent is separate.
+
 ## Events emitted by the website
 
 - `generate_lead` and `naserwis_lead_submit` — only after a successful lead API
@@ -19,6 +24,9 @@ Google tag per page and preserving the denied Consent Mode defaults.
   added to `dataLayer`.
 - `naserwis_contact_click`, plus `phone_click`, `whatsapp_click` and
   `telegram_click` — contact-link clicks with non-PII channel and placement.
+- `email_click` — email-link click, also included in `naserwis_contact_click`
+  with `contact_method=email`; the address and link text are not sent. This is
+  an analytics event, without an additional Google Ads conversion action.
 - `chatwoot_open` — after the SDK opens the chat widget, not when a visitor merely
   requests chat consent. Consent rejection and SDK timeout never count as opens.
 - `naserwis_review_submit` — only after a successful review API response.
@@ -91,6 +99,48 @@ therefore affects the observed funnel; report its coverage, not just aggregate
 conversion rate. For GA4 breakdowns, register the required custom dimensions in
 a separately authorized analytics task. Do not mark micro-events as primary
 Ads conversions. Compare qualified leads, not chat/button opens.
+
+## Redesign measurement audit — 2026-10-16
+
+All existing lead forms and the five Ads labels are retained. There are 40
+contact forms across the 20 home/service/tool pages (including each modal),
+plus 16 separate review forms. No new lead form or conversion type was needed.
+The 12 guide pages retain their existing header/mobile contact links.
+
+Additional GA4 diagnostics, only with analytics consent:
+
+| Event | Meaning / parameters |
+| --- | --- |
+| `naserwis_service_select` | Same-origin service selection in the task panels, catalogue, header, mobile menu or content; allowlisted `target_service`, optional `service_choice` and `task_group` |
+| `naserwis_pricing_click` | A link to the localized homepage's pricing section; `placement` identifies its source |
+
+The six stable `service_choice` values are `wifi-coverage`, `router-setup`,
+`lan-install`, `lan-repair`, `network-test` and `device-setup`. `task_group` is
+`fault` or `setup`; target services use the existing `wifi_repair`, `lan_install`
+and `lan_cctv_repair` identifiers. These values distinguish cards that lead to
+the same service URL without transmitting translated text or raw URLs.
+
+Phone, WhatsApp, Telegram and chat buttons now also participate in
+`naserwis_cta_view`. Hidden/inert controls and the closed mobile menu do not
+count as visible; each control is counted at most once per document.
+Contact click event names and Ads labels remain unchanged.
+Footer email links also participate in CTA impressions with `action=email`.
+
+Placement now distinguishes `hero`, `final`, `header`, `footer`, `mobile_menu`,
+`contact_rail`, `service_rail`, `task_panel`, `services` and `pricing`, alongside
+the existing `floating`, `sticky`, `form`, `checkpoint`, `modal` and `content`.
+In form diagnostics, `hero-form` on the redesigned homepage uses
+`placement=contact_rail`; the service `final-form` moved to
+`placement=service_rail`. Form IDs and primary conversion behavior are unchanged.
+Use the eventual deployment time as the placement-reporting boundary.
+
+The new diagnostics are not Google Ads conversion actions or bidding goals.
+Event parameters are sent to GA4; using them as report breakdowns requires
+corresponding custom dimensions in the GA4 property. This source change does not
+claim to configure or verify those account settings.
+
+Verification and publication status:
+[docs/MEASUREMENT-AUDIT-2026-10-16.md](../docs/MEASUREMENT-AUDIT-2026-10-16.md).
 
 ## URL tracking
 
