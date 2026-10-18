@@ -35,3 +35,18 @@ Publication uses the existing Git integration on `main`. Previous production
 revision: `84dda9d836304730045a95662d95d2df49ce7d90`;
 Pages deployment: `b5b808dc-c7a4-492c-a90c-c56713ad3c34`.
 Production verification evidence is saved in the ignored image output folder.
+
+## Power control refinement
+
+The owner requested a Power symbol without visible text, positioned in the
+bottom-left corner. The 44px button has a localized accessible name, pressed
+state and action tooltip. Off now extinguishes the LED; on resumes red blinking.
+The preference is remembered across reloads. The owner explicitly requested ignoring reduced motion for this small LED.
+The Power toggle still extinguishes it, and offscreen/hidden pages still pause it. Images and contact/measurement source
+files are unchanged.
+
+Static checks and four existing task/contact-placement measurement scenarios
+passed. Focused verification covers all four languages at desktop/mobile widths:
+icon, bottom-left placement, dark off state, blinking on state, remembered
+preference, keyboard control and blinking under reduced motion. Raster checks confirm red light
+only in the on state. Production evidence is kept with the local image outputs.
