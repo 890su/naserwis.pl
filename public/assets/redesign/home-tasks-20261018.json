@@ -1,0 +1,56 @@
+{
+  "createdDate": "2026-10-18",
+  "tool": "Built-in image_gen",
+  "status": "Approved homepage illustrations, 18 October 2026",
+  "variants": [
+    {
+      "file": "no-internet-pl.png",
+      "source": "exec-6818ce3c-6013-40f2-a6aa-7ac6cab4ef8b.png",
+      "locale": "pl",
+      "prompt": "Use case: precise-object-edit. Edit the supplied finished Polish router-and-phone marketing illustration. Preserve every part of the scene and all Polish phone text exactly: \"Brak internetu\". Change only the router indicator lights: remove the green glow from the leftmost power indicator, making it dark like the other unlit indicators, and illuminate the existing RIGHTMOST indicator, the one directly above the small Internet/globe symbol, in a clearly RED color. The red indicator must be a small realistic hardware LED with a subtle localized glow, not a giant painted dot or decorative badge. All other indicator lenses stay dark. No green light remains. This is an unbranded illustrative fault-status scene, not a manufacturer operating manual. Keep exactly four antennas, housing, shadows, desk grain, phone, warning triangle, screen lettering, camera perspective, crop and 1672x941 landscape dimensions unchanged. Do not add a new LED or move any existing hole or symbol. Deliver one complete edited still image; no collage."
+    },
+    {
+      "file": "no-internet-ru.png",
+      "source": "exec-9c167698-c519-469d-8441-95ccffe5ce54.png",
+      "locale": "ru",
+      "prompt": "Use case: text-localization. The supplied image is the edit target. Change ONLY the text inside the smartphone screen to Русский: exactly \"Нет\" on the first line and \"интернета\" on the second line, together \"Нет интернета\". Keep the identical bold dark sans-serif typography, perspective and centered composition, adjusting only enough to fit the letters. Keep all other details unchanged: especially the small RED Internet LED above the rightmost globe symbol, the dark power LED and other dark indicators, exactly four antennas, router housing and symbols, phone, amber warning triangle, shadows, background, wood grain, 1672x941 framing and photographic finish. No additional text, logos, badges, object changes, extra LEDs or green light. Deliver one complete localized image."
+    },
+    {
+      "file": "no-internet-uk.png",
+      "source": "exec-90c459bb-a88a-49ef-95e5-b8c0dc6fac69.png",
+      "locale": "uk",
+      "prompt": "Use case: text-localization. The supplied image is the edit target. Change ONLY the text inside the smartphone screen to Українська: exactly \"Немає\" on the first line and \"інтернету\" on the second line, together \"Немає інтернету\". Keep the identical bold dark sans-serif typography, perspective and centered composition, adjusting only enough to fit the letters. Keep all other details unchanged: especially the small RED Internet LED above the rightmost globe symbol, the dark power LED and other dark indicators, exactly four antennas, router housing and symbols, phone, amber warning triangle, shadows, background, wood grain, 1672x941 framing and photographic finish. No additional text, logos, badges, object changes, extra LEDs or green light. Deliver one complete localized image."
+    },
+    {
+      "file": "no-internet-en.png",
+      "source": "exec-ba51f53f-7c4c-4707-9646-04ab3ecb201d.png",
+      "locale": "en",
+      "prompt": "Use case: text-localization. The supplied image is the edit target. Change ONLY the text inside the smartphone screen to English: exactly \"No\" on the first line and \"internet\" on the second line, together \"No internet\". Keep the identical bold dark sans-serif typography, perspective and centered composition, adjusting only enough to fit the letters. Keep all other details unchanged: especially the small RED Internet LED above the rightmost globe symbol, the dark power LED and other dark indicators, exactly four antennas, router housing and symbols, phone, amber warning triangle, shadows, background, wood grain, 1672x941 framing and photographic finish. No additional text, logos, badges, object changes, extra LEDs or green light. Deliver one complete localized image."
+    },
+    {
+      "file": "no-internet-led-off.png",
+      "source": "exec-22096527-859e-4003-b9ce-e4b1db2514d8.png",
+      "locale": "off",
+      "prompt": "Use case: precise-object-edit. Edit the supplied Polish router and smartphone image. Change ONLY the existing illuminated RED Internet LED at the far right of the router front: turn it completely OFF so it looks exactly like the other dark indicator lenses. Remove its tiny red halo too. Preserve every other pixel and detail, including all four antennas, housing, symbols, camera angle, desk grain, background, smartphone, support, amber warning triangle and the exact phone text \"Brak internetu\". This is the off-state animation frame of the same photograph, so absolutely no reframing, geometry change, lighting change, color grading or typography change. Keep the identical 1672x941 landscape dimensions. Return one full image."
+    }
+  ],
+  "companion": {
+    "file": "rj45-installation.png",
+    "prompt": "Use case: compositing / product-mockup.\nAsset type: photorealistic illustration for the installation-and-connection task card on a residential home-network service website, one 16:9 landscape image.\nInput image 1 is the edit target: the real Schneider Sedna double RJ45 wall socket product photograph. Input image 2 is ONLY a lighting, realistic-material and neutral pale-room style reference, not equipment to reproduce.\nPrimary request: transform the isolated product photo into a believable close-up in an ordinary modern home: this double RJ45 socket correctly installed on a pale neutral wall WITH its matching simple white outer decorative frame, no exposed metal mounting frame. A single human hand is connecting a blue Ethernet patch cable to one of the two black RJ45 sockets. Show a physically correct transparent RJ45 plug with normal eight contacts, a blue strain-relief boot, correct alignment and latch, just entering one socket. The second socket remains empty and clearly visible. Cable is one continuous cable and falls naturally down and out of frame. Keep the genuine two-port geometry from image 1.\nComposition: close crop, socket and connector large, immediately understandable at 400px image width; slight three-quarter angle, socket on the left half and hand entering from the right, natural home daylight. Crop arm naturally out of frame, ordinary neat hand with anatomically correct fingers, no face or person. White wall, very subtle warm neutral background; believable understated service illustration with real plastic, skin and cable textures.\nConstraints: no router, phone, desktop PC, rack, tester, electrical mains outlets, tools, exposed wires or damaged insulation. No logos, labels, legible text, captions, watermark, collage or website interface. No imaginary cable junctions, no branched plugs, no impossible socket connections. Illustrative scene, not a claimed documentary client visit. One complete landscape photo.",
+    "reference": "reference-sedna-rj45.jpg",
+    "referenceSource": "https://www.se.com/pl/pl/product/SDD111462/"
+  },
+  "production": {
+    "prefix": "/assets/redesign/",
+    "version": "20261018",
+    "widths": [
+      640,
+      1200
+    ],
+    "formats": [
+      "avif",
+      "webp"
+    ],
+    "animation": "Generated LED-off frame, clipped to the Internet LED; CSS opacity only"
+  }
+}

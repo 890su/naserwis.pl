@@ -40,6 +40,17 @@ const words = {
  uk: ['Зателефонувати майстру','Описати проблему','Щось не працює?','Потрібно налаштувати або встановити','Швидкий зв’язок','Орієнтовні ціни','Виїзд + перша година','Наступна година','Зателефонуйте — обговоримо деталі','Роутер і ноутбук — ілюстрація домашньої мережі','Тестер мережевого кабелю підключений до обох кінців кабелю; індикатор пари 3–6 не світиться — пошкоджена пара','Фото:','Ви платите за погоджений обсяг','Суму підтверджуємо до початку робіт.'],
  en: ['Call a technician','Describe the problem','Something not working?','Need setup or installation?','Quick contact','Indicative prices','Visit + first hour','Additional hour','Call to discuss the details','Router and laptop — home network illustration','Network cable tester connected to both ends of a cable; the 3–6 pair LED is off, indicating a damaged pair','Photo:','You pay for the agreed scope','We confirm the amount before work starts.']
 };
+const taskPhotos = {
+ pl: ['Podłączanie kabla Ethernet do gniazda RJ45 — ilustracja','Router z czerwoną kontrolką Internetu i telefon z napisem „Brak internetu” — ilustracja','Wstrzymaj miganie','Włącz miganie'],
+ ru: ['Подключение сетевого кабеля к розетке RJ45 — иллюстрация','Роутер с красным индикатором интернета и телефон с надписью «Нет интернета» — иллюстрация','Остановить мигание','Включить мигание'],
+ uk: ['Підключення мережевого кабелю до розетки RJ45 — ілюстрація','Роутер із червоним індикатором інтернету й телефон із написом «Немає інтернету» — ілюстрація','Зупинити блимання','Увімкнути блимання'],
+ en: ['Connecting an Ethernet cable to an RJ45 wall socket — illustration','Router with a red Internet indicator and a phone saying “No internet” — illustration','Pause blinking','Start blinking']
+};
+const taskImage = (name, alt) => {
+ const path = '/assets/redesign/'+name+'-20261018-';
+ const sizes = '(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw';
+ return `<picture><source type="image/avif" srcset="${path}640.avif 640w, ${path}1200.avif 1200w" sizes="${sizes}"><img src="${path}1200.webp" srcset="${path}640.webp 640w, ${path}1200.webp 1200w" sizes="${sizes}" width="1200" height="675" decoding="async" alt="${alt}"></picture>`;
+};
 async function walk(dir) { const list=[]; for (const item of await readdir(dir,{withFileTypes:true})) { const p=join(dir,item.name); if(item.isDirectory()) list.push(...await walk(p)); else if(item.name.endsWith('.html')) list.push(p); } return list; }
 export async function applyRedesign() {
 let transformed=0;
@@ -52,6 +63,9 @@ for (const [file, currentHtml] of pages) {
   const w = words[lang] || words.pl;
   const prefix = lang === 'pl' ? '' : `${lang}/`;
   const isHome = path.replaceAll('\\','/') === `${prefix}index.html`;
+  // A separate source keeps this image-only behavior out of contact/measurement code.
+  html=html.replace(/\s*<script\b[^>]*src="\/home-photo\.js[^"]*"[^>]*><\/script>/g,'');
+  if (isHome) html=html.replace('</body>','<script defer src="/home-photo.js"></script>\n</body>');
   const isService = /(?:^|[\\/])(?:naprawa-wifi|naprawa-sieci|montaz-sieci)[\\/]index\.html$/.test(path);
   html=html.replace(/\s*<link\b[^>]*href="\/redesign\.css[^\"]*"[^>]*>/g,'');
   html=html.replace('</head>', '<link rel="stylesheet" href="/redesign.css?v=20261015">\n</head>');
@@ -91,8 +105,8 @@ for (const [file, currentHtml] of pages) {
       });
       const links=[...home.matchAll(/<a class="home-service-link"[\s\S]*?<\/a>/g)].map((x,index)=>identifyService(x[0],index));
       const figures={
-        fault:`<figure class="preview-task-photo"><picture><source type="image/avif" srcset="/assets/redesign/tester-fault-640.avif 640w, /assets/redesign/tester-fault-1200.avif 1200w" sizes="(max-width: 760px) 100vw, 30vw"><img src="/assets/redesign/tester-fault-1200.webp" srcset="/assets/redesign/tester-fault-640.webp 640w, /assets/redesign/tester-fault-1200.webp 1200w" sizes="(max-width: 760px) 100vw, 30vw" width="1200" height="675" decoding="async" alt="${w[10]}"></picture><figcaption>${w[11]} Smial, <a href="https://commons.wikimedia.org/wiki/File:Network_cable_tester_IMGP1637_smial_wp.jpg" rel="noopener" target="_blank">Wikimedia Commons</a>, <a href="https://artlibre.org/licence/lal/en/" rel="noopener license" target="_blank">FAL 1.3</a></figcaption></figure>`,
-        setup:`<figure class="preview-task-photo"><picture><source type="image/avif" srcset="/assets/redesign/home-network-720.avif 720w, /assets/redesign/home-network-1440.avif 1440w" sizes="(max-width: 760px) 100vw, 30vw"><img src="/assets/redesign/home-network-1440.webp" srcset="/assets/redesign/home-network-720.webp 720w, /assets/redesign/home-network-1440.webp 1440w" sizes="(max-width: 760px) 100vw, 30vw" width="1440" height="793" decoding="async" alt="${w[9]}"></picture></figure>`
+        fault:`<figure class="preview-task-photo" data-fault-photo>${taskImage('no-internet-'+lang,taskPhotos[lang][1])}<img class="preview-led-off" src="/assets/redesign/no-internet-led-off-20261018-1200.webp" srcset="/assets/redesign/no-internet-led-off-20261018-640.webp 640w, /assets/redesign/no-internet-led-off-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" alt="" aria-hidden="true" decoding="async"><button type="button" class="preview-photo-motion" data-photo-motion data-pause="${taskPhotos[lang][2]}" data-play="${taskPhotos[lang][3]}" hidden>${taskPhotos[lang][2]}</button></figure>`,
+        setup:`<figure class="preview-task-photo">${taskImage('rj45-installation',taskPhotos[lang][0])}</figure>`
       };
       const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><span class="preview-task-icon">${icon(type==='fault'?'wrench':'setup')}</span><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}</div></article>`;
       const overview=`<section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair">${task(w[2],[0,3,4],'fault')}${task(w[3],[1,2,5],'setup')}</div><aside id="preview-contact" class="preview-contact-rail">${heroForm}</aside></div></section>`;
