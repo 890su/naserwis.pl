@@ -69,18 +69,25 @@ async function update(directory) {
             `;
       return header.replace(/<div class="(?:nav-center|nav-right) desktop-nav">[\s\S]*?(?=<!-- Mobile Actions -->)/, navigation);
     });
-    // The burger menu mirrors the desktop navigation: same items, order and
-    // active state, then language and a call button styled like other actions.
+    // Keep languages in the mobile header and progressively disclose services.
     if (html.includes('id="mobile-menu-overlay"')) {
       const header = html.match(/<header id="header"[\s\S]*?<\/header>/)[0];
       const overlay = balancedDiv(html, '<div class="mobile-menu-overlay" id="mobile-menu-overlay">');
       const servicesLabel = header.match(/<span class="lang-name services-label">([^<]+)<\/span>/)?.[1];
       const serviceLinks = [...header.matchAll(/onclick="window\.location\.href='([^']+)'"[\s\S]*?<span class="lang-name">([^<]+)<\/span>/g)];
-      const languages = balancedDiv(overlay, '<div class="mobile-lang-options">');
-      const languageLabel = overlay.match(/<span class="mobile-nav-label">([^<]+)<\/span>\s*<div class="mobile-lang-options">/)?.[1];
+      const languages = balancedDiv(header, '<div class="mobile-lang-options"') || balancedDiv(overlay, '<div class="mobile-lang-options"');
+      const languageLabel = { pl: 'Język', ru: 'Язык', uk: 'Мова', en: 'Language' }[locale];
       const phoneIcon = header.match(/<a\b[^>]*class="phone"[\s\S]*?(<svg[\s\S]*?<\/svg>)/)?.[1];
       const navLabel = header.match(/<nav\b[^>]*aria-label="([^"]+)"/)?.[1];
       if (!servicesLabel || serviceLinks.length !== 3 || !languages || !languageLabel || !phoneIcon) throw new Error(`Incomplete mobile menu: ${file}`);
+      const headerLanguages = languages
+        .replace(/<div class="mobile-lang-options"[^>]*>/, `<div class="mobile-lang-options" role="group" aria-label="${languageLabel}">`)
+        .replace(/<a\b[^>]*>/g, tag => {
+          tag = tag.replace(/ aria-current="[^"]*"/g, '');
+          return /class="[^"]*\bactive\b/.test(tag) ? tag.replace('>', ' aria-current="page">') : tag;
+        });
+      const updatedHeader = header.replace(/(<div class="mobile-actions">)\s*(?:<a\b[^>]*class="btn-mobile-call"[\s\S]*?<\/a>|<div class="mobile-lang-options"[\s\S]*?<\/div>)/, `$1\n                ${headerLanguages}`);
+      html = html.replace(header, updatedHeader);
       const current = href => canonical === `https://naserwis.pl${href}` ? ' aria-current="page"' : '';
       // Contact channels reuse the page's localized launcher: same links, labels and brand icons.
       const fabMenu = html.match(/<div class="fab-menu" id="contact-menu">[\s\S]*?<\/div>/)?.[0] || '';
@@ -100,10 +107,12 @@ async function update(directory) {
       const menu = `<div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <nav class="mobile-nav" aria-label="${navLabel}">
             <a class="mobile-nav-link" href="${prefix}"${currentHome}>${home}</a>
-            <div class="mobile-nav-group">
-                <span class="mobile-nav-label">${servicesLabel}</span>
+            <details class="mobile-nav-group">
+                <summary class="mobile-services-toggle"><span>${servicesLabel}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+                <div class="mobile-service-links">
                 ${serviceLinks.map(([, href, name]) => `<a class="mobile-nav-link mobile-nav-sub" href="${href}"${current(href)}>${serviceIcon(href)}${name.trim()}</a>`).join('\n                ')}
-            </div>
+                </div>
+            </details>
             <a class="mobile-nav-link" href="${prefix}#services">${prices}</a>
             <a class="mobile-nav-link guides-nav-link" href="${prefix}poradnik/"${currentGuide}>${guides}</a>
             <a class="mobile-nav-link" href="${prefix}#contact">${contact}</a>
@@ -113,10 +122,6 @@ async function update(directory) {
             <a href="tel:+48453327678" class="btn btn-primary mobile-call-btn">${phoneIcon}<span>+48 453 327 678</span></a>
             ${channelRows}
         </div>
-        <div class="mobile-nav-block mobile-nav-language">
-            <span class="mobile-nav-label">${languageLabel}</span>
-            ${languages}
-        </div>
     </div>`;
       html = html.replace(overlay, menu);
     }
@@ -125,4 +130,4 @@ async function update(directory) {
 }
 
 await update('public');
-console.log('Shared headers: centered Home / Services / Prices / Guides / Contact; phone and language on the right.');
+console.log('Shared headers: desktop navigation preserved; mobile header languages and collapsible services.');

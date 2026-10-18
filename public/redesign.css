@@ -328,18 +328,26 @@ body[data-redesign] .interactive-stars{justify-content:flex-start;gap:4px;margin
 /* Burger menu mirrors the desktop navigation and shares its typography and actions. */
 body[data-redesign] .mobile-menu-overlay{width:min(86%,380px);padding-top:76px;box-shadow:none;border-left:1px solid var(--rd-line);font-family:Manrope,Arial,sans-serif}
 body[data-redesign] .mobile-nav{display:flex;flex-direction:column;padding:8px 20px 12px;border-bottom:1px solid var(--rd-line)}
-body[data-redesign] .mobile-nav-link{display:flex;align-items:center;min-height:48px;padding:10px 0;border-radius:0;font-size:17px;font-weight:700;color:var(--rd-ink);background:none;border-bottom:1px solid var(--rd-line)}
+body[data-redesign] .mobile-nav-link,body[data-redesign] .mobile-services-toggle{display:flex;align-items:center;min-height:48px;padding:10px 0;border-radius:0;font-size:17px;font-weight:700;color:var(--rd-ink);background:none;border-bottom:1px solid var(--rd-line)}
 body[data-redesign] .mobile-nav>.mobile-nav-link:last-child{border-bottom:0}
 body[data-redesign] .mobile-nav-link:hover{background:none;color:var(--rd-blue)}
 body[data-redesign] .mobile-nav-link[aria-current]{color:var(--rd-blue);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
-body[data-redesign] .mobile-nav-group{padding:10px 0 4px;border-bottom:1px solid var(--rd-line)}
+body[data-redesign] .mobile-nav-group{padding:0;border-bottom:1px solid var(--rd-line)}
+body[data-redesign] .mobile-services-toggle{justify-content:space-between;gap:12px;border:0;cursor:pointer;list-style:none;line-height:inherit}
+body[data-redesign] .mobile-services-toggle::-webkit-details-marker{display:none}
+body[data-redesign] .mobile-services-toggle:hover{color:var(--rd-blue)}
+body[data-redesign] .mobile-services-toggle svg{width:18px;height:18px;flex-shrink:0}
+body[data-redesign] .mobile-nav-group[open] .mobile-services-toggle svg{transform:rotate(180deg)}
+body[data-redesign] .mobile-service-links{padding-bottom:8px}
 body[data-redesign] .mobile-nav-sub{min-height:44px;padding-left:14px;font-size:16px;font-weight:600;border-bottom:0}
 body[data-redesign] .mobile-nav-label{font-size:13px;font-weight:700;letter-spacing:0;text-transform:none;color:var(--rd-muted);margin:0 0 4px}
 body[data-redesign] .mobile-nav-block{padding:16px 20px;border-bottom:1px solid var(--rd-line)}
-body[data-redesign] .mobile-lang-options{gap:8px}
-body[data-redesign] .mobile-lang-btn{min-width:52px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 12px;border:1px solid #c4ccd5;border-radius:6px;background:#fff;color:var(--rd-ink);font-size:15px;font-weight:700}
-body[data-redesign] .mobile-lang-btn:hover{background:#f3f5f7}
-body[data-redesign] .mobile-lang-btn.active{background:var(--rd-ink);border-color:var(--rd-ink);color:#fff}
+body[data-redesign] .mobile-actions{gap:8px}
+body[data-redesign] .mobile-lang-options{gap:0;flex-wrap:nowrap}
+body[data-redesign] .mobile-lang-btn{min-width:32px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px;border:0;border-radius:0;background:none;color:var(--rd-muted);font-size:13px;font-weight:500;line-height:1.4;text-decoration:none;box-shadow:none}
+body[data-redesign] .mobile-lang-btn:hover{background:none;color:var(--rd-blue);transform:none;box-shadow:none}
+body[data-redesign] .mobile-lang-btn.active{background:none;border:0;color:var(--rd-blue);font-weight:800;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+@media(max-width:360px){body[data-redesign] .logo{font-size:22px}body[data-redesign] .mobile-lang-btn{min-width:30px;padding:0 4px}body[data-redesign] .mobile-actions{gap:4px}}
 body[data-redesign] .mobile-nav-call{border-bottom:0}
 body[data-redesign] .mobile-call-btn{display:flex;width:100%;min-height:52px;gap:10px;font-size:16px;box-shadow:none;color:#fff;transform:none}
 body[data-redesign] .mobile-call-btn svg{width:20px;height:20px;flex-shrink:0}
@@ -348,7 +356,7 @@ body[data-redesign] .mobile-call-btn:hover{color:#fff;transform:none;box-shadow:
 /* The burger nav is a <nav>: neutralise the global header nav flex layout. */
 body[data-redesign] .mobile-nav{align-items:stretch;justify-content:flex-start;text-align:left;max-width:none;margin:0;min-height:0;position:static}
 body[data-redesign] .mobile-nav-link{width:100%;justify-content:flex-start;text-align:left}
-body[data-redesign] .mobile-nav-group{display:flex;flex-direction:column}
+body[data-redesign] .mobile-nav-group{display:block}
 
 /* Pop-up enquiry form in the shared palette. */
 body[data-redesign] .quick-contact-dialog{border:0;border-radius:8px;box-shadow:0 24px 60px rgba(24,33,44,.35);font-family:Manrope,Arial,sans-serif}

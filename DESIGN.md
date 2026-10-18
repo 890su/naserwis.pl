@@ -117,6 +117,8 @@ components:
 
 ## Variant B — "Pomoc według zadania" (16 October 2026)
 
+Mobile navigation refinement (18 October 2026): below 1200px, the header shows PL / RU / UA / EN as quiet text links in place of the top call button. Links have no border or filled background; the active language uses bold blue text and a 2px underline. Preserve each page's localized destination and guide reading-level behavior. The burger menu has no language block. Services uses a native, initially closed details/summary disclosure, with the same 17px bold type as the other main sections and a stroke chevron. Keep the three service links inside it; contact actions stay below the navigation, with vertical scrolling available on short screens.
+
 The owner chose variant B from the two research-based mocks (`outputs/redesign-2026-10-15/v4-variants/b-zadanie.html`) and asked to rework the published design into it without changing content or SEO. Where this section and older paragraphs below disagree, this section wins.
 
 - **Homepage first screen.** The inherited H1 and subtitle sit left in a compact band; a call box on the right carries the large `tel:` number, the inherited service-area line and the call / describe-problem actions. There is no full-bleed hero photo; the H1 is the first content paint.
