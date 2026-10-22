@@ -87,7 +87,7 @@ async function bundle(tags, type, homepage = false) {
     if (homepage) {
       const [result] = await new PurgeCSS().purge({
         content: homeContent, css: [{ raw: code }],
-        dynamicAttributes: ['aria-hidden', 'aria-expanded', 'aria-modal', 'aria-invalid', 'data-suppressed', 'data-search-intent'],
+        dynamicAttributes: ['aria-hidden', 'aria-expanded', 'aria-modal', 'aria-invalid', 'data-suppressed', 'data-search-intent', 'href'],
         // Runtime IDs, accessible expanded/focus states and consent/modal UI
         // must survive even when they are absent from the initial visible DOM.
         safelist: {
