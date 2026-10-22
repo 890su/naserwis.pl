@@ -20,7 +20,8 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('h1')).toHaveCount(1);
       await expect(page.locator('link[rel=canonical]')).toHaveCount(1);
       if (!service) {
-        await expect(page.locator('.hero-text a[href="#contact"]')).toHaveCount(0);
+        await expect(page.locator('.hero-text a[href="#contact"]')).toHaveCount(1);
+        await expect(page.locator('.hero-text a[href="#contact"]')).toHaveAttribute('data-contact-modal', '');
         await expect(page.locator('.hero-text a[href="#services"]')).toHaveCount(0);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
@@ -51,7 +52,7 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.fab-toggle')).toBeFocused();
       await expect(page.locator('.fab-toggle')).toHaveCSS('border-radius', '50%');
       await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-expanded', 'false');
-      await page.locator('.service-content, .trust-signals').first().evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
+      await page.locator('.service-content, .home-service-catalog').first().evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
       await expect(page.locator('.fab-toggle')).toBeVisible();
       await page.locator('.fab-toggle').click();
       await expect(page.locator('.fab-menu')).toBeVisible();

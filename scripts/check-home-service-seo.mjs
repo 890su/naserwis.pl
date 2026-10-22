@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
+import { copy } from './home-service-copy.mjs';
 
 const decode = value => value.replaceAll('&amp;', '&').replaceAll('&quot;', '"').replaceAll('&lt;', '<').replaceAll('&gt;', '>');
 const routes = ['', 'naprawa-wifi/', 'naprawa-sieci/', 'montaz-sieci/'];
@@ -38,6 +39,14 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
       await access(`public${path.replace(/\/$/, '')}/index.html`);
     }
     if (!route) {
+      const home = copy[locale].home;
+      assert.ok(html.includes(`<title>${home.title}</title>`), `${file}: current homepage title`);
+      for (const [attribute, key, value] of [
+        ['name', 'title', home.title], ['name', 'description', home.description],
+        ['property', 'og:title', home.title], ['property', 'og:description', home.description],
+        ['property', 'twitter:title', home.title], ['property', 'twitter:description', home.description]
+      ]) assert.ok(html.includes(`<meta ${attribute}="${key}" content="${value}">`), `${file}: consistent ${key}`);
+      assert.ok(!html.includes('class="trust-signals"'), `${file}: removed generic trust section`);
       const catalog = html.match(/<div class="home-services-grid">([\s\S]*?)<\/div>\s*<p class="home-secondary-scope">/)?.[1];
       assert.ok(catalog, file);
       assert.equal((catalog.match(/class="home-service-link"/g) || []).length, 6, file);

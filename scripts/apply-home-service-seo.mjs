@@ -70,8 +70,8 @@ for (const [locale, c] of Object.entries(copy)) {
     html = html.replace(/<p class="hero-(?:large-)?subtitle"([^>]*)>[\s\S]*?<\/p>/, (_m, attrs) => `<p class="${type === 'home' ? 'hero-subtitle' : 'hero-large-subtitle'}"${attrs}>${s.intro}</p>`);
     html = html.replace(/(<div class="hero-cta-wrapper">\s*<a[^>]*>)[\s\S]*?(<\/a>)/, `$1${c.request}$2`);
     if (type === 'home') {
-      let index = 0;
-      html = html.replace(/(<span class="trust-label">)[\s\S]*?(<\/span>)/g, (_m, before, after) => `${before}${c.trust[index++]}${after}`);
+      if (html.includes('class="trust-signals"')) html = replaceSection(html, 'trust-signals', '');
+      html = html.replace(/\s*<!-- Trust Signals -->/g, '');
       html = replaceSection(html, 'comprehensive-support', catalog(c, prefix));
       html = replaceSection(html, 'problems', `<section class="problems" aria-labelledby="problems-title"><div class="container"><h2 id="problems-title" class="section-title">${c.problemsTitle}</h2><div class="problems-grid">${c.problems.map(([key, title, text]) => `<article class="problem-card"><h3>${title}</h3><p>${text}</p><a href="/${prefix}${routes[key]}">${c[key].h1} <span aria-hidden="true">→</span></a></article>`).join('\n')}</div></div></section>`);
       html = replaceSection(html, 'services', `<section class="services home-billing" id="services" aria-labelledby="services-title"><div class="container"><h2 id="services-title" class="section-title">${c.billing}</h2>${billing(c)}<a class="home-catalog-back" href="#available-services">${c.catalog} <span aria-hidden="true">↑</span></a></div></section>`);

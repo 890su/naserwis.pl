@@ -134,6 +134,8 @@ The owner chose variant B from the two research-based mocks (`outputs/redesign-2
 
 ## Navigation and utility page refinement
 
+Homepage copy refinement (22 October 2026): homepage title and search/social descriptions omit "home/domestic" in all four locales; keep the existing visible heading, introduction and service-specific scope text. The generic four-item trust strip (Experience / Jobs / Contact / Clear pricing) is removed, so the visit process is followed directly by the service catalogue. LocalBusiness descriptions mirror the revised localized homepage descriptions; canonical/hreflang and service-page titles/descriptions remain intact.
+
 Privacy notice refinement (22 October 2026): use Manrope, graphite text, a quiet `#f3f5f7` surface, 8px panel corners and 6px buttons. The initial notice has exactly two vertically stacked choices: blue "Accept all" first and white "Necessary only" second, with the same source and keyboard order. Remove the initial settings button; preserve privacy/cookie links and the footer's category settings dialog. On mobile, copy appears above two full-width buttons; on desktop, copy and the stacked actions sit alongside each other. Consent storage, defaults and category behavior remain unchanged.
 
 The desktop menu uses a single 28px gap with no extra item margins. Weather and internet diagnostics are discovered through the four localized Poradnik indexes; their existing canonical URLs remain unchanged and Poradnik is active on those pages.
