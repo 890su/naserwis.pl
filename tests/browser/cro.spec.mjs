@@ -73,7 +73,7 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
   }
 }
 
-test('consent is a centred grey split card below the usable contact button; settings stay modal', async ({ page }) => {
+test('consent uses two stacked site-style choices; footer settings stay modal', async ({ page }) => {
   await isolate(page); await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/');
   const panel = page.locator('.consent-panel');
@@ -82,9 +82,13 @@ test('consent is a centred grey split card below the usable contact button; sett
   const fab = page.locator('.fab-toggle');
   await expect(panel).toHaveAttribute('role', 'region');
   expect(await page.evaluate(() => getComputedStyle(document.body).overflow)).not.toBe('hidden');
-  await expect(panel).toHaveCSS('background-color', 'rgb(225, 231, 235)');
+  await expect(panel).toHaveCSS('background-color', 'rgb(243, 245, 247)');
   await expect(page.locator('.consent-close')).toBeHidden();
-  await expect(visibleConsentButtons).toHaveCount(3);
+  await expect(visibleConsentButtons).toHaveCount(2);
+  await expect(visibleConsentButtons.first()).toHaveClass(/consent-accept/);
+  await expect(page.locator('.consent-accept')).toHaveCSS('background-color', 'rgb(29, 91, 208)');
+  await expect(page.locator('.consent-reject')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(page.locator('.consent-customise')).toHaveCount(0);
   const layout = await page.evaluate(() => {
     const panel = document.querySelector('.consent-panel').getBoundingClientRect();
     const heading = document.querySelector('.consent-heading').getBoundingClientRect();
@@ -99,9 +103,9 @@ test('consent is a centred grey split card below the usable contact button; sett
   expect(Math.abs(layout.panel.x - (layout.viewport - layout.panel.width) / 2)).toBeLessThan(2);
   expect(layout.panel.width).toBeLessThan(layout.viewport);
   expect(layout.heading.x).toBeLessThan(layout.panel.x + layout.panel.width / 2);
-  expect(layout.actions.x).toBeGreaterThanOrEqual(layout.panel.x + layout.panel.width * .45);
-  expect(Math.max(...layout.buttons.map(button => button.y)) - Math.min(...layout.buttons.map(button => button.y))).toBeLessThan(2);
-  expect(layout.buttons.every(button => button.background !== 'rgba(0, 0, 0, 0)' && button.border === '2px')).toBe(true);
+  expect(Math.abs(layout.actions.x - layout.heading.x)).toBeLessThan(1);
+  expect(layout.buttons[1].y).toBeGreaterThan(layout.buttons[0].bottom);
+  expect(layout.buttons.every(button => button.background !== 'rgba(0, 0, 0, 0)' && button.border === '1px')).toBe(true);
   await expect(fab).toBeVisible();
   await expect.poll(async () => {
     const fabBox = await fab.boundingBox();
@@ -112,7 +116,8 @@ test('consent is a centred grey split card below the usable contact button; sett
   await expect(page.locator('.fab-menu')).toBeVisible();
   await page.keyboard.press('Escape');
   await expect(page.locator('script[data-chatwoot-loader]')).toHaveCount(0);
-  await page.locator('.consent-customise').click();
+  await page.locator('.consent-reject').click();
+  await page.locator('[data-consent-settings]').click();
   await expect(panel).toHaveAttribute('aria-modal', 'true');
   await expect(page.locator('.consent-close')).toBeVisible();
   await expect(fab).toBeHidden();
@@ -278,7 +283,7 @@ test('chat consent grants open once after ready; reject never counts as chat ope
   expect((await events(page, 'chatwoot_open')).length).toBe(0);
   await page.locator('.consent-reject').click();
   await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
-  await page.locator('.consent-customise').click();
+  await page.evaluate(() => window.NASERWIS_CONSENT.open());
   await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'dialog');
   await page.locator('label').filter({ has: page.locator('input[name=support]') }).click();
   await expect(page.locator('input[name=support]')).toBeChecked();

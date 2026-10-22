@@ -222,16 +222,14 @@
                     ${t.changeAnytime}
                 </p>
                 <div class="consent-actions">
-                    <button type="button" class="consent-button consent-button-muted consent-customise">${t.settings}</button>
-                    <button type="button" class="consent-button consent-button-outline consent-reject">${t.reject}</button>
                     <button type="button" class="consent-button consent-button-primary consent-accept">${t.accept}</button>
+                    <button type="button" class="consent-button consent-button-outline consent-reject">${t.reject}</button>
                     <button type="button" class="consent-button consent-button-primary consent-save" hidden>${t.save}</button>
                 </div>
             </section>`;
         document.body.appendChild(overlay);
 
         const options = overlay.querySelector('.consent-options');
-        const customise = overlay.querySelector('.consent-customise');
         const save = overlay.querySelector('.consent-save');
         const closeButton = overlay.querySelector('.consent-close');
         const panel = overlay.querySelector('.consent-panel');
@@ -281,7 +279,6 @@
             previouslyFocused = document.activeElement;
             setChecks(readConsent());
             options.hidden = !customiseImmediately;
-            customise.hidden = Boolean(customiseImmediately);
             save.hidden = !customiseImmediately;
             overlay.querySelector('.consent-accept').hidden = Boolean(customiseImmediately);
             overlay.classList.toggle('consent-overlay-settings', Boolean(customiseImmediately));
@@ -329,15 +326,6 @@
         overlay.querySelector('.consent-reject').addEventListener('click', function () {
             applyConsent({ analytics: false, marketing: false, support: false }, true);
             close();
-        });
-        customise.addEventListener('click', function () {
-            options.hidden = false;
-            customise.hidden = true;
-            save.hidden = false;
-            overlay.querySelector('.consent-accept').hidden = true;
-            overlay.classList.add('consent-overlay-settings');
-            modalMode(true);
-            notifyVisibility();
         });
         save.addEventListener('click', function () {
             applyConsent({

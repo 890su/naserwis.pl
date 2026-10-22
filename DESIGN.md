@@ -11,7 +11,7 @@ colors:
   quiet-surface: "#f3f5f7"
   line: "#dde2e8"
   task-panel-line: "#c4ccd5"
-  contact-surface: "#f3f5f7"
+  contact-surface: "#e8edf2"
   field-line: "#c4ccd5"
   outline-hover: "#e8effc"
   intent-active: "#e8effc"
@@ -121,8 +121,8 @@ Mobile navigation refinement (18 October 2026): below 1200px, the header shows P
 
 The owner chose variant B from the two research-based mocks (`outputs/redesign-2026-10-15/v4-variants/b-zadanie.html`) and asked to rework the published design into it without changing content or SEO. Where this section and older paragraphs below disagree, this section wins.
 
-- **Homepage first screen.** The inherited H1 and subtitle sit left in a compact band; a call box on the right carries the large `tel:` number, the inherited service-area line and the call / describe-problem actions. There is no full-bleed hero photo; the H1 is the first content paint.
-- **Task panels.** "Coś nie działa?" and "Chcę skonfigurować lub zamontować" are white panels with a 1px `#c4ccd5` border and an equipment photo on top (16:9), then heading and divider-separated links copied from the localized service catalogue. The quick-contact form sits in a third `#f3f5f7` column.
+- **Homepage first screen (22 October 2026).** Reuse the service introduction via `hero-service-style`: graphite background, white H1, muted light description, an underlined describe-problem link opening the existing enquiry modal, and a phone action with the blue icon, large number and localized call label. Retain the homepage's H1, description and service-area microdata. Keep the fixed first-visit language suggestion clear of the heading without layout shifts.
+- **Task panels.** "Coś nie działa?" and "Chcę skonfigurować lub zamontować" are white panels with a 1px `#c4ccd5` border and an equipment photo on top (16:9), then heading and divider-separated links copied from the localized service catalogue. Heading icons were removed on 22 October; icons remain in each service list row. The quick-contact form sits in a slightly darker third `#e8edf2` column with white fields. Other content below the introduction stays unchanged.
 - **Conditions strip.** Directly below: "you pay for the agreed scope" plus the three published rates with their exact localized labels from the price table, and a link to the full pricing conditions. The rates are read from the page, never typed.
 - **Palette and shape.** Graphite ink `#18212c`, body `#485462`, one action blue `#1d5bd0` (hover `#174bb0`), neutral surface `#f3f5f7`, lines `#dde2e8`. Buttons 6px, panels and cards 8px. No mint/wash task tints, no decorative accent bars above section titles, no button lift on hover.
 - **Rhythm.** Steps use outlined ink numerals; trust tiles, reviews and why-us items are flat with a 2px ink top rule. Final call and footer are graphite; district tags are outlined pills on the dark footer.
@@ -133,6 +133,8 @@ The owner chose variant B from the two research-based mocks (`outputs/redesign-2
 - **Preserved.** Titles, H1 (except the approved homepage H1s), meta, canonical/hreflang, JSON-LD, prices, factual copy, reviews markup and the star flow (1–3 internal feedback form, 4–5 Google), form IDs, consent, launcher and the 88px mobile hero offset that keeps the floating language banner off the H1.
 
 ## Navigation and utility page refinement
+
+Privacy notice refinement (22 October 2026): use Manrope, graphite text, a quiet `#f3f5f7` surface, 8px panel corners and 6px buttons. The initial notice has exactly two vertically stacked choices: blue "Accept all" first and white "Necessary only" second, with the same source and keyboard order. Remove the initial settings button; preserve privacy/cookie links and the footer's category settings dialog. On mobile, copy appears above two full-width buttons; on desktop, copy and the stacked actions sit alongside each other. Consent storage, defaults and category behavior remain unchanged.
 
 The desktop menu uses a single 28px gap with no extra item margins. Weather and internet diagnostics are discovered through the four localized Poradnik indexes; their existing canonical URLs remain unchanged and Poradnik is active on those pages.
 
@@ -151,7 +153,7 @@ This document describes `public/redesign.css`, layered over the retained site CS
 **Key Characteristics:**
 
 - Direct telephone and enquiry actions.
-- Light homepage and compact dark service introduction.
+- Shared dark homepage/service introduction above light content and task panels.
 - Flat sections, thin dividers and selectively rounded task/contact surfaces.
 - Local font files and technically illustrative equipment imagery.
 

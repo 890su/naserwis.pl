@@ -78,8 +78,8 @@ test('skip link moves keyboard focus past navigation to the main content', async
   await page.keyboard.press('Enter');
   await expect(page.locator('#main-content')).toBeFocused();
   await page.keyboard.press('Tab');
-  // Variant B: the call box's phone number is the first action after the offer.
-  await expect(page.locator('.preview-callbox a[href="tel:+48453327678"]').first()).toBeFocused();
+  // The service-style hero offers the problem link before the phone action.
+  await expect(page.locator('.hero [data-contact-modal]').first()).toBeFocused();
 });
 
 test('floating enquiry modal restores focus to the visible launcher on Escape', async ({ page }) => {

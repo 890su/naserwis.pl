@@ -43,7 +43,7 @@ for (const consentType of ["analytics_storage", "ad_storage", "ad_user_data", "a
     throw new Error(`Consent default is not denied for ${consentType}.`);
   }
 }
-for (const interfaceHook of ["consent-close", "consent-customise", "consent-reject", "consent-save"]) {
+for (const interfaceHook of ["consent-close", "consent-accept", "consent-reject", "consent-save", "data-consent-settings"]) {
   if (!consent.includes(interfaceHook)) throw new Error(`Missing consent interface hook: ${interfaceHook}.`);
 }
 

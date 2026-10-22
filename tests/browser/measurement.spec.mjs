@@ -191,9 +191,9 @@ for (const [analytics, marketing] of [[false, false], [true, false], [false, tru
       if (event.target.closest('a')) event.preventDefault();
     }, true));
     await page.locator('.preview-task-link').first().click();
-    await page.locator('.preview-callbox .btn[href^="tel:"]').click();
+    await page.locator('.hero .preview-hero-call').click();
     await page.locator('footer a[href^="mailto:"]').first().click();
-    await page.locator('.preview-callbox [data-contact-modal]').click();
+    await page.locator('.hero [data-contact-modal]').click();
     await fill(page.locator('#quick-form'));
     await page.route('**/api/contact', route => route.fulfill({ json: { success: true, message: 'QA accepted', leadId: 'qa-consent' } }));
     await page.locator('#quick-form [type="submit"]').click();
@@ -283,9 +283,9 @@ test('granting consent does not replay earlier clicks; visible phone impressions
   expect(await events(page, 'naserwis_service_select')).toHaveLength(0);
   await page.locator('.preview-task-link').first().click();
   expect(await events(page, 'naserwis_service_select')).toHaveLength(1);
-  await page.locator('.preview-callbox').scrollIntoViewIfNeeded();
-  await expect.poll(async () => (await events(page, 'naserwis_cta_view')).filter(event => event.placement === 'hero' && event.action === 'phone').length).toBe(2);
+  await page.locator('.hero').scrollIntoViewIfNeeded();
+  await expect.poll(async () => (await events(page, 'naserwis_cta_view')).filter(event => event.placement === 'hero' && event.action === 'phone').length).toBe(1);
   await page.locator('footer').scrollIntoViewIfNeeded();
-  await page.locator('.preview-callbox').scrollIntoViewIfNeeded();
-  expect((await events(page, 'naserwis_cta_view')).filter(event => event.placement === 'hero' && event.action === 'phone')).toHaveLength(2);
+  await page.locator('.hero').scrollIntoViewIfNeeded();
+  expect((await events(page, 'naserwis_cta_view')).filter(event => event.placement === 'hero' && event.action === 'phone')).toHaveLength(1);
 });

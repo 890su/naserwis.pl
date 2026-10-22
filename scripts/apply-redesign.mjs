@@ -40,6 +40,7 @@ const words = {
  uk: ['Зателефонувати майстру','Описати проблему','Щось не працює?','Потрібно налаштувати або встановити','Швидкий зв’язок','Орієнтовні ціни','Виїзд + перша година','Наступна година','Зателефонуйте — обговоримо деталі','Роутер і ноутбук — ілюстрація домашньої мережі','Тестер мережевого кабелю підключений до обох кінців кабелю; індикатор пари 3–6 не світиться — пошкоджена пара','Фото:','Ви платите за погоджений обсяг','Суму підтверджуємо до початку робіт.'],
  en: ['Call a technician','Describe the problem','Something not working?','Need setup or installation?','Quick contact','Indicative prices','Visit + first hour','Additional hour','Call to discuss the details','Router and laptop — home network illustration','Network cable tester connected to both ends of a cable; the 3–6 pair LED is off, indicating a damaged pair','Photo:','You pay for the agreed scope','We confirm the amount before work starts.']
 };
+const heroCall = w => `<a href="tel:+48453327678" class="preview-hero-call"><span class="preview-call-icon">${icon('phone')}</span><span><strong>+48 453 327 678</strong><small>${w[0]}</small></span></a>`;
 const taskPhotos = {
  pl: ['Podłączanie kabla Ethernet do gniazda RJ45 — ilustracja','Router z czerwoną kontrolką Internetu i telefon z napisem „Brak internetu” — ilustracja','Wyłącz kontrolkę','Włącz kontrolkę','Zasilanie kontrolki'],
  ru: ['Подключение сетевого кабеля к розетке RJ45 — иллюстрация','Роутер с красным индикатором интернета и телефон с надписью «Нет интернета» — иллюстрация','Выключить индикатор','Включить индикатор','Питание индикатора'],
@@ -84,18 +85,15 @@ for (const [file, currentHtml] of pages) {
     if (isHome) {
       for (const [tag, match] of [['section',/<section class="preview-overview"/],['section',/<section class="preview-conditions"/]])
         if (match.test(html)) html=html.replace(block(html,tag,match),'');
-      const oldHero = block(html,'section',/<section class="hero"/);
-      let newHero = oldHero;
-      // Read the location line before removing a previous callbox that may contain it.
-      const location=oldHero.match(/<p class="hero-location"[\s\S]*?<\/p>/)?.[0]?.replace(/(<p class="hero-location"[^>]*>)🎯\s*/, '$1') || '';
-      for (const [tag, match] of [['aside',/<aside class="hero-form"/],['picture',/<picture class="preview-hero-photo"/],['div',/<div class="preview-callbox"/],['div',/<div class="preview-actions"/]])
-        while (match.test(newHero)) newHero=newHero.replace(block(newHero,tag,match),'');
-      newHero=newHero.replace(/<p class="hero-location"[\s\S]*?<\/p>/,'');
-      // Variant B: compact offer on the left, direct call on the right; equipment
-      // imagery moves into the two task panels below.
-      const callbox=`<div class="preview-callbox"><a class="preview-callbox-number" href="tel:+48453327678">+48 453 327 678</a>${location}<div class="preview-actions"><a class="btn btn-primary" href="tel:+48453327678">${icon('phone')}${w[0]}</a><a class="btn preview-outline" href="#contact" data-contact-modal>${icon('chat')}${w[1]}</a></div></div>`;
-      const textBlock=block(newHero,'div',/<div class="hero-text"/);
-      newHero=newHero.replace(textBlock,textBlock+callbox);
+      const oldHero = block(html,'section',/<section class="hero(?: hero-service-style)?"/);
+      // Reuse the service introduction: copy and enquiry link left, phone right.
+      // Keep the inherited service-area microdata without adding another visible row.
+      const location = oldHero.match(/<p class="hero-location"[^>]*>([\s\S]*?)<\/p>/)?.[1]?.replace(/🎯\s*/, '').trim();
+      const area = location ? `<meta itemprop="areaServed" content="${location.replaceAll('"','&quot;')}">` : oldHero.match(/<meta itemprop="areaServed"[^>]*>/)?.[0] || '';
+      let text = block(oldHero,'div',/<div class="hero-text"/);
+      if (text.includes('<div class="hero-cta-wrapper"')) text = text.replace(block(text,'div',/<div class="hero-cta-wrapper"/),'');
+      text = text.replace("class=\"hero-subtitle\"","class=\"hero-subtitle hero-large-subtitle\"").replace(/<p class="hero-location"[\s\S]*?<\/p>/,'').replace(/<\/div>\s*$/, `<div class="hero-cta-wrapper"><a href="#contact" class="btn btn-primary btn-large" data-contact-modal>${w[1]}</a></div></div>`);
+      const newHero = oldHero.replace(/class="hero(?: hero-service-style)?"/, 'class="hero hero-service-style"').replace(block(oldHero,'div',/<div class="hero-content"/), `<div class="hero-content">${text}${heroCall(w)}${area}</div>`);
       html=html.replace(oldHero,newHero);
       let serviceIndex=0;
       const identifyService = (link, index) => link.replace(/ data-service-choice="[^"]*"/g,'').replace('class="home-service-link"',`class="home-service-link" data-service-choice="${serviceChoices[index]}"`);
@@ -108,7 +106,7 @@ for (const [file, currentHtml] of pages) {
         fault:`<figure class="preview-task-photo" data-fault-photo>${taskImage('no-internet-'+lang,taskPhotos[lang][1])}<img class="preview-led-off" src="/assets/redesign/no-internet-led-off-20261018-1200.webp" srcset="/assets/redesign/no-internet-led-off-20261018-640.webp 640w, /assets/redesign/no-internet-led-off-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" alt="" aria-hidden="true" decoding="async"><button type="button" class="preview-photo-motion" data-photo-motion data-pause="${taskPhotos[lang][2]}" data-play="${taskPhotos[lang][3]}" aria-label="${taskPhotos[lang][4]}" aria-pressed="true" title="${taskPhotos[lang][2]}" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/></svg></button></figure>`,
         setup:`<figure class="preview-task-photo">${taskImage('rj45-installation',taskPhotos[lang][0])}</figure>`
       };
-      const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><span class="preview-task-icon">${icon(type==='fault'?'wrench':'setup')}</span><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}</div></article>`;
+      const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}</div></article>`;
       const overview=`<section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair">${task(w[2],[0,3,4],'fault')}${task(w[3],[1,2,5],'setup')}</div><aside id="preview-contact" class="preview-contact-rail">${heroForm}</aside></div></section>`;
       // Rates and their labels are copied from the published localized price table.
       const rows=[...home.matchAll(/<div class="price-row" role="row"><div class="price-service" role="cell">([^<]+)<\/div><div class="price-value" role="cell">([^<]+)<\/div><\/div>/g)];
@@ -119,10 +117,10 @@ for (const [file, currentHtml] of pages) {
       const process=block(html,'section',/<section class="how-we-work"/);
       html=html.replace(process,'').replace(conditions,conditions+process);
     } else {
-      const oldHero=block(html,'section',/<section class="hero hero-centered"/);
-      const call=`<a href="tel:+48453327678" class="preview-hero-call"><span class="preview-call-icon">${icon('phone')}</span><span><strong>+48 453 327 678</strong><small>${w[0]}</small></span></a>`;
+      const oldHero=block(html,'section',/<section class="hero hero-centered(?: hero-service-style)?"/);
+      const call=heroCall(w);
       const text=block(oldHero,'div',/<div class="hero-text"/);
-      const newHero=oldHero.replace(block(oldHero,'div',/<div class="hero-content"/),`<div class="hero-content">${text}${call}</div>`);
+      const newHero=oldHero.replace(/class="hero hero-centered(?: hero-service-style)?"/, 'class="hero hero-centered hero-service-style"').replace(block(oldHero,'div',/<div class="hero-content"/),`<div class="hero-content">${text}${call}</div>`);
       html=html.replace(oldHero,newHero);
       const sidebar=block(html,'div',/<div class="service-sidebar home-billing"/);
       // Move the original service form, retaining IDs, validation and intent hooks.
