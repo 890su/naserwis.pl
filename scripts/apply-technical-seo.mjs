@@ -3,6 +3,7 @@ import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { transform } from 'esbuild';
 import sharp from 'sharp';
+import { PurgeCSS } from 'purgecss';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { applyRedesign } from './apply-redesign.mjs';
 
@@ -53,13 +54,20 @@ const overrides = `
 .nw-forecast-card time,.nw-forecast-card span{color:#536674}
 `;
 const sourceCache = new Map();
+// Union all translated home markup and runtime-created states. Other page
+// bundles retain their existing CSS; generators can still expand every bundle.
+const homeContent = await Promise.all(['', 'ru/', 'uk/', 'en/'].map(async prefix => ({ raw: await readFile(`public/${prefix}index.html`, 'utf8'), extension: 'html' })));
+homeContent.push(...await Promise.all(['site-config.js', 'consent.js', 'script.js', 'contact-ui.js', 'home-photo.js'].map(async file => ({ raw: await readFile('public/' + file, 'utf8'), extension: 'js' }))));
+const bundleCache = new Map();
 async function source(url) {
   const path = 'public' + url.split('?')[0];
   if (!sourceCache.has(path)) sourceCache.set(path, await readFile(path, 'utf8'));
   return sourceCache.get(path);
 }
-async function bundle(tags, type) {
+async function bundle(tags, type, homepage = false) {
   if (!tags.length) return '';
+  const cacheKey = JSON.stringify([type, homepage, tags]);
+  if (bundleCache.has(cacheKey)) return bundleCache.get(cacheKey);
   const sources = tags.map(tag => tag.match(/(?:href|src)="([^"]+)"/)[1]);
   const parts = await Promise.all(sources.map(async url => {
     let code = await source(url);
@@ -67,18 +75,37 @@ async function bundle(tags, type) {
     // survive the legacy system-font fallback used by the incumbent CSS.
     if (type === 'css' && !url.startsWith('/redesign.css')) code=code.replace(/font-family\s*:[^;}]+/gi, `font-family:${systemFont}`)
       .replace(/(['"])(?:IBM Plex Sans|Poppins|Roboto)\1\s*,\s*sans-serif/g, systemFont);
+    // This stylesheet owns dynamically constructed consent/dialog states.
+    // Preserve it whole; optimize the static page/layout styles around it.
+    if (type === 'css' && url.startsWith('/contact-ui.css')) code = `/* purgecss start ignore */\n${code}\n/* purgecss end ignore */`;
     return code;
   }));
   let code = parts.join(type === 'js' ? '\n;\n' : '\n');
   if (type === 'css') {
     code = code.replace(/#718096/gi, '#566575').replace(/#888\b/gi, '#666');
     code += overrides;
+    if (homepage) {
+      const [result] = await new PurgeCSS().purge({
+        content: homeContent, css: [{ raw: code }],
+        dynamicAttributes: ['aria-hidden', 'aria-expanded', 'aria-modal', 'aria-invalid', 'data-suppressed', 'data-search-intent'],
+        // Runtime IDs, accessible expanded/focus states and consent/modal UI
+        // must survive even when they are absent from the initial visible DOM.
+        safelist: {
+          standard: [/^consent-/, /^fab-/, /^contact-/, /^quick-/, /^mobile-/, /-error$/, /^(active|open|scrolled|error-message|success-message)$/],
+          greedy: [/\[aria-/, /\[data-/, /:focus/, /\[inert\]/]
+        },
+        fontFace: false, keyframes: false, variables: false
+      });
+      code = result.css;
+    }
   }
   const compiled = await transform(code, { loader: type, minify: true, charset: 'utf8', target: ['chrome109', 'firefox115', 'safari16'], legalComments: 'none' });
   const url = `/assets/site-${digest(compiled.code)}.${type}`;
   await writeFile('public' + url, compiled.code);
   manifest[url] = { type, sources, tags };
-  return type === 'css' ? `<link rel="stylesheet" href="${url}">` : `<script defer src="${url}"></script>`;
+  const tag = type === 'css' ? `<link rel="stylesheet" href="${url}">` : `<script defer src="${url}"></script>`;
+  bundleCache.set(cacheKey, tag);
+  return tag;
 }
 
 async function processDirectory(directory) {
@@ -107,6 +134,9 @@ async function processDirectory(directory) {
       if (html.includes('id="main-content"')) html = html.replace(/(<body\b[^>]*>)/, `$1\n<a class="site-skip-link" href="#main-content">${skipText[locale] || skipText.pl}</a>`);
     }
     const identity = file === 'public/index.html' || /^public\/(?:ru|uk|en)\/index\.html$/.test(file);
+    // Keep content and contacts readable if the external CSS fails to load.
+    html = html.replace(/<style id="layout-fallback">[\s\S]*?<\/style>\s*/g, '');
+    html = html.replace('</head>', '<style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>\n</head>');
     html = html.replace(/(<script[^>]*type="application\/ld\+json"[^>]*>)([\s\S]*?)(<\/script>)/g, (tag, start, json, end) => {
       const data = JSON.parse(json);
       function visit(item) {
@@ -135,7 +165,7 @@ async function processDirectory(directory) {
       const rank = tag => { const i = priority.findIndex(url => tag.includes(`"${url}`)); return i < 0 ? priority.length : i; };
       return rank(a) - rank(b);
     });
-    const stylesheet = await bundle(styles, 'css');
+    const stylesheet = await bundle(styles, 'css', identity);
     const javascript = await bundle(scripts, 'js');
     if (stylesheet) html = html.replace('</head>', stylesheet + '\n</head>');
     if (javascript) html = html.replace('</body>', javascript + '\n</body>');

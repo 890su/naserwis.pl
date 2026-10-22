@@ -172,11 +172,11 @@
     window.visualViewport?.addEventListener('resize', scheduleUpdate);
     window.addEventListener('naserwis:consent-ui', () => {
         if (!consentVisible() && !window.NASERWIS_CONSENT?.get()?.support) chatPending = false;
-        update();
+        scheduleUpdate();
     });
     // Consent is built on DOMContentLoaded. Measure again after its panel has
     // participated in layout so the circular launcher clears the full banner.
-    document.addEventListener('DOMContentLoaded', update);
+    document.addEventListener('DOMContentLoaded', scheduleUpdate);
     const consentPanelObserver = new ResizeObserver(scheduleUpdate);
     function observeConsentPanel() {
         const panel = document.querySelector('.consent-panel');

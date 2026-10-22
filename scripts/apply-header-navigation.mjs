@@ -97,7 +97,7 @@ async function update(directory) {
         const href = item.match(/href="([^"]+)"/)?.[1];
         const title = item.match(/<strong>([^<]+)<\/strong>/)?.[1];
         const note = item.match(/<\/strong><span>([^<]+)<\/span>/)?.[1];
-        const svg = item.match(/<svg[\s\S]*?<\/svg>/)?.[0].replace(/\s+/g, ' ').replace(/<svg\b/, '<svg aria-hidden="true"');
+        const svg = item.match(/<svg[\s\S]*?<\/svg>/)?.[0].replace(/\s+/g, ' ').replace(/\s+aria-hidden="[^"]*"/g, '').replace(/<svg\b/, '<svg aria-hidden="true"');
         if (!title || !svg) return '';
         const inner = `<span class="mobile-channel-icon mobile-channel-${key}">${svg}</span><span class="mobile-channel-text"><strong>${title}</strong>${note ? `<small>${note}</small>` : ''}</span>`;
         return href ? `<a class="mobile-nav-link mobile-channel" href="${href}" target="_blank" rel="noopener">${inner}</a>`

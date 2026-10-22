@@ -2,6 +2,8 @@
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { resolve, relative, join } from 'node:path';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
+import { restoreHomepage, simplifyHomepage } from './homepage-readability.mjs';
+import { businessLinks } from './business-links.mjs';
 const output = resolve('public');
 function block(html, tag, match) {
   const start = html.search(match); if (start < 0) throw Error('Missing block '+match);
@@ -47,16 +49,16 @@ const taskPhotos = {
  uk: ['Підключення мережевого кабелю до розетки RJ45 — ілюстрація','Роутер із червоним індикатором інтернету й телефон із написом «Немає інтернету» — ілюстрація','Вимкнути індикатор','Увімкнути індикатор','Живлення індикатора'],
  en: ['Connecting an Ethernet cable to an RJ45 wall socket — illustration','Router with a red Internet indicator and a phone saying “No internet” — illustration','Turn indicator off','Turn indicator on','Indicator power']
 };
-const taskImage = (name, alt) => {
+const taskImage = (name, alt, primary = false) => {
  const path = '/assets/redesign/'+name+'-20261018-';
  const sizes = '(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw';
- return `<picture><source type="image/avif" srcset="${path}640.avif 640w, ${path}1200.avif 1200w" sizes="${sizes}"><img src="${path}1200.webp" srcset="${path}640.webp 640w, ${path}1200.webp 1200w" sizes="${sizes}" width="1200" height="675" decoding="async" alt="${alt}"></picture>`;
+ return `<picture><source type="image/avif" srcset="${path}640.avif 640w, ${path}800.avif 800w, ${path}1200.avif 1200w" sizes="${sizes}"><img src="${path}1200.webp" srcset="${path}640.webp 640w, ${path}800.webp 800w, ${path}1200.webp 1200w" sizes="${sizes}" width="1200" height="675" decoding="async" ${primary ? 'fetchpriority="high"' : 'loading="lazy"'} alt="${alt}"></picture>`;
 };
 async function walk(dir) { const list=[]; for (const item of await readdir(dir,{withFileTypes:true})) { const p=join(dir,item.name); if(item.isDirectory()) list.push(...await walk(p)); else if(item.name.endsWith('.html')) list.push(p); } return list; }
 export async function applyRedesign() {
 let transformed=0;
 const manifest = await assetManifest();
-const pages = new Map(await Promise.all((await walk(output)).map(async file => [file, expandAssetBundles(await readFile(file,'utf8'),manifest)])));
+const pages = new Map(await Promise.all((await walk(output)).map(async file => [file, restoreHomepage(expandAssetBundles(await readFile(file,'utf8'),manifest), block)])));
 for (const [file, currentHtml] of pages) {
   let html = currentHtml;
   const path = relative(output,file);
@@ -64,6 +66,16 @@ for (const [file, currentHtml] of pages) {
   const w = words[lang] || words.pl;
   const prefix = lang === 'pl' ? '' : `${lang}/`;
   const isHome = path.replaceAll('\\','/') === `${prefix}index.html`;
+  const footerMatch = /<footer\b/;
+  if (footerMatch.test(html)) {
+    const footer = block(html, 'footer', footerMatch);
+    let compactFooter = footer;
+    for (const match of footer.matchAll(/<div class="footer-section"[^>]*>/g)) {
+      const column = block(footer.slice(match.index), 'div', /^<div/);
+      if (/\bhreflang=/.test(column)) compactFooter = compactFooter.replace(column, '');
+    }
+    html = html.replace(footer, compactFooter.replace(/^[\t ]+$/gm, ''));
+  }
   // A separate source keeps this image-only behavior out of contact/measurement code.
   html=html.replace(/\s*<script\b[^>]*src="\/home-photo\.js[^"]*"[^>]*><\/script>/g,'');
   if (isHome) html=html.replace('</body>','<script defer src="/home-photo.js"></script>\n</body>');
@@ -103,10 +115,12 @@ for (const [file, currentHtml] of pages) {
       });
       const links=[...home.matchAll(/<a class="home-service-link"[\s\S]*?<\/a>/g)].map((x,index)=>identifyService(x[0],index));
       const figures={
-        fault:`<figure class="preview-task-photo" data-fault-photo>${taskImage('no-internet-'+lang,taskPhotos[lang][1])}<img class="preview-led-off" src="/assets/redesign/no-internet-led-off-20261018-1200.webp" srcset="/assets/redesign/no-internet-led-off-20261018-640.webp 640w, /assets/redesign/no-internet-led-off-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" alt="" aria-hidden="true" decoding="async"><button type="button" class="preview-photo-motion" data-photo-motion data-pause="${taskPhotos[lang][2]}" data-play="${taskPhotos[lang][3]}" aria-label="${taskPhotos[lang][4]}" aria-pressed="true" title="${taskPhotos[lang][2]}" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/></svg></button></figure>`,
+        fault:`<figure class="preview-task-photo" data-fault-photo>${taskImage('no-internet-'+lang,taskPhotos[lang][1],true)}<picture><source type="image/avif" srcset="/assets/redesign/no-internet-led-off-20261018-640.avif 640w, /assets/redesign/no-internet-led-off-20261018-800.avif 800w, /assets/redesign/no-internet-led-off-20261018-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw"><img class="preview-led-off" src="/assets/redesign/no-internet-led-off-20261018-1200.webp" srcset="/assets/redesign/no-internet-led-off-20261018-640.webp 640w, /assets/redesign/no-internet-led-off-20261018-800.webp 800w, /assets/redesign/no-internet-led-off-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async"></picture><button type="button" class="preview-photo-motion" data-photo-motion data-pause="${taskPhotos[lang][2]}" data-play="${taskPhotos[lang][3]}" aria-label="${taskPhotos[lang][4]}" aria-pressed="true" title="${taskPhotos[lang][2]}" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/></svg></button></figure>`,
         setup:`<figure class="preview-task-photo">${taskImage('rj45-installation',taskPhotos[lang][0])}</figure>`
       };
-      const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}</div></article>`;
+      const business = businessLinks[lang] || businessLinks.pl;
+      const businessLink = `<a class="preview-task-link preview-business-link" href="${business.url}" target="_blank" rel="noopener"><span class="preview-task-ico">${icon('network')}</span><div><h3>${business.label}</h3><small>ITBIZ.PL</small></div>${icon('arrow')}</a>`;
+      const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}${type==='setup'?businessLink:''}</div></article>`;
       const overview=`<section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair">${task(w[2],[0,3,4],'fault')}${task(w[3],[1,2,5],'setup')}</div><aside id="preview-contact" class="preview-contact-rail">${heroForm}</aside></div></section>`;
       // Rates and their labels are copied from the published localized price table.
       const rows=[...home.matchAll(/<div class="price-row" role="row"><div class="price-service" role="cell">([^<]+)<\/div><div class="price-value" role="cell">([^<]+)<\/div><\/div>/g)];
@@ -116,6 +130,7 @@ for (const [file, currentHtml] of pages) {
       // Keep the existing content intact while bringing the visit process after the task chooser.
       const process=block(html,'section',/<section class="how-we-work"/);
       html=html.replace(process,'').replace(conditions,conditions+process);
+      html=simplifyHomepage(html,lang,block);
     } else {
       const oldHero=block(html,'section',/<section class="hero hero-centered(?: hero-service-style)?"/);
       const call=heroCall(w);
@@ -159,6 +174,10 @@ export async function restoreRedesignForms() {
     html=html.replace(rail,rail.replace(form,'')).replace(actions,`<div class="final-form">${form}</div>`);
     await writeFile(file,html);
   }
+}
+
+export function restoreHomepageReadability(html) {
+  return restoreHomepage(html, block);
 }
 
 if (process.argv[1]?.endsWith('apply-redesign.mjs')) await applyRedesign();

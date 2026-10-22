@@ -6,9 +6,10 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     await page.route(/googletagmanager|google-analytics|clarity|tawk|fonts\.google/, route => route.abort());
     await page.setViewportSize({ width: 320, height: 740 });
     await page.goto('/' + prefix);
+    await page.locator('.home-services-details > summary').click();
     await expect(page.locator('.home-service-link')).toHaveCount(6);
     expect(await page.locator('.home-service-catalog').innerText()).not.toMatch(/\d+\s*(?:zł|PLN)/);
-    await expect(page.locator('.home-billing .price-row[role=row]')).toHaveCount(4);
+    await expect(page.locator('.home-billing .price-row[role=row]')).toHaveCount(0);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
     // This visible scope link must land on the same locale's existing service,
     // with hourly/short-visit alternatives, rather than a duplicate new URL.
@@ -27,9 +28,11 @@ test('capture reviewed home catalogue and billing on desktop and mobile', async 
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/');
   await page.getByRole('button', { name: 'Tylko niezbędne', exact: true }).click();
+  await page.locator('.home-services-details > summary').click();
   await page.locator('#available-services').scrollIntoViewIfNeeded();
   await page.screenshot({ path: 'outputs/seo-week-1-3/catalog-desktop.png' });
   await page.locator('#services').scrollIntoViewIfNeeded();
+  await page.locator('.home-pricing-details > summary').click();
   await page.screenshot({ path: 'outputs/seo-week-1-3/billing-desktop.png' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/naprawa-sieci/');

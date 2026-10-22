@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { copy } from './home-service-copy.mjs';
+import { businessLinks } from './business-links.mjs';
 
 const routes = { home: '', wifi: 'naprawa-wifi/', repair: 'naprawa-sieci/', install: 'montaz-sieci/' };
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -32,13 +33,12 @@ function billing(c, sidebar = false) {
   return `${prices}\n<p class="billing-rule"><strong>${escape(c.noDouble)}</strong></p>\n<p class="billing-condition">${escape(c.shortNote)}</p>\n<p class="billing-project">${escape(c.project)}</p>\n<p class="price-disclaimer">${escape(c.disclaimer)}</p>`;
 }
 function handoff(c, locale, section = false) {
-  const prefix = locale === 'pl' ? '' : `${locale}/`;
-  const content = `<h${section ? '2' : '3'} id="business-handoff-title">${c.businessTitle}</h${section ? '2' : '3'}><p>${c.business}</p><a href="https://itbiz.pl/${prefix}uslugi/">${c.businessLink} <span aria-hidden="true">→</span></a>`;
+  const content = `<h${section ? '2' : '3'} id="business-handoff-title">${c.businessTitle}</h${section ? '2' : '3'}><p>${c.business}</p><a href="${businessLinks[locale].url}" target="_blank" rel="noopener">${c.businessLink} <span aria-hidden="true">→</span></a>`;
   return section ? `<section class="packages business-handoff" aria-labelledby="business-handoff-title"><div class="container">${content}</div></section>` : `<aside class="business-handoff">${content}</aside>`;
 }
 function catalog(c, prefix) {
   return `<section class="comprehensive-support home-service-catalog" id="available-services" aria-labelledby="available-services-title"><div class="container">
-<span class="home-scope">${c.scope}</span><h2 id="available-services-title" class="section-title">${c.catalog}</h2><p class="home-section-intro">${c.catalogIntro}</p>
+<h2 id="available-services-title" class="section-title">${c.catalog}</h2><p class="home-section-intro">${c.catalogIntro}</p>
 <div class="home-services-grid">${c.services.map(([type, title, text]) => `<a class="home-service-link" href="/${prefix}${routes[type]}"><div><h3>${title}</h3><p>${text}</p></div><span aria-hidden="true">↗</span></a>`).join('\n')}</div>
 <p class="home-secondary-scope">${c.secondary}</p></div></section>`;
 }
@@ -67,7 +67,7 @@ for (const [locale, c] of Object.entries(copy)) {
     // Google ignores meta keywords. Remove obsolete B2B keyword lists.
     html = html.replace(/^\s*<meta name="keywords"[^>]*>\r?\n/gm, '\n');
     html = html.replace(/<h1\b([^>]*)>[\s\S]*?<\/h1>/, `<h1$1>${s.h1}<br><span class="accent-text">${s.accent}</span></h1>`);
-    html = html.replace(/<p class="hero-(?:large-)?subtitle"([^>]*)>[\s\S]*?<\/p>/, (_m, attrs) => `<p class="${type === 'home' ? 'hero-subtitle' : 'hero-large-subtitle'}"${attrs}>${s.intro}</p>`);
+    html = html.replace(/<p class="hero-(?:large-)?subtitle(?: hero-large-subtitle)?"([^>]*)>[\s\S]*?<\/p>/, (_m, attrs) => `<p class="${type === 'home' ? 'hero-subtitle' : 'hero-large-subtitle'}"${attrs}>${s.intro}</p>`);
     html = html.replace(/(<div class="hero-cta-wrapper">\s*<a[^>]*>)[\s\S]*?(<\/a>)/, `$1${c.request}$2`);
     if (type === 'home') {
       if (html.includes('class="trust-signals"')) html = replaceSection(html, 'trust-signals', '');

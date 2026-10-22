@@ -28,13 +28,15 @@ for (const route of ['/', '/naprawa-wifi/']) {
 }
 
 for(const reducedMotion of ['no-preference','reduce']) {
-  test(`why-us copy remains visible during ordinary scrolling / ${reducedMotion}`,async({page})=>{
+  test(`why-us copy stays readable in service details / ${reducedMotion}`,async({page})=>{
     await page.emulateMedia({reducedMotion});
     await page.addInitScript(()=>{
       localStorage.setItem('preferredLanguage','pl');
       localStorage.setItem('naserwis_consent_v1',JSON.stringify({version:1,analytics:false,marketing:false,support:false}));
     });
     await page.goto('/');
+    await expect(page.locator('.why-us')).toBeHidden();
+    await page.locator('.home-services-details > summary').click();
     await page.locator('.why-us').scrollIntoViewIfNeeded();
     await expect(page.locator('.why-us .section-title')).toHaveCSS('color','rgb(24, 33, 44)');
     for(const benefit of await page.locator('.why-us .benefit').all()) {

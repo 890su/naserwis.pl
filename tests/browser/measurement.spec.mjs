@@ -149,6 +149,7 @@ for (const [locale, weather] of locales) {
       if (event.target.closest('a')) event.preventDefault();
     }, true));
     const choices = ['wifi-coverage', 'router-setup', 'lan-install', 'lan-repair', 'network-test', 'device-setup'];
+    await page.locator('.home-services-details > summary').click();
     for (const choice of choices) {
       await page.locator(`.preview-task-link[data-service-choice="${choice}"]`).click();
       expect((await events(page, 'naserwis_service_select')).at(-1)).toMatchObject({

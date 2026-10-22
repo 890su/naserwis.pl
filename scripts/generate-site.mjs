@@ -2,7 +2,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
-import { restoreRedesignForms } from './apply-redesign.mjs';
+import { restoreRedesignForms, restoreHomepageReadability } from './apply-redesign.mjs';
 await restoreRedesignForms();
 const manifest = await assetManifest();
 async function restore(dir) {
@@ -11,7 +11,7 @@ async function restore(dir) {
     if (entry.isDirectory()) await restore(path);
     else if (entry.name.endsWith('.html')) {
       const html = await readFile(path, 'utf8');
-      await writeFile(path, expandAssetBundles(html, manifest));
+      await writeFile(path, restoreHomepageReadability(expandAssetBundles(html, manifest)));
     }
   }
 }

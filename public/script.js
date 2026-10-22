@@ -297,6 +297,10 @@
         function scrollToTarget(href) {
             const target = document.querySelector(href);
             if (!target) return false;
+            // Reveal native disclosures before measuring a linked section.
+            for (let parent = target.parentElement; parent; parent = parent.parentElement) {
+                if (parent.matches('details:not([open])')) parent.open = true;
+            }
 
             const headerOffset = getHeaderOffset();
             const elementPosition = target.getBoundingClientRect().top;
@@ -543,6 +547,9 @@
     // Scroll Animations
     // ===================================
     function initScrollAnimations() {
+        // The approved redesign renders these blocks visibly in CSS. Avoid
+        // rewriting every block's inline styles during the first layout.
+        if (document.body.dataset.redesign) return;
         const motion = matchMedia('(prefers-reduced-motion: reduce)');
         if (motion.matches) return;
         const observerOptions = {
@@ -1300,6 +1307,11 @@
         // Capture before the desktop menu's inline handler starts navigation.
         // Never forward link text or query strings.
         document.addEventListener('click', function (event) {
+            const pricingToggle = event.target.closest('summary[data-pricing-toggle]');
+            if (pricingToggle) {
+                if (!pricingToggle.parentElement.open) trackFunnelEvent('naserwis_pricing_click', { placement: 'pricing' });
+                return;
+            }
             const link = event.target.closest('a[href], .services-menu button[onclick]');
             if (!link) return;
             const href = link.getAttribute('href') || link.getAttribute('onclick')?.match(/^window\.location\.href='([^']+)'$/)?.[1];
