@@ -68,6 +68,11 @@ test('reduced motion leaves content visible and reviews do not autoplay', async 
   const initial = await page.locator('.reviews-track').evaluate(el => el.scrollLeft);
   await page.clock.runFor(12000);
   expect(await page.locator('.reviews-track').evaluate(el => el.scrollLeft)).toBe(initial);
+  // Imported reviews must remain reachable without accumulating a hardcoded gap.
+  await page.locator('.slider-btn.prev').click();
+  expect(await page.locator('.reviews-track').evaluate(el => Math.abs(el.lastElementChild.getBoundingClientRect().left - el.getBoundingClientRect().left))).toBeLessThan(1);
+  await page.locator('.slider-btn.next').click();
+  expect(await page.locator('.reviews-track').evaluate(el => el.scrollLeft)).toBe(0);
 });
 
 test('skip link moves keyboard focus past navigation to the main content', async ({ page }) => {

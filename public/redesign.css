@@ -114,6 +114,9 @@ body[data-redesign] .reviews{border-top:1px solid var(--rd-line)}
 body[data-redesign] .reviews-intro,body[data-redesign] .reviews-note{text-align:left;margin-left:0}
 body[data-redesign] .google-link-wrapper{text-align:left}
 body[data-redesign] .review-card{border:1px solid var(--rd-line);box-shadow:none;background:#fff;border-radius:8px;padding:26px}
+body[data-redesign] .review-source{font-size:13px;line-height:1.5;color:var(--rd-muted);margin:16px 0 0}
+body[data-redesign] .review-source a{color:var(--rd-blue);text-decoration:underline}
+body[data-redesign] .review-rating-only{font-size:15px;color:var(--rd-muted);margin:0}
 body[data-redesign] .review-avatar{background:#e8effc;color:var(--rd-blue)}
 body[data-redesign] .review-cta-interactive{background:var(--bg-alt);border:0;box-shadow:none;border-radius:8px;padding:28px}
 body[data-redesign] .review-cta-interactive h3{font-size:23px}

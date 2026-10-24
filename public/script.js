@@ -628,10 +628,8 @@
         const totalCards = cards.length;
 
         function updateSlider() {
-            const cardWidth = cards[0].offsetWidth;
-            const gap = 30;
             track.scrollTo({
-                left: currentIndex * (cardWidth + gap),
+                left: cards[currentIndex].offsetLeft - cards[0].offsetLeft,
                 behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
             });
         }

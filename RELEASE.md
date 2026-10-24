@@ -1,3 +1,23 @@
+# Missing Google reviews imported — 2026-10-24
+
+- Checked the public NaSerwis Google listing (13 reviews/ratings) against the
+  four authors previously present on the site. Added nine missing entries:
+  eight with text and Sergey Ch's rating-only entry, honestly labelled as such.
+  Karina's verified original-language excerpt is labelled and linked to her
+  full Google review. Original wording and ratings are retained, including typos;
+  no inferred publication dates or fabricated translations are displayed.
+- Each homepage locale and its service pages contain 13 unique authors. Existing
+  cards/translations remain intact, with original-language fallback for an older
+  author that a locale did not previously include. The manual source snapshot and
+  repeatable sync are in scripts/google-reviews-2026-10-24.json and
+  scripts/sync-google-reviews.mjs. This is a manual import, not automatic syncing.
+- Slider navigation now uses actual card offsets rather than a hardcoded gap,
+  so the additional cards remain correctly aligned. Existing rating routing and
+  no-autoplay behavior are preserved. No review or response was posted to Google.
+- Static/link/SEO/CRO/guide checks, review-flow/no-autoplay/wraparound browser
+  tests and repeated build output passed. SEO metadata/H1/schema and all original
+  review cards are preserved; 20 commercial pages have 13 unique reviews each.
+
 # Audience-specific burger navigation — 2026-10-24
 
 - Mobile menu separates services for individuals and organisations into adjacent

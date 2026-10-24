@@ -11,6 +11,7 @@ import { applyRedesign } from './apply-redesign.mjs';
 await import('./apply-tool-navigation.mjs');
 await import('./apply-header-navigation.mjs');
 await import('./sync-home-metadata.mjs');
+await import('./sync-google-reviews.mjs');
 await applyRedesign();
 
 const previousManifest = await assetManifest();
