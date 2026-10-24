@@ -22,8 +22,6 @@
         const list = form.querySelector('.enquiry-example-list');
         const all = form.querySelector('[data-examples-all]');
         let expanded = false;
-        let paused = false;
-        let interacting = false;
         let visible = false;
         let frame = 0;
         let lastTime = 0;
@@ -58,7 +56,7 @@
         function updateMotion() {
             stop();
             clones.forEach(item => { item.hidden = expanded; });
-            if (visible && !paused && !interacting && !expanded && !examples.hidden && !document.hidden) frame = requestAnimationFrame(animate);
+            if (visible && !expanded && !examples.hidden && !document.hidden) frame = requestAnimationFrame(animate);
         }
         function reveal() {
             const hasDescription = message.value.trim().length > 0;
@@ -67,9 +65,8 @@
             examples.hidden = hasDescription || Boolean(typingTimer);
             updateMotion();
         }
-        // Only the text participates in native list scrolling. The surrounding
-        // row still highlights and selects across its full width, while gestures
-        // in its empty side areas hit the parent and scroll the page naturally.
+        // Rows remain selectable across their full width. Wheel and touch
+        // gestures always scroll the page; only animation moves this list.
         function rowAtPoint(event) {
             const bounds = list.getBoundingClientRect();
             if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return null;
@@ -127,19 +124,6 @@
             offset = list.scrollTop = 0;
             updateMotion();
         });
-        list.addEventListener('pointerenter', () => { interacting = true; updateMotion(); });
-        list.addEventListener('pointerleave', () => { interacting = list.contains(document.activeElement); updateMotion(); });
-        list.addEventListener('focusin', () => { interacting = true; updateMotion(); });
-        list.addEventListener('focusout', event => { interacting = list.contains(event.relatedTarget); updateMotion(); });
-        // Manual scrolling takes over from automatic movement.
-        function manualScroll() {
-            paused = true;
-            offset = list.scrollTop;
-            updateMotion();
-        }
-        list.addEventListener('wheel', manualScroll, { passive: true });
-        list.addEventListener('touchstart', manualScroll, { passive: true });
-        list.addEventListener('scroll', () => { if (!frame) offset = list.scrollTop; }, { passive: true });
         document.addEventListener('visibilitychange', updateMotion);
         new IntersectionObserver(entries => { visible = entries[0].isIntersecting; updateMotion(); }).observe(list);
         form.addEventListener('reset', () => {
@@ -150,7 +134,6 @@
                 form.querySelector('.enquiry-extras').open = false;
                 examples.hidden = false;
                 message.style.removeProperty('height');
-                paused = false;
                 highlightRow(null);
                 offset = list.scrollTop = 0;
                 updateMotion();

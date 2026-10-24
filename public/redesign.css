@@ -542,7 +542,7 @@ body[data-redesign] [data-staged-form] .enquiry-details{margin-top:20px}
 .enquiry-example-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;font-size:12px;line-height:1.5;color:#485462;margin:12px 0 6px}
 .enquiry-example-controls{display:flex;flex-wrap:wrap;gap:0 12px}
 body[data-redesign] [data-staged-form] .enquiry-example-controls button{background:none;color:#174bb0;border:0;padding:6px 0;min-height:32px;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-.enquiry-example-list{position:relative;height:240px;max-height:240px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;scroll-behavior:auto;pointer-events:none;mask-image:linear-gradient(to bottom,transparent,#000 32px,#000 calc(100% - 32px),transparent)}
+.enquiry-example-list{position:relative;height:240px;max-height:240px;overflow:hidden;overscroll-behavior:auto;touch-action:pan-y pinch-zoom;scrollbar-width:none;scroll-behavior:auto;pointer-events:none;mask-image:linear-gradient(to bottom,transparent,#000 32px,#000 calc(100% - 32px),transparent)}
 .enquiry-example-text{pointer-events:auto}
 .enquiry-examples:has([data-enquiry-example].is-hovered){cursor:pointer}
 .enquiry-example-list::-webkit-scrollbar{display:none}

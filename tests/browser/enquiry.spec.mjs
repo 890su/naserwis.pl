@@ -37,13 +37,47 @@ async function prepare(page, lang) {
 
 async function selectExample(example) {
   await example.scrollIntoViewIfNeeded();
-  // Text receives native pointer events; empty row space deliberately lets the
-  // browser scroll the page. Click an actual text line, including wrapped copy.
+  // Click an actual text line, including wrapped copy; both text and empty row
+  // space leave wheel/touch scrolling to the page.
   const point = await example.locator('.enquiry-example-text').evaluate(el => {
     const rect = el.getClientRects()[0];
     return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
   });
   await example.page().mouse.click(point.x, point.y);
+}
+
+for (const route of ['', 'serwis-monitoringu/']) {
+  for (const gesture of ['wheel', 'touch']) {
+    test.describe(`${route || '/'} ${gesture} input`, () => {
+      test.use({ isMobile: gesture === 'touch', hasTouch: gesture === 'touch', viewport: { width: gesture === 'touch' ? 390 : 1440, height: 1000 } });
+    test(`example ${gesture} scrolls the page without stopping motion /${route}`, async ({ page }) => {
+      await prepare(page, 'pl');
+      await page.goto('/' + route);
+      const list = page.locator(`${route ? '#final-form' : '#hero-form'} .enquiry-example-list`);
+      await list.scrollIntoViewIfNeeded();
+      const bounds = await list.boundingBox();
+      const x = bounds.x + bounds.width / 2, y = bounds.y + bounds.height / 2;
+      await page.mouse.move(x, y);
+      const initialOffset = await list.evaluate(el => el.scrollTop);
+      await expect.poll(() => list.evaluate(el => el.scrollTop)).toBeGreaterThan(initialOffset + 3);
+      const pageStart = await page.evaluate(() => scrollY);
+      if (gesture === 'wheel') await page.mouse.wheel(0, 100);
+      else {
+        const client = await page.context().newCDPSession(page);
+        await client.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x, y }] });
+        for (let step = 1; step <= 6; step++) {
+          await client.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x, y: y - step * 20 }] });
+          await page.waitForTimeout(30);
+        }
+        await client.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+        await client.detach();
+      }
+      await expect.poll(() => page.evaluate(() => scrollY)).toBeGreaterThan(pageStart + 30);
+      const offsetAfterGesture = await list.evaluate(el => el.scrollTop);
+      await expect.poll(() => list.evaluate(el => el.scrollTop)).toBeGreaterThan(offsetAfterGesture + 3);
+    });
+    });
+  }
 }
 
 for (const lang of ['pl', 'ru', 'uk', 'en']) {

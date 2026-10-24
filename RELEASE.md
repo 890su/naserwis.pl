@@ -1,3 +1,18 @@
+# Automatic enquiry examples without nested manual scrolling — 2026-10-24
+
+- The collapsed enquiry example list is clipped for automatic movement only.
+  Wheel and touch gestures scroll the page over both text and empty row areas;
+  there is no manual list scrolling, gesture takeover or hover/focus pause.
+  Vertical touch panning and pinch zoom remain native browser gestures.
+- Full-width example selection, animated typing, the expanded All examples
+  view and form resets retain their behavior. Motion stops while the examples
+  are hidden, expanded or outside the viewport.
+- Static/link/SEO/CRO/guide guards and seven focused browser scenarios passed:
+  native wheel/touch page scrolling and continuing automatic movement on home
+  and CCTV, desktop/mobile form completion, keyboard selection and manual typing.
+  Native touch tests use a mobile browser context and trusted CDP input events;
+  no real lead is submitted.
+
 # Missing Google reviews imported — 2026-10-24
 
 - Checked the public NaSerwis Google listing (13 reviews/ratings) against the
