@@ -9,7 +9,7 @@
         const mobile = matchMedia('(max-width: 1199px)');
         function place() {
             const destination = mobile.matches ? slotInner : desktopSlot;
-            if (rail.parentElement !== destination) destination.append(rail);
+            if (rail.parentElement !== destination) destination.prepend(rail);
         }
         mobile.addEventListener('change', place);
         place();
@@ -20,7 +20,6 @@
         const details = form.querySelector('.enquiry-details');
         const examples = form.querySelector('.enquiry-examples');
         const list = form.querySelector('.enquiry-example-list');
-        const pause = form.querySelector('[data-examples-pause]');
         const all = form.querySelector('[data-examples-all]');
         let expanded = false;
         let paused = false;
@@ -58,7 +57,6 @@
         }
         function updateMotion() {
             stop();
-            pause.hidden = expanded;
             clones.forEach(item => { item.hidden = expanded; });
             if (visible && !paused && !interacting && !expanded && !examples.hidden && !document.hidden) frame = requestAnimationFrame(animate);
         }
@@ -69,9 +67,33 @@
             examples.hidden = hasDescription || Boolean(typingTimer);
             updateMotion();
         }
-        list.addEventListener('click', event => {
-            const example = event.target.closest('[data-enquiry-example]');
+        // Only the text participates in native list scrolling. The surrounding
+        // row still highlights and selects across its full width, while gestures
+        // in its empty side areas hit the parent and scroll the page naturally.
+        function rowAtPoint(event) {
+            const bounds = list.getBoundingClientRect();
+            if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) return null;
+            return [...list.children].find(item => {
+                if (item.hidden) return false;
+                const row = item.getBoundingClientRect();
+                return event.clientY >= row.top && event.clientY <= row.bottom;
+            });
+        }
+        let hoveredRow = null;
+        function highlightRow(row) {
+            if (hoveredRow === row) return;
+            hoveredRow?.classList.remove('is-hovered');
+            hoveredRow = row;
+            hoveredRow?.classList.add('is-hovered');
+        }
+        examples.addEventListener('pointermove', event => {
+            if (event.pointerType === 'mouse') highlightRow(rowAtPoint(event));
+        });
+        examples.addEventListener('pointerleave', () => highlightRow(null));
+        examples.addEventListener('click', event => {
+            const example = event.target.closest('[data-enquiry-example]') || rowAtPoint(event);
             if (!example) return;
+            highlightRow(null);
             cancelTyping();
             selectedText = example.textContent;
             details.hidden = false;
@@ -97,12 +119,6 @@
         message.addEventListener('pointerdown', cancelTyping);
         form.addEventListener('submit', finishTyping, true);
         message.addEventListener('input', reveal);
-        pause.addEventListener('click', () => {
-            paused = !paused;
-            pause.setAttribute('aria-pressed', String(paused));
-            pause.textContent = paused ? pause.dataset.resume : pause.dataset.pause;
-            updateMotion();
-        });
         all.addEventListener('click', () => {
             expanded = !expanded;
             list.classList.toggle('enquiry-show-all', expanded);
@@ -115,11 +131,9 @@
         list.addEventListener('pointerleave', () => { interacting = list.contains(document.activeElement); updateMotion(); });
         list.addEventListener('focusin', () => { interacting = true; updateMotion(); });
         list.addEventListener('focusout', event => { interacting = list.contains(event.relatedTarget); updateMotion(); });
-        // Manual scrolling pauses the automatic movement until the visitor resumes it.
+        // Manual scrolling takes over from automatic movement.
         function manualScroll() {
             paused = true;
-            pause.setAttribute('aria-pressed', 'true');
-            pause.textContent = pause.dataset.resume;
             offset = list.scrollTop;
             updateMotion();
         }
@@ -136,6 +150,8 @@
                 form.querySelector('.enquiry-extras').open = false;
                 examples.hidden = false;
                 message.style.removeProperty('height');
+                paused = false;
+                highlightRow(null);
                 offset = list.scrollTop = 0;
                 updateMotion();
             });

@@ -349,6 +349,24 @@ No uplift is claimed. Obtain fresh 28/90-day GA4/GSC and qualified-lead records;
 review the first full week's consent-segmented funnel and run a controlled
 experiment only when traffic supports it. Do not alter Ads bidding based on
 button clicks alone. See [CRO_PLAN.md](CRO_PLAN.md) for evidence-gated next steps.
+# 2026-10-24 — audience navigation and enquiry scrolling
+
+The owner explicitly authorized publishing the reviewed local changes:
+
+- Short home/business labels in desktop and burger navigation in PL/RU/UK/EN;
+  business destinations reuse the localized ITBIZ links.
+- Four footer columns with business services and all 14 districts in compact form.
+- Native example-list scrolling over text only, page scrolling in empty side
+  space, full-width highlighting/selection, and removal of Pause.
+- Centered service-form channels below 1200px; service phone below the form at
+  760px and below, preserving order when resizing.
+
+Static checks passed for 49 pages. Browser coverage and targeted reruns are
+recorded in `docs/enquiry-scroll-2026-10-24.md`. Publication uses the existing
+GitHub main / Cloudflare Pages integration. Deployment status and production
+verification must be confirmed against the released SHA; the local publication
+receipt is `outputs/navigation-enquiry-publication-2026-10-24.json`.
+
 # 2026-09-06 — weather and connection utility
 
 - Added localized PL/RU/UK/EN pages combining the Warsaw forecast with an

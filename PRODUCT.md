@@ -49,6 +49,26 @@ Existing service copy, transparent pricing terms and customer review excerpts ar
 
 ## Confirmed Decisions
 
+The owner then explicitly requested publication of the audience navigation,
+four-column footer and enquiry scroll/contact refinements on 24 October 2026.
+This authorizes committing and pushing these reviewed changes through the existing
+GitHub main / Cloudflare Pages integration and verifying the live result.
+
+On 24 October 2026 the owner refined the progressive enquiry on home and service
+pages: native wheel/touch scrolling belongs to the examples list only over its
+text; empty space to either side scrolls the page. Keep full-width row highlighting
+and selection, remove Pause, center service-form contact channels below 1200px,
+and move the service hero phone below the form only on phones (760px and below),
+as on the homepage. Keep this ordering after responsive placement changes. Apply
+all four locales. Local implementation only; publication was not requested.
+
+On 24 October 2026 the owner requested short audience labels in the burger menu,
+matching home/business dropdowns in desktop navigation, and a business column in
+the footer with a more compact service-area list. Use “Dla domu” / “Dla biznesu”
+and equivalent RU/UK/EN labels. Reuse the five existing localized ITBIZ menu
+destinations and retain every service district. This is a local implementation
+request; no new production publication was requested.
+
 On 24 October 2026 the owner requested broader homepage link-preview metadata:
 remove domestic/private-customer limitations and include Wi-Fi, LAN, network and
 internet faults, plus CCTV diagnosis/configuration/installation. Apply equivalent

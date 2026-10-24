@@ -284,6 +284,18 @@ Shipping derivatives are `public/assets/redesign/home-network-{720,1440}.{avif,w
 
 Owner follow-up (22 October 2026): the homepage pricing disclosure contains conditions only; the three published rates appear once above it. Omit its redundant table, heading and top divider. Use neutral LAN/device names and homepage introductions in PL/RU/UK/EN. Add a matching “for companies and offices” list entry in the setup panel linking to the localized ITBIZ services page, with ITBIZ.PL as a quiet destination caption. The footer now has three desktop columns and no language column on any page; preserve header language links and head hreflang alternates.
 
+Navigation/footer refinement (24 October 2026): use the short “Dla domu” / “Dla biznesu” labels in both header dropdowns and mobile disclosures, with equivalent RU/UK/EN wording. The business dropdown reuses the five existing localized ITBIZ menu links, an ITBIZ.PL caption and the existing external-link stroke icon. The footer now has four desktop columns: contact, service area, home services and business services; two below 1100px and one below 601px. Retain all 14 districts as compact wrapping text with 13px type, no tag outlines, and the existing #c9d2dc support color. ITBIZ captions reuse #9aa6b4 at 12px. Keep business links opening in a new tab with rel=noopener.
+
+Enquiry interaction refinement (24 October 2026): keep full-width example rows
+and their hover/keyboard treatment. Only the inline text spans receive pointer
+events within the native scroller; the outer examples region preserves full-row
+mouse highlighting and selection while letting side-space gestures reach page
+scrolling. No Pause link; retain All examples and existing automatic movement
+until manual scrolling takes over. Below 1200px center the service-form contact
+channels. At 760px and below hide the service hero phone and show the same phone
+block beneath the form, matching the homepage. Keep the form before this block
+when moving it between desktop and mobile slots.
+
 Audience refinements (22 October 2026): show the catalogue heading once above exactly two disclosures, for private customers and organisations. Keep the detailed NaSerwis catalogue/scenarios/about copy inside the private disclosure; remove the repeated catalogue heading. The business disclosure explains the ITBIZ destination/new-tab behavior and shows five localized direct service links with external-link stroke icons. Every ITBIZ handoff uses target=_blank and rel=noopener. Keep one pricing-disclosure label and no internal billing heading/table. Separate the white process and reviews with a pale blue-gray (#e8eef5) full-width services/audience section; prices and guides use the existing gray wash. Preserve the dark intro/contact and white task chooser.
 
 Approved audit fixes (22 October 2026): normal form-field boundaries use #758497, retaining existing focus/error colors. Keep consent and contact runtime styles intact when pruning homepage CSS. The first task photo has high fetch priority; the second and optional LED frame load lazily, with an 800px candidate and AVIF frame variants. A small inline width fallback keeps content usable when external CSS fails. Publication is authorized; validation is recorded in docs/homepage-release-2026-10-22.md.

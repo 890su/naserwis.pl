@@ -3,7 +3,7 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { resolve, relative, join } from 'node:path';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { restoreHomepage, simplifyHomepage } from './homepage-readability.mjs';
-import { businessLinks } from './business-links.mjs';
+import { audienceLabels, businessLinks, businessMenuServices } from './business-links.mjs';
 import { stagedEnquiries, enquiryHeading, compactQuickEnquiry } from './staged-enquiry.mjs';
 const output = resolve('public');
 function block(html, tag, match) {
@@ -31,7 +31,7 @@ function renderEnquiryPlacement(html, isHome, lang) {
   const placedRail = rail.replace(/(<form\b[^>]*)(>)/, (_, attrs) => `${attrs.replace(/ data-enquiry-placement="[^"]*"/g, '')} data-enquiry-placement="${isHome ? 'contact_rail' : 'service_rail'}">`);
   html = html.replace(rail, '<div data-enquiry-desktop-slot></div>');
   const hero = block(html, 'section', /<section class="hero\b/);
-  const mobileCall = isHome ? heroCall(words[lang] || words.pl).replace('class="preview-hero-call"', 'class="preview-hero-call preview-home-mobile-call"') : '';
+  const mobileCall = heroCall(words[lang] || words.pl).replace('class="preview-hero-call"', 'class="preview-hero-call preview-home-mobile-call"');
   return html.replace(hero, `${hero}<section class="mobile-enquiry-slot" aria-label="${enquiryHeading(lang)}"><div class="container">${placedRail}${mobileCall}</div></section>`)
     .replace('</head>', enquiryNoJs + '\n</head>');
 }
@@ -93,6 +93,23 @@ for (const [file, currentHtml] of pages) {
     for (const match of footer.matchAll(/<div class="footer-section"[^>]*>/g)) {
       const column = block(footer.slice(match.index), 'div', /^<div/);
       if (/\bhreflang=/.test(column)) compactFooter = compactFooter.replace(column, '');
+      else if (!column.includes('footer-districts') && !column.includes('ContactPoint')) {
+        compactFooter = compactFooter.replace(column, column.replace(/<h[34]>[^<]+<\/h[34]>/, `<h3>${audienceLabels[lang][0]}</h3>`));
+      }
+    }
+    if (compactFooter.includes('class="footer-content"')) {
+      const existing = /<div class="footer-section footer-business">/.test(compactFooter)
+        ? block(compactFooter, 'div', /<div class="footer-section footer-business">/) : '';
+      const content = block(compactFooter, 'div', /<div class="footer-content">/);
+      const business = `<div class="footer-section footer-business">
+                    <h3>${audienceLabels[lang][1]}</h3>
+                    <p class="footer-business-label">ITBIZ.PL</p>
+                    <ul class="footer-business-links">
+                        ${businessMenuServices[lang].map(([name, slug]) => `<li><a href="${businessLinks[lang].url}${slug}/" target="_blank" rel="noopener">${name}</a></li>`).join('\n                        ')}
+                    </ul>
+                </div>`;
+      compactFooter = existing ? compactFooter.replace(existing, business)
+        : compactFooter.replace(content, content.replace(/<\/div>$/, business + '\n            </div>'));
     }
     html = html.replace(footer, compactFooter.replace(/^[\t ]+$/gm, ''));
   }

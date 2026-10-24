@@ -1,18 +1,12 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { cctvCopy, cctvRoute } from './cctv-copy.mjs';
-import { businessLinks, businessMenuServices } from './business-links.mjs';
+import { audienceLabels, businessLinks, businessMenuServices } from './business-links.mjs';
 
 const labels = {
   pl: ['Strona główna', 'Ceny', 'Poradnik', 'Kontakt'],
   ru: ['Главная', 'Цены', 'Статьи', 'Контакты'],
   uk: ['Головна', 'Ціни', 'Порадник', 'Контакти'],
   en: ['Home', 'Prices', 'Guides', 'Contact'],
-};
-const audienceLabels = {
-  pl: ['Usługi dla osób prywatnych', 'Usługi dla organizacji'],
-  ru: ['Услуги для частных лиц', 'Услуги для организаций'],
-  uk: ['Послуги для приватних осіб', 'Послуги для організацій'],
-  en: ['Services for individuals', 'Services for organisations']
 };
 const escapeAttribute = text => text.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
@@ -52,6 +46,7 @@ async function update(directory) {
     if (!html.includes('id="header"') || !html.includes('services-dropdown')) continue;
     const locale = html.match(/<html[^>]*lang="([a-z]{2})/)?.[1] || 'pl';
     const [home, prices, guides, contact] = labels[locale];
+    const [privateServices, organisationServices] = audienceLabels[locale];
     const prefix = locale === 'pl' ? '/' : `/${locale}/`;
     const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
     const currentHome = canonical === `https://naserwis.pl${prefix}` ? ' aria-current="page"' : '';
@@ -62,15 +57,27 @@ async function update(directory) {
       const phone = header.match(/<a\b[^>]*class="phone"[\s\S]*?<\/a>/)?.[0];
       const language = header.match(/<div class="lang-dropdown" role="group"[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       if (!services || !phone || !language) throw new Error(`Incomplete header: ${file}`);
+      services = services.replace(/(<span class="lang-name services-label">)[^<]+/, `$1${privateServices}`);
       services = services.replace(/<button class="lang-option"[^>]*onclick="window\.location\.href='[^']*naprawa-sieci\/'"[\s\S]*?<\/button>/, button => button.replace(/(<span class="lang-name">)[^<]+/, `$1${cctvCopy[locale].lanNav}`));
       if (!services.includes(cctvRoute)) services = services.replace(/(<\/div>\s*<\/div>)$/, `<button class="lang-option" role="menuitem" onclick="window.location.href='${prefix}${cctvRoute}'"><span class="lang-name">${cctvCopy[locale].nav}</span></button>\n$1`);
       services = services.replace(/<button class="lang-current services-btn"[^>]*>/, tag => {
         tag = tag.replace(/ aria-current="[^"]*"/g, '');
         return isService ? tag.replace('>', ' aria-current="page">') : tag;
       });
+      const business = `<div class="lang-dropdown business-dropdown">
+                    <button class="lang-current services-btn" aria-haspopup="true" aria-expanded="false" aria-controls="business-menu">
+                        <span class="lang-name services-label">${organisationServices}</span>
+                        <span class="lang-arrow">&#9660;</span>
+                    </button>
+                    <div id="business-menu" class="lang-menu services-menu business-menu" role="menu" aria-hidden="true">
+                        <p class="business-menu-label">ITBIZ.PL</p>
+                        ${businessMenuServices[locale].map(([name, slug]) => `<a class="lang-option" role="menuitem" href="${businessLinks[locale].url}${slug}/" target="_blank" rel="noopener"><span class="lang-name">${name}</span>${externalIcon}</a>`).join('\n                        ')}
+                    </div>
+                </div>`;
       const navigation = `<div class="nav-center desktop-nav">
                 <a class="header-nav-link" href="${prefix}"${currentHome}>${home}</a>
                 ${services}
+                ${business}
                 <a class="header-nav-link" href="${prefix}#services">${prices}</a>
                 <a class="guides-nav-link" href="${prefix}poradnik/"${currentGuide}>${guides}</a>
                 <a class="header-nav-link" href="${prefix}#contact">${contact}</a>
@@ -103,7 +110,6 @@ async function update(directory) {
       const updatedHeader = header.replace(/(<div class="mobile-actions">)\s*(?:<a\b[^>]*class="btn-mobile-call"[\s\S]*?<\/a>|<div class="mobile-lang-options"[\s\S]*?<\/div>)/, `$1\n                ${headerLanguages}`);
       html = html.replace(header, updatedHeader);
       const current = href => canonical === `https://naserwis.pl${href}` ? ' aria-current="page"' : '';
-      const [privateServices, organisationServices] = audienceLabels[locale];
       // Contact channels reuse the page's localized launcher: same links, labels and brand icons.
       const fabMenu = html.match(/<div class="fab-menu" id="contact-menu">[\s\S]*?<\/div>/)?.[0] || '';
       const channel = key => {
@@ -132,7 +138,7 @@ async function update(directory) {
                 <summary class="mobile-services-toggle"><span>${organisationServices}</span>${chevron}</summary>
                 <div class="mobile-service-links mobile-business-links">
                     <p class="mobile-business-label">ITBIZ.PL</p>
-                    ${businessMenuServices[locale].map(([name, slug]) => `<a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}${slug}/"><span>${name}</span>${externalIcon}</a>`).join('\n                    ')}
+                    ${businessMenuServices[locale].map(([name, slug]) => `<a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}${slug}/" target="_blank" rel="noopener"><span>${name}</span>${externalIcon}</a>`).join('\n                    ')}
                 </div>
             </details>
             <a class="mobile-nav-link" href="${prefix}#services">${prices}</a>
@@ -153,4 +159,4 @@ async function update(directory) {
 }
 
 await update('public');
-console.log('Shared headers: desktop navigation preserved; mobile header languages and collapsible services.');
+console.log('Shared headers: compact home/business menus on desktop and mobile; mobile header languages preserved.');

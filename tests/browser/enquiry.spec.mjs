@@ -35,6 +35,17 @@ async function prepare(page, lang) {
   }, lang);
 }
 
+async function selectExample(example) {
+  await example.scrollIntoViewIfNeeded();
+  // Text receives native pointer events; empty row space deliberately lets the
+  // browser scroll the page. Click an actual text line, including wrapped copy.
+  const point = await example.locator('.enquiry-example-text').evaluate(el => {
+    const rect = el.getClientRects()[0];
+    return { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
+  });
+  await example.page().mouse.click(point.x, point.y);
+}
+
 for (const lang of ['pl', 'ru', 'uk', 'en']) {
   for (const route of ['', 'naprawa-wifi/', 'naprawa-sieci/', 'montaz-sieci/', 'serwis-monitoringu/']) {
     for (const width of [390, 1440]) {
@@ -52,8 +63,7 @@ for (const lang of ['pl', 'ru', 'uk', 'en']) {
           expect(await page.locator('.hero').evaluate(el => el.nextElementSibling.className)).toBe('mobile-enquiry-slot');
           const call = await page.locator('.preview-hero-call:visible').boundingBox();
           const bounds = await form.boundingBox();
-          if (route) expect(call.y).toBeLessThan(bounds.y);
-          else expect(call.y).toBeGreaterThanOrEqual(bounds.y + bounds.height);
+          expect(call.y).toBeGreaterThanOrEqual(bounds.y + bounds.height);
         } else {
           expect(await form.evaluate(el => Boolean(el.closest('.preview-contact-rail, .preview-service-rail')))).toBe(true);
         }
@@ -62,7 +72,7 @@ for (const lang of ['pl', 'ru', 'uk', 'en']) {
         // Selecting an example starts step two and retains an editable description.
         const example = form.locator('[data-enquiry-example]').first();
         const text = await example.textContent();
-        await example.click();
+        await selectExample(example);
         await expect(form.locator('[name=message]')).toHaveValue(text);
         await expect(form.locator('[name=message]')).toBeFocused();
         await expect(form.locator('.enquiry-details')).toBeVisible();
@@ -102,7 +112,7 @@ test('owner-requested example motion, keyboard selection and manual typing takeo
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   const form = page.locator('#hero-form');
-  await expect(form.locator('[data-examples-pause]')).toBeVisible();
+  await expect(form.locator('[data-examples-pause]')).toHaveCount(0);
   const list = form.locator('.enquiry-example-list');
   const start = await list.evaluate(el => el.scrollTop);
   await expect.poll(() => list.evaluate(el => el.scrollTop)).toBeGreaterThan(start + 5);
@@ -151,7 +161,7 @@ for (const route of ['', 'serwis-monitoringu/']) {
       } else expect(await form.evaluate(el => Boolean(el.closest('.preview-contact-rail, .preview-service-rail')))).toBe(true);
       const example = form.locator('[data-enquiry-example]').first();
       const text = await example.textContent();
-      await example.click();
+      await selectExample(example);
       await expect(form).toHaveAttribute('data-typing-example', 'true');
       await expect(form.locator('.enquiry-details')).toBeVisible();
       await expect(form.locator('textarea')).toHaveValue(text);
@@ -176,7 +186,7 @@ test('an early submit finishes the selected example instead of sending partial t
   const form = page.locator('#hero-form');
   const example = form.locator('[data-enquiry-example]').first();
   const text = await example.textContent();
-  await example.click();
+  await selectExample(example);
   await form.locator('[name=phone]').fill('@qa_test');
   await page.route('**/api/contact', async route => {
     expect(route.request().postDataJSON().message).toBe(text);

@@ -1,4 +1,11 @@
 // ITBIZ uses translated service slugs; do not derive them from the Polish URL.
+export const audienceLabels = {
+  pl: ['Dla domu', 'Dla biznesu'],
+  ru: ['Для дома', 'Для бизнеса'],
+  uk: ['Для дому', 'Для бізнесу'],
+  en: ['For home', 'For business']
+};
+
 export const businessLinks = {
   pl: { label: 'Dla firm i biur', url: 'https://itbiz.pl/uslugi/' },
   ru: { label: 'Для компаний и офисов', url: 'https://itbiz.pl/ru/uslugi/' },
@@ -38,7 +45,7 @@ export const businessServices = {
   ]
 };
 
-// Selected mobile-menu services, checked against all four live ITBIZ indexes.
+// Shared header, mobile-menu and footer services, checked against all four ITBIZ indexes.
 const businessMenuExtras = {
   pl: [['Awaria monitoringu IP', 'awaria-monitoringu-w-firmie'], ['Projekt i konfiguracja Wi-Fi', 'wifi-dla-biur']],
   ru: [['Авария IP-видеонаблюдения', 'avariya-videonablyudeniya-v-kompanii'], ['Проектирование и настройка Wi-Fi', 'wifi-dlya-ofisov']],
