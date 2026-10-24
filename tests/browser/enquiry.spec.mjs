@@ -1,5 +1,33 @@
 import { test, expect } from '@playwright/test';
 
+// A slow bundle must not move the already painted mobile content below the form.
+for (const route of ['', 'serwis-monitoringu/']) {
+  for (const width of [412, 768]) {
+    test(`stable initial form with delayed JavaScript /${route} at ${width}`, async ({ page }) => {
+      await prepare(page, 'pl');
+      await page.setViewportSize({ width, height: 1000 });
+      let release;
+      const ready = new Promise(resolve => { release = resolve; });
+      await page.route('**/assets/site-*.js', async handler => { await ready; await handler.continue(); });
+      await page.goto('/' + route, { waitUntil: 'commit' });
+      const form = page.locator(route ? '#final-form' : '#hero-form');
+      const following = page.locator('.mobile-enquiry-slot + section');
+      try {
+        await expect(form.locator('[name=message]')).toBeVisible();
+        expect(await form.evaluate(el => !!el.closest('.mobile-enquiry-slot'))).toBe(true);
+        await page.evaluate(() => document.fonts.ready);
+        const before = await following.boundingBox();
+        // The first render is intentionally observed before releasing the application bundle.
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        release();
+        await expect(form.locator('[name=phone]')).toHaveAttribute('aria-describedby', /-error/);
+        const after = await following.boundingBox();
+        expect(Math.abs(before.y - after.y)).toBeLessThan(1);
+      } finally { release(); }
+    });
+  }
+}
+
 async function prepare(page, lang) {
   await page.addInitScript(locale => {
     localStorage.setItem('preferredLanguage', locale);

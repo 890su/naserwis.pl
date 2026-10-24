@@ -16,6 +16,24 @@ function block(html, tag, match) {
   }
   throw Error('Unclosed '+tag);
 }
+const enquiryNoJs = '<noscript><style>.mobile-enquiry-slot{display:block!important;background:#18212c;padding:24px 0}.mobile-enquiry-slot>.container{max-width:688px}</style></noscript>';
+// Restore the source rail before any generator rebuilds its surrounding content.
+function restoreEnquiryPlacement(html) {
+  if (!html.includes('data-enquiry-desktop-slot')) return html;
+  const slot = block(html, 'section', /<section class="mobile-enquiry-slot"/);
+  const rail = block(slot, 'aside', /<aside (?:id="preview-contact" class="preview-contact-rail"|class="hero-form")/);
+  return html.replace(slot, '').replace('<div data-enquiry-desktop-slot></div>', rail).replace(enquiryNoJs, '');
+}
+function renderEnquiryPlacement(html, isHome, lang) {
+  const rail = isHome
+    ? block(html, 'aside', /<aside id="preview-contact" class="preview-contact-rail"/)
+    : block(block(html, 'aside', /<aside class="preview-service-rail"/), 'aside', /<aside class="hero-form"/);
+  const placedRail = rail.replace(/(<form\b[^>]*)(>)/, (_, attrs) => `${attrs.replace(/ data-enquiry-placement="[^"]*"/g, '')} data-enquiry-placement="${isHome ? 'contact_rail' : 'service_rail'}">`);
+  html = html.replace(rail, '<div data-enquiry-desktop-slot></div>');
+  const hero = block(html, 'section', /<section class="hero\b/);
+  return html.replace(hero, `${hero}<section class="mobile-enquiry-slot" aria-label="${enquiryHeading(lang)}"><div class="container">${placedRail}</div></section>`)
+    .replace('</head>', enquiryNoJs + '\n</head>');
+}
 const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${({ phone:'<path d="M21 16.5v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 1.1 3.8 2 2 0 0 1 3.1 1.6h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/>', chat:'<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 10h8M8 14h5"/>', wrench:'<path d="M14.7 6.3a5 5 0 0 0-6.3 6.3L2 19a2.1 2.1 0 0 0 3 3l6.4-6.4a5 5 0 0 0 6.3-6.3l-3 3-3-3 3-3Z"/>', setup:'<rect x="4" y="10" width="16" height="10" rx="2"/><path d="M7 10V3M17 10V3M8 15h.01M12 15h.01M16 15h.01M8 23h8"/>', arrow:'<path d="m9 5 7 7-7 7"/>', wifi:'<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/>', router:'<rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18H6"/><path d="M10.01 18H10"/><path d="M15 10v4"/><path d="M17.84 7.17a4 4 0 0 0-5.66 0"/><path d="M20.66 4.34a8 8 0 0 0-11.31 0"/>', network:'<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>', port:'<path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/>', test:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>', laptop:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/>' })[name]}</svg>`;
 // Brand glyphs copied from the existing contact launcher (filled, recognisable marks).
 const brandPaths = {
@@ -59,7 +77,7 @@ async function walk(dir) { const list=[]; for (const item of await readdir(dir,{
 export async function applyRedesign() {
 let transformed=0;
 const manifest = await assetManifest();
-const pages = new Map(await Promise.all((await walk(output)).map(async file => [file, restoreHomepage(expandAssetBundles(await readFile(file,'utf8'),manifest), block)])));
+const pages = new Map(await Promise.all((await walk(output)).map(async file => [file, restoreHomepage(restoreEnquiryPlacement(expandAssetBundles(await readFile(file,'utf8'),manifest)), block)])));
 for (const [file, currentHtml] of pages) {
   let html = currentHtml;
   const path = relative(output,file);
@@ -159,6 +177,7 @@ for (const [file, currentHtml] of pages) {
   html=channels(html);
   if (isHome || isService) html=stagedEnquiries(html,lang,path);
   html=compactQuickEnquiry(html,lang);
+  if (isHome || isService) html=renderEnquiryPlacement(html,isHome,lang);
   await writeFile(file,html.replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n'));
 }
 console.log(`Approved redesign applied: ${transformed} commercial layouts; shared visual skin on all HTML.`);
@@ -168,7 +187,8 @@ console.log(`Approved redesign applied: ${transformed} commercial layouts; share
 // the lower CTA so the existing generator can replace the section safely.
 export async function restoreRedesignForms() {
   for (const file of await walk(output)) {
-    let html=await readFile(file,'utf8');
+    let html=restoreEnquiryPlacement(await readFile(file,'utf8'));
+    await writeFile(file,html);
     if (!html.includes('<aside class="preview-service-rail"')) continue;
     const rail=block(html,'aside',/<aside class="preview-service-rail"/);
     if (!rail.includes('<form id="final-form"')) continue;

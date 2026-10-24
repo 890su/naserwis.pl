@@ -68,6 +68,8 @@ body[data-redesign] .preview-outline{border:1px solid var(--rd-blue);color:var(-
 .preview-task-link:hover h3{color:var(--rd-blue);text-decoration:underline}
 .preview-contact-rail{background:#e8edf2;border-radius:var(--rd-radius);padding:24px;scroll-margin-top:95px}
 body[data-redesign] .hero-form{margin:0;padding:0;box-shadow:none;background:transparent;border:0;border-radius:0;max-width:none;width:100%;color:var(--rd-ink)}
+/* First-screen content should paint immediately instead of waiting for entrance fades. */
+body[data-redesign] .hero-service-style .hero-text>:is(h1,p,.hero-cta-wrapper),body[data-redesign] .hero-form[data-enquiry-panel]{animation:none}
 body[data-redesign] .hero-form h2{font-size:24px;font-weight:800;text-align:left;margin:0 0 16px}
 body[data-redesign] .hero-form .contact-next-step{font-size:14px;line-height:1.5;margin-bottom:14px;color:var(--rd-muted)}
 body[data-redesign] .hero-form .form-group{margin-bottom:10px}
@@ -559,7 +561,9 @@ body[data-redesign] [data-compact-form] textarea{min-height:108px;resize:vertica
 body[data-redesign] [data-compact-form] .form-submit{width:100%}
 body[data-redesign] [data-staged-form] .form-submit{width:100%}
 body[data-redesign] [data-staged-form] [role=alert]:not(:empty){margin-top:14px}
+[data-enquiry-desktop-slot]{min-width:0;align-self:start}
 @media(min-width:1200px){.mobile-enquiry-slot{display:none}}
+@media(max-width:1199px){[data-enquiry-desktop-slot]{display:none}}
 @media(max-width:1199px){
   .mobile-enquiry-slot{padding:24px 0 0;text-align:left;background:#fff}
   body[data-redesign] .mobile-enquiry-slot :is(.preview-contact-rail,.hero-form){background:#e8edf2;border-radius:8px;padding:24px;color:var(--rd-ink)}

@@ -381,24 +381,28 @@
             pl: {
                 required: 'Proszę wypełnić to pole.',
                 phone: 'Proszę wpisać numer telefonu.',
+                contact: 'Proszę wpisać numer telefonu, e-mail lub @Telegram.',
                 name: 'Proszę wpisać imię.',
                 message: 'Proszę opisać problem.'
             },
             ru: {
                 required: 'Пожалуйста, заполните это поле.',
                 phone: 'Пожалуйста, введите номер телефона.',
+                contact: 'Пожалуйста, введите телефон, e-mail или @Telegram.',
                 name: 'Пожалуйста, введите имя.',
                 message: 'Пожалуйста, опишите проблему.'
             },
             uk: {
                 required: 'Будь ласка, заповніть це поле.',
                 phone: 'Будь ласка, введіть номер телефону.',
+                contact: 'Будь ласка, введіть телефон, e-mail або @Telegram.',
                 name: 'Будь ласка, введіть ім\'я.',
                 message: 'Будь ласка, опишіть проблему.'
             },
             en: {
                 required: 'Please fill in this field.',
                 phone: 'Please enter your phone number.',
+                contact: 'Please enter your phone number, email or @Telegram.',
                 name: 'Please enter your name.',
                 message: 'Please describe the issue.'
             }
@@ -446,7 +450,8 @@
                 input.setAttribute('aria-invalid', String(!valid));
                 error.hidden = valid;
                 if (!valid) {
-                    error.textContent = value ? (shortMessages[currentLang] || shortMessages.pl) + minimum[input.name] + '.' : msgs[input.name];
+                    const requiredMessage = input.name === 'phone' && input.type === 'text' ? msgs.contact : msgs[input.name];
+                    error.textContent = value ? (shortMessages[currentLang] || shortMessages.pl) + minimum[input.name] + '.' : requiredMessage;
                     invalid ||= input;
                     trackFunnelEvent('naserwis_form_validation_error', { ...formParameters, field: input.name, reason: value ? 'too_short_or_invalid' : 'required' });
                 }

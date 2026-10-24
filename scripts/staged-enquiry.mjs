@@ -68,7 +68,7 @@ export function stagedEnquiries(html, lang, path) {
         <fieldset class="enquiry-choices"><legend>${t.type}</legend>${choice('requestType', 'broken', t.broken)}${choice('requestType', 'setup', t.setup)}</fieldset>
         <fieldset class="enquiry-choices enquiry-urgency"><legend>${t.urgency}</legend>${choice('urgency', 'urgent', t.urgent)}${choice('urgency', 'soon', t.today)}${choice('urgency', 'flexible', t.normal)}</fieldset>
         <div class="form-group"><label for="${prefix}-phone">${t.contact}</label><input type="text" id="${prefix}-phone" name="phone" required minlength="5" maxlength="120" autocomplete="off" placeholder="${t.contactHint}" aria-describedby="${id}-contact-help"><small id="${id}-contact-help" class="enquiry-hint">${t.contactHint}</small></div>
-        <details class="enquiry-extras"><summary>${t.extras} <span>(${t.optional})</span></summary><div class="form-group"><label for="${prefix}-name">${t.name}</label><input type="text" id="${prefix}-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="${prefix}-address">${t.address}</label><input type="text" id="${prefix}-address" name="address" maxlength="300" autocomplete="street-address"></div></details>
+        <details class="enquiry-extras"><summary>${t.extras} <span>(${t.optional})</span></summary><div class="form-group"><label for="${prefix}-name">${t.name}</label><input type="text" id="${prefix}-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="${prefix}-address">${t.address}</label><input type="text" id="${prefix}-address" name="address" maxlength="300" autocomplete="address-line1"></div></details>
         <button type="submit" class="btn btn-primary form-submit">${t.submit}</button>${notice}
       </div>
       <div id="${id}-message" role="alert" aria-live="polite"></div>${alternatives}
@@ -94,7 +94,7 @@ export function compactQuickEnquiry(html, lang) {
     return `<form id="quick-form" aria-label="${title}" data-compact-form>
       <div class="form-group"><label for="quick-message">${description}</label><textarea id="quick-message" name="message" required minlength="3" maxlength="4000" rows="3"></textarea></div>
       <div class="form-group"><label for="quick-phone">${phone}</label><input type="tel" id="quick-phone" name="phone" required minlength="5" maxlength="60" autocomplete="tel" inputmode="tel"></div>
-      <details class="enquiry-extras"><summary>${t.extras} <span>(${t.optional})</span></summary><div class="form-group"><label for="quick-name">${t.name}</label><input type="text" id="quick-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="quick-address">${t.address}</label><input type="text" id="quick-address" name="address" maxlength="300" autocomplete="street-address"></div></details>
+      <details class="enquiry-extras"><summary>${t.extras} <span>(${t.optional})</span></summary><div class="form-group"><label for="quick-name">${t.name}</label><input type="text" id="quick-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="quick-address">${t.address}</label><input type="text" id="quick-address" name="address" maxlength="300" autocomplete="address-line1"></div></details>
       <button type="submit" class="btn btn-primary form-submit">${t.submit}</button>${notice}<div id="quick-form-message" role="alert" aria-live="polite"></div>
     </form>`;
   });

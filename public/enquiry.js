@@ -1,6 +1,19 @@
 // Progressive enquiry: typing never moves focus or scrolls the page.
 (() => {
     'use strict';
+    // Mobile order is present in raw HTML, so delayed JS cannot move content down.
+    const slotInner = document.querySelector('.mobile-enquiry-slot > .container');
+    const desktopSlot = document.querySelector('[data-enquiry-desktop-slot]');
+    const rail = slotInner?.firstElementChild;
+    if (rail && desktopSlot) {
+        const mobile = matchMedia('(max-width: 1199px)');
+        function place() {
+            const destination = mobile.matches ? slotInner : desktopSlot;
+            if (rail.parentElement !== destination) destination.append(rail);
+        }
+        mobile.addEventListener('change', place);
+        place();
+    }
     // Owner-requested motion exception: these examples animate even with reduced motion.
     document.querySelectorAll('[data-staged-form]').forEach(form => {
         const message = form.elements.message;
@@ -131,25 +144,4 @@
         addEventListener('pageshow', reveal);
     });
 
-    // Keep the SAME form before the content on both phone and tablet layouts.
-    const rail = document.querySelector('.preview-contact-rail') || document.querySelector('.preview-service-rail > .hero-form');
-    const hero = document.querySelector('.hero');
-    if (rail && hero) {
-        rail.querySelector('form').dataset.enquiryPlacement = rail.matches('.preview-contact-rail') ? 'contact_rail' : 'service_rail';
-        const marker = document.createComment('desktop enquiry position');
-        rail.before(marker);
-        const slot = document.createElement('section');
-        slot.className = 'mobile-enquiry-slot';
-        const slotInner = document.createElement('div');
-        slotInner.className = 'container';
-        slot.append(slotInner);
-        hero.after(slot);
-        const mobile = matchMedia('(max-width: 1199px)');
-        function place() {
-            if (mobile.matches) slotInner.append(rail);
-            else marker.after(rail);
-        }
-        mobile.addEventListener('change', place);
-        place();
-    }
 })();

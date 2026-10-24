@@ -1,3 +1,24 @@
+# Stable enquiry first render and valid address fields — 2026-10-24
+
+- Render the single enquiry panel immediately after the hero in source HTML.
+  Mobile/tablet no longer relocate it after JavaScript loads; desktop uses the
+  original right-hand column. Resizing retains the same form and field values.
+  Generators restore and reapply this placement idempotently, preserving form
+  placement attribution and a visible no-JavaScript fallback.
+- Remove entrance fades from the initial hero text and enquiry panel. The
+  owner-approved example scrolling/typing and LED motion remain unchanged.
+- Use valid `autocomplete="address-line1"` on single-line address inputs in
+  staged and compact forms. Staged contact validation now mentions phone,
+  email and Telegram in every locale; compact phone-only messages stay specific.
+- Validation: static/link/SEO/CRO/guide guards and 13 unit tests passed; 62
+  enquiry browser scenarios passed, including four delayed-JavaScript geometry
+  regressions. Nu reports zero HTML errors for home/CCTV in all four locales.
+  Responsive checks at 320/768/1280/1920px, localized errors, no-JS fallback and
+  repeated generator output passed. SEO metadata/H1/schema remain identical
+  on all 49 pages. Provider delivery is mocked, never a real test lead.
+- Owner explicitly requested publication. Production smoke and repeated mobile
+  Lighthouse measurements are recorded with the release verification artifacts.
+
 # Broader homepage link previews — 2026-10-24
 
 - Homepage title, description, Open Graph and Twitter metadata now include
