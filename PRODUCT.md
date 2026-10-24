@@ -49,6 +49,13 @@ Existing service copy, transparent pricing terms and customer review excerpts ar
 
 ## Confirmed Decisions
 
+On 24 October 2026 the owner requested broader homepage link-preview metadata:
+remove domestic/private-customer limitations and include Wi-Fi, LAN, network and
+internet faults, plus CCTV diagnosis/configuration/installation. Apply equivalent
+titles/descriptions in PL/RU/UK/EN and align the shared business description;
+preserve visible H1/content, canonical/hreflang, factual scope and pricing. Publish
+the metadata and then perform a read-only seo-landing audit of the live site.
+
 The owner subsequently explicitly requested publication of the final progressive
 forms, graphite layout, compact popup and CCTV link cleanup on 24 October 2026.
 This authorizes committing and pushing the approved implementation to the existing

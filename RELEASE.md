@@ -1,3 +1,17 @@
+# Broader homepage link previews — 2026-10-24
+
+- Homepage title, description, Open Graph and Twitter metadata now include
+  Wi-Fi/LAN, network and internet fault diagnosis and CCTV service/installation
+  in all four locales, without domestic/private-customer limitations.
+- Shared LocalBusiness descriptions use the same factual service summary.
+  Visible H1/content, service-specific metadata, canonical/hreflang, URLs, prices
+  and conversion configuration remain unchanged.
+- The normal technical build synchronizes the metadata from the existing copy
+  source. Reviewed SEO hashes were updated only after confirming the unchanged
+  headings, canonical/hreflang and all non-description schema facts.
+- Static/link/SEO/CRO/guide checks passed. The owner requested a read-only live
+  seo-landing audit after publication; its measured results are reported separately.
+
 # Progressive enquiries and graphite form layout — 2026-10-24
 
 Follow-up: the final homepage contact section remains a centered single column

@@ -10,6 +10,7 @@ import { applyRedesign } from './apply-redesign.mjs';
 // Both passes write shared HTML, so finish tool relocation before rebuilding headers.
 await import('./apply-tool-navigation.mjs');
 await import('./apply-header-navigation.mjs');
+await import('./sync-home-metadata.mjs');
 await applyRedesign();
 
 const previousManifest = await assetManifest();

@@ -34,24 +34,24 @@ const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-c
 // Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
-  // 2026-10-22: owner-approved homepage titles/descriptions and matching LocalBusiness descriptions.
+  // 2026-10-24: owner-approved network/internet fault and CCTV share summaries; aligned LocalBusiness descriptions.
   // 2026-10-16 owner-approved shorter homepage H1 in all four languages ("... / Montaż lub naprawa z dojazdem").
-  "public/index.html": "2dbdac6319f7e3cce2aaf8a2785f94af627ad35592b19613571426077331d375",
-  "public/naprawa-wifi/index.html": "e164bd28ffbfbb7641859f25434e604578ef690b11255f64012656f1c370e9f9",
-  "public/naprawa-sieci/index.html": "64b3da36a5e717c2aea0b3b205786a712555f7f98391b44408b3e01a6ccd4960",
-  "public/montaz-sieci/index.html": "d9ea5eeed46f5bedd8759c4cc7ca693bcd14def95c99ff4f6df3f4875aba51f7",
-  "public/ru/index.html": "4d41ff400e3aaffe506c12bef325285c9ba9623044953ff2a7fe4887ed934edb",
-  "public/ru/naprawa-wifi/index.html": "db31e4f9f299cb0766eee9749d6ec3de667dc6888fa71d659eaa36d437b30cf0",
-  "public/ru/naprawa-sieci/index.html": "c83b202d25033cd2a43c3189fe5414a528d17080de9a5bc247adcde58e9292ec",
-  "public/ru/montaz-sieci/index.html": "32e7a2391fd2b5ca0fb5711d444e26eccc8838c3d0043df599f2b5fff61dd3bf",
-  "public/uk/index.html": "90dfa5b44ff19b81a05384709dbd8abfe96082a7650c9aae00d903a875220a3f",
-  "public/uk/naprawa-wifi/index.html": "c72ae6cdbff26321f15e880c0163201cf951e7b54439292a4bcc9cee5382a7b0",
-  "public/uk/naprawa-sieci/index.html": "0d07e527a1f3a8e0fe84b69aa8991ed9d6f204179d7f38d202151a332cb3db70",
-  "public/uk/montaz-sieci/index.html": "599215918bc7609860b06602a37b6f74a533d1bf4aa51cb7ba9f5044cd5f07dc",
-  "public/en/index.html": "a6bf3a557dba6b3dd16c9ed834e14b465351d5b9ff95e74f6b0e26a36dee593f",
-  "public/en/naprawa-wifi/index.html": "a587fed9d0e55df4cdf90a7779b637199bb80183d75171a405f58ce5de384cd6",
-  "public/en/naprawa-sieci/index.html": "a7869fabf1a0e2837c2023faf77d56675ca64fd960612c875263d50b857fd914",
-  "public/en/montaz-sieci/index.html": "8b0453df8963a2ee71e3c500cdc4625df0659f3f8bc3210bd4d44b0142f9c948"
+  "public/index.html": "49200a1f57759ec3fb0fb5b3e724860181398f34644c3cecb9f44254663030a6",
+  "public/naprawa-wifi/index.html": "05422f18ea1561eebec9ac5fb1874e37519f4262afce18b3b77bcd754c5414ef",
+  "public/naprawa-sieci/index.html": "5edebcded0d4e2e799c539c551d0ea3794b219b1f7c48718fb24d8d8f0fc8c61",
+  "public/montaz-sieci/index.html": "174a8c021bb79c239e6f70324ca59641652c9b5993c7e892dfa4c16451a0ebc4",
+  "public/ru/index.html": "c22ded0339f8afa8dc5ad9512ef6ee8dacc6e32970323ffd3099ad50380ca8ed",
+  "public/ru/naprawa-wifi/index.html": "8a70053586416cefefdfa6cd598c300921f66215b73bdfaa31cf20c28b3f8d38",
+  "public/ru/naprawa-sieci/index.html": "4852e0c1599e2dae5dafaf03634ad26a7760ff261d0785d903e5c899f85fb6ba",
+  "public/ru/montaz-sieci/index.html": "921cfd644ed09980403cb34ef351327cea668d2375b8b211ade5dd7201100cc9",
+  "public/uk/index.html": "e5a45f12e15b3535e1ce679e30e2a17fc8e1f90a05e718162bb5230ef89d340a",
+  "public/uk/naprawa-wifi/index.html": "750816a109c0c2996fe6eff6468c139d5e5973d34b68dcf375c44ab0e63617ce",
+  "public/uk/naprawa-sieci/index.html": "a7c87282853b9893b9bac6a431cb2693abd4d7567bf863a5d6a42f973bf43174",
+  "public/uk/montaz-sieci/index.html": "da60db75e2acec58d6a35875b12d40030126303023d896bd4bb6043c596b710d",
+  "public/en/index.html": "804fb2c0c0de5e272bbb97e160fcb51d7ffdd28649f174fffa70f5eb00dc368c",
+  "public/en/naprawa-wifi/index.html": "caf925038fb4c6923199d9a414786e5042d4cdb0fd36789032e3807359688c7c",
+  "public/en/naprawa-sieci/index.html": "dea9dba5a518628abce452d7630aca6ee7d72a0beeee7d71489049e1276b6794",
+  "public/en/montaz-sieci/index.html": "17d0c8a3d2a799026b0787fd7f510bf177441eb11bd9c0913da66ffbb57a9733"
 };
 // Legacy PHP routes now redirect directly to their established canonical URLs.
 const reviewedProtectedFileHashes = {
