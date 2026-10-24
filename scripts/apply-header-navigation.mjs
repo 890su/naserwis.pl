@@ -1,4 +1,5 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { cctvCopy, cctvRoute } from './cctv-copy.mjs';
 
 const labels = {
   pl: ['Strona główna', 'Ceny', 'Poradnik', 'Kontakt'],
@@ -9,6 +10,7 @@ const labels = {
 
 // Same stroke icons as the homepage service catalogue.
 const servicePaths = {
+  'serwis-monitoringu': '<rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-4v12l-6-4"/>',
   'montaz-sieci': '<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
   'naprawa-wifi': '<path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/>',
   'naprawa-sieci': '<path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/>'
@@ -44,12 +46,14 @@ async function update(directory) {
     const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
     const currentHome = canonical === `https://naserwis.pl${prefix}` ? ' aria-current="page"' : '';
     const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) || /\/(?:pogoda-internet-warszawa|pogoda-internet-varshava|pohoda-internet-varshava|weather-internet-warsaw)\/$/.test(canonical || '') ? ' aria-current="page"' : '';
-    const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/'].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
+    const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/', cctvRoute].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
     html = html.replace(/<header id="header"[\s\S]*?<\/header>/, header => {
       let services = header.match(/<div class="lang-dropdown services-dropdown">[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       const phone = header.match(/<a\b[^>]*class="phone"[\s\S]*?<\/a>/)?.[0];
       const language = header.match(/<div class="lang-dropdown" role="group"[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       if (!services || !phone || !language) throw new Error(`Incomplete header: ${file}`);
+      services = services.replace(/<button class="lang-option"[^>]*onclick="window\.location\.href='[^']*naprawa-sieci\/'"[\s\S]*?<\/button>/, button => button.replace(/(<span class="lang-name">)[^<]+/, `$1${cctvCopy[locale].lanNav}`));
+      if (!services.includes(cctvRoute)) services = services.replace(/(<\/div>\s*<\/div>)$/, `<button class="lang-option" role="menuitem" onclick="window.location.href='${prefix}${cctvRoute}'"><span class="lang-name">${cctvCopy[locale].nav}</span></button>\n$1`);
       services = services.replace(/<button class="lang-current services-btn"[^>]*>/, tag => {
         tag = tag.replace(/ aria-current="[^"]*"/g, '');
         return isService ? tag.replace('>', ' aria-current="page">') : tag;
@@ -79,7 +83,7 @@ async function update(directory) {
       const languageLabel = { pl: 'Język', ru: 'Язык', uk: 'Мова', en: 'Language' }[locale];
       const phoneIcon = header.match(/<a\b[^>]*class="phone"[\s\S]*?(<svg[\s\S]*?<\/svg>)/)?.[1];
       const navLabel = header.match(/<nav\b[^>]*aria-label="([^"]+)"/)?.[1];
-      if (!servicesLabel || serviceLinks.length !== 3 || !languages || !languageLabel || !phoneIcon) throw new Error(`Incomplete mobile menu: ${file}`);
+      if (!servicesLabel || serviceLinks.length !== 4 || !languages || !languageLabel || !phoneIcon) throw new Error(`Incomplete mobile menu: ${file}`);
       const headerLanguages = languages
         .replace(/<div class="mobile-lang-options"[^>]*>/, `<div class="mobile-lang-options" role="group" aria-label="${languageLabel}">`)
         .replace(/<a\b[^>]*>/g, tag => {

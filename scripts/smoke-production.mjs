@@ -34,8 +34,8 @@ for (let index = 0; index < files.length; index += 4) {
       assert.equal(normalized(live).match(/<header id="header"[\s\S]*?<\/header>/)?.[0], normalized(local).match(/<header id="header"[\s\S]*?<\/header>/)?.[0], `Production header mismatch: ${route}`);
       assert.equal(normalized(live).match(/<div class="mobile-menu-overlay"[\s\S]*?(?=<main)/)?.[0], normalized(local).match(/<div class="mobile-menu-overlay"[\s\S]*?(?=<main)/)?.[0], `Production mobile navigation mismatch: ${route}`);
     }
-    if (route.includes('/poradnik/')) {
-      assert.equal(normalized(live).match(/<main\b[\s\S]*?<\/main>/)?.[0], normalized(local).match(/<main\b[\s\S]*?<\/main>/)?.[0], `Production guide content mismatch: ${route}`);
+    if (route.includes('/poradnik/') || route.endsWith('/serwis-monitoringu/')) {
+      assert.equal(normalized(live).match(/<main\b[\s\S]*?<\/main>/)?.[0], normalized(local).match(/<main\b[\s\S]*?<\/main>/)?.[0], `Production content mismatch: ${route}`);
     }
     assert.ok(pageAssets(live, manifest).some(asset => asset.startsWith('/contact-ui.css')), route);
     for (const bundle of local.matchAll(/(?:src|href)="(\/assets\/site-[^"]+)"/g)) assert.ok(live.includes(bundle[1]), `Production bundle mismatch: ${route}`);
@@ -50,7 +50,7 @@ for (let index = 0; index < files.length; index += 4) {
     }
   }));
 }
-for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'redesign.css', 'home-services.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml', ...Object.keys(manifest).map(path => path.slice(1))]) {
+for (const asset of ['contact-ui.js', 'contact-ui.css', 'consent.js', 'script.js', 'styles.css', 'custom.css', 'redesign.css', 'home-services.css', 'cctv.css', 'guides.js', 'guides.css', 'site-config.js', 'robots.txt', 'sitemap.xml', ...Object.keys(manifest).map(path => path.slice(1))]) {
   const live = normalized(await get('/' + asset));
   const local = normalized(await readFile('public/' + asset, 'utf8'));
   if (asset === 'robots.txt' && live !== local) {
@@ -67,6 +67,10 @@ for (const [source, destination] of [
   ['/ru/naprawa-sieci', '/ru/naprawa-sieci/'],
   ['/uk/montaz-sieci', '/uk/montaz-sieci/'],
   ['/en/naprawa-wifi', '/en/naprawa-wifi/'],
+  ['/serwis-monitoringu', '/serwis-monitoringu/'],
+  ['/ru/serwis-monitoringu', '/ru/serwis-monitoringu/'],
+  ['/uk/poradnik/konserwacja-monitoringu-lista-kontrolna', '/uk/poradnik/konserwacja-monitoringu-lista-kontrolna/'],
+  ['/en/poradnik/konserwacja-monitoringu-lista-kontrolna', '/en/poradnik/konserwacja-monitoringu-lista-kontrolna/'],
   ['/naprawa-wifi.php', '/naprawa-wifi/'],
   ['/ru/naprawa-sieci.php', '/ru/naprawa-sieci/'],
   ['/uk/montaz-sieci.php', '/uk/montaz-sieci/'],

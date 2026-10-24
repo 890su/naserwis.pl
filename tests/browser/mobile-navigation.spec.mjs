@@ -38,7 +38,7 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
 
       await toggle.click();
       await expect(services).toHaveAttribute('open', '');
-      await expect(services.locator('.mobile-nav-sub')).toHaveCount(3);
+      await expect(services.locator('.mobile-nav-sub')).toHaveCount(4);
       await expect(services.locator('.mobile-nav-sub').last()).toBeVisible();
       await expect(menu).toHaveClass(/active/);
       await toggle.focus();

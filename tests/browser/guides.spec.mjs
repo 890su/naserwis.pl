@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 const wifi = 'jak-wzmocnic-sygnal-wifi-w-domu/';
 const lan = 'siec-lan-w-domu-przed-remontem/';
+const cctv = 'konserwacja-monitoringu-lista-kontrolna/';
 async function isolate(page) {
   await page.route(/googletagmanager|google-analytics|clarity|tawk|fonts\.google/, route => route.abort());
   await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, updatedAt: new Date().toISOString() })));
@@ -46,7 +47,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     await expect(page).toHaveURL(/\/ru\/poradnik\/$/);
     expect(errors).toEqual([]);
   });
-  for (const slug of [wifi, lan]) {
+  for (const slug of [wifi, lan, cctv]) {
     test(`reading levels, keyboard and mobile /${prefix}${slug}`, async ({ page }) => {
       await isolate(page);
       await page.setViewportSize({ width: 320, height: 740 });
@@ -75,7 +76,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('#technical-2')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
       await page.locator('.guide-service a').click();
-      await expect(page).toHaveURL(new RegExp(`/${prefix}${slug === wifi ? 'naprawa-wifi' : 'montaz-sieci'}/$`));
+      await expect(page).toHaveURL(new RegExp(`/${prefix}${slug === wifi ? 'naprawa-wifi' : slug === lan ? 'montaz-sieci' : 'serwis-monitoringu'}/$`));
     });
   }
   test(`guide discovery /${prefix}`, async ({ page }) => {
@@ -83,9 +84,24 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     await page.goto('/' + prefix);
     await page.locator('.guides-teaser a').last().click();
     await expect(page).toHaveURL(new RegExp(`/${prefix}poradnik/$`));
-    await expect(page.locator('.guide-cards article')).toHaveCount(2);
+    await expect(page.locator('.guide-cards article')).toHaveCount(3);
     await page.locator('.guide-cards h2 a').first().click();
     await expect(page.locator('#simple')).toBeVisible();
+  });
+  test(`CCTV guide discovery, contextual service links and article date /${prefix}`, async ({ page }) => {
+    await isolate(page);
+    await page.goto(`/${prefix}serwis-monitoringu/`);
+    await expect(page.locator('.cctv-system-types li')).toHaveCount(3);
+    await expect(page.locator('.cctv-system-types')).toContainText('BNC');
+    await page.locator(`.guides-teaser a[href="/${prefix}poradnik/${cctv}"]`).click();
+    await expect(page.locator('.guide-caption time')).toHaveAttribute('datetime', '2026-10-24');
+    const article = await page.locator('script[type="application/ld+json"]').evaluateAll(nodes => nodes.flatMap(n => JSON.parse(n.textContent)['@graph'] || []).find(n => n['@type'] === 'Article'));
+    expect(article.datePublished).toBe('2026-10-24');
+    expect(article.dateModified).toBe('2026-10-24');
+    expect(article.url).toBe(`https://naserwis.pl/${prefix}poradnik/${cctv}`);
+    await page.locator('#simple .guide-context-link a').first().click();
+    await expect(page).toHaveURL(new RegExp(`/${prefix}serwis-monitoringu/#cctv-repair$`));
+    await expect(page.locator('#cctv-repair')).toBeVisible();
   });
 }
 test('both full versions and anchor navigation work without JavaScript', async ({ browser }) => {

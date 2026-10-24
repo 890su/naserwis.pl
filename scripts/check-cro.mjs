@@ -107,7 +107,7 @@ if (record) {
       assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);
     }
   }
-  assert.equal(landingCount, 20);
+  assert.equal(landingCount, 24);
   const sitemap = await readFile('public/sitemap.xml', 'utf8');
   for (const route of ['/pogoda-internet-warszawa/', '/ru/pogoda-internet-varshava/', '/uk/pohoda-internet-varshava/', '/en/weather-internet-warsaw/']) assert.ok(sitemap.includes(route), `sitemap: ${route}`);
   for (const file of Object.keys(reviewedPageHashes)) {
@@ -119,5 +119,5 @@ if (record) {
   const notFound = await readFile('public/404.html', 'utf8');
   assert.ok(notFound.includes('<meta name="robots" content="noindex, follow">'), '404 page must remain noindex, follow');
   assert.ok(notFound.includes('href="/"'), '404 page must link back to the homepage');
-  console.log('CRO guards passed: reviewed home-service SEO, preserved Ads configuration, 20 landings and 4 tool routes.');
+  console.log('CRO guards passed: reviewed home-service SEO, preserved Ads configuration, 24 contact landings including CCTV and 4 tool routes.');
 }

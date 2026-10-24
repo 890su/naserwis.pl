@@ -79,7 +79,7 @@ for (const [file, currentHtml] of pages) {
   // A separate source keeps this image-only behavior out of contact/measurement code.
   html=html.replace(/\s*<script\b[^>]*src="\/home-photo\.js[^"]*"[^>]*><\/script>/g,'');
   if (isHome) html=html.replace('</body>','<script defer src="/home-photo.js"></script>\n</body>');
-  const isService = /(?:^|[\\/])(?:naprawa-wifi|naprawa-sieci|montaz-sieci)[\\/]index\.html$/.test(path);
+  const isService = /(?:^|[\\/])(?:naprawa-wifi|naprawa-sieci|montaz-sieci|serwis-monitoringu)[\\/]index\.html$/.test(path);
   html=html.replace(/\s*<link\b[^>]*href="\/redesign\.css[^\"]*"[^>]*>/g,'');
   html=html.replace('</head>', '<link rel="stylesheet" href="/redesign.css?v=20261015">\n</head>');
   for (const weight of [400,700]) {

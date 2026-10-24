@@ -7,7 +7,7 @@ const locs = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
 assert.equal(new Set(locs).size, locs.length, 'Duplicate sitemap URLs');
 for (const locale of ['pl', 'ru', 'uk', 'en']) {
   const prefix = locale === 'pl' ? '/' : `/${locale}/`;
-  for (const slug of ['', 'jak-wzmocnic-sygnal-wifi-w-domu/', 'siec-lan-w-domu-przed-remontem/']) {
+  for (const slug of ['', 'jak-wzmocnic-sygnal-wifi-w-domu/', 'siec-lan-w-domu-przed-remontem/', 'konserwacja-monitoringu-lista-kontrolna/']) {
     const path = `${prefix}poradnik/${slug}`;
     const html = await readFile(`public${path}index.html`, 'utf8');
     for (const asset of ['styles.css', 'custom.css', 'script.js']) assert.ok(pageAssets(html, manifest).includes(`/${asset}?v=20261010-guide3`), `Shared asset ${asset}: ${path}`);

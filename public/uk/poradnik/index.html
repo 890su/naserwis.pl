@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="uk"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Домашні Wi-Fi та LAN — практичні поради | NaSerwis</title><meta name="description" content="Як покращити домашній Wi-Fi і підготувати LAN до ремонту. Дві практичні статті з простими поясненнями та технічними подробицями."><meta name="robots" content="index, follow">
+<title>Порадник: Wi-Fi, мережі LAN і відеоспостереження | NaSerwis</title><meta name="description" content="Як поліпшити Wi-Fi, підготувати мережу LAN і перевіряти відеоспостереження. Інструкції у двох версіях: простій і технічній."><meta name="robots" content="index, follow">
 <link rel="canonical" href="https://naserwis.pl/uk/poradnik/"><link rel="alternate" hreflang="pl" href="https://naserwis.pl/poradnik/">
 <link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/poradnik/">
 <link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/poradnik/">
 <link rel="alternate" hreflang="en" href="https://naserwis.pl/en/poradnik/">
 <link rel="alternate" hreflang="x-default" href="https://naserwis.pl/poradnik/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://naserwis.pl/uk/poradnik/"><meta property="og:title" content="Домашні Wi-Fi та LAN — практичні поради"><meta property="og:description" content="Як покращити домашній Wi-Fi і підготувати LAN до ремонту. Дві практичні статті з простими поясненнями та технічними подробицями.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://naserwis.pl/uk/poradnik/"><meta property="og:title" content="Порадник: Wi-Fi, мережі LAN і відеоспостереження"><meta property="og:description" content="Як поліпшити Wi-Fi, підготувати мережу LAN і перевіряти відеоспостереження. Інструкції у двох версіях: простій і технічній.">
 
 <script type="application/ld+json">
 {
@@ -33,8 +33,8 @@
     {
       "@type": "CollectionPage",
       "url": "https://naserwis.pl/uk/poradnik/",
-      "name": "Домашні Wi-Fi та LAN — практичні поради",
-      "description": "Як покращити домашній Wi-Fi і підготувати LAN до ремонту. Дві практичні статті з простими поясненнями та технічними подробицями.",
+      "name": "Порадник: Wi-Fi, мережі LAN і відеоспостереження",
+      "description": "Як поліпшити Wi-Fi, підготувати мережу LAN і перевіряти відеоспостереження. Інструкції у двох версіях: простій і технічній.",
       "inLanguage": "uk",
       "hasPart": [
         {
@@ -46,6 +46,11 @@
           "@type": "Article",
           "headline": "Як спланувати кабелі й розетки домашньої LAN до ремонту",
           "url": "https://naserwis.pl/uk/poradnik/siec-lan-w-domu-przed-remontem/"
+        },
+        {
+          "@type": "Article",
+          "headline": "Як перевіряти відеоспостереження, поки не знадобилися записи",
+          "url": "https://naserwis.pl/uk/poradnik/konserwacja-monitoringu-lista-kontrolna/"
         }
       ]
     }
@@ -54,6 +59,7 @@
 </script>
 <link rel="preload" href="/assets/redesign/manrope-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
+<style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
 <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png">
 <meta property="og:image" content="https://naserwis.pl/assets/naserwis-social.png">
 <meta property="og:image:width" content="1200">
@@ -61,8 +67,6 @@
 <meta property="og:image:alt" content="NaSerwis">
 <meta name="twitter:image" content="https://naserwis.pl/assets/naserwis-social.png">
 <meta name="twitter:image:alt" content="NaSerwis">
-
-<style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
 <link rel="stylesheet" href="/assets/site-66ace9208235ac7c.css">
 </head>
 <body class="guide-page" data-redesign="shared"><a class="guide-skip" href="#main-content">Читати статтю</a><header id="header" role="banner">
@@ -88,9 +92,10 @@
                         </button>
                         <button class="lang-option" role="menuitem" onclick="window.location.href='/uk/naprawa-sieci/'">
                             <span class="lang-flag">&#128295;</span>
-                            <span class="lang-name">Ремонт мереж</span>
+                            <span class="lang-name">Ремонт мереж LAN</span>
                         </button>
-                    </div>
+                    <button class="lang-option" role="menuitem" onclick="window.location.href='/uk/serwis-monitoringu/'"><span class="lang-name">Відеоспостереження</span></button>
+</div>
                 </div>
                 <a class="header-nav-link" href="/uk/#services">Ціни</a>
                 <a class="guides-nav-link" href="/uk/poradnik/" aria-current="page">Порадник</a>
@@ -148,7 +153,8 @@
                 <div class="mobile-service-links">
                 <a class="mobile-nav-link mobile-nav-sub" href="/uk/montaz-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span>Монтаж мереж</a>
                 <a class="mobile-nav-link mobile-nav-sub" href="/uk/naprawa-wifi/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg></span>Ремонт WiFi</a>
-                <a class="mobile-nav-link mobile-nav-sub" href="/uk/naprawa-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/></svg></span>Ремонт мереж</a>
+                <a class="mobile-nav-link mobile-nav-sub" href="/uk/naprawa-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/></svg></span>Ремонт мереж LAN</a>
+                <a class="mobile-nav-link mobile-nav-sub" href="/uk/serwis-monitoringu/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-4v12l-6-4"/></svg></span>Відеоспостереження</a>
                 </div>
             </details>
             <a class="mobile-nav-link" href="/uk/#services">Ціни</a>
@@ -163,8 +169,7 @@
     </div>
 
 <main id="main-content" class="guide-shell" tabindex="-1"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/uk/">Головна</a><span aria-hidden="true">/</span><span>Практичні поради</span></nav>
-<div class="guide-heading"><span class="guide-topic">Практичні поради</span><h1>Домашні Wi-Fi та LAN — практичні поради</h1><p class="guide-lead">Практичні поради щодо Wi-Fi та LAN у квартирі чи будинку. Спочатку визначаємо причину, потім вибираємо обладнання.</p></div><div class="guide-cards"><article><span class="guide-topic">Wi-Fi</span><h2><a href="/uk/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Як покращити покриття та стабільність домашнього Wi-Fi</a></h2><p>Якщо можете прокласти кабель до комп’ютера чи точки Wi-Fi, почніть із цього. Якщо ні, перевірте інші варіанти у своїй квартирі, перш ніж купувати обладнання.</p><p class="guide-caption">Простою мовою / Технічно</p><a class="btn btn-primary guide-action" href="/uk/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Читати статтю →</a></article><article><span class="guide-topic">LAN</span><h2><a href="/uk/poradnik/siec-lan-w-domu-przed-remontem/">Як спланувати кабелі й розетки домашньої LAN до ремонту</a></h2><p>Сплануйте кабелі до оздоблення стін. Залиште місце для майбутніх ліній. Під час приймання перевірте підключення, маркування й результати тестів кожної розетки.</p><p class="guide-caption">Простою мовою / Технічно</p><a class="btn btn-primary guide-action" href="/uk/poradnik/siec-lan-w-domu-przed-remontem/">Читати статтю →</a></article></div>
-
+<div class="guide-heading"><span class="guide-topic">Практичні поради</span><h1>Порадник: Wi-Fi, мережі LAN і відеоспостереження</h1><p class="guide-lead">Практичні поради щодо Wi-Fi, мереж LAN і відеоспостереження. Прості пояснення та окрема версія з технічними параметрами.</p></div><div class="guide-cards"><article><span class="guide-topic">Wi-Fi</span><h2><a href="/uk/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Як покращити покриття та стабільність домашнього Wi-Fi</a></h2><p>Якщо можете прокласти кабель до комп’ютера чи точки Wi-Fi, почніть із цього. Якщо ні, перевірте інші варіанти у своїй квартирі, перш ніж купувати обладнання.</p><p class="guide-caption">Простою мовою / Технічно</p><a class="btn btn-primary guide-action" href="/uk/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Читати статтю →</a></article><article><span class="guide-topic">LAN</span><h2><a href="/uk/poradnik/siec-lan-w-domu-przed-remontem/">Як спланувати кабелі й розетки домашньої LAN до ремонту</a></h2><p>Сплануйте кабелі до оздоблення стін. Залиште місце для майбутніх ліній. Під час приймання перевірте підключення, маркування й результати тестів кожної розетки.</p><p class="guide-caption">Простою мовою / Технічно</p><a class="btn btn-primary guide-action" href="/uk/poradnik/siec-lan-w-domu-przed-remontem/">Читати статтю →</a></article><article><span class="guide-topic">CCTV</span><h2><a href="/uk/poradnik/konserwacja-monitoringu-lista-kontrolna/">Як перевіряти відеоспостереження, поки не знадобилися записи</a></h2><p>Зображення у прямому ефірі — лише одна з перевірок. Потрібні ще відтворення записів, картинка після настання темряви та сповіщення. Почніть із короткого списку, який зручно повторювати.</p><p class="guide-caption">Простою мовою / Технічно</p><a class="btn btn-primary guide-action" href="/uk/poradnik/konserwacja-monitoringu-lista-kontrolna/">Читати статтю →</a></article></div>
 <!-- GUIDE TOOLS START -->
 <section class="guide-tools" aria-labelledby="guide-tools-title"><span class="guide-topic">Інструменти</span><h2 id="guide-tools-title"><a href="/uk/pohoda-internet-varshava/">Погода і тест інтернету</a></h2><p>Погода у Варшаві + ваша IP-адреса і легкий тест інтернету</p><a class="btn btn-primary guide-action" href="/uk/pohoda-internet-varshava/">Перевірити →</a></section>
 <!-- GUIDE TOOLS END -->
@@ -210,6 +215,5 @@
 <div class="footer-legal-links"><a href="/uk/privacy/">Конфіденційність</a><a href="/uk/cookies/">Політика cookies</a><button type="button" data-consent-settings>Налаштування конфіденційності</button></div>
             </div>
         </div>
-    </footer>
-<script defer src="/assets/site-4643974e4769e725.js"></script>
+    </footer><script defer src="/assets/site-85319fee6420c7bb.js"></script>
 </body></html>

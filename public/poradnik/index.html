@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="pl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Wi-Fi i LAN w domu — praktyczny poradnik | NaSerwis</title><meta name="description" content="Jak poprawić domowe Wi-Fi i zaplanować sieć LAN przed remontem. Dwa praktyczne poradniki: proste wyjaśnienia oraz szczegóły techniczne."><meta name="robots" content="index, follow">
+<title>Poradnik: Wi-Fi, sieci LAN i monitoring | NaSerwis</title><meta name="description" content="Jak poprawić Wi-Fi, zaplanować sieć LAN i sprawdzać monitoring. Instrukcje w dwóch wersjach: prostej i technicznej."><meta name="robots" content="index, follow">
 <link rel="canonical" href="https://naserwis.pl/poradnik/"><link rel="alternate" hreflang="pl" href="https://naserwis.pl/poradnik/">
 <link rel="alternate" hreflang="ru" href="https://naserwis.pl/ru/poradnik/">
 <link rel="alternate" hreflang="uk" href="https://naserwis.pl/uk/poradnik/">
 <link rel="alternate" hreflang="en" href="https://naserwis.pl/en/poradnik/">
 <link rel="alternate" hreflang="x-default" href="https://naserwis.pl/poradnik/">
-<meta property="og:type" content="website"><meta property="og:url" content="https://naserwis.pl/poradnik/"><meta property="og:title" content="Wi-Fi i LAN w domu — praktyczny poradnik"><meta property="og:description" content="Jak poprawić domowe Wi-Fi i zaplanować sieć LAN przed remontem. Dwa praktyczne poradniki: proste wyjaśnienia oraz szczegóły techniczne.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://naserwis.pl/poradnik/"><meta property="og:title" content="Poradnik: Wi-Fi, sieci LAN i monitoring"><meta property="og:description" content="Jak poprawić Wi-Fi, zaplanować sieć LAN i sprawdzać monitoring. Instrukcje w dwóch wersjach: prostej i technicznej.">
 
 <script type="application/ld+json">
 {
@@ -33,8 +33,8 @@
     {
       "@type": "CollectionPage",
       "url": "https://naserwis.pl/poradnik/",
-      "name": "Wi-Fi i LAN w domu — praktyczny poradnik",
-      "description": "Jak poprawić domowe Wi-Fi i zaplanować sieć LAN przed remontem. Dwa praktyczne poradniki: proste wyjaśnienia oraz szczegóły techniczne.",
+      "name": "Poradnik: Wi-Fi, sieci LAN i monitoring",
+      "description": "Jak poprawić Wi-Fi, zaplanować sieć LAN i sprawdzać monitoring. Instrukcje w dwóch wersjach: prostej i technicznej.",
       "inLanguage": "pl",
       "hasPart": [
         {
@@ -46,6 +46,11 @@
           "@type": "Article",
           "headline": "Sieć LAN w domu: jak zaplanować kable i gniazda przed remontem?",
           "url": "https://naserwis.pl/poradnik/siec-lan-w-domu-przed-remontem/"
+        },
+        {
+          "@type": "Article",
+          "headline": "Jak sprawdzać monitoring, zanim zabraknie nagrań",
+          "url": "https://naserwis.pl/poradnik/konserwacja-monitoringu-lista-kontrolna/"
         }
       ]
     }
@@ -54,6 +59,7 @@
 </script>
 <link rel="preload" href="/assets/redesign/manrope-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
+<style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
 <link rel="icon" type="image/png" sizes="256x256" href="/favicon.png">
 <meta property="og:image" content="https://naserwis.pl/assets/naserwis-social.png">
 <meta property="og:image:width" content="1200">
@@ -61,8 +67,6 @@
 <meta property="og:image:alt" content="NaSerwis">
 <meta name="twitter:image" content="https://naserwis.pl/assets/naserwis-social.png">
 <meta name="twitter:image:alt" content="NaSerwis">
-
-<style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
 <link rel="stylesheet" href="/assets/site-66ace9208235ac7c.css">
 </head>
 <body class="guide-page" data-redesign="shared"><a class="guide-skip" href="#main-content">Czytaj poradnik</a><header id="header" role="banner">
@@ -88,9 +92,10 @@
                         </button>
                         <button class="lang-option" role="menuitem" onclick="window.location.href='/naprawa-sieci/'">
                             <span class="lang-flag">&#128295;</span>
-                            <span class="lang-name">Naprawa Sieci</span>
+                            <span class="lang-name">Naprawa sieci LAN</span>
                         </button>
-                    </div>
+                    <button class="lang-option" role="menuitem" onclick="window.location.href='/serwis-monitoringu/'"><span class="lang-name">Monitoring CCTV</span></button>
+</div>
                 </div>
                 <a class="header-nav-link" href="/#services">Ceny</a>
                 <a class="guides-nav-link" href="/poradnik/" aria-current="page">Poradnik</a>
@@ -148,7 +153,8 @@
                 <div class="mobile-service-links">
                 <a class="mobile-nav-link mobile-nav-sub" href="/montaz-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span>Montaż Sieci LAN</a>
                 <a class="mobile-nav-link mobile-nav-sub" href="/naprawa-wifi/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg></span>Naprawa WiFi</a>
-                <a class="mobile-nav-link mobile-nav-sub" href="/naprawa-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/></svg></span>Naprawa Sieci</a>
+                <a class="mobile-nav-link mobile-nav-sub" href="/naprawa-sieci/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/></svg></span>Naprawa sieci LAN</a>
+                <a class="mobile-nav-link mobile-nav-sub" href="/serwis-monitoringu/"><span class="mobile-nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="m16 10 6-4v12l-6-4"/></svg></span>Monitoring CCTV</a>
                 </div>
             </details>
             <a class="mobile-nav-link" href="/#services">Ceny</a>
@@ -163,8 +169,7 @@
     </div>
 
 <main id="main-content" class="guide-shell" tabindex="-1"><nav class="guide-breadcrumb" aria-label="Breadcrumb"><a href="/">Strona główna</a><span aria-hidden="true">/</span><span>Poradnik</span></nav>
-<div class="guide-heading"><span class="guide-topic">Poradnik</span><h1>Wi-Fi i LAN w domu — praktyczny poradnik</h1><p class="guide-lead">Praktyczne wskazówki do Wi-Fi i sieci LAN w mieszkaniu lub domu. Najpierw sprawdź przyczynę, potem wybierz sprzęt.</p></div><div class="guide-cards"><article><span class="guide-topic">Wi-Fi</span><h2><a href="/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Jak wzmocnić sygnał Wi-Fi w domu i poprawić stabilność?</a></h2><p>Jeśli możesz podłączyć komputer lub punkt Wi-Fi kablem, zacznij od tego. Gdy nie da się poprowadzić przewodu, przetestuj pozostałe rozwiązania w swoim mieszkaniu.</p><p class="guide-caption">Prosto / Technicznie</p><a class="btn btn-primary guide-action" href="/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Czytaj poradnik →</a></article><article><span class="guide-topic">LAN</span><h2><a href="/poradnik/siec-lan-w-domu-przed-remontem/">Sieć LAN w domu: jak zaplanować kable i gniazda przed remontem?</a></h2><p>Zaplanuj przewody, zanim ściany zostaną zamknięte. Zostaw miejsce na kolejne kable. Przy odbiorze sprawdź, czy każde gniazdo jest podłączone, opisane i przetestowane.</p><p class="guide-caption">Prosto / Technicznie</p><a class="btn btn-primary guide-action" href="/poradnik/siec-lan-w-domu-przed-remontem/">Czytaj poradnik →</a></article></div>
-
+<div class="guide-heading"><span class="guide-topic">Poradnik</span><h1>Poradnik: Wi-Fi, sieci LAN i monitoring</h1><p class="guide-lead">Praktyczne wskazówki dotyczące Wi-Fi, sieci LAN i monitoringu. Proste wyjaśnienia oraz osobna wersja z parametrami technicznymi.</p></div><div class="guide-cards"><article><span class="guide-topic">Wi-Fi</span><h2><a href="/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Jak wzmocnić sygnał Wi-Fi w domu i poprawić stabilność?</a></h2><p>Jeśli możesz podłączyć komputer lub punkt Wi-Fi kablem, zacznij od tego. Gdy nie da się poprowadzić przewodu, przetestuj pozostałe rozwiązania w swoim mieszkaniu.</p><p class="guide-caption">Prosto / Technicznie</p><a class="btn btn-primary guide-action" href="/poradnik/jak-wzmocnic-sygnal-wifi-w-domu/">Czytaj poradnik →</a></article><article><span class="guide-topic">LAN</span><h2><a href="/poradnik/siec-lan-w-domu-przed-remontem/">Sieć LAN w domu: jak zaplanować kable i gniazda przed remontem?</a></h2><p>Zaplanuj przewody, zanim ściany zostaną zamknięte. Zostaw miejsce na kolejne kable. Przy odbiorze sprawdź, czy każde gniazdo jest podłączone, opisane i przetestowane.</p><p class="guide-caption">Prosto / Technicznie</p><a class="btn btn-primary guide-action" href="/poradnik/siec-lan-w-domu-przed-remontem/">Czytaj poradnik →</a></article><article><span class="guide-topic">CCTV</span><h2><a href="/poradnik/konserwacja-monitoringu-lista-kontrolna/">Jak sprawdzać monitoring, zanim zabraknie nagrań</a></h2><p>Obraz na żywo to dopiero jedna z kontroli. Sprawdź też odtwarzanie nagrań, widok po zmroku i powiadomienia. Zacznij od krótkiej listy, którą da się powtarzać.</p><p class="guide-caption">Prosto / Technicznie</p><a class="btn btn-primary guide-action" href="/poradnik/konserwacja-monitoringu-lista-kontrolna/">Czytaj poradnik →</a></article></div>
 <!-- GUIDE TOOLS START -->
 <section class="guide-tools" aria-labelledby="guide-tools-title"><span class="guide-topic">Narzędzia</span><h2 id="guide-tools-title"><a href="/pogoda-internet-warszawa/">Pogoda i test internetu</a></h2><p>Pogoda w Warszawie + Twój IP i lekki test internetu</p><a class="btn btn-primary guide-action" href="/pogoda-internet-warszawa/">Sprawdź teraz →</a></section>
 <!-- GUIDE TOOLS END -->
@@ -210,6 +215,5 @@
 <div class="footer-legal-links"><a href="/privacy/">Polityka prywatności</a><a href="/cookies/">Polityka cookies</a><button type="button" data-consent-settings>Ustawienia prywatności</button></div>
             </div>
         </div>
-    </footer>
-<script defer src="/assets/site-4643974e4769e725.js"></script>
+    </footer><script defer src="/assets/site-85319fee6420c7bb.js"></script>
 </body></html>

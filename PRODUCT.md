@@ -49,6 +49,12 @@ Existing service copy, transparent pricing terms and customer review excerpts ar
 
 ## Confirmed Decisions
 
+On 24 October 2026 the owner requested one combined CCTV service page covering fault diagnosis, configuration, repair of the installation, camera installation and expansion. It uses the existing four-language service-page design and agreed visit rates. Device compatibility and the condition of the installation must be checked first; circuit-board repair and damaged-drive data recovery are not advertised. Business-system enquiries link to the existing localized ITBIZ CCTV service page. This request authorizes building the page; a new production publication has not yet been requested.
+
+Later on 24 October the owner expanded this page to include analogue cameras and hybrid analogue/IP systems. Supported video formats, resolutions and channel modes depend on the specific recorder; the page must not imply universal compatibility. The related maintenance guide covers IP, analogue and hybrid systems in PL/RU/UK/EN, using the existing two reading levels, contextual service links and a sample inspection schedule explicitly distinguished from mandatory or manufacturer-specific intervals.
+
+The owner then explicitly requested publication of the combined CCTV service and maintenance guide in all four languages through the existing GitHub main / Cloudflare Pages integration. This authorizes committing, pushing and deployment; completion must be verified against the live pages.
+
 On 15 October 2026 the owner confirmed the audience, purpose and preservation constraints above, and chose to review visual image concepts before implementation.
 
 Later on 15 October the owner rejected the residential/interior direction: NaSerwis must be immediately recognizable as an on-site computer and technical service. Replace the initial visual concepts; do not infer new service capabilities or hardware repair promises from this positioning correction.

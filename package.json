@@ -13,6 +13,7 @@
     "prices:generate": "node scripts/generate-site.mjs apply-starting-prices.mjs apply-home-service-seo.mjs build-guides.mjs",
     "intent:generate": "node scripts/generate-site.mjs apply-home-service-seo.mjs build-guides.mjs",
     "seo:generate": "node scripts/generate-site.mjs apply-home-service-seo.mjs build-guides.mjs",
+    "cctv:generate": "node scripts/generate-site.mjs",
     "guides:generate": "node scripts/generate-site.mjs build-guides.mjs",
     "technical:generate": "node scripts/apply-technical-seo.mjs",
     "ads:intent:generate": "node scripts/build-intent-ads-pack.mjs",

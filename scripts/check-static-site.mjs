@@ -58,7 +58,7 @@ for (const language of ["", "ru/", "uk/", "en/"]) {
 }
 
 const languages = ["", "ru/", "uk/", "en/"];
-const services = ["", "montaz-sieci/", "naprawa-wifi/", "naprawa-sieci/"];
+const services = ["", "montaz-sieci/", "naprawa-wifi/", "naprawa-sieci/", "serwis-monitoringu/"];
 for (const language of languages) {
   for (const service of services) {
     const file = `public/${language}${service}index.html`;

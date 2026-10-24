@@ -1045,6 +1045,7 @@
         if (path.includes('naprawa-wifi')) return 'wifi_repair';
         if (path.includes('montaz-sieci')) return 'lan_install';
         if (path.includes('naprawa-sieci')) return 'lan_cctv_repair';
+        if (path.includes('serwis-monitoringu')) return 'lan_cctv_repair';
         return 'it_general';
     }
 
@@ -1319,7 +1320,7 @@
             const url = new URL(href, window.location.href);
             if (url.origin !== window.location.origin) return;
             const route = url.pathname.replace(/^\/(?:ru|uk|en)(?=\/)/, '');
-            const services = { '/naprawa-wifi/': 'wifi_repair', '/montaz-sieci/': 'lan_install', '/naprawa-sieci/': 'lan_cctv_repair' };
+            const services = { '/naprawa-wifi/': 'wifi_repair', '/montaz-sieci/': 'lan_install', '/naprawa-sieci/': 'lan_cctv_repair', '/serwis-monitoringu/': 'lan_cctv_repair' };
             const targetService = services[route];
             if (targetService && !url.hash) {
                 trackFunnelEvent('naserwis_service_select', {
