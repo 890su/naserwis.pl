@@ -1376,7 +1376,7 @@
         if (element.closest('.preview-task')) return 'task_panel';
         if (element.closest('.home-service-catalog')) return 'services';
         if (element.closest('.preview-prices, .preview-conditions')) return 'pricing';
-        if (element.closest('.hero')) return 'hero';
+        if (element.closest('.hero, .preview-home-mobile-call')) return 'hero';
         if (element.closest('.final-cta')) return 'final';
         if (element.closest('.contact-checkpoint')) return 'checkpoint';
         return 'content';

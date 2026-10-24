@@ -50,7 +50,10 @@ for (const lang of ['pl', 'ru', 'uk', 'en']) {
         if (width === 390) {
           expect(await form.evaluate(el => Boolean(el.closest('.mobile-enquiry-slot')))).toBe(true);
           expect(await page.locator('.hero').evaluate(el => el.nextElementSibling.className)).toBe('mobile-enquiry-slot');
-          expect((await page.locator('.preview-hero-call').boundingBox()).y).toBeLessThan((await form.boundingBox()).y);
+          const call = await page.locator('.preview-hero-call:visible').boundingBox();
+          const bounds = await form.boundingBox();
+          if (route) expect(call.y).toBeLessThan(bounds.y);
+          else expect(call.y).toBeGreaterThanOrEqual(bounds.y + bounds.height);
         } else {
           expect(await form.evaluate(el => Boolean(el.closest('.preview-contact-rail, .preview-service-rail')))).toBe(true);
         }
@@ -141,7 +144,7 @@ for (const route of ['', 'serwis-monitoringu/']) {
       await expect(form.locator('textarea')).toHaveAttribute('aria-label', 'Что случилось?');
       if (width < 1200) {
         expect(await form.evaluate(el => Boolean(el.closest('.mobile-enquiry-slot')))).toBe(true);
-        const call = await page.locator('.preview-hero-call').boundingBox();
+        const call = await page.locator('.preview-hero-call:visible').boundingBox();
         const bounds = await form.boundingBox();
         expect(call.y + call.height).toBeLessThan(bounds.y);
         expect(await page.locator('.hero').evaluate(el => el.nextElementSibling.className)).toBe('mobile-enquiry-slot');

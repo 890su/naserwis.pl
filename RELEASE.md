@@ -1,3 +1,17 @@
+# Homepage mobile call placement — 2026-10-24
+
+- On homepage screens up to 760px, the large phone/icon/call caption follows
+  the enquiry form, including its expanded state. A thin grey divider separates
+  the hero enquiry link from the form heading. Tablet/desktop and service pages
+  retain their existing call placement. All four locales use the shared markup.
+- Both responsive call links are in source HTML, with exactly one visible and
+  keyboard-accessible at a time; no post-load mobile relocation is introduced.
+  The moved call retains hero contact attribution.
+- Static/link/SEO/CRO/guide guards passed. Fourteen focused browser scenarios
+  passed, including delayed-JavaScript stability and all four home locales.
+  Responsive visual checks covered 390/768/1440px and expansion; service call
+  placement was verified in all four locales. No real leads were submitted.
+
 # Stable enquiry first render and valid address fields — 2026-10-24
 
 - Render the single enquiry panel immediately after the hero in source HTML.
