@@ -1,5 +1,10 @@
 # Progressive enquiries and graphite form layout — 2026-10-24
 
+Follow-up: the final homepage contact section remains a centered single column
+at every viewport width (640px maximum content), and both homepage forms center
+their contact-channel links. Verified at 320/768/1280/1920px with no overflow;
+existing static/SEO/link guards pass. The change affects layout only.
+
 Implementation commit `6351c6d553af2d4fa3cdd0d8aa6d0f9824b3214a` was
 published successfully through Cloudflare Pages deployment
 `0b78a431-f971-406c-adb6-56839af3c026`. Production smoke passed all 49 page
