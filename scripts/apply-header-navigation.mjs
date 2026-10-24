@@ -1,12 +1,12 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { cctvCopy, cctvRoute } from './cctv-copy.mjs';
-import { audienceLabels, businessLinks, businessMenuServices } from './business-links.mjs';
+import { menuAudienceLabels, businessLinks, businessMenuServices } from './business-links.mjs';
 
 const labels = {
-  pl: ['Strona główna', 'Ceny', 'Poradnik', 'Kontakt'],
-  ru: ['Главная', 'Цены', 'Статьи', 'Контакты'],
-  uk: ['Головна', 'Ціни', 'Порадник', 'Контакти'],
-  en: ['Home', 'Prices', 'Guides', 'Contact'],
+  pl: ['Ceny', 'Poradnik', 'Kontakt'],
+  ru: ['Цены', 'Статьи', 'Контакты'],
+  uk: ['Ціни', 'Порадник', 'Контакти'],
+  en: ['Prices', 'Guides', 'Contact'],
 };
 const escapeAttribute = text => text.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
 const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
@@ -45,14 +45,22 @@ async function update(directory) {
     let html = await readFile(file, 'utf8');
     if (!html.includes('id="header"') || !html.includes('services-dropdown')) continue;
     const locale = html.match(/<html[^>]*lang="([a-z]{2})/)?.[1] || 'pl';
-    const [home, prices, guides, contact] = labels[locale];
-    const [privateServices, organisationServices] = audienceLabels[locale];
+    const [prices, guides, contact] = labels[locale];
+    const [privateServices, organisationServices] = menuAudienceLabels[locale];
     const prefix = locale === 'pl' ? '/' : `/${locale}/`;
     const canonical = html.match(/rel="canonical" href="([^"]+)"/)?.[1];
-    const currentHome = canonical === `https://naserwis.pl${prefix}` ? ' aria-current="page"' : '';
+    const isHome = canonical === `https://naserwis.pl${prefix}`;
     const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) || /\/(?:pogoda-internet-warszawa|pogoda-internet-varshava|pohoda-internet-varshava|weather-internet-warsaw)\/$/.test(canonical || '') ? ' aria-current="page"' : '';
     const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/', cctvRoute].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
     html = html.replace(/<header id="header"[\s\S]*?<\/header>/, header => {
+      const oldBrand = balancedDiv(header, '<div class="site-brand">');
+      const oldLogo = header.match(/<a\b[^>]*class="logo"[^>]*>[\s\S]*?<\/a>/)?.[0];
+      if (!oldLogo) throw new Error(`Missing wordmark: ${file}`);
+      const logo = oldLogo.replace(/<a\b[^>]*>/, tag => {
+        tag = tag.replace(/ aria-(?:current|describedby)="[^"]*"/g, '');
+        return isHome ? tag.replace('>', ' aria-current="page">') : tag;
+      });
+      header = header.replace(oldBrand || oldLogo, logo);
       let services = header.match(/<div class="lang-dropdown services-dropdown">[\s\S]*?<\/div>\s*<\/div>/)?.[0];
       const phone = header.match(/<a\b[^>]*class="phone"[\s\S]*?<\/a>/)?.[0];
       const language = header.match(/<div class="lang-dropdown" role="group"[\s\S]*?<\/div>\s*<\/div>/)?.[0];
@@ -75,7 +83,6 @@ async function update(directory) {
                     </div>
                 </div>`;
       const navigation = `<div class="nav-center desktop-nav">
-                <a class="header-nav-link" href="${prefix}"${currentHome}>${home}</a>
                 ${services}
                 ${business}
                 <a class="header-nav-link" href="${prefix}#services">${prices}</a>
@@ -127,7 +134,6 @@ async function update(directory) {
       const channelRows = ['whatsapp', 'telegram', 'form'].map(channel).join('\n            ');
       const menu = `<div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <nav class="mobile-nav" aria-label="${navLabel}">
-            <a class="mobile-nav-link" href="${prefix}"${currentHome}>${home}</a>
             <details class="mobile-nav-group mobile-private-services">
                 <summary class="mobile-services-toggle"><span>${privateServices}</span>${chevron}</summary>
                 <div class="mobile-service-links">

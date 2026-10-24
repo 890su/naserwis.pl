@@ -296,6 +296,14 @@ channels. At 760px and below hide the service hero phone and show the same phone
 block beneath the form, matching the homepage. Keep the form before this block
 when moving it between desktop and mobile slots.
 
+Subsequent menu wording decision (24 October 2026): desktop and mobile navigation
+begin with “Usługi dla domu” / “Dla firm” (and equivalent RU/UK/EN labels), then
+prices, guides and contact. Remove the separate Home item; preserve the localized
+homepage link on the logo and mark it aria-current=page on homepages. Footer labels
+remain compact. After reviewing a descriptor beneath the logo, the owner requested
+its removal and publication. Keep the wordmark without a descriptor and retain
+the established compact header height, drawer spacing and localized homepage link.
+
 Audience refinements (22 October 2026): show the catalogue heading once above exactly two disclosures, for private customers and organisations. Keep the detailed NaSerwis catalogue/scenarios/about copy inside the private disclosure; remove the repeated catalogue heading. The business disclosure explains the ITBIZ destination/new-tab behavior and shows five localized direct service links with external-link stroke icons. Every ITBIZ handoff uses target=_blank and rel=noopener. Keep one pricing-disclosure label and no internal billing heading/table. Separate the white process and reviews with a pale blue-gray (#e8eef5) full-width services/audience section; prices and guides use the existing gray wash. Preserve the dark intro/contact and white task chooser.
 
 Approved audit fixes (22 October 2026): normal form-field boundaries use #758497, retaining existing focus/error colors. Keep consent and contact runtime styles intact when pruning homepage CSS. The first task photo has high fetch priority; the second and optional LED frame load lazily, with an 800px candidate and AVIF frame variants. A small inline width fallback keeps content usable when external CSS fails. Publication is authorized; validation is recorded in docs/homepage-release-2026-10-22.md.

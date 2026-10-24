@@ -351,6 +351,13 @@ experiment only when traffic supports it. Do not alter Ads bidding based on
 button clicks alone. See [CRO_PLAN.md](CRO_PLAN.md) for evidence-gated next steps.
 # 2026-10-24 — audience navigation and enquiry scrolling
 
+Subsequent approved follow-up: publish the final five-item desktop/burger menu,
+starting with “Usługi dla domu” / “Dla firm” and equivalent RU/UK/EN wording.
+Remove the separate Home item; the logo retains the localized homepage link.
+The owner rejected the locally previewed descriptor: it is removed from markup,
+styles and accessible descriptions, restoring the compact header before publication.
+Publication receipt: `outputs/service-menu-publication-2026-10-24.json`.
+
 The owner explicitly authorized publishing the reviewed local changes:
 
 - Short home/business labels in desktop and burger navigation in PL/RU/UK/EN;

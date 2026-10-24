@@ -6,6 +6,14 @@ export const audienceLabels = {
   en: ['For home', 'For business']
 };
 
+// Navigation reads as a single pair: services for home, then for companies.
+export const menuAudienceLabels = {
+  pl: ['Usługi dla domu', 'Dla firm'],
+  ru: ['Услуги для дома', 'Для фирм'],
+  uk: ['Послуги для дому', 'Для фірм'],
+  en: ['Home services', 'For business']
+};
+
 export const businessLinks = {
   pl: { label: 'Dla firm i biur', url: 'https://itbiz.pl/uslugi/' },
   ru: { label: 'Для компаний и офисов', url: 'https://itbiz.pl/ru/uslugi/' },

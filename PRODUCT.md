@@ -27,7 +27,7 @@ Customers describe symptoms and location, and may share equipment details or pho
 - Existing static HTML/CSS/JS site on the existing Cloudflare Pages Git integration; preserve routes, redirects, canonical/hreflang, structured data and indexability.
 - Preserve all four languages, current factual copy, services, prices, form delivery contracts, consent rules and conversion tracking.
 - Existing phone, WhatsApp, Telegram, website chat and enquiry form remain functional. Preserve the circular contact launcher and its tested motion behavior.
-- Header navigation has centered Home / Services / Prices / Guides / Contact and phone/language utilities on desktop; mobile has a menu and contact actions.
+- Header navigation has centered home services / for companies / prices / guides / contact and phone/language utilities on desktop; mobile has the same sections and contact actions. The logo links to the localized homepage.
 - Guides have two reading levels at one canonical URL, with language-aware navigation.
 - Weather and internet diagnostics belong to Guides / Poradnik, retain their established URLs and use the same visual system as service pages.
 - The owner has explicitly authorized committing, pushing and publishing the approved redesign through the existing GitHub `main` / Cloudflare Pages integration. Record deployment completion and production performance only when verified.
@@ -48,6 +48,17 @@ Existing service copy, transparent pricing terms and customer review excerpts ar
 - Keep equivalent quality across languages and device widths.
 
 ## Confirmed Decisions
+
+The owner reviewed the descriptor and then explicitly requested its removal and
+publication on 24 October 2026. Keep the original compact wordmark/header with no
+descriptor in any locale. Publish the final five-item navigation through the
+existing GitHub main / Cloudflare Pages integration and verify the live result.
+
+After publication on 24 October 2026 the owner chose the consecutive menu labels
+“Usługi dla domu” / “Dla firm”, with equivalent RU/UK/EN wording, and accepted
+removing the separate Home item in favor of the logo's homepage link. Apply this
+to desktop and burger navigation; retain the compact footer labels. This follow-up
+is approved for publication under the subsequent instruction recorded above.
 
 The owner then explicitly requested publication of the audience navigation,
 four-column footer and enquiry scroll/contact refinements on 24 October 2026.
