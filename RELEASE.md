@@ -1,5 +1,14 @@
 # Progressive enquiries and graphite form layout — 2026-10-24
 
+Implementation commit `6351c6d553af2d4fa3cdd0d8aa6d0f9824b3214a` was
+published successfully through Cloudflare Pages deployment
+`0b78a431-f971-406c-adb6-56839af3c026`. Production smoke passed all 49 page
+SEO/content/asset checks, canonical redirects, 404 and safe API 405/400 checks.
+All 16 focused production browser scenarios passed across the main run and an
+isolated confirmation; a row-alignment assertion now tolerates less than one
+pixel of inherited entrance-animation movement (the observed difference was
+0.007px). No real leads were submitted. Rollback implementation: `0f94e11`.
+
 - Owner approved publication of the final four-language form changes through the
   existing GitHub main / Cloudflare Pages integration.
 - Homepage and service-page forms start with a problem description and scrolling,

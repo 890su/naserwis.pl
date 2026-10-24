@@ -129,7 +129,8 @@ for (const route of ['', 'serwis-monitoringu/']) {
       if (width < 1200) {
         const first = await labels.nth(0).boundingBox();
         const second = await labels.nth(1).boundingBox();
-        expect(first.y).toBe(second.y);
+        // Subpixel movement during the inherited entrance animation is not a new row.
+        expect(Math.abs(first.y - second.y)).toBeLessThan(1);
       }
       await expect(form.locator('.enquiry-urgency .enquiry-choice')).toHaveText(['Срочно', 'В ближайшее время', 'Сроки не горящие']);
       await expect(form.locator('.enquiry-urgency svg')).toHaveCount(0);

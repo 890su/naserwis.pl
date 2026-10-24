@@ -1,5 +1,12 @@
 # Progressive enquiries — 24 October 2026
 
+Publication verified: implementation `6351c6d553af2d4fa3cdd0d8aa6d0f9824b3214a`,
+Cloudflare Pages deployment `0b78a431-f971-406c-adb6-56839af3c026` (successful).
+The live domain passed the 49-page production smoke and all 16 focused layout /
+compact-popup scenarios across the primary run and isolated confirmation. Form
+submissions in browser QA were intercepted; no real enquiry was sent. A follow-up
+changes only this release record and the test's subpixel alignment tolerance.
+
 Approved visual choice: in-page forms now use the hero's graphite background with light text and softened #dfe5ec input surfaces. Desktop retains a separate card on the right; below 1200px, the centered form (maximum 640px content width) shares a continuous background with the hero. The light compact modal is excluded. The generator marks in-page wrappers with `data-enquiry-panel`, and the technical privacy override inherits the panel's supporting-text variable while retaining its previous fallback for light forms. Desktop/tablet/mobile QA captures: `outputs/graphite-enquiry-20261024/`.
 
 Latest owner correction: the shared button-opened modal now uses a compact, single-screen form, with immediately visible description and phone and optional name/address. Examples, request type and urgency remain exclusive to the in-page progressive forms. `compactQuickEnquiry` applies this modal consistently to all pages containing it. It uses the explicit `compact` delivery flow for optional names; review validation remains required. Focus trapping includes the optional-fields disclosure, and successful reset closes it.
