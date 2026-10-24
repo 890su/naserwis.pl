@@ -1,5 +1,6 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { cctvCopy, cctvRoute } from './cctv-copy.mjs';
+import { businessLinks, businessMenuServices } from './business-links.mjs';
 
 const labels = {
   pl: ['Strona główna', 'Ceny', 'Poradnik', 'Kontakt'],
@@ -7,6 +8,15 @@ const labels = {
   uk: ['Головна', 'Ціни', 'Порадник', 'Контакти'],
   en: ['Home', 'Prices', 'Guides', 'Contact'],
 };
+const audienceLabels = {
+  pl: ['Usługi dla osób prywatnych', 'Usługi dla organizacji'],
+  ru: ['Услуги для частных лиц', 'Услуги для организаций'],
+  uk: ['Послуги для приватних осіб', 'Послуги для організацій'],
+  en: ['Services for individuals', 'Services for organisations']
+};
+const escapeAttribute = text => text.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;');
+const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
+const externalIcon = '<svg class="mobile-external-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>';
 
 // Same stroke icons as the homepage service catalogue.
 const servicePaths = {
@@ -93,6 +103,7 @@ async function update(directory) {
       const updatedHeader = header.replace(/(<div class="mobile-actions">)\s*(?:<a\b[^>]*class="btn-mobile-call"[\s\S]*?<\/a>|<div class="mobile-lang-options"[\s\S]*?<\/div>)/, `$1\n                ${headerLanguages}`);
       html = html.replace(header, updatedHeader);
       const current = href => canonical === `https://naserwis.pl${href}` ? ' aria-current="page"' : '';
+      const [privateServices, organisationServices] = audienceLabels[locale];
       // Contact channels reuse the page's localized launcher: same links, labels and brand icons.
       const fabMenu = html.match(/<div class="fab-menu" id="contact-menu">[\s\S]*?<\/div>/)?.[0] || '';
       const channel = key => {
@@ -100,31 +111,39 @@ async function update(directory) {
         if (!item) return '';
         const href = item.match(/href="([^"]+)"/)?.[1];
         const title = item.match(/<strong>([^<]+)<\/strong>/)?.[1];
-        const note = item.match(/<\/strong><span>([^<]+)<\/span>/)?.[1];
         const svg = item.match(/<svg[\s\S]*?<\/svg>/)?.[0].replace(/\s+/g, ' ').replace(/\s+aria-hidden="[^"]*"/g, '').replace(/<svg\b/, '<svg aria-hidden="true"');
         if (!title || !svg) return '';
-        const inner = `<span class="mobile-channel-icon mobile-channel-${key}">${svg}</span><span class="mobile-channel-text"><strong>${title}</strong>${note ? `<small>${note}</small>` : ''}</span>`;
-        return href ? `<a class="mobile-nav-link mobile-channel" href="${href}" target="_blank" rel="noopener">${inner}</a>`
-          : `<button type="button" class="mobile-nav-link mobile-channel" data-contact-modal>${inner}</button>`;
+        const inner = `<span class="mobile-channel-icon mobile-channel-${key}">${svg}</span>`;
+        const name = `aria-label="${escapeAttribute(title)}" title="${escapeAttribute(title)}"`;
+        return href ? `<a class="mobile-nav-link mobile-channel" href="${href}" target="_blank" rel="noopener" ${name}>${inner}</a>`
+          : `<button type="button" class="mobile-nav-link mobile-channel" data-contact-modal ${name}>${inner}</button>`;
       };
       const channelRows = ['whatsapp', 'telegram', 'form'].map(channel).join('\n            ');
       const menu = `<div class="mobile-menu-overlay" id="mobile-menu-overlay">
         <nav class="mobile-nav" aria-label="${navLabel}">
             <a class="mobile-nav-link" href="${prefix}"${currentHome}>${home}</a>
-            <details class="mobile-nav-group">
-                <summary class="mobile-services-toggle"><span>${servicesLabel}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+            <details class="mobile-nav-group mobile-private-services">
+                <summary class="mobile-services-toggle"><span>${privateServices}</span>${chevron}</summary>
                 <div class="mobile-service-links">
                 ${serviceLinks.map(([, href, name]) => `<a class="mobile-nav-link mobile-nav-sub" href="${href}"${current(href)}>${serviceIcon(href)}${name.trim()}</a>`).join('\n                ')}
+                </div>
+            </details>
+            <details class="mobile-nav-group mobile-business-services">
+                <summary class="mobile-services-toggle"><span>${organisationServices}</span>${chevron}</summary>
+                <div class="mobile-service-links mobile-business-links">
+                    <p class="mobile-business-label">ITBIZ.PL</p>
+                    ${businessMenuServices[locale].map(([name, slug]) => `<a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}${slug}/"><span>${name}</span>${externalIcon}</a>`).join('\n                    ')}
                 </div>
             </details>
             <a class="mobile-nav-link" href="${prefix}#services">${prices}</a>
             <a class="mobile-nav-link guides-nav-link" href="${prefix}poradnik/"${currentGuide}>${guides}</a>
             <a class="mobile-nav-link" href="${prefix}#contact">${contact}</a>
+            <div class="mobile-nav-channels">
+                ${channelRows}
+            </div>
         </nav>
         <div class="mobile-nav-block mobile-nav-call">
-            <span class="mobile-nav-label">${contact}</span>
             <a href="tel:+48453327678" class="btn btn-primary mobile-call-btn">${phoneIcon}<span>+48 453 327 678</span></a>
-            ${channelRows}
         </div>
     </div>`;
       html = html.replace(overlay, menu);

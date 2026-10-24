@@ -37,3 +37,14 @@ export const businessServices = {
     ['Ongoing IT support', 'managed-it-for-business']
   ]
 };
+
+// Selected mobile-menu services, checked against all four live ITBIZ indexes.
+const businessMenuExtras = {
+  pl: [['Awaria monitoringu IP', 'awaria-monitoringu-w-firmie'], ['Projekt i konfiguracja Wi-Fi', 'wifi-dla-biur']],
+  ru: [['Авария IP-видеонаблюдения', 'avariya-videonablyudeniya-v-kompanii'], ['Проектирование и настройка Wi-Fi', 'wifi-dlya-ofisov']],
+  uk: [['Аварія IP-відеоспостереження', 'avariya-videosposterezhennya-v-kompaniyi'], ['Проєктування й налаштування Wi-Fi', 'wifi-dlya-ofisiv']],
+  en: [['IP CCTV outage', 'business-cctv-emergency'], ['Wi-Fi design and setup', 'office-wifi']]
+};
+export const businessMenuServices = Object.fromEntries(Object.entries(businessServices).map(([lang, services]) => [lang,
+  [services[0], businessMenuExtras[lang][0], services[2], businessMenuExtras[lang][1], services[4]]
+]));

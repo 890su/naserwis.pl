@@ -1,3 +1,18 @@
+# Audience-specific burger navigation — 2026-10-24
+
+- Mobile menu separates services for individuals and organisations into adjacent
+  native disclosures. The business section links to five verified localized
+  ITBIZ services: network/internet and IP CCTV outages, LAN cabling, office Wi-Fi
+  and ongoing IT support. All 20 destination pages returned HTTP 200.
+- WhatsApp, Telegram and enquiry are an icon row directly below Contact, with
+  localized accessible names. Removed the redundant Contact caption above the
+  phone. A separate phone footer stays at the bottom while the navigation scrolls,
+  with safe-area padding and usable controls on short screens.
+- Desktop navigation is retained. Static/link/SEO/CRO/guide checks, 12 focused
+  mobile navigation/conversion browser scenarios and PL/RU Nu HTML validation
+  passed. Visual/keyboard checks cover all four locales, short 320px screens,
+  disclosures, phone position, icon row and enquiry opening. No leads were sent.
+
 # Homepage mobile call placement — 2026-10-24
 
 - On homepage screens up to 760px, the large phone/icon/call caption follows

@@ -312,14 +312,14 @@ body[data-redesign] .interactive-stars{justify-content:flex-start;gap:4px;margin
 }
 
 /* Burger menu mirrors the desktop navigation and shares its typography and actions. */
-body[data-redesign] .mobile-menu-overlay{width:min(86%,380px);padding-top:76px;box-shadow:none;border-left:1px solid var(--rd-line);font-family:Manrope,Arial,sans-serif}
-body[data-redesign] .mobile-nav{display:flex;flex-direction:column;padding:8px 20px 12px;border-bottom:1px solid var(--rd-line)}
+body[data-redesign] .mobile-menu-overlay{display:flex;flex-direction:column;width:min(86%,380px);height:100dvh;padding-top:76px;overflow:hidden;box-shadow:none;border-left:1px solid var(--rd-line);font-family:Manrope,Arial,sans-serif}
+body[data-redesign] .mobile-nav{display:flex;flex-direction:column;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 20px 20px;border-bottom:0}
 body[data-redesign] .mobile-nav-link,body[data-redesign] .mobile-services-toggle{display:flex;align-items:center;min-height:48px;padding:10px 0;border-radius:0;font-size:17px;font-weight:700;color:var(--rd-ink);background:none;border-bottom:1px solid var(--rd-line)}
 body[data-redesign] .mobile-nav>.mobile-nav-link:last-child{border-bottom:0}
 body[data-redesign] .mobile-nav-link:hover{background:none;color:var(--rd-blue)}
 body[data-redesign] .mobile-nav-link[aria-current]{color:var(--rd-blue);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 body[data-redesign] .mobile-nav-group{padding:0;border-bottom:1px solid var(--rd-line)}
-body[data-redesign] .mobile-services-toggle{justify-content:space-between;gap:12px;border:0;cursor:pointer;list-style:none;line-height:inherit}
+body[data-redesign] .mobile-services-toggle{justify-content:space-between;gap:12px;border:0;cursor:pointer;list-style:none;line-height:1.5}
 body[data-redesign] .mobile-services-toggle::-webkit-details-marker{display:none}
 body[data-redesign] .mobile-services-toggle:hover{color:var(--rd-blue)}
 body[data-redesign] .mobile-services-toggle svg{width:18px;height:18px;flex-shrink:0}
@@ -334,7 +334,7 @@ body[data-redesign] .mobile-lang-btn{min-width:32px;min-height:44px;display:inli
 body[data-redesign] .mobile-lang-btn:hover{background:none;color:var(--rd-blue);transform:none;box-shadow:none}
 body[data-redesign] .mobile-lang-btn.active{background:none;border:0;color:var(--rd-blue);font-weight:800;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
 @media(max-width:360px){body[data-redesign] .logo{font-size:22px}body[data-redesign] .mobile-lang-btn{min-width:30px;padding:0 4px}body[data-redesign] .mobile-actions{gap:4px}}
-body[data-redesign] .mobile-nav-call{border-bottom:0}
+body[data-redesign] .mobile-nav-call{flex:0 0 auto;padding:16px 20px max(16px,env(safe-area-inset-bottom));border-top:1px solid var(--rd-line);border-bottom:0;background:#fff}
 body[data-redesign] .mobile-call-btn{display:flex;width:100%;min-height:52px;gap:10px;font-size:16px;box-shadow:none;color:#fff;transform:none}
 body[data-redesign] .mobile-call-btn svg{width:20px;height:20px;flex-shrink:0}
 body[data-redesign] .mobile-call-btn:hover{color:#fff;transform:none;box-shadow:none}
@@ -388,17 +388,19 @@ body[data-redesign] .contact-alternatives a[href^="tel:"] svg{color:var(--rd-blu
 body[data-redesign] .final-cta .contact-alternatives{justify-content:center}
 
 /* Contact channels inside the burger menu. */
-body[data-redesign] .mobile-nav-call{display:flex;flex-direction:column;gap:2px}
-body[data-redesign] .mobile-nav-call .mobile-call-btn{margin:4px 0 8px}
-body[data-redesign] .mobile-channel{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;min-height:56px;padding:8px 0;font:inherit;text-align:left;border:0;border-bottom:1px solid var(--rd-line);background:none;cursor:pointer}
-body[data-redesign] .mobile-nav-call .mobile-channel:last-child{border-bottom:0}
+body[data-redesign] .mobile-nav-call{display:flex;flex-direction:column;gap:0}
+body[data-redesign] .mobile-nav-call .mobile-call-btn{margin:0}
+body[data-redesign] .mobile-nav-channels{display:flex;align-items:center;gap:12px;padding:8px 0 0}
+body[data-redesign] .mobile-nav-channels .mobile-channel{display:inline-flex;flex:0 0 48px;justify-content:center;align-items:center;width:48px;min-height:48px;padding:4px;font:inherit;border:0;background:none;cursor:pointer}
 body[data-redesign] .mobile-channel-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:6px;background:#f3f5f7}
 body[data-redesign] .mobile-channel-icon svg{width:21px;height:21px}
 body[data-redesign] .mobile-channel-whatsapp{color:#1a8f4b}
 body[data-redesign] .mobile-channel-telegram{color:#2481cc}
 body[data-redesign] .mobile-channel-form{color:var(--rd-blue)}
-body[data-redesign] .mobile-channel-text strong{display:block;font-size:16px;font-weight:700;color:var(--rd-ink)}
-body[data-redesign] .mobile-channel-text small{display:block;font-size:13px;font-weight:500;color:var(--rd-muted);line-height:1.4}
+body[data-redesign] .mobile-channel:hover .mobile-channel-icon{background:#e8effc}
+body[data-redesign] .mobile-business-label{font-size:12px;font-weight:700;color:var(--rd-muted);margin:0 0 4px}
+body[data-redesign] .mobile-business-links .mobile-nav-sub{justify-content:space-between;font-size:15px;line-height:1.5}
+body[data-redesign] .mobile-external-icon{width:16px;height:16px;flex-shrink:0;color:var(--rd-muted)}
 body[data-redesign] .mobile-nav-sub{gap:12px;padding-left:0}
 body[data-redesign] .mobile-nav-ico{width:32px;height:32px;display:grid;place-items:center;flex-shrink:0;border-radius:6px;background:#e8effc;color:var(--rd-blue)}
 body[data-redesign] .mobile-nav-ico svg{width:18px;height:18px}

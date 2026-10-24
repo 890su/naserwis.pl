@@ -25,7 +25,7 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
 
       await page.locator('#mobile-menu-toggle').click();
       const menu = page.locator('#mobile-menu-overlay');
-      const services = menu.locator('.mobile-nav-group');
+      const services = menu.locator('.mobile-private-services');
       const toggle = services.locator('summary');
       await expect(services).not.toHaveAttribute('open');
       await expect(services.locator('.mobile-nav-sub').first()).toBeHidden();
@@ -46,6 +46,22 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
       await expect(services).not.toHaveAttribute('open');
       await page.keyboard.press('Space');
       await expect(services).toHaveAttribute('open', '');
+
+      const businesses = menu.locator('.mobile-business-services');
+      await businesses.locator('summary').click();
+      await expect(businesses.locator('a')).toHaveCount(5);
+      for (const href of await businesses.locator('a').evaluateAll(links => links.map(a => a.href))) {
+        expect(href).toMatch(/^https:\/\/itbiz\.pl\//);
+      }
+      const call = await menu.locator('.mobile-call-btn').boundingBox();
+      expect(call.y + call.height).toBeLessThanOrEqual(viewport.height);
+      expect(call.y + call.height).toBeGreaterThan(viewport.height - 40);
+      await expect(menu.locator('.mobile-nav-label')).toHaveCount(0);
+      const channels = menu.locator('.mobile-nav-channels .mobile-channel');
+      await expect(channels).toHaveCount(3);
+      const positions = await channels.evaluateAll(items => items.map(item => item.getBoundingClientRect().y));
+      expect(Math.max(...positions) - Math.min(...positions)).toBeLessThan(1);
+      for (const channel of await channels.all()) await expect(channel).toHaveAttribute('aria-label', /.+/);
 
       const enquiry = menu.locator('.mobile-channel[data-contact-modal]');
       await enquiry.scrollIntoViewIfNeeded();
