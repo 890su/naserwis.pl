@@ -144,9 +144,11 @@ test('form validates locally, preserves errors, counts one success and no PII', 
     expect(body.formType).toBe('final-form');
     await route.fulfill({ status: requests === 1 ? 502 : 200, contentType: 'application/json', body: JSON.stringify(requests === 1 ? { success: false, message: 'Test delivery error' } : { success: true, message: 'Test accepted', leadId: 'qa-id' }) });
   });
+  await page.locator('#final-message').fill('Private test message');
   await page.locator('#final-form button[type=submit]').click();
   expect(requests).toBe(0);
-  await expect(page.locator('#final-name')).toBeFocused();
+  await expect(page.locator('#final-phone')).toBeFocused();
+  await page.locator('#final-form .enquiry-extras summary').click();
   await page.locator('#final-name').fill('QA Person');
   await page.locator('#final-phone').fill('+48 000 000 000');
   await page.locator('#final-message').fill('Private test message');
@@ -201,6 +203,8 @@ test('intent selector updates the hero, URL, lead payload and analytics without 
     payload = route.request().postDataJSON();
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Test accepted', leadId: 'intent-lead-id' }) });
   });
+  await page.locator('#quick-message').fill('Coverage test');
+  await page.locator('#quick-form .enquiry-extras summary').click();
   await page.locator('#quick-name').fill('QA Person');
   await page.locator('#quick-phone').fill('+48 000 000 000');
   await page.locator('#quick-message').fill('Coverage test');
@@ -229,9 +233,10 @@ test('unknown intent cannot alter HTML, forms or attribution', async ({ page }) 
     payload = route.request().postDataJSON();
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ success: true, message: 'Test accepted', leadId: 'invalid-intent-id' }) });
   });
+  await page.locator('#final-message').fill('Invalid intent test');
+  await page.locator('#final-form .enquiry-extras summary').click();
   await page.locator('#final-name').fill('QA Person');
   await page.locator('#final-phone').fill('+48 000 000 000');
-  await page.locator('#final-message').fill('Invalid intent test');
   await page.locator('#final-form button[type=submit]').click();
   expect(payload.intent).toBeNull();
   expect(payload.attribution.intent).toBeUndefined();
@@ -259,9 +264,10 @@ test('mobile dock and modal form preserve secondary phone and primary lead conve
   await expect(page.locator('#quick-contact-modal')).toBeVisible();
   await expect(page.locator('.quick-contact-close')).toBeFocused();
   await expect(page.locator('#main-content')).toHaveAttribute('inert', '');
+  await page.locator('#quick-message').fill('Modal test message');
+  await page.locator('#quick-form .enquiry-extras summary').click();
   await page.locator('#quick-name').fill('QA Person');
   await page.locator('#quick-phone').fill('+48 000 000 000');
-  await page.locator('#quick-message').fill('Modal test message');
   await page.locator('#quick-form button[type=submit]').click();
   await expect(page.locator('#quick-form-message')).toContainText('Test accepted');
   expect(payload.formType).toBe('quick-form');
@@ -314,8 +320,9 @@ test('blocked storage does not disable contacts/forms', async ({ page }) => {
   await page.locator('.fab-toggle').click();
   await expect(page.locator('.fab-menu')).toBeVisible();
   await page.keyboard.press('Escape');
+  await page.locator('#final-message').fill('Local validation test');
   await page.locator('#final-form button[type=submit]').click();
-  await expect(page.locator('#final-name')).toHaveAttribute('aria-invalid', 'true');
+  await expect(page.locator('#final-phone')).toHaveAttribute('aria-invalid', 'true');
 });
 
 test('existing contact conversion labels remain single and unchanged', async ({ page }) => {
@@ -359,12 +366,12 @@ test('restored circular visuals, navigation suppression and visibility during fo
   await page.screenshot({ path: 'outputs/visual/mobile-round.png', animations: 'disabled' });
   await page.locator('#mobile-menu-toggle').click(); await expect(page.locator('.fab-toggle')).toBeHidden();
   await page.keyboard.press('Escape'); await expect(page.locator('.fab-toggle')).toBeVisible();
-  await page.locator('#final-name').focus();
+  await page.locator('#final-message').focus();
   await expect(page.locator('.fab-toggle')).toBeVisible();
-  await page.locator('#final-name').fill('Тест');
+  await page.locator('#final-message').fill('Тест');
   await expect(page.locator('.fab-toggle')).toBeVisible();
   await page.locator('#final-form').screenshot({ path: 'outputs/visual/mobile-form.png', animations: 'disabled' });
-  await page.locator('#final-name').blur();
+  await page.locator('#final-message').blur();
   await page.locator('footer').scrollIntoViewIfNeeded(); await expect(page.locator('.fab-toggle')).toBeVisible();
   await page.setViewportSize({ width: 1440, height: 900 }); await page.goto('/en/naprawa-wifi/');
   await page.locator('.fab-toggle').click();

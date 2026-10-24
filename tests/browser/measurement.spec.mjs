@@ -26,9 +26,10 @@ async function setup(page, baseURL, preferences = { analytics: true, marketing: 
 }
 
 async function fill(form) {
+  await form.locator('[name="message"]').fill('Private QA message');
+  if (await form.locator('.enquiry-extras summary').count()) await form.locator('.enquiry-extras summary').click();
   await form.locator('[name="name"]').fill('Private QA Person');
   await form.locator('[name="phone"]').fill('+48 000 000 999');
-  await form.locator('[name="message"]').fill('Private QA message');
 }
 
 const locales = [
@@ -37,6 +38,8 @@ const locales = [
 ];
 for (const [locale, weather] of locales) {
   test(`popup launchers and alternative contact channels /${locale}`, async ({ page, baseURL }) => {
+    // This scenario opens every launcher across four page/viewport combinations.
+    test.setTimeout(90000);
     await setup(page, baseURL);
     for (const section of ['', 'naprawa-wifi/']) {
       for (const width of [1280, 390]) {

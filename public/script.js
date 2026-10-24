@@ -441,7 +441,8 @@
             inputs.forEach(input => {
                 const value = input.value.trim();
                 const error = document.getElementById(input.id + '-error');
-                const valid = value.length >= minimum[input.name] && input.validity.valid;
+                const optionalName = form.matches('[data-staged-form], [data-compact-form]') && input.name === 'name';
+                const valid = (optionalName || value.length >= minimum[input.name]) && input.validity.valid;
                 input.setAttribute('aria-invalid', String(!valid));
                 error.hidden = valid;
                 if (!valid) {
@@ -450,7 +451,13 @@
                     trackFunnelEvent('naserwis_form_validation_error', { ...formParameters, field: input.name, reason: value ? 'too_short_or_invalid' : 'required' });
                 }
             });
-            if (invalid) { invalid.focus(); return; }
+            if (invalid) {
+                if (form.hasAttribute('data-staged-form')) {
+                    form.querySelector('.enquiry-details').hidden = false;
+                    if (invalid.closest('.enquiry-extras')) invalid.closest('.enquiry-extras').open = true;
+                }
+                invalid.focus(); return;
+            }
             sending = true;
 
             const formData = new FormData(form);
@@ -462,6 +469,10 @@
                 name: formData.get('name'),
                 phone: formData.get('phone'),
                 message: formData.get('message'),
+                contactFlow: form.hasAttribute('data-staged-form') ? 'staged' : form.hasAttribute('data-compact-form') ? 'compact' : undefined,
+                requestType: formData.get('requestType'),
+                urgency: formData.get('urgency'),
+                address: formData.get('address'),
                 intent: formData.get('intent'),
                 website: formData.get('website'),
                 turnstileToken: formData.get('cf-turnstile-response'),
@@ -1354,6 +1365,7 @@
         if (element.closest('header')) return 'header';
         if (element.closest('footer')) return 'footer';
         if (element.closest('.mobile-menu-overlay')) return 'mobile_menu';
+        if (element.closest('form[data-enquiry-placement]')) return element.closest('form[data-enquiry-placement]').dataset.enquiryPlacement;
         if (element.closest('.preview-service-rail')) return 'service_rail';
         if (element.closest('.preview-contact-rail')) return 'contact_rail';
         if (element.closest('.preview-task')) return 'task_panel';

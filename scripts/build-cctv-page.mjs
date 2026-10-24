@@ -43,8 +43,7 @@ for (const [locale, c] of Object.entries(cctvCopy)) {
   if (html.includes('<section class="service-proof"')) html = html.replace(block(html, 'section', /<section class="service-proof"/), '');
   const oldContent = block(html, 'section', /<section class="service-content /);
   const related = [['naprawa-sieci/', base.repair.h1], ['naprawa-wifi/', base.wifi.h1], ['montaz-sieci/', base.install.h1]];
-  const content = `<nav class="cctv-jumps" aria-label="${esc(c.jumpLabel)}"><div class="container"><a href="#cctv-repair">${esc(c.repairLink)}</a><a href="#cctv-install">${esc(c.installLink)}</a><a href="#cctv-prices">${esc(c.pricesLink)}</a></div></nav>
-<section class="service-content home-service-content"><div class="container"><div class="service-row"><div class="service-main">
+  const content = `<section class="service-content home-service-content"><div class="container"><div class="service-row"><div class="service-main">
 <section class="cctv-repair" id="cctv-repair" aria-labelledby="cctv-repair-title"><h2 id="cctv-repair-title">${esc(c.repairTitle)}</h2><p>${esc(c.repairIntro)}</p>
 <div class="cctv-symptoms">${c.faults.map(([title, text]) => `<details class="cctv-symptom"><summary><h3>${esc(title)}</h3>${arrow}</summary><p>${esc(text)}</p></details>`).join('\n')}</div>
 <p class="cctv-preserve">${esc(c.preserve)}</p></section>

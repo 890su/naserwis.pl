@@ -44,9 +44,10 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
       expect(faq.mainEntity.map(q => q.name)).toEqual(questions);
       expect(faq.mainEntity.map(q => q.acceptedAnswer.text)).toEqual(await page.locator('.faq-answer').allTextContents());
       if (width === 1280) {
+        await page.locator('#final-message').fill('CCTV test: one camera offline in Warsaw.');
+        await page.locator('#final-form .enquiry-extras summary').click();
         await page.locator('#final-name').fill('CCTV Test');
         await page.locator('#final-phone').fill('+48 500 000 000');
-        await page.locator('#final-message').fill('CCTV test: one camera offline in Warsaw.');
         await page.locator('#final-form button[type="submit"]').click();
         await expect.poll(() => submitted).toBe(1);
       }

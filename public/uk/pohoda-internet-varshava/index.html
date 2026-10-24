@@ -113,7 +113,7 @@
 <link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
 
 <style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
-<link rel="stylesheet" href="/assets/site-cb32e211e15c5859.css">
+<link rel="stylesheet" href="/assets/site-a6fc4227ae670118.css">
 </head>
 <body itemscope itemtype="https://schema.org/WebPage" data-redesign="shared">
 <a class="site-skip-link" href="#main-content">Перейти до вмісту</a>
@@ -313,15 +313,12 @@
         <section class="quick-contact-dialog" role="dialog" aria-modal="true" aria-labelledby="quick-contact-title">
             <button type="button" class="quick-contact-close" data-quick-contact-close aria-label="Закрити"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
             <div class="quick-contact-heading"><span>Форма заявки</span><h2 id="quick-contact-title">Надіслати запит</h2><p>Коротко опишіть проблему. Передзвонимо, щоб уточнити деталі й можливий час візиту.</p></div>
-            <form id="quick-form" aria-label="Надіслати запит">
-                <div class="quick-contact-fields">
-                    <div class="form-group"><label for="quick-name">Ім’я</label><input type="text" id="quick-name" name="name" required aria-required="true" minlength="2" maxlength="120" autocomplete="name"></div>
-                    <div class="form-group"><label for="quick-phone">Телефон</label><input type="tel" id="quick-phone" name="phone" required aria-required="true" minlength="5" maxlength="60" autocomplete="tel" inputmode="tel"></div>
-                    <div class="form-group quick-contact-message"><label for="quick-message">Що потрібно виправити?</label><textarea id="quick-message" name="message" required aria-required="true" minlength="3" maxlength="4000" aria-describedby="quick-form-help"></textarea><small id="quick-form-help" class="contact-field-help">Достатньо коротко описати симптоми й указати місто — деталі обговоримо під час дзвінка.</small></div>
-                </div>
-                <button type="submit" class="btn btn-primary form-submit">Попросити зв’язатися</button>
-                <p class="form-privacy-notice">Дані потрібні для відповіді на запит. Адміністратор: Ihar Shestsiuk. <a href="/uk/privacy">Конфіденційність</a>.</p><div id="quick-form-message" role="alert" aria-live="polite"></div>
-            </form>
+            <form id="quick-form" aria-label="Надіслати запит" data-compact-form>
+      <div class="form-group"><label for="quick-message">Опис проблеми</label><textarea id="quick-message" name="message" required minlength="3" maxlength="4000" rows="3"></textarea></div>
+      <div class="form-group"><label for="quick-phone">Телефон</label><input type="tel" id="quick-phone" name="phone" required minlength="5" maxlength="60" autocomplete="tel" inputmode="tel"></div>
+      <details class="enquiry-extras"><summary>Додати ім’я та адресу <span>(необов’язково)</span></summary><div class="form-group"><label for="quick-name">Ім’я</label><input type="text" id="quick-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="quick-address">Адреса або населений пункт</label><input type="text" id="quick-address" name="address" maxlength="300" autocomplete="street-address"></div></details>
+      <button type="submit" class="btn btn-primary form-submit">Надіслати заявку</button><p class="form-privacy-notice">Дані потрібні для відповіді на запит. Адміністратор: Ihar Shestsiuk. <a href="/uk/privacy">Конфіденційність</a>.</p><div id="quick-form-message" role="alert" aria-live="polite"></div>
+    </form>
         </section>
     </div>
     <!-- QUICK CONTACT UI END -->
@@ -362,6 +359,6 @@
             </svg>
         </button>
     </div>
-<script defer src="/assets/site-239644ca011932da.js"></script>
+<script defer src="/assets/site-44ca6e474651d069.js"></script>
 </body>
 </html>

@@ -69,3 +69,28 @@ test('intent is allowlisted in both the lead and attribution payload', async t =
   assert.ok(!delivery.text.includes('img src'));
   assert.ok(!delivery.text.includes('script'));
 });
+
+test('staged enquiries allow an omitted name and deliver sanitized details through both channels', async t => {
+  const sent = [];
+  t.mock.method(globalThis, 'fetch', async (_url, options) => {
+    sent.push(JSON.parse(options.body));
+    return Response.json({ ok: true });
+  });
+  const env = { TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only', RESEND_API_KEY: 'test-only', EMAIL_FROM: 'qa@example.test', EMAIL_TO: 'qa@example.test' };
+  for (const name of ['', 'Я']) {
+    const response = await call({ ...valid, name, phone: 'qa@example.test', contactFlow: 'staged', requestType: 'setup', urgency: 'soon', address: ' Warszawa\u0000 ' }, env);
+    assert.equal(response.status, 200);
+    for (const delivery of sent.slice(-2)) {
+      assert.match(delivery.text, /Request type: setup/);
+      assert.match(delivery.text, /Urgency: soon/);
+      assert.match(delivery.text, /Address: Warszawa/);
+      assert.ok(!delivery.text.includes('\u0000'));
+    }
+  }
+  assert.equal((await call({ ...valid, name: '', contactFlow: 'staged', formType: 'review' }, env)).status, 400);
+  assert.equal((await call({ ...valid, name: '', contactFlow: 'compact', formType: 'quick-form', address: 'Warszawa' }, env)).status, 200);
+  assert.match(sent.at(-1).text, /Address: Warszawa/);
+  assert.equal((await call({ ...valid, name: '', contactFlow: 'compact', formType: 'review' }, env)).status, 400);
+  await call({ ...valid, contactFlow: 'staged', requestType: 'unknown', urgency: 'unknown' }, env);
+  assert.ok(!sent.at(-1).text.includes('unknown'));
+});

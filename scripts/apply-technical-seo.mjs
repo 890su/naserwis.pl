@@ -46,7 +46,7 @@ const overrides = `
 .site-skip-link:focus{transform:translateY(0)}
 .footer-section h3{font-size:18px;margin-bottom:15px}
 #services .price-value[role="cell"]{color:#087860}
-#hero-form .form-privacy-notice,#final-form .form-privacy-notice,#quick-form .form-privacy-notice{color:#516572}
+#hero-form .form-privacy-notice,#final-form .form-privacy-notice,#quick-form .form-privacy-notice{color:var(--enquiry-muted,#516572)}
 #consent-dialog .consent-policy-links a{display:inline-flex;align-items:center;min-height:24px;padding-block:6px}
 #consent-dialog:not(.consent-overlay-settings) .consent-summary>p:first-child{color:#425b6c}
 .nw-section-heading>p{color:#087a65}

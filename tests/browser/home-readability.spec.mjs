@@ -74,8 +74,8 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       expect(await page.locator('.home-more').evaluate(e => getComputedStyle(e).backgroundColor))
         .not.toBe(await page.locator('.how-we-work').evaluate(e => getComputedStyle(e).backgroundColor));
       await page.locator('#final-form').scrollIntoViewIfNeeded();
-      await expect(page.locator('#final-name')).toBeVisible();
-      await expect(page.locator('#final-phone')).toBeVisible();
+      await expect(page.locator('#final-name')).toBeHidden();
+      await expect(page.locator('#final-phone')).toBeHidden();
       await expect(page.locator('#final-form textarea')).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     });

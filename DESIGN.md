@@ -11,7 +11,11 @@ colors:
   quiet-surface: "#f3f5f7"
   line: "#dde2e8"
   task-panel-line: "#c4ccd5"
-  contact-surface: "#e8edf2"
+  contact-surface: "#18212c"
+  contact-field-fill: "#dfe5ec"
+  contact-field-focus: "#e7ecf2"
+  contact-muted: "#c9d2dc"
+  contact-link: "#bad2ff"
   field-line: "#c4ccd5"
   outline-hover: "#e8effc"
   intent-active: "#e8effc"
@@ -113,6 +117,18 @@ components:
 ---
 
 # Design System: NaSerwis
+
+## Progressive enquiry — 24 October 2026
+
+**Approved graphite variant.** All in-page enquiry panels use the hero's graphite #18212c background, white headings/labels, #c9d2dc supporting text and #bad2ff links. Input surfaces are softened to #dfe5ec (#e7ecf2 on focus), with dark #18212c input text. Native request-type radios use the dark control scheme; urgency rings use lighter red/amber/green accents against graphite. The compact modal keeps its light presentation. From 1200px, the top panel remains a separate right-column card with 24px padding and 8px corners. Below 1200px, the enquiry section continues the hero's background without a white seam or nested card; its form is centered at a maximum content width of 640px inside a 688px container including side padding. The phone stays above it, and the pricing sidebar remains separate in the light content section. This supersedes the older light contact-surface descriptions below.
+
+The button-opened contact modal is an explicit exception: preserve its original “Send an enquiry” heading and dialog treatment, with a single screen containing problem description and telephone. Name and address are optional behind the native disclosure. Do not show examples, request type, urgency or progressive steps in this modal. Apply this compact version to every page that contains the shared modal, including utility pages. Keep focus trapping, error recovery, delivery and conversion tracking.
+
+In-page homepage and service-page enquiry panels use the single heading “What happened?” in the active locale. The textarea retains an accessible name without repeating a visible label. Examples scroll vertically, with centered text and soft edge fades. Selecting one immediately reveals step two while its description types into the field. Manual editing cancels the typing; an early submit completes the selected description before sending it. The second part contains optional broken/setup and urgency choices, a required phone/email/Telegram contact, and a native disclosure for optional name and address. Type choices share a row when they fit. Use native radio choices rather than bordered button cards; urgency uses red/amber/green radio outlines and matching selected centers and the localized labels Urgent / In the near future / No rush. Preserve existing form IDs, privacy notices, delivery confirmation and successful-lead conversion semantics.
+
+The examples pause on hover, focus, touch/manual scrolling, when offscreen or when the document is hidden. Supply Pause/Resume and All examples controls. The owner explicitly requested that example scrolling and selected-text typing continue even with reduced motion (24 October refinement). Duplicate visual examples are always outside the accessibility tree and tab order.
+
+Below 1200px, move the same top enquiry panel into its own section immediately after the complete hero (title, description, actions and phone), before the service/task content. Restore its original right column from 1200px. The hero phone must stay above the form in stacked layouts. Never clone the form: values, IDs and handlers must survive resizing. Keep the service price sidebar in the content section. Use the existing Manrope typography, blue action color, 6px fields and 8px panel radius. Field boundaries retain the established accessible #758497 treatment.
 
 
 ## Variant B — "Pomoc według zadania" (16 October 2026)

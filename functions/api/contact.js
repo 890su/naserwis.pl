@@ -45,11 +45,12 @@ function attributionText(attribution) {
   return `\n\n📊 Attribution\n${entries.map(([key, value]) => `${key}: ${value}`).join("\n")}`;
 }
 
-function telegramText({ leadId, name, phone, message, formType, rating, lang, intent, attribution }) {
+function telegramText({ leadId, name, phone, message, formType, rating, lang, intent, attribution, requestType, urgency, address }) {
   const title = formType === "review" ? "📝 New private review" : "📩 New contact request";
   const review = formType === "review" ? `\n⭐ Rating: ${rating}/5` : "";
   const intentLine = intent ? `\n🎯 Intent: ${intent}` : "";
-  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name}\n📞 ${phone}\n💬 ${message}\n📋 Form: ${formType}\n🌐 Language: ${lang}${intentLine}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
+  const details = [requestType && `Request type: ${requestType}`, urgency && `Urgency: ${urgency}`, address && `Address: ${address}`].filter(Boolean).join('\n');
+  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name || '—'}\n📞 ${phone}\n💬 ${message}${details ? '\n' + details : ''}\n📋 Form: ${formType}\n🌐 Language: ${lang}${intentLine}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
 }
 
 async function validateTurnstile(token, request, env) {
@@ -108,16 +109,20 @@ export async function onRequestPost(context) {
   const data = {
     leadId: crypto.randomUUID(),
     name: clean(payload.name, MAX_NAME_LENGTH),
-    phone: clean(payload.phone, MAX_PHONE_LENGTH),
+    phone: clean(payload.phone, payload.contactFlow === 'staged' ? 120 : MAX_PHONE_LENGTH),
     message: clean(payload.message, MAX_MESSAGE_LENGTH),
     intent: ALLOWED_INTENTS.has(payload.intent) ? payload.intent : "",
     formType: ALLOWED_FORM_TYPES.has(payload.formType) ? payload.formType : "hero-form",
     rating: Math.min(5, Math.max(1, Number.parseInt(payload.rating, 10) || 1)),
     attribution: cleanAttribution(payload.attribution),
+    requestType: ['broken', 'setup'].includes(payload.requestType) ? payload.requestType : '',
+    urgency: ['urgent', 'soon', 'today', 'flexible'].includes(payload.urgency) ? payload.urgency : '',
+    address: clean(payload.address, 300),
     lang
   };
 
-  if (payload.website || data.name.length < 2 || data.phone.length < 5 || data.message.length < 3) {
+  const optionalName = ['staged', 'compact'].includes(payload.contactFlow) && data.formType !== 'review';
+  if (payload.website || (!optionalName && data.name.length < 2) || data.phone.length < 5 || data.message.length < 3) {
     return reply({ success: false, message: text.invalid }, 400);
   }
 

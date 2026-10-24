@@ -4,6 +4,7 @@ import { resolve, relative, join } from 'node:path';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { restoreHomepage, simplifyHomepage } from './homepage-readability.mjs';
 import { businessLinks } from './business-links.mjs';
+import { stagedEnquiries, enquiryHeading, compactQuickEnquiry } from './staged-enquiry.mjs';
 const output = resolve('public');
 function block(html, tag, match) {
   const start = html.search(match); if (start < 0) throw Error('Missing block '+match);
@@ -90,7 +91,7 @@ for (const [file, currentHtml] of pages) {
   html=html.replace(/(&#128222;\s*)(<span id="phone-number">)/, icon('phone')+' $2');
   if (isHome || isService) {
     const home = pages.get(join(output,prefix,'index.html'));
-    const heroForm = block(home,'aside',/<aside class="hero-form"/).replace(/<h2>[\s\S]*?<\/h2>/,`<h2>${w[4]}</h2>`);
+    const heroForm = block(home,'aside',/<aside class="hero-form"/).replace(/<h2>[\s\S]*?<\/h2>/,`<h2>${enquiryHeading(lang)}</h2>`);
     const rates = [...home.matchAll(/<div class="price-value"[^>]*>([^<]+)<\/div>/g)].map(m=>m[1]).filter(s=>/\d/.test(s));
     if (rates.length!==3) throw Error('Published localized rates not found: '+lang);
     const shortPrices = `<div class="preview-prices"><h3>${w[5]}</h3><div><span>${w[6]}</span><strong>${rates[0]}</strong></div><div><span>${w[7]}</span><strong>${rates[1]}</strong></div><a href="${isHome?'#services':`/${prefix}#services`}">${lang==='pl'?'Warunki rozliczenia':lang==='ru'?'Условия оплаты':lang==='uk'?'Умови оплати':'Pricing conditions'} ${icon('arrow')}</a></div>`;
@@ -156,6 +157,8 @@ for (const [file, currentHtml] of pages) {
     transformed++;
   }
   html=channels(html);
+  if (isHome || isService) html=stagedEnquiries(html,lang,path);
+  html=compactQuickEnquiry(html,lang);
   await writeFile(file,html.replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n'));
 }
 console.log(`Approved redesign applied: ${transformed} commercial layouts; shared visual skin on all HTML.`);

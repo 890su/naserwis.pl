@@ -1,3 +1,27 @@
+# Progressive enquiries and graphite form layout — 2026-10-24
+
+- Owner approved publication of the final four-language form changes through the
+  existing GitHub main / Cloudflare Pages integration.
+- Homepage and service-page forms start with a problem description and scrolling,
+  service-specific examples. Typing or selecting an example reveals request type,
+  urgency and contact; name/address stay optional. Selection types the example
+  into the field, with manual-edit takeover and complete-text early submission.
+- In-page panels use graphite with softened light-grey fields. Below 1200px,
+  the same form follows the hero phone on a continuous graphite background, with
+  its content centered at a maximum 640px. Desktop keeps a separate right rail.
+- Button-opened dialogs retain a single screen: description, phone and optional
+  name/address. Existing modal keyboard/focus behavior, anti-spam, privacy and
+  successful-lead conversion semantics are preserved.
+- Removed the three CCTV section-jump links in PL/RU/UK/EN, retaining section IDs
+  used by guide links. Routes, SEO entities and pricing remain unchanged.
+- Validation: 13 unit tests and all static/SEO/CRO/link/guide guards passed.
+  The final graphite layout and compact modal passed 16 focused desktop/mobile
+  browser scenarios, with previous comprehensive enquiry and conversion checks
+  recorded in docs/PROGRESSIVE-ENQUIRY-2026-10-24.md. Provider delivery is mocked
+  during tests; no real lead is sent for verification.
+- Rollback uses the prior successful Pages deployment or a reviewed Git revert;
+  no DNS, project, secret or campaign configuration change is required.
+
 # Intent-matched service landings — 2026-09-17
 
 - Added localized, indexable symptom guidance to all four Wi-Fi pages and

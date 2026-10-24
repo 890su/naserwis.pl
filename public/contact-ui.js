@@ -229,6 +229,10 @@
     quickModal?.addEventListener('click', event => {
         if (event.target.closest('[data-quick-contact-close]')) closeQuickModal();
     });
+    quickModal?.querySelector('form')?.addEventListener('reset', () => {
+        const extras = quickModal.querySelector('.enquiry-extras');
+        if (extras) extras.open = false;
+    });
     document.addEventListener('keydown', event => {
         if (!quickModal || quickModal.hidden) return;
         if (event.key === 'Escape') {
@@ -237,7 +241,7 @@
             return;
         }
         if (event.key !== 'Tab') return;
-        const focusable = [...quickModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled])')]
+        const focusable = [...quickModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), summary')]
                 .filter(element => element.tabIndex >= 0 && !element.closest('[aria-hidden="true"], [inert], [hidden]') && element.getClientRects().length > 0);
         if (!focusable.length) return;
         const first = focusable[0];
