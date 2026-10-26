@@ -27,7 +27,7 @@ function replaceSection(html, className, replacement) {
   throw new Error(`Unclosed section: ${className}`);
 }
 function billing(c, sidebar = false) {
-  const rows = [[c.visit, 200], [c.next, 150]];
+  const rows = [[c.short, 200], [c.visit, 250], [c.next, 150]];
   const prices = sidebar ? rows.map(([label, amount]) => `<div class="price-item"><span>${escape(label)}</span><strong>${c.prefix} ${amount} ${c.currency}</strong></div>`).join('\n') :
     `<div class="price-table" role="table" aria-label="${escape(c.billing)}"><div class="price-row header" role="row"><div class="price-service" role="columnheader">${c.rateLabel}</div><div class="price-value" role="columnheader">${c.amountLabel}</div></div>\n${rows.map(([label, amount]) => `<div class="price-row" role="row"><div class="price-service" role="cell">${escape(label)}</div><div class="price-value" role="cell">${c.prefix} ${amount} ${c.currency}</div></div>`).join('\n')}\n</div>`;
   return `${prices}\n<p class="billing-rule"><strong>${escape(c.noDouble)}</strong></p>\n<p class="billing-condition">${escape(c.shortNote)}</p>\n<p class="billing-project">${escape(c.project)}</p>\n<p class="price-disclaimer">${escape(c.disclaimer)}</p>`;

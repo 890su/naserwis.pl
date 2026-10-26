@@ -57,7 +57,7 @@ export function simplifyHomepage(html, locale, block) {
   const billing = section(html, 'home-billing', block);
   const conditions = section(html, 'preview-conditions', block);
   const rates = [...conditions.matchAll(/<p class="preview-rate">[\s\S]*?<\/p>/g)].map(m => m[0]);
-  if (rates.length !== 2) throw Error('Homepage needs the visit and additional-hour rates');
+  if (rates.length !== 3) throw Error('Homepage needs the short-job, standard visit and additional-hour rates');
   const compactBilling = billing.replace(/\s+id="services"/, '').replace(/\s+aria-labelledby="services-title"/, '')
     .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '')
     .replace(block(billing, 'div', /<div class="price-table"/), '');

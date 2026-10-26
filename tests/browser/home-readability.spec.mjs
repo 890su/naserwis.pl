@@ -22,7 +22,10 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await page.goto('/' + prefix);
       await expect(page.locator('main > section:not(.mobile-enquiry-slot)')).toHaveCount(8);
       await expect(page.locator('#services')).toHaveCount(1);
-      await expect(page.locator('.home-pricing-rates .preview-rate')).toHaveCount(2);
+      await expect(page.locator('.home-pricing-rates .preview-rate')).toHaveCount(3);
+      const pricePrefix = { '': 'od', 'ru/': 'от', 'uk/': 'від', 'en/': 'from' }[prefix];
+      const currency = prefix === 'en/' ? 'PLN' : 'zł';
+      await expect(page.locator('.home-pricing-rates .preview-rate strong')).toHaveText([200, 250, 150].map(amount => `${pricePrefix} ${amount} ${currency}`));
       await expect(page.locator('.home-disclosure')).toHaveCount(3);
       await expect(page.locator('.billing-rule')).toBeHidden();
       await expect(page.locator('.home-service-catalog')).toBeHidden();
