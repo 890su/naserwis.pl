@@ -337,7 +337,7 @@ body[data-redesign] .review-stars{display:flex;gap:2px;margin:0;color:#e6a400}
 body[data-redesign] .review-stars svg,body[data-redesign] .google-icon svg{display:block;fill:currentColor;flex-shrink:0}
 body[data-redesign] .review-text{font-size:15px;line-height:1.65;color:#202124;margin:0}
 body[data-redesign] .review-source{margin:16px 0 0;font-size:13px;color:#5f6368}
-body[data-redesign] .review-source a{color:#1967d2;text-decoration:none}
+body[data-redesign] .review-source a{color:#1967d2;text-decoration:underline;text-underline-offset:3px}
 body[data-redesign] .review-source a:hover{text-decoration:underline}
 body[data-redesign] .google-reviews-link{border:1px solid #dadce0;border-radius:24px;color:#1967d2}
 body[data-redesign] .google-icon{color:#e6a400}
