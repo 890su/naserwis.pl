@@ -22,4 +22,5 @@ for (const script of process.argv.slice(2)) {
   if (result.status !== 0) process.exit(result.status || 1);
 }
 await import('./build-cctv-page.mjs');
+await import('./build-business-pages.mjs');
 await import('./apply-technical-seo.mjs');

@@ -79,12 +79,12 @@ export function simplifyHomepage(html, locale, block) {
   if (stepIndex !== 3) throw Error('Expected three visit steps');
   html = html.replace(process, editedProcess);
   const business = section(html, 'business-handoff', block);
-  const businessList = `<ul class="home-business-links">${businessServices[locale].map(([title, slug]) => `<li><a href="${businessLinks[locale].url}${slug}/" target="_blank" rel="noopener"><span>${title}</span>${external}</a></li>`).join('')}</ul>`;
+  const businessList = `<ul class="home-business-links">${businessServices[locale].map(([title, slug]) => `<li><a href="${businessLinks[locale].url}${slug}/"><span>${title}</span>${chevron}</a></li>`).join('')}</ul>`;
   // Keep the existing audience handoff in the generator model, with one clear
   // introduction and service destinations in its rendered disclosure.
   const compactBusiness = business.replace(/\s+aria-labelledby="business-handoff-title"/, '')
     .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '')
-    .replace(/<p>[\s\S]*?<\/p>/, `<p class="home-business-note">${t.newTab}</p>${businessList}`);
+    .replace(/<p>[\s\S]*?<\/p>/, `<p class="home-business-note">${c.business}</p>${businessList}`);
   const more = `<section class="home-more" aria-labelledby="available-services-title"><div class="container"><h2 id="available-services-title" class="home-section-heading">${c.catalog}</h2><details class="home-disclosure home-services-details"><summary><span>${t.private}</span>${chevron}</summary><div class="home-disclosure-body">${compactCatalogue}${problems}${editedAbout}</div></details><details class="home-disclosure home-business-details"><summary><span>${t.business}</span>${chevron}</summary><div class="home-disclosure-body">${compactBusiness}</div></details></div></section>`;
   html = html.replace(catalogue, '<!-- HOME DETAILS -->').replace(problems, '').replace(about, '').replace(business, '').replace('<!-- HOME DETAILS -->', more);
 

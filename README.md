@@ -1,12 +1,19 @@
 # NaSerwis.pl on Cloudflare Pages
 
-Production source: `public/` (20 landing/tool pages and 8 legal pages, PL/RU/UK/EN),
+Production source: `public/` (72 routed pages plus the 404 page, PL/RU/UK/EN),
 with Pages Functions for contact delivery, weather and connection diagnostics. The ignored legacy PHP files
 are a local migration archive, not the deployment source.
 
-Release plan: [CRO_PLAN.md](CRO_PLAN.md). Measurement contract:
+Current product definition: [PRODUCT.md](PRODUCT.md). Cross-brand strategy:
+[`../PROMOTION-CONTRACT.md`](../PROMOTION-CONTRACT.md). Measurement contract:
 [ads/measurement.md](ads/measurement.md). Deployment and QA record:
-[RELEASE.md](RELEASE.md).
+[RELEASE.md](RELEASE.md). Superseded plans are under `docs/archive/`.
+
+Local business services live under `/dla-firm/` (also `/ru/`, `/uk/`, `/en/`).
+Edit `scripts/business-copy.mjs`, then run `npm run business:generate`. The build
+reuses existing service forms and adds page-specific examples, local menus,
+canonical/hreflang, structured data and sitemap entries. Implementation record:
+[docs/BUSINESS-SERVICES-2026-10-26.md](docs/BUSINESS-SERVICES-2026-10-26.md).
 
 ## Cloudflare Pages configuration
 
@@ -125,10 +132,12 @@ partners. Polish and ITBIZ are excluded. The owner-reported approved Google Ads
 campaigns must be optimized in place using `ads/non-pl-existing-campaign-optimization.md`;
 the paused repository drafts must not be imported as duplicates.
 
-The 2026-10-09 home-service SEO update separates the available scope from billing
-in all four languages and removes NaSerwis business subscriptions. See
-`docs/SEO-WEEKS-1-3-2026-10-09.md` for query ownership, billing and validation.
-Use `npm run seo:generate` after editing `scripts/home-service-copy.mjs`.
+The 2026-10-09 home-service implementation remains in the source, but its
+home-only brand boundary is superseded. Current positioning and query ownership
+are defined in [PRODUCT.md](PRODUCT.md) and the workspace promotion contract.
+The old implementation note is preserved under `docs/archive/`. Use
+`npm run seo:generate` after editing `scripts/home-service-copy.mjs` and inspect
+the generated copy for the current two-segment model.
 
 The home-network guide section contains two articles, each with plain and technical
 reading levels on a single canonical URL in PL/RU/UK/EN. Edit

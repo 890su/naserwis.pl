@@ -1,4 +1,4 @@
-// NaSerwis owns private home infrastructure; company equipment belongs to ITBIZ.
+// Existing general services and billing; organisational requests stay in NaSerwis.
 // One source for rendered scope, billing, FAQ and search-engine descriptions.
 export const copy = {
   pl: {
@@ -82,3 +82,14 @@ export const copy = {
     priceQuestion:'Is a service fee added to the hourly rate?',businessQuestion:'Do you serve offices or company equipment?',
   },
 };
+
+// 2026-10-26: NaSerwis accepts both audiences; business requests stay local.
+const localBusinessCopy = {
+  pl: ['Dla klientów indywidualnych i organizacji', 'Potrzebujesz pomocy w firmie?', 'Tak, przyjmujemy również zgłoszenia firm i organizacji. Zakres, dostęp do sprzętu i ewentualną przerwę w pracy uzgadniamy przed wizytą.', 'Usługi dla firm w NaSerwis'],
+  ru: ['Для частных клиентов и организаций', 'Нужна помощь в организации?', 'Да, принимаем заявки компаний и организаций. Объём, доступ к оборудованию и возможный перерыв в работе согласуем до визита.', 'Услуги для бизнеса в NaSerwis'],
+  uk: ['Для приватних клієнтів і організацій', 'Потрібна допомога в організації?', 'Так, приймаємо заявки компаній і організацій. Обсяг, доступ до обладнання та можливу перерву в роботі погоджуємо до візиту.', 'Послуги для бізнесу в NaSerwis'],
+  en: ['For individuals and organisations', 'Need help at your business?', 'Yes, we also accept requests from businesses and organisations. We agree the scope, equipment access and any interruption before the visit.', 'Business services at NaSerwis']
+};
+for (const [locale, [scope, businessTitle, business, businessLink]] of Object.entries(localBusinessCopy)) {
+  Object.assign(copy[locale], { scope, businessTitle, business, businessLink });
+}

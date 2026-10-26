@@ -103,9 +103,8 @@ for (const [file, currentHtml] of pages) {
       const content = block(compactFooter, 'div', /<div class="footer-content">/);
       const business = `<div class="footer-section footer-business">
                     <h3>${audienceLabels[lang][1]}</h3>
-                    <p class="footer-business-label">ITBIZ.PL</p>
                     <ul class="footer-business-links">
-                        ${businessMenuServices[lang].map(([name, slug]) => `<li><a href="${businessLinks[lang].url}${slug}/" target="_blank" rel="noopener">${name}</a></li>`).join('\n                        ')}
+                        ${businessMenuServices[lang].map(([name, slug]) => `<li><a href="${businessLinks[lang].url}${slug}/">${name}</a></li>`).join('\n                        ')}
                     </ul>
                 </div>`;
       compactFooter = existing ? compactFooter.replace(existing, business)
@@ -116,7 +115,8 @@ for (const [file, currentHtml] of pages) {
   // A separate source keeps this image-only behavior out of contact/measurement code.
   html=html.replace(/\s*<script\b[^>]*src="\/home-photo\.js[^"]*"[^>]*><\/script>/g,'');
   if (isHome) html=html.replace('</body>','<script defer src="/home-photo.js"></script>\n</body>');
-  const isService = /(?:^|[\\/])(?:naprawa-wifi|naprawa-sieci|montaz-sieci|serwis-monitoringu)[\\/]index\.html$/.test(path);
+  const isBusiness = path.replaceAll('\\', '/').includes('dla-firm/');
+  const isService = isBusiness || /(?:^|[\\/])(?:naprawa-wifi|naprawa-sieci|montaz-sieci|serwis-monitoringu)[\\/]index\.html$/.test(path);
   html=html.replace(/\s*<link\b[^>]*href="\/redesign\.css[^\"]*"[^>]*>/g,'');
   html=html.replace('</head>', '<link rel="stylesheet" href="/redesign.css?v=20261015">\n</head>');
   for (const weight of [400,700]) {
@@ -127,7 +127,7 @@ for (const [file, currentHtml] of pages) {
   html=html.replace(/(&#128222;\s*)(<span id="phone-number">)/, icon('phone')+' $2');
   if (isHome || isService) {
     const home = pages.get(join(output,prefix,'index.html'));
-    const heroForm = block(home,'aside',/<aside class="hero-form"/).replace(/<h2>[\s\S]*?<\/h2>/,`<h2>${enquiryHeading(lang)}</h2>`);
+    const heroForm = block(home,'aside',/<aside class="hero-form"/).replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '');
     const rates = [...home.matchAll(/<div class="price-value"[^>]*>([^<]+)<\/div>/g)].map(m=>m[1]).filter(s=>/\d/.test(s));
     if (rates.length!==3) throw Error('Published localized rates not found: '+lang);
     const rowsLabel = [...home.matchAll(/<div class="price-service" role="cell">([^<]+)<\/div>/g)].map(m => m[1]);
@@ -157,7 +157,7 @@ for (const [file, currentHtml] of pages) {
         setup:`<figure class="preview-task-photo">${taskImage('rj45-installation',taskPhotos[lang][0])}</figure>`
       };
       const business = businessLinks[lang] || businessLinks.pl;
-      const businessLink = `<a class="preview-task-link preview-business-link" href="${business.url}" target="_blank" rel="noopener"><span class="preview-task-ico">${icon('network')}</span><div><h3>${business.label}</h3><small>ITBIZ.PL</small></div>${icon('arrow')}</a>`;
+      const businessLink = `<a class="preview-task-link preview-business-link" href="${business.url}"><span class="preview-task-ico">${icon('network')}</span><div><h3>${business.label}</h3></div>${icon('arrow')}</a>`;
       const task = (title,indices,type) => `<article class="preview-task preview-task-${type}">${figures[type]}<div class="preview-task-heading"><h2>${title}</h2></div><div class="preview-task-links">${indices.map(i=>stripServiceDecor(links[i]).replace('home-service-link','preview-task-link').replace(/<p>[\s\S]*?<\/p>/,'').replace(/(<a class="preview-task-link"[^>]*>)/,`$1<span class="preview-task-ico">${icon(serviceIcons[i])}</span>`).replace(/<\/a>$/,icon('arrow')+'</a>')).join('')}${type==='setup'?businessLink:''}</div></article>`;
       const overview=`<section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair">${task(w[2],[0,3,4],'fault')}${task(w[3],[1,2,5],'setup')}</div><aside id="preview-contact" class="preview-contact-rail">${heroForm}</aside></div></section>`;
       // Rates and their labels are copied from the published localized price table.
@@ -189,7 +189,7 @@ for (const [file, currentHtml] of pages) {
       const reviewModal=block(home,'div',/<div id="review-modal"/);
       if (html.includes('<section class="reviews"')) html=html.replace(block(html,'section',/<section class="reviews"/),'');
       if (html.includes('<div id="review-modal"')) html=html.replace(block(html,'div',/<div id="review-modal"/),'');
-      html=html.replace('<section class="final-cta"',reviews+reviewModal+'\n<section class="final-cta"');
+      if (!isBusiness) html=html.replace('<section class="final-cta"',reviews+reviewModal+'\n<section class="final-cta"');
     }
     transformed++;
   }
@@ -197,7 +197,7 @@ for (const [file, currentHtml] of pages) {
   if (isHome || isService) html=stagedEnquiries(html,lang,path);
   html=compactQuickEnquiry(html,lang);
   if (isHome || isService) html=renderEnquiryPlacement(html,isHome,lang);
-  await writeFile(file,html.replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n'));
+  await writeFile(file,html.replace(/[ \t]+$/gm,'').replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n'));
 }
 console.log(`Approved redesign applied: ${transformed} commercial layouts; shared visual skin on all HTML.`);
 }

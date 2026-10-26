@@ -118,6 +118,35 @@ components:
 
 # Design System: NaSerwis
 
+Owner update, 26 October 2026: the large phone action follows the enquiry form
+whenever the hero is a single column (through 900px), including tablets. Center
+the icon/number group and hide the redundant inline phone link beside WhatsApp
+and Telegram in that mobile/tablet form. Above 900px the phone stays alongside
+the heading in the existing two-column hero.
+
+Owner update, 26 October 2026: in-page enquiry panels start directly with the
+description field. Remove the visible “What happened?” heading in all four
+locales, including business pages. Keep the textarea's accessible name, form
+behavior and the separate contact dialog title. This supersedes the heading
+instruction in the historical progressive-enquiry notes below.
+
+## Local business services — 26 October 2026
+
+The `/dla-firm/` hub and five short business task pages inherit the existing
+service hero, graphite progressive form, Manrope, cobalt actions and responsive
+form placement. Each page has its own task examples. Use flat headings and lists
+for scope/result/preparation; do not add long benefit grids or repeated reviews.
+The compact price rail shows all three rates and the nearby-job condition;
+additional billing conditions use a native disclosure. Business menus and footer
+links stay inside NaSerwis and use the same tab. Broad services use a neutral
+`Usługi` label. Historical external ITBIZ routing descriptions below are replaced
+by this local implementation.
+
+> Current positioning note, 2026-10-26: preserve this visual system, but do not
+> treat historical audience labels or repeated ITBIZ hand-off links below as
+> current product requirements. NaSerwis now serves private customers and
+> organisations through one catalogue; see `PRODUCT.md` and `AGENTS.md`.
+
 ## Progressive enquiry — 24 October 2026
 
 The final homepage contact section (PL: “Skontaktuj się z technikiem”) always uses one column, including wide desktop layouts: introduction, phone and form stack within a centered 640px content width. The container adds 24px side gutters (20px on phones). Keep the form flush with this column rather than adding a second inset. Center phone/WhatsApp/Telegram rows in both homepage in-page forms, including wrapped rows.

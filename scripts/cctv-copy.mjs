@@ -1,5 +1,7 @@
 // Research and query clusters: docs/cctv-research-2026-10-24.md.
 export const cctvRoute = 'serwis-monitoringu/';
+import { businessCopy } from './business-copy.mjs';
+import { businessPath } from './business-links.mjs';
 export const cctvCopy = {
   pl: {
     nav: 'Monitoring CCTV', lanNav: 'Naprawa sieci LAN',
@@ -174,3 +176,8 @@ export const cctvCopy = {
     contactTitle: 'Describe the fault or planned installation', contactText: 'Tell us your location and number of cameras. We will agree the scope, cost and a possible visit time.',
   },
 };
+
+for (const [locale, c] of Object.entries(cctvCopy)) {
+  c.business = businessCopy[locale].services.monitoring.intro;
+  c.businessUrl = businessPath(locale, 'monitoring');
+}

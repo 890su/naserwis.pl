@@ -637,9 +637,10 @@ body[data-redesign="home"] [data-staged-form] .contact-alternatives{justify-cont
   body[data-redesign="service"] [data-staged-form] .contact-alternatives{justify-content:center}
 }
 @media(max-width:760px){.mobile-enquiry-slot>.container{padding-inline:20px}body[data-redesign="home"] .home-contact-grid{max-width:680px;padding-inline:20px}}
-@media(max-width:760px){
+@media(max-width:900px){
   body[data-redesign] .hero .preview-hero-call{display:none}
   body[data-redesign] .mobile-enquiry-slot>.container::before{content:"";display:block;border-top:1px solid #3a4757;margin-bottom:24px}
-  body[data-redesign] .preview-home-mobile-call{display:flex;max-width:none;border-left:0;border-top:1px solid #3a4757;padding:24px 0 0;margin-top:24px}
+  body[data-redesign] .mobile-enquiry-slot .contact-alternatives a[href^="tel:"]{display:none}
+  body[data-redesign] .preview-home-mobile-call{display:flex;justify-content:center;max-width:none;width:100%;border-left:0;border-top:1px solid #3a4757;padding:24px 0 0;margin-top:24px}
 }
 /* purgecss end ignore */

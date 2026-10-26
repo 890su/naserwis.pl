@@ -52,6 +52,7 @@ async function update(directory) {
     const isHome = canonical === `https://naserwis.pl${prefix}`;
     const currentGuide = /<body[^>]*class="[^"]*guide-page/.test(html) || /\/(?:pogoda-internet-warszawa|pogoda-internet-varshava|pohoda-internet-varshava|weather-internet-warsaw)\/$/.test(canonical || '') ? ' aria-current="page"' : '';
     const isService = ['montaz-sieci/', 'naprawa-wifi/', 'naprawa-sieci/', cctvRoute].some(route => canonical === `https://naserwis.pl${prefix}${route}`);
+    const isBusiness = canonical?.startsWith(`https://naserwis.pl${prefix}dla-firm/`);
     html = html.replace(/<header id="header"[\s\S]*?<\/header>/, header => {
       const oldBrand = balancedDiv(header, '<div class="site-brand">');
       const oldLogo = header.match(/<a\b[^>]*class="logo"[^>]*>[\s\S]*?<\/a>/)?.[0];
@@ -73,13 +74,13 @@ async function update(directory) {
         return isService ? tag.replace('>', ' aria-current="page">') : tag;
       });
       const business = `<div class="lang-dropdown business-dropdown">
-                    <button class="lang-current services-btn" aria-haspopup="true" aria-expanded="false" aria-controls="business-menu">
+                    <button class="lang-current services-btn" aria-haspopup="true" aria-expanded="false" aria-controls="business-menu"${isBusiness ? ' aria-current="page"' : ''}>
                         <span class="lang-name services-label">${organisationServices}</span>
                         <span class="lang-arrow">&#9660;</span>
                     </button>
                     <div id="business-menu" class="lang-menu services-menu business-menu" role="menu" aria-hidden="true">
-                        <p class="business-menu-label">ITBIZ.PL</p>
-                        ${businessMenuServices[locale].map(([name, slug]) => `<a class="lang-option" role="menuitem" href="${businessLinks[locale].url}${slug}/" target="_blank" rel="noopener"><span class="lang-name">${name}</span>${externalIcon}</a>`).join('\n                        ')}
+                        <a class="lang-option" role="menuitem" href="${businessLinks[locale].url}"><span class="lang-name">${businessLinks[locale].label}</span></a>
+                        ${businessMenuServices[locale].map(([name, slug]) => `<a class="lang-option" role="menuitem" href="${businessLinks[locale].url}${slug}/"><span class="lang-name">${name}</span></a>`).join('\n                        ')}
                     </div>
                 </div>`;
       const navigation = `<div class="nav-center desktop-nav">
@@ -143,8 +144,8 @@ async function update(directory) {
             <details class="mobile-nav-group mobile-business-services">
                 <summary class="mobile-services-toggle"><span>${organisationServices}</span>${chevron}</summary>
                 <div class="mobile-service-links mobile-business-links">
-                    <p class="mobile-business-label">ITBIZ.PL</p>
-                    ${businessMenuServices[locale].map(([name, slug]) => `<a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}${slug}/" target="_blank" rel="noopener"><span>${name}</span>${externalIcon}</a>`).join('\n                    ')}
+                    <a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}"${current(businessLinks[locale].url)}><span>${businessLinks[locale].label}</span></a>
+                    ${businessMenuServices[locale].map(([name, slug]) => `<a class="mobile-nav-link mobile-nav-sub" href="${businessLinks[locale].url}${slug}/"${current(`${businessLinks[locale].url}${slug}/`)}><span>${name}</span></a>`).join('\n                    ')}
                 </div>
             </details>
             <a class="mobile-nav-link" href="${prefix}#services">${prices}</a>

@@ -1,0 +1,21 @@
+/* Business services inherit the existing service hero, form, prices and footer. */
+.business-breadcrumbs{display:flex;justify-content:flex-start;flex-wrap:wrap;gap:8px;margin:0 0 28px;color:#5d6875;font-size:13px;line-height:1.6}
+.business-breadcrumbs a{color:#485462;text-underline-offset:3px}
+.business-content .service-main>section,.business-related{margin:0 0 30px}
+.business-related{display:block}
+.business-content .service-main h2{margin:0 0 14px;font-size:25px;line-height:1.3;letter-spacing:-.025em}
+.business-content .service-main p{max-width:70ch;margin:0 0 14px;line-height:1.65}
+.business-work{margin:0;padding-left:22px;max-width:70ch}
+.business-work li{padding-left:4px;margin:0 0 10px;line-height:1.65}
+.business-limit{color:#5d6875}
+.business-related ul{list-style:none;padding:0;margin:0}
+.business-related li{border-bottom:1px solid #dde2e8}
+.business-related a{display:flex;justify-content:space-between;gap:20px;align-items:center;min-height:48px;padding:12px 0;color:#1d5bd0;font-weight:600;text-underline-offset:4px}
+.business-related a:hover{color:#174bb0;text-decoration:underline}
+.business-related a:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}
+.business-page .hero-large-subtitle{max-width:70ch}
+.business-page .final-cta{padding:32px 0}
+.business-price-terms{margin:14px 0 20px;font-size:13px;line-height:1.65}
+.business-price-terms summary{cursor:pointer;color:#1d5bd0;text-underline-offset:3px}
+.business-price-terms[open] summary{margin-bottom:12px}
+@media(max-width:760px){.business-content .service-main h2{font-size:23px}.business-breadcrumbs{margin-bottom:24px;font-size:12px}.business-content .service-main>section,.business-related{margin-bottom:26px}}

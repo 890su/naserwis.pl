@@ -34,25 +34,26 @@ const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-c
 // Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
+  // 2026-10-26 local business pages: existing Service metadata retained; only the audience FAQ answer now accepts organisations locally.
   // 2026-10-26: restored conditional nearby short job from 200 PLN and standard visit from 250 PLN; only the billing FAQ answer changed.
   // 2026-10-24: owner-approved network/internet fault and CCTV share summaries; aligned LocalBusiness descriptions.
   // 2026-10-16 owner-approved shorter homepage H1 in all four languages ("... / Montaż lub naprawa z dojazdem").
   "public/index.html": "49200a1f57759ec3fb0fb5b3e724860181398f34644c3cecb9f44254663030a6",
-  "public/naprawa-wifi/index.html": "05422f18ea1561eebec9ac5fb1874e37519f4262afce18b3b77bcd754c5414ef",
-  "public/naprawa-sieci/index.html": "5edebcded0d4e2e799c539c551d0ea3794b219b1f7c48718fb24d8d8f0fc8c61",
-  "public/montaz-sieci/index.html": "174a8c021bb79c239e6f70324ca59641652c9b5993c7e892dfa4c16451a0ebc4",
+  "public/naprawa-wifi/index.html": "4e571b6244bb6fac32a4023f3231d2dc50733cfcf72d529ea2d5964c26a46ac6",
+  "public/naprawa-sieci/index.html": "e2de9b1adea8844a80e1e24b0b1be87f9adc0724002989fd423f15d173376791",
+  "public/montaz-sieci/index.html": "7464792df3642789fd4eb054d671f3c165273436dd79db7914df3520b2d0f44b",
   "public/ru/index.html": "c22ded0339f8afa8dc5ad9512ef6ee8dacc6e32970323ffd3099ad50380ca8ed",
-  "public/ru/naprawa-wifi/index.html": "8a70053586416cefefdfa6cd598c300921f66215b73bdfaa31cf20c28b3f8d38",
-  "public/ru/naprawa-sieci/index.html": "4852e0c1599e2dae5dafaf03634ad26a7760ff261d0785d903e5c899f85fb6ba",
-  "public/ru/montaz-sieci/index.html": "921cfd644ed09980403cb34ef351327cea668d2375b8b211ade5dd7201100cc9",
+  "public/ru/naprawa-wifi/index.html": "8d4808fe3670edc9e518af2665578f9cf077760060907c06f59ce74d5dc7aae5",
+  "public/ru/naprawa-sieci/index.html": "0475401a7f30af024fa1a60b514239eed4e6a7df20811b58208538c51c9f46a8",
+  "public/ru/montaz-sieci/index.html": "43513ac17678d1c1530fdf841dd7ed70a45d26c996b70352e311aef1aeec27b4",
   "public/uk/index.html": "e5a45f12e15b3535e1ce679e30e2a17fc8e1f90a05e718162bb5230ef89d340a",
-  "public/uk/naprawa-wifi/index.html": "750816a109c0c2996fe6eff6468c139d5e5973d34b68dcf375c44ab0e63617ce",
-  "public/uk/naprawa-sieci/index.html": "a7c87282853b9893b9bac6a431cb2693abd4d7567bf863a5d6a42f973bf43174",
-  "public/uk/montaz-sieci/index.html": "da60db75e2acec58d6a35875b12d40030126303023d896bd4bb6043c596b710d",
+  "public/uk/naprawa-wifi/index.html": "3bc47b1e2fa38cfbb4631b20cea48c80dc99a43707a260c2d0e61573fc3e36a6",
+  "public/uk/naprawa-sieci/index.html": "572b96044d94f2c3f5e1968ceacd50a9030e499209734e33f772a99105f7e0da",
+  "public/uk/montaz-sieci/index.html": "212c36591e823cbb78ac29b4bf14e8e4648152f08ddf45ea72bae0f0fb254fea",
   "public/en/index.html": "804fb2c0c0de5e272bbb97e160fcb51d7ffdd28649f174fffa70f5eb00dc368c",
-  "public/en/naprawa-wifi/index.html": "caf925038fb4c6923199d9a414786e5042d4cdb0fd36789032e3807359688c7c",
-  "public/en/naprawa-sieci/index.html": "dea9dba5a518628abce452d7630aca6ee7d72a0beeee7d71489049e1276b6794",
-  "public/en/montaz-sieci/index.html": "17d0c8a3d2a799026b0787fd7f510bf177441eb11bd9c0913da66ffbb57a9733"
+  "public/en/naprawa-wifi/index.html": "59e1aaa972ec5024a8b4b2d0ee8d0118dd39a86306f602a5fbcc27492a60f071",
+  "public/en/naprawa-sieci/index.html": "1ed34631b16b2165749de19c2cd5392a0dc46eecfc77d68bad2888ab666fd5ba",
+  "public/en/montaz-sieci/index.html": "311007d233eae393b26e32d3ba918b118a14ef172c1f2bbc9a08a39ea166c7ba"
 };
 // Legacy PHP routes now redirect directly to their established canonical URLs.
 const reviewedProtectedFileHashes = {
@@ -108,7 +109,7 @@ if (record) {
       assert.ok(!html.includes('<div class="cta-buttons">'), `${file}: rejected homepage hero buttons returned`);
     }
   }
-  assert.equal(landingCount, 24);
+  assert.equal(landingCount, 48);
   const sitemap = await readFile('public/sitemap.xml', 'utf8');
   for (const route of ['/pogoda-internet-warszawa/', '/ru/pogoda-internet-varshava/', '/uk/pohoda-internet-varshava/', '/en/weather-internet-warsaw/']) assert.ok(sitemap.includes(route), `sitemap: ${route}`);
   for (const file of Object.keys(reviewedPageHashes)) {
@@ -120,5 +121,5 @@ if (record) {
   const notFound = await readFile('public/404.html', 'utf8');
   assert.ok(notFound.includes('<meta name="robots" content="noindex, follow">'), '404 page must remain noindex, follow');
   assert.ok(notFound.includes('href="/"'), '404 page must link back to the homepage');
-  console.log('CRO guards passed: reviewed home-service SEO, preserved Ads configuration, 24 contact landings including CCTV and 4 tool routes.');
+  console.log('CRO guards passed: reviewed audience FAQ, preserved Ads configuration, 48 contact landings including 24 local business pages and 4 tool routes.');
 }

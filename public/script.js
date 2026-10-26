@@ -1056,6 +1056,9 @@
 
     function getPageService() {
         const path = window.location.pathname;
+        const business = document.body.dataset.businessService;
+        const businessServices = { hub: 'business_general', 'awaria-sieci': 'business_network', monitoring: 'business_cctv', 'sieci-lan': 'business_lan', wifi: 'business_wifi', 'obsluga-it': 'business_it' };
+        if (businessServices[business]) return businessServices[business];
         if (path.includes('naprawa-wifi')) return 'wifi_repair';
         if (path.includes('montaz-sieci')) return 'lan_install';
         if (path.includes('naprawa-sieci')) return 'lan_cctv_repair';
@@ -1294,7 +1297,7 @@
             placement: ['floating', 'sticky', 'content', 'checkpoint', 'hero', 'final', 'modal', 'form',
                 'header', 'footer', 'mobile_menu', 'contact_rail', 'service_rail', 'task_panel', 'services', 'pricing'],
             action: ['form', 'contact_menu', 'phone', 'whatsapp', 'telegram', 'chatwoot', 'email'],
-            target_service: ['wifi_repair', 'lan_install', 'lan_cctv_repair'],
+            target_service: ['wifi_repair', 'lan_install', 'lan_cctv_repair', 'business_general', 'business_network', 'business_cctv', 'business_lan', 'business_wifi', 'business_it'],
             service_choice: ['wifi-coverage', 'router-setup', 'lan-install', 'lan-repair', 'network-test', 'device-setup'],
             task_group: ['fault', 'setup'],
             form_id: ['hero-form', 'final-form', 'quick-form'],
@@ -1335,6 +1338,7 @@
             if (url.origin !== window.location.origin) return;
             const route = url.pathname.replace(/^\/(?:ru|uk|en)(?=\/)/, '');
             const services = { '/naprawa-wifi/': 'wifi_repair', '/montaz-sieci/': 'lan_install', '/naprawa-sieci/': 'lan_cctv_repair', '/serwis-monitoringu/': 'lan_cctv_repair' };
+            Object.assign(services, { '/dla-firm/': 'business_general', '/dla-firm/awaria-sieci/': 'business_network', '/dla-firm/monitoring/': 'business_cctv', '/dla-firm/sieci-lan/': 'business_lan', '/dla-firm/wifi/': 'business_wifi', '/dla-firm/obsluga-it/': 'business_it' });
             const targetService = services[route];
             if (targetService && !url.hash) {
                 trackFunnelEvent('naserwis_service_select', {

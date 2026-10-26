@@ -50,7 +50,7 @@ for (const [locale, c] of Object.entries(cctvCopy)) {
 <section class="cctv-install" id="cctv-install" aria-labelledby="cctv-install-title"><h2 id="cctv-install-title">${esc(c.installTitle)}</h2><p>${esc(c.installIntro)}</p>
 <ol class="cctv-install-steps">${c.steps.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${esc(text)}</p></li>`).join('\n')}</ol><h3 class="cctv-systems-title">${esc(c.systemsTitle)}</h3><ul class="cctv-system-types">${c.systems.map(([title, text]) => `<li><strong>${esc(title)}.</strong> ${esc(text)}</li>`).join('\n')}</ul><p class="cctv-scope">${esc(c.scope)}</p></section>
 <section class="cctv-prepare" aria-labelledby="cctv-prepare-title"><h2 id="cctv-prepare-title">${esc(c.prepareTitle)}</h2><p>${esc(c.prepare)}</p><a href="#contact" data-contact-modal>${esc(base.request)}</a></section>
-<aside class="business-handoff cctv-business"><h2>${esc(c.businessTitle)}</h2><p>${esc(c.business)}</p><a href="${c.businessUrl}" target="_blank" rel="noopener">${esc(c.businessLink)} <span aria-hidden="true">↗</span></a><small>${esc(c.newTab)}</small></aside>
+<aside class="business-handoff cctv-business"><h2>${esc(c.businessTitle)}</h2><p>${esc(c.business)}</p><a href="${c.businessUrl}">${esc(c.businessLink)} <span aria-hidden="true">→</span></a></aside>
 <div class="info-box cctv-related"><h2>${esc(c.relatedTitle)}</h2><div class="info-box-links">${related.map(([path, label]) => `<a class="info-link" href="/${prefix}${path}">${esc(label)} <span aria-hidden="true">→</span></a>`).join('\n')}</div></div>
 </div>${sidebar}</div></div></section>`;
   html = html.replace(oldContent, content);

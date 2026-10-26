@@ -363,7 +363,29 @@ and measurement behavior, including its known limitations.
 No uplift is claimed. Obtain fresh 28/90-day GA4/GSC and qualified-lead records;
 review the first full week's consent-segmented funnel and run a controlled
 experiment only when traffic supports it. Do not alter Ads bidding based on
-button clicks alone. See [CRO_PLAN.md](CRO_PLAN.md) for evidence-gated next steps.
+button clicks alone. The historical CRO plan is preserved under `docs/archive/`;
+current product and channel decisions live in [PRODUCT.md](PRODUCT.md) and the
+workspace promotion contract.
+# 2026-10-26 — local business services and responsive contact cleanup
+
+Owner approval: publish the reviewed current version through the existing main
+branch / Cloudflare Pages integration.
+
+- Added five concise business task pages and a hub in PL/RU/UK/EN; all business
+  navigation stays on NaSerwis. Existing general service URLs and their primary
+  SEO fields are retained; the organisational FAQ now accepts requests locally.
+- Reused the progressive form with page-specific examples and attribution.
+  Removed its redundant visible heading in every locale.
+- In the single-column hero through 900px, the large phone action follows the
+  form, is centred, and replaces the inline phone beside WhatsApp/Telegram. In
+  two-column layouts the phone remains beside the heading.
+- Price conditions remain 200/250/150 PLN. Existing Ads identifiers, delivery,
+  consent and review routing are preserved.
+
+Local checks: 73 HTML pages, 13 unit tests, 43 feature browser scenarios and 21
+responsive/contact acceptance scenarios passed. Publication receipts and live
+verification: `outputs/publication-business-20261026/publication.json`.
+
 # 2026-10-24 — audience navigation and enquiry scrolling
 
 Subsequent approved follow-up: publish the final five-item desktop/burger menu,

@@ -36,6 +36,10 @@ async function prepare(page, lang) {
 }
 
 async function selectExample(example) {
+  // Expand the real control before aiming at a row: the looping examples move
+  // between coordinate lookup and mouse click, especially with two QA workers.
+  const all = example.locator('xpath=ancestor::form').locator('[data-examples-all]');
+  if (await all.getAttribute('aria-expanded') === 'false') await all.click();
   await example.scrollIntoViewIfNeeded();
   // Click an actual text line, including wrapped copy; both text and empty row
   // space leave wheel/touch scrolling to the page.
@@ -183,14 +187,15 @@ for (const route of ['', 'serwis-monitoringu/']) {
       await page.goto('/ru/' + route);
       const form = page.locator(route ? '#final-form' : '#hero-form');
       const panel = form.locator('..');
-      await expect(panel.locator('h2')).toHaveText('Что случилось?');
+      await expect(panel.locator('h2')).toHaveCount(0);
       await expect(form.locator('.enquiry-problem label')).toHaveCount(0);
       await expect(form.locator('textarea')).toHaveAttribute('aria-label', 'Что случилось?');
       if (width < 1200) {
         expect(await form.evaluate(el => Boolean(el.closest('.mobile-enquiry-slot')))).toBe(true);
         const call = await page.locator('.preview-hero-call:visible').boundingBox();
         const bounds = await form.boundingBox();
-        expect(call.y + call.height).toBeLessThan(bounds.y);
+        if (width <= 900) expect(call.y).toBeGreaterThanOrEqual(bounds.y + bounds.height);
+        else expect(call.y + call.height).toBeLessThan(bounds.y);
         expect(await page.locator('.hero').evaluate(el => el.nextElementSibling.className)).toBe('mobile-enquiry-slot');
       } else expect(await form.evaluate(el => Boolean(el.closest('.preview-contact-rail, .preview-service-rail')))).toBe(true);
       const example = form.locator('[data-enquiry-example]').first();

@@ -33,7 +33,7 @@ function billing(c, sidebar = false) {
   return `${prices}\n<p class="billing-rule"><strong>${escape(c.noDouble)}</strong></p>\n<p class="billing-condition">${escape(c.shortNote)}</p>\n<p class="billing-project">${escape(c.project)}</p>\n<p class="price-disclaimer">${escape(c.disclaimer)}</p>`;
 }
 function handoff(c, locale, section = false) {
-  const content = `<h${section ? '2' : '3'} id="business-handoff-title">${c.businessTitle}</h${section ? '2' : '3'}><p>${c.business}</p><a href="${businessLinks[locale].url}" target="_blank" rel="noopener">${c.businessLink} <span aria-hidden="true">→</span></a>`;
+  const content = `<h${section ? '2' : '3'} id="business-handoff-title">${c.businessTitle}</h${section ? '2' : '3'}><p>${c.business}</p><a href="${businessLinks[locale].url}">${c.businessLink} <span aria-hidden="true">→</span></a>`;
   return section ? `<section class="packages business-handoff" aria-labelledby="business-handoff-title"><div class="container">${content}</div></section>` : `<aside class="business-handoff">${content}</aside>`;
 }
 function catalog(c, prefix) {

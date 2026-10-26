@@ -72,8 +72,9 @@ for (const [locale, weather] of locales) {
         }, true));
         for (const method of ['phone', 'whatsapp', 'telegram']) {
           const selector = method === 'phone' ? '[href^="tel:"]' : method === 'whatsapp' ? '[href*="wa.me/"]' : '[href*="t.me/"]';
-          await page.locator('.contact-alternatives ' + selector).first().click();
-          expect((await events(page, method + '_click')).at(-1)).toMatchObject({ contact_method: method, contact_placement: 'form' });
+          const belowFormPhone = method === 'phone' && width <= 900;
+          await page.locator(belowFormPhone ? '.preview-home-mobile-call' : '.contact-alternatives ' + selector).first().click();
+          expect((await events(page, method + '_click')).at(-1)).toMatchObject({ contact_method: method, contact_placement: belowFormPhone ? 'hero' : 'form' });
         }
         await page.locator('footer a[href^="mailto:"]').first().click();
         expect(await events(page, 'email_click')).toMatchObject([{ contact_method: 'email', contact_placement: 'footer' }]);
