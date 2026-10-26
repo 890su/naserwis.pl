@@ -82,7 +82,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
   test(`guide discovery /${prefix}`, async ({ page }) => {
     await isolate(page);
     await page.goto('/' + prefix);
-    await page.locator('.guides-teaser a').last().click();
+    await page.locator(`.guides-teaser a[href="/${prefix}poradnik/"]`).click();
     await expect(page).toHaveURL(new RegExp(`/${prefix}poradnik/$`));
     await expect(page.locator('.guide-cards article')).toHaveCount(3);
     await page.locator('.guide-cards h2 a').first().click();

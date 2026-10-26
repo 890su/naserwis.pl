@@ -65,12 +65,19 @@ test('reduced motion leaves content visible and reviews do not autoplay', async 
   await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, support: false })));
   await page.goto('/');
   await expect(page.locator('.problem-card').first()).toHaveCSS('opacity', '1');
+  const fittedReview = () => page.locator('.reviews-track').evaluate(track => {
+    const cards = [...track.children];
+    const active = cards.reduce((best, card) => Math.abs(card.offsetLeft - cards[0].offsetLeft - track.scrollLeft) < Math.abs(best.offsetLeft - cards[0].offsetLeft - track.scrollLeft) ? card : best);
+    return Math.abs(track.clientHeight - active.offsetHeight);
+  });
+  await expect.poll(fittedReview).toBeLessThanOrEqual(1);
   const initial = await page.locator('.reviews-track').evaluate(el => el.scrollLeft);
   await page.clock.runFor(12000);
   expect(await page.locator('.reviews-track').evaluate(el => el.scrollLeft)).toBe(initial);
   // Imported reviews must remain reachable without accumulating a hardcoded gap.
   await page.locator('.slider-btn.prev').click();
   expect(await page.locator('.reviews-track').evaluate(el => Math.abs(el.lastElementChild.getBoundingClientRect().left - el.getBoundingClientRect().left))).toBeLessThan(1);
+  await expect.poll(fittedReview).toBeLessThanOrEqual(1);
   await page.locator('.slider-btn.next').click();
   expect(await page.locator('.reviews-track').evaluate(el => el.scrollLeft)).toBe(0);
 });

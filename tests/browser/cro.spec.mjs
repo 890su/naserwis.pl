@@ -52,7 +52,7 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.fab-toggle')).toBeFocused();
       await expect(page.locator('.fab-toggle')).toHaveCSS('border-radius', '50%');
       await expect(page.locator('.fab-toggle')).toHaveAttribute('aria-expanded', 'false');
-      await page.locator('.service-content, .how-we-work').first().evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
+      await page.locator('.service-content, .home-pricing').first().evaluate(e => window.scrollTo({ top: e.getBoundingClientRect().top + scrollY, behavior: 'instant' }));
       await expect(page.locator('.fab-toggle')).toBeVisible();
       await page.locator('.fab-toggle').click();
       await expect(page.locator('.fab-menu')).toBeVisible();

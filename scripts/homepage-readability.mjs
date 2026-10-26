@@ -73,11 +73,11 @@ export function simplifyHomepage(html, locale, block) {
   const editedAbout = about.replace(/(<h3\b[^>]*>)[\s\S]*?(<\/h3>)/g, (_m, open, close) => open + editorial.benefits[benefitTitle++][0] + close)
     .replace(/(<p\b[^>]*>)[\s\S]*?(<\/p>)/g, (_m, open, close) => open + editorial.benefits[benefitText++][1] + close);
   if (benefitTitle !== 4 || benefitText !== 4) throw Error('Expected four homepage benefits');
-  const process = section(html, 'how-we-work', block);
-  let stepIndex = 0;
-  const editedProcess = process.replace(/(<p\b[^>]*>)[\s\S]*?(<\/p>)/g, (_m, open, close) => open + editorial.steps[stepIndex++] + close);
-  if (stepIndex !== 3) throw Error('Expected three visit steps');
-  html = html.replace(process, editedProcess);
+  // The visit steps repeated the contact and billing sections. Remove legacy
+  // markup when encountered; later generator runs also accept its absence.
+  if (/<section\b[^>]*class="[^"]*\bhow-we-work\b/.test(html)) {
+    html = html.replace(section(html, 'how-we-work', block), '');
+  }
   const business = section(html, 'business-handoff', block);
   const businessList = `<ul class="home-business-links">${businessServices[locale].map(([title, slug]) => `<li><a href="${businessLinks[locale].url}${slug}/"><span>${title}</span>${chevron}</a></li>`).join('')}</ul>`;
   // Keep the existing audience handoff in the generator model, with one clear

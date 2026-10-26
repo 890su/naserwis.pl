@@ -296,16 +296,18 @@ body[data-redesign] #header .business-menu-label{margin:0;padding:12px 15px 4px;
 @media(min-width:1200px){body[data-redesign] #header .nav-center{gap:20px}}
 @media(min-width:1200px) and (max-width:1399px){body[data-redesign] #header nav{grid-template-columns:auto minmax(0,1fr) auto;gap:20px}body[data-redesign] #header .nav-center{gap:16px}}
 
-/* Reviews: carousel on the left; Google link and the rating widget on the right.
-   CSS-only so the review markup and the 1–3 internal / 4–5 Google flow stay intact. */
+/* One centered heading for the review carousel and the Google/rating actions. */
+body[data-redesign] .reviews>.container{max-width:1200px}
+body[data-redesign] .reviews .section-title,body[data-redesign] .reviews-intro,body[data-redesign] .reviews-note{text-align:center}
 @media(min-width:960px){
-  body[data-redesign] .reviews .container{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);column-gap:56px;align-items:start}
+  body[data-redesign] .reviews .container{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px 32px;align-items:start;grid-template-rows:auto auto auto 50px auto}
   body[data-redesign] .reviews .section-title{grid-column:1/-1;grid-row:1}
-  body[data-redesign] .reviews-intro{grid-column:1;grid-row:2}
-  body[data-redesign] .reviews-note{grid-column:1;grid-row:3}
-  body[data-redesign] .reviews-slider{grid-column:1;grid-row:4}
-  body[data-redesign] .reviews .google-link{grid-column:2;grid-row:2}
-  body[data-redesign] .review-cta-interactive{grid-column:2;grid-row:3/5}
+  body[data-redesign] .reviews-intro{grid-column:1/-1;grid-row:2}
+  body[data-redesign] .reviews-note{grid-column:1/-1;grid-row:3}
+  body[data-redesign] .reviews-slider{grid-column:1;grid-row:4/6;min-width:0}
+  body[data-redesign] .reviews .google-link{grid-column:2;grid-row:4;margin:0}
+  body[data-redesign] .review-cta-interactive{grid-column:2;grid-row:5}
+  body[data-redesign] .reviews .section-title{margin-bottom:0}
 }
 body[data-redesign] .reviews-intro{margin:0 0 4px;font-size:17px}
 body[data-redesign] .reviews-note{margin:0 0 20px;font-size:15px;color:var(--rd-muted)}
@@ -314,17 +316,43 @@ body[data-redesign] .google-reviews-link{display:flex;justify-content:center;ali
 body[data-redesign] .google-reviews-link:hover{background:#e8effc;transform:none;box-shadow:none;color:var(--rd-blue)}
 body[data-redesign] .google-icon{font-size:16px}
 body[data-redesign] .reviews-slider{max-width:none;margin:0;padding:0 0 60px}
-body[data-redesign] .reviews-track{gap:24px}
+body[data-redesign] .reviews-track{gap:24px;align-items:flex-start;overflow-y:hidden}
 body[data-redesign] .review-card{min-height:190px}
 body[data-redesign] .review-text{font-size:17px;line-height:1.65;color:var(--rd-ink);font-style:normal}
 body[data-redesign] .slider-btn{top:auto;bottom:0;transform:none;width:44px;height:44px;border-radius:6px;border:1px solid #c4ccd5;background:#fff;color:var(--rd-ink);box-shadow:none;font-size:22px;line-height:1}
 body[data-redesign] .slider-btn:hover{background:#f3f5f7;border-color:var(--rd-ink);color:var(--rd-ink);box-shadow:none}
-body[data-redesign] .slider-btn.prev{left:0}
-body[data-redesign] .slider-btn.next{left:54px;right:auto}
-body[data-redesign] .review-cta-interactive{max-width:none;margin:0;padding:28px 24px;text-align:left;background:#f3f5f7;border-radius:8px}
+body[data-redesign] .slider-btn.prev{left:calc(50% - 50px)}
+body[data-redesign] .slider-btn.next{left:calc(50% + 6px);right:auto}
+body[data-redesign] .review-cta-interactive{max-width:none;margin:0;padding:28px 24px;text-align:center;background:#f3f5f7;border-radius:8px}
 body[data-redesign] .review-cta-interactive h3{font-size:22px;margin:0 0 6px}
 body[data-redesign] .review-cta-subtitle{margin:0 0 16px;color:var(--rd-muted)}
-body[data-redesign] .interactive-stars{justify-content:flex-start;gap:4px;margin-left:-8px}
+body[data-redesign] .interactive-stars{justify-content:center;gap:4px;margin-left:0}
+/* Familiar review cards: profile, gold rating, plain text and source. */
+body[data-redesign] .review-card{box-sizing:border-box;border:1px solid #dadce0;border-radius:16px;padding:24px;background:#fff;box-shadow:none;min-height:210px;text-align:left}
+body[data-redesign] .review-header{gap:12px;align-items:center;margin-bottom:16px}
+body[data-redesign] .review-avatar{width:40px;height:40px;font-size:18px;font-weight:600;background:#e8f0fe;color:#174ea6}
+body[data-redesign] .review-info{min-width:0}
+body[data-redesign] .review-author{color:#202124;font-size:16px;font-weight:700;line-height:1.5;margin:0 0 4px;overflow-wrap:anywhere}
+body[data-redesign] .review-stars{display:flex;gap:2px;margin:0;color:#e6a400}
+body[data-redesign] .review-stars svg,body[data-redesign] .google-icon svg{display:block;fill:currentColor;flex-shrink:0}
+body[data-redesign] .review-text{font-size:15px;line-height:1.65;color:#202124;margin:0}
+body[data-redesign] .review-source{margin:16px 0 0;font-size:13px;color:#5f6368}
+body[data-redesign] .review-source a{color:#1967d2;text-decoration:none}
+body[data-redesign] .review-source a:hover{text-decoration:underline}
+body[data-redesign] .google-reviews-link{border:1px solid #dadce0;border-radius:24px;color:#1967d2}
+body[data-redesign] .google-icon{color:#e6a400}
+body[data-redesign] .slider-btn{border-radius:50%;border-color:#dadce0;color:#3c4043}
+body[data-redesign] .review-cta-interactive{background:#fff;border:1px solid #dadce0;border-radius:16px;padding:24px}
+body[data-redesign] .review-cta-interactive h3{font-size:20px;color:#202124}
+body[data-redesign] .review-cta-subtitle{font-size:14px;color:#5f6368}
+body[data-redesign] .review-cta-interactive .star-icon{width:32px;height:32px}
+body[data-redesign] .review-cta-interactive .star-outline{fill:none;stroke:#70757a;stroke-width:1.2}
+body[data-redesign] .review-cta-interactive .star-btn{min-width:44px;min-height:44px;padding:6px}
+body[data-redesign] .review-cta-interactive .star-btn:hover .star-outline,body[data-redesign] .review-cta-interactive .star-btn.hovered .star-outline{fill:#fbbc04;stroke:#fbbc04}
+body[data-redesign] .footer-service-links{list-style:none;margin:0;padding:0}
+body[data-redesign] .footer-service-links a{display:inline-block;padding:5px 0;text-decoration:none;line-height:1.65}
+body[data-redesign] .footer-service-links a:hover{text-decoration:underline;text-underline-offset:4px}
+body[data-redesign] .footer-service-links a:focus-visible{outline:2px solid #fff;outline-offset:4px}
 @media(max-width:959px){
   body[data-redesign] .google-link{margin:16px 0}
   body[data-redesign] .review-cta-interactive{margin-top:8px}
@@ -496,6 +524,31 @@ body[data-redesign="home"] .guides-teaser h2{font-size:24px;line-height:1.3;marg
 body[data-redesign="home"] .guides-teaser p{font-size:15px;line-height:1.6;max-width:65ch;margin:0 0 16px}
 body[data-redesign="home"] .guides-teaser ul{margin:0 0 16px;padding-left:20px;line-height:1.6}
 body[data-redesign="home"] .guides-teaser li+li{margin-top:6px}
+/* Quiet homepage reading links, aligned with the site's flat service rows. */
+body[data-redesign] .home-guides{background:#fff;padding-block:32px}
+body[data-redesign] .home-guides-layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:48px;align-items:start}
+body[data-redesign] .home-guides-copy h2{margin:0 0 10px}
+body[data-redesign] .home-guides-copy p{color:#5d6875;max-width:28ch;margin:0 0 18px}
+body[data-redesign] .home-guides-all{display:inline-flex;align-items:center;gap:8px;min-height:32px;font-size:14px;font-weight:700;color:#1d5bd0;text-decoration:none}
+body[data-redesign] .home-guides-list{list-style:none;padding:0;margin:0;border-top:1px solid #dde2e8}
+body[data-redesign] .home-guides-list li+li{margin:0}
+body[data-redesign] .home-guides-list li{border-bottom:1px solid #dde2e8}
+body[data-redesign] .home-guides-list a{display:grid;grid-template-columns:70px minmax(0,1fr) 20px;align-items:center;gap:16px;min-height:56px;padding:14px 0;color:#18212c;text-decoration:none;line-height:1.5}
+body[data-redesign] .home-guide-topic{font-size:13px;font-weight:600;color:#5d6875}
+body[data-redesign] .home-guide-title{font-size:16px;font-weight:600}
+body[data-redesign] .home-guides-list svg{color:#1d5bd0}
+body[data-redesign] .home-guides a:hover{color:#174bb0}
+body[data-redesign] .home-guides a:hover .home-guide-title,body[data-redesign] .home-guides-all:hover{text-decoration:underline;text-underline-offset:4px}
+body[data-redesign] .home-guides a:focus-visible{outline:3px solid #1d5bd0;outline-offset:4px}
+@media(max-width:760px){
+  body[data-redesign] .home-guides{padding-block:24px}
+  body[data-redesign] .home-guides-layout{grid-template-columns:1fr;gap:20px}
+  body[data-redesign] .home-guides-copy{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center}
+  body[data-redesign] .home-guides-copy h2{margin:0}
+  body[data-redesign] .home-guides-copy p{grid-column:1/-1;grid-row:2;margin:0;max-width:none}
+  body[data-redesign] .home-guides-all{grid-column:2;grid-row:1}
+  body[data-redesign] .home-guides-list a{grid-template-columns:54px minmax(0,1fr) 18px;gap:12px;min-height:60px}
+}
 @media(max-width:900px){body[data-redesign="home"] .home-contact-grid{grid-template-columns:1fr;gap:28px}body[data-redesign="home"] .home-contact-copy p{max-width:60ch}}
 @media(max-width:760px){
   body[data-redesign="home"]{--home-section-space:28px}
@@ -642,5 +695,25 @@ body[data-redesign="home"] [data-staged-form] .contact-alternatives{justify-cont
   body[data-redesign] .mobile-enquiry-slot>.container::before{content:"";display:block;border-top:1px solid #3a4757;margin-bottom:24px}
   body[data-redesign] .mobile-enquiry-slot .contact-alternatives a[href^="tel:"]{display:none}
   body[data-redesign] .preview-home-mobile-call{display:flex;justify-content:center;max-width:none;width:100%;border-left:0;border-top:1px solid #3a4757;padding:24px 0 0;margin-top:24px}
+}
+/* Shared visual rhythm across the homepage and both service templates. */
+body[data-redesign] .faq-section>.container{max-width:1040px}
+body[data-redesign] .faq-container{max-width:none;margin-inline:0}
+body[data-redesign] .faq-title{font-size:28px;line-height:1.3;margin-bottom:24px}
+body[data-redesign] .faq-question{font:inherit;font-weight:600;line-height:1.5;padding:18px 0}
+body[data-redesign] .service-main>p,body[data-redesign] .service-main .feature-content p{max-width:74ch}
+body[data-redesign] .service-main :is(.segment-card,.contact-checkpoint,.business-handoff) p{max-width:70ch}
+body[data-redesign] .service-main .segment-card h3{margin-top:0;font-size:20px}
+body[data-redesign] .service-main .segment-card p{margin-bottom:0}
+body[data-redesign] [data-staged-form] .contact-alternatives{justify-content:center}
+body[data-redesign] .final-cta>.container>p{max-width:70ch;margin-inline:auto}
+body[data-redesign] .final-cta>.container>h2{max-width:30ch;margin-inline:auto;text-wrap:balance}
+@media(min-width:1200px){body[data-redesign="service"] .preview-service-rail .contact-alternatives{gap:10px 14px;font-size:13px}}
+@media(max-width:760px){
+  body[data-redesign] .hero h1{text-wrap:pretty}
+  body[data-redesign] .faq-title{font-size:25px}
+  body[data-redesign] .reviews .section-title{margin-bottom:12px}
+  body[data-redesign] .reviews-intro{font-size:16px}
+  body[data-redesign] .reviews-note{font-size:14px}
 }
 /* purgecss end ignore */

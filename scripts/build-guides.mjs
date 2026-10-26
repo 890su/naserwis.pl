@@ -5,6 +5,7 @@ import uk from './guide-copy-uk.mjs';
 import en from './guide-copy-en.mjs';
 import { siteChrome, syncGuideNavigation } from './site-chrome.mjs';
 import { cctvGuideCopy, cctvGuideSlug, cctvGuideSources } from './guide-copy-cctv.mjs';
+import { homeGuideTeaser } from './home-guide-teaser.mjs';
 const copies = { pl, ru, uk, en };
 for (const [locale, c] of Object.entries(copies)) {
   Object.assign(c, cctvGuideCopy[locale].index);
@@ -91,7 +92,7 @@ for (const locale of Object.keys(copies)) {
     let html = await readFile(file, 'utf8');
     html = html.replace(/\s*<!-- GUIDES TEASER START -->[\s\S]*?<!-- GUIDES TEASER END -->/g, '');
     const c = copies[locale], types = service === 'naprawa-wifi/' ? ['wifi'] : service ? ['lan'] : ['wifi', 'lan'];
-    const block = `<section class="guides-teaser"><div class="container"><h2>${esc(c.label)}</h2><p>${esc(c.intro)}</p><ul>${types.map(t => `<li><a href="${route(locale, t)}">${esc(c[t].h1)} →</a></li>`).join('')}</ul><a href="${route(locale)}">${esc(c.label)} →</a></div></section>`;
+    const block = homeGuideTeaser(locale, esc(c.label), type => route(locale, type), service ? types : undefined);
     html = html.replace('</main>', `\n<!-- GUIDES TEASER START -->\n${block}\n<!-- GUIDES TEASER END -->\n</main>`);
     if (!html.includes('/guides.css?')) html = html.replace('</head>', `<link rel="stylesheet" href="/guides.css?v=${version}">\n</head>`);
     html = html.replace(/\/guides\.css\?v=[^"\s]+/g, `/guides.css?v=${version}`);

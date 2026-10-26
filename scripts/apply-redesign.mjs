@@ -5,6 +5,7 @@ import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { restoreHomepage, simplifyHomepage } from './homepage-readability.mjs';
 import { audienceLabels, businessLinks, businessMenuServices } from './business-links.mjs';
 import { stagedEnquiries, enquiryHeading, compactQuickEnquiry } from './staged-enquiry.mjs';
+import { reviewPresentation } from './review-presentation.mjs';
 const output = resolve('public');
 function block(html, tag, match) {
   const start = html.search(match); if (start < 0) throw Error('Missing block '+match);
@@ -90,11 +91,19 @@ for (const [file, currentHtml] of pages) {
   if (footerMatch.test(html)) {
     const footer = block(html, 'footer', footerMatch);
     let compactFooter = footer;
-    for (const match of footer.matchAll(/<div class="footer-section"[^>]*>/g)) {
+    for (const match of footer.matchAll(/<div class="footer-section(?: footer-services)?"[^>]*>/g)) {
       const column = block(footer.slice(match.index), 'div', /^<div/);
       if (/\bhreflang=/.test(column)) compactFooter = compactFooter.replace(column, '');
       else if (!column.includes('footer-districts') && !column.includes('ContactPoint')) {
-        compactFooter = compactFooter.replace(column, column.replace(/<h[34]>[^<]+<\/h[34]>/, `<h3>${audienceLabels[lang][0]}</h3>`));
+        const serviceNames = {
+          pl: ['Naprawa i konfiguracja Wi-Fi', 'Montaż sieci LAN', 'Naprawa sieci i gniazd RJ45', 'Monitoring i kamery'],
+          ru: ['Ремонт и настройка Wi-Fi', 'Монтаж сети LAN', 'Ремонт сети и розеток RJ45', 'Видеонаблюдение и камеры'],
+          uk: ['Ремонт і налаштування Wi-Fi', 'Монтаж мережі LAN', 'Ремонт мережі й розеток RJ45', 'Відеоспостереження й камери'],
+          en: ['Wi-Fi repair and setup', 'LAN installation', 'Network and RJ45 socket repair', 'CCTV and cameras']
+        };
+        const slugs = ['naprawa-wifi', 'montaz-sieci', 'naprawa-sieci', 'serwis-monitoringu'];
+        const links = serviceNames[lang].map((name, i) => `<li><a href="/${prefix}${slugs[i]}/">${name}</a></li>`).join('');
+        compactFooter = compactFooter.replace(column, `<div class="footer-section footer-services"><h3>${audienceLabels[lang][0]}</h3><ul class="footer-service-links">${links}</ul></div>`);
       }
     }
     if (compactFooter.includes('class="footer-content"')) {
@@ -165,9 +174,6 @@ for (const [file, currentHtml] of pages) {
       if (rows.length!==3) throw Error('Published localized price rows not found: '+lang);
       const conditions=`<section class="preview-conditions" aria-label="${w[5]}"><div class="container preview-conditions-grid"><p class="preview-conditions-lead"><strong>${w[12]}</strong><span>${w[13]}</span></p>${rows.map(r=>`<p class="preview-rate"><strong>${r[2]}</strong><span>${r[1]}</span></p>`).join('')}<a class="preview-conditions-link" href="#services">${shortPrices.match(/<a href="[^"]*">([^<]+)/)[1].trim()} ${icon('arrow')}</a></div></section>`;
       html=html.replace(newHero,newHero+overview+conditions);
-      // Keep the existing content intact while bringing the visit process after the task chooser.
-      const process=block(html,'section',/<section class="how-we-work"/);
-      html=html.replace(process,'').replace(conditions,conditions+process);
       html=simplifyHomepage(html,lang,block);
     } else {
       const oldHero=block(html,'section',/<section class="hero hero-centered(?: hero-service-style)?"/);
@@ -196,6 +202,7 @@ for (const [file, currentHtml] of pages) {
   html=channels(html);
   if (isHome || isService) html=stagedEnquiries(html,lang,path);
   html=compactQuickEnquiry(html,lang);
+  html=reviewPresentation(html,lang);
   if (isHome || isService) html=renderEnquiryPlacement(html,isHome,lang);
   await writeFile(file,html.replace(/[ \t]+$/gm,'').replace(/\n[ \t]*\n(?:[ \t]*\n)+/g,'\n\n'));
 }

@@ -20,7 +20,7 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, support: false })));
       await page.route(/googletagmanager|google-analytics|chatwoot|ai\.czait\.pl/, route => route.abort());
       await page.goto('/' + prefix);
-      await expect(page.locator('main > section:not(.mobile-enquiry-slot)')).toHaveCount(8);
+      await expect(page.locator('main > section:not(.mobile-enquiry-slot)')).toHaveCount(7);
       await expect(page.locator('#services')).toHaveCount(1);
       await expect(page.locator('.home-pricing-rates .preview-rate')).toHaveCount(3);
       const pricePrefix = { '': 'od', 'ru/': 'от', 'uk/': 'від', 'en/': 'from' }[prefix];
@@ -34,9 +34,8 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('#header a[hreflang]')).not.toHaveCount(0);
       const business = page.locator('.preview-business-link');
       await expect(business).toBeVisible();
-      const businessPath = prefix === 'uk/' ? 'uk/poslugy/' : prefix === 'en/' ? 'en/services/' : prefix + 'uslugi/';
-      await expect(business).toHaveAttribute('href', 'https://itbiz.pl/' + businessPath);
-      await expect(business).toHaveAttribute('target', '_blank');
+      await expect(business).toHaveAttribute('href', '/' + prefix + 'dla-firm/');
+      await expect(business).not.toHaveAttribute('target', '_blank');
       await expect(business).not.toHaveAttribute('data-service-choice');
       await expect(page.locator('.home-services-details .home-scope')).toHaveCount(0);
       await expect(page.locator('.home-more > .container > h2')).toBeVisible();
@@ -69,13 +68,12 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       const businessServices = page.locator('.home-business-links a');
       await expect(businessServices).toHaveCount(5);
       for (const link of await businessServices.all()) {
-        await expect(link).toHaveAttribute('target', '_blank');
-        await expect(link).toHaveAttribute('rel', 'noopener');
-        await expect(link).toHaveAttribute('href', /^https:\/\/itbiz\.pl\//);
+        await expect(link).not.toHaveAttribute('target', '_blank');
+        await expect(link).toHaveAttribute('href', new RegExp('^/' + prefix + 'dla-firm/'));
       }
       await expect(page.locator('.business-handoff h2')).toHaveCount(0);
       expect(await page.locator('.home-more').evaluate(e => getComputedStyle(e).backgroundColor))
-        .not.toBe(await page.locator('.how-we-work').evaluate(e => getComputedStyle(e).backgroundColor));
+        .not.toBe(await page.locator('.reviews').evaluate(e => getComputedStyle(e).backgroundColor));
       await page.locator('#final-form').scrollIntoViewIfNeeded();
       await expect(page.locator('#final-name')).toBeHidden();
       await expect(page.locator('#final-phone')).toBeHidden();

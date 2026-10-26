@@ -1,7 +1,8 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { cctvCopy, cctvRoute } from './cctv-copy.mjs';
 import { copy } from './home-service-copy.mjs';
-import { cctvGuideCopy, cctvGuideSlug } from './guide-copy-cctv.mjs';
+import { cctvGuideSlug } from './guide-copy-cctv.mjs';
+import { homeGuideTeaser } from './home-guide-teaser.mjs';
 
 const esc = value => value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const jsonld = data => `<script type="application/ld+json">${JSON.stringify(data, null, 2)}</script>`;
@@ -58,9 +59,9 @@ for (const [locale, c] of Object.entries(cctvCopy)) {
   html = html.replace(block(html, 'section', /<section class="faq-section"/), faq);
   html = html.replace(/<h2 id="contact-title">[\s\S]*?<\/h2>\s*<p>[\s\S]*?<\/p>/, `<h2 id="contact-title">${esc(c.contactTitle)}</h2><p>${esc(c.contactText)}</p>`);
   html = html.replace(/(<form id="final-form"[^>]*>)\s*<p class="contact-next-step">[\s\S]*?<\/p>/, `$1<p class="contact-next-step">${esc(c.contactText)}</p>`);
-  const oldTeaser = block(html, 'section', /<section class="guides-teaser"/);
-  const articleLink = `<ul><li><a href="/${prefix}poradnik/${cctvGuideSlug}/">${esc(cctvGuideCopy[locale].h1)} <span aria-hidden="true">→</span></a></li></ul>`;
-  html = html.replace(oldTeaser, oldTeaser.replace(/<ul>[\s\S]*?<\/ul>/, articleLink));
+  const oldTeaser = block(html, 'section', /<section class="guides-teaser(?: home-guides)?"/);
+  const guideTitle = oldTeaser.match(/<h2\b[^>]*>([^<]+)<\/h2>/)?.[1];
+  html = html.replace(oldTeaser, homeGuideTeaser(locale, guideTitle, type => `/${prefix}poradnik/${type ? cctvGuideSlug + '/' : ''}`, ['cctv']));
   html = html.replace(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g, (source, json) => {
     const data = JSON.parse(json);
     return ['Service', 'FAQPage'].includes(data['@type']) ? '' : source;

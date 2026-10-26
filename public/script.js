@@ -626,8 +626,15 @@
         let currentIndex = 0;
         const cards = track.querySelectorAll('.review-card');
         const totalCards = cards.length;
+        if (!totalCards) return;
+
+        // Short reviews should not inherit the height of the longest review.
+        function fitCurrentReview() {
+            track.style.height = cards[currentIndex].offsetHeight + 'px';
+        }
 
         function updateSlider() {
+            fitCurrentReview();
             track.scrollTo({
                 left: cards[currentIndex].offsetLeft - cards[0].offsetLeft,
                 behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
@@ -643,6 +650,16 @@
             currentIndex = (currentIndex + 1) % totalCards;
             updateSlider();
         });
+
+        track.addEventListener('scrollend', () => {
+            const position = track.scrollLeft + cards[0].offsetLeft;
+            currentIndex = Array.from(cards).reduce((best, card, index) =>
+                Math.abs(card.offsetLeft - position) < Math.abs(cards[best].offsetLeft - position) ? index : best, 0);
+            fitCurrentReview();
+        });
+        const reviewSizeObserver = new ResizeObserver(fitCurrentReview);
+        cards.forEach(card => reviewSizeObserver.observe(card));
+        fitCurrentReview();
 
         // Reviews advance only through the accessible controls, without an autoplay timer.
     }
