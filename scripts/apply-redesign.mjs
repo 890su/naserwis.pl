@@ -129,7 +129,7 @@ for (const [file, currentHtml] of pages) {
     const home = pages.get(join(output,prefix,'index.html'));
     const heroForm = block(home,'aside',/<aside class="hero-form"/).replace(/<h2>[\s\S]*?<\/h2>/,`<h2>${enquiryHeading(lang)}</h2>`);
     const rates = [...home.matchAll(/<div class="price-value"[^>]*>([^<]+)<\/div>/g)].map(m=>m[1]).filter(s=>/\d/.test(s));
-    if (rates.length!==3) throw Error('Published localized rates not found: '+lang);
+    if (rates.length!==2) throw Error('Published localized rates not found: '+lang);
     const shortPrices = `<div class="preview-prices"><h3>${w[5]}</h3><div><span>${w[6]}</span><strong>${rates[0]}</strong></div><div><span>${w[7]}</span><strong>${rates[1]}</strong></div><a href="${isHome?'#services':`/${prefix}#services`}">${lang==='pl'?'Warunki rozliczenia':lang==='ru'?'Условия оплаты':lang==='uk'?'Умови оплати':'Pricing conditions'} ${icon('arrow')}</a></div>`;
     if (isHome) {
       for (const [tag, match] of [['section',/<section class="preview-overview"/],['section',/<section class="preview-conditions"/]])
@@ -161,7 +161,7 @@ for (const [file, currentHtml] of pages) {
       const overview=`<section class="preview-overview"><div class="container preview-overview-grid"><div class="preview-task-pair">${task(w[2],[0,3,4],'fault')}${task(w[3],[1,2,5],'setup')}</div><aside id="preview-contact" class="preview-contact-rail">${heroForm}</aside></div></section>`;
       // Rates and their labels are copied from the published localized price table.
       const rows=[...home.matchAll(/<div class="price-row" role="row"><div class="price-service" role="cell">([^<]+)<\/div><div class="price-value" role="cell">([^<]+)<\/div><\/div>/g)];
-      if (rows.length!==3) throw Error('Published localized price rows not found: '+lang);
+      if (rows.length!==2) throw Error('Published localized price rows not found: '+lang);
       const conditions=`<section class="preview-conditions" aria-label="${w[5]}"><div class="container preview-conditions-grid"><p class="preview-conditions-lead"><strong>${w[12]}</strong><span>${w[13]}</span></p>${rows.map(r=>`<p class="preview-rate"><strong>${r[2]}</strong><span>${r[1]}</span></p>`).join('')}<a class="preview-conditions-link" href="#services">${shortPrices.match(/<a href="[^"]*">([^<]+)/)[1].trim()} ${icon('arrow')}</a></div></section>`;
       html=html.replace(newHero,newHero+overview+conditions);
       // Keep the existing content intact while bringing the visit process after the task chooser.

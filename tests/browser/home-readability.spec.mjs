@@ -20,9 +20,9 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, support: false })));
       await page.route(/googletagmanager|google-analytics|chatwoot|ai\.czait\.pl/, route => route.abort());
       await page.goto('/' + prefix);
-      await expect(page.locator('main > section')).toHaveCount(8);
+      await expect(page.locator('main > section:not(.mobile-enquiry-slot)')).toHaveCount(8);
       await expect(page.locator('#services')).toHaveCount(1);
-      await expect(page.locator('.home-pricing-rates .preview-rate')).toHaveCount(3);
+      await expect(page.locator('.home-pricing-rates .preview-rate')).toHaveCount(2);
       await expect(page.locator('.home-disclosure')).toHaveCount(3);
       await expect(page.locator('.billing-rule')).toBeHidden();
       await expect(page.locator('.home-service-catalog')).toBeHidden();

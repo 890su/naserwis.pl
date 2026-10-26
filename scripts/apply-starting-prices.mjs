@@ -2,6 +2,7 @@
 // Numeric microdata stays numeric; quoted/individual prices stay unchanged.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { copy as homeCopy } from './home-service-copy.mjs';
 
 const prefixes = { pl: 'od', ru: 'от', uk: 'від', en: 'from' };
 const copy = {
@@ -31,7 +32,7 @@ for (const file of await pages('public')) {
   if (!prefix) continue;
   const text = copy[locale];
   const note = `<p class="price-disclaimer" style="margin:16px 0;font-size:0.9rem;line-height:1.5;color:#595959;">${text.note}</p>`;
-  const tableNote = `<p class="price-disclaimer" style="margin:16px 0;font-size:0.9rem;line-height:1.5;color:#595959;">${text.smallCondition} ${text.note}</p>`;
+  const tableNote = `<p class="price-disclaimer" style="margin:16px 0;font-size:0.9rem;line-height:1.5;color:#595959;">${homeCopy[locale].shortNote} ${text.note}</p>`;
   let html = original.replace(
     /(<(?:div|strong)[^>]*class="(?:price-value|package-price|segment-price)"[^>]*>)(\s*)(\d)/g,
     (_match, tag, space, digit) => `${tag}${space}${prefix} ${digit}`,
@@ -47,17 +48,17 @@ for (const file of await pages('public')) {
   html = html.replace(/(?:3,000–6,000 PLN|3000–6000 zł)/g, range);
   // A visit includes the first hour. Update only visit amounts, not the
   // separate installation, configuration or diagnostics line items.
-  html = html.replace(/(<div class="price-row"[^>]*><div class="price-service"[^>]*>(?:Wyjazd serwisowy|Выезд специалиста|Виїзд спеціаліста|On-site visit)[^<]*<\/div><div class="price-value"[^>]*>[^<]*?)150/g, '$1250');
-  html = html.replace(/(<div class="price-item"><span>(?:Wyjazd serwisowy|Выезд сервисного|Виїзд сервісного|On-site visit)[^<]*<\/span><strong>[^<]*?)150/g, '$1250');
+  html = html.replace(/(<div class="price-row"[^>]*><div class="price-service"[^>]*>(?:Wyjazd serwisowy|Выезд специалиста|Виїзд спеціаліста|On-site visit)[^<]*<\/div><div class="price-value"[^>]*>[^<]*?)150/g, '$1200');
+  html = html.replace(/(<div class="price-item"><span>(?:Wyjazd serwisowy|Выезд сервисного|Виїзд сервісного|On-site visit)[^<]*<\/span><strong>[^<]*?)150/g, '$1200');
   // Keep the on-site minimum and the additional hourly rate visible together.
   const currency = locale === 'en' ? 'PLN' : 'zł';
-  const homeVisit = `<div class="price-row" role="row"><div class="price-service" role="cell">${text.visit}</div><div class="price-value" role="cell">${prefix} 250 ${currency}</div></div>`;
+  const homeVisit = `<div class="price-row" role="row"><div class="price-service" role="cell">${text.visit}</div><div class="price-value" role="cell">${prefix} 200 ${currency}</div></div>`;
   const homeNext = `<div class="price-row" role="row"><div class="price-service" role="cell">${text.nextHour}</div><div class="price-value" role="cell">${prefix} 150 ${currency}</div></div>`;
   html = html.replace(/<div class="price-row" role="row"><div class="price-service" role="cell">(?:Wyjazd serwisowy \(pierwsza godzina\)|Выезд специалиста \(первый час\)|Виїзд спеціаліста \(перша година\)|On-site visit \(first hour\)|Dojazd na terenie Warszawy \+ pierwsza godzina pracy|Выезд по Варшаве \+ первый час работы|Виїзд Варшавою \+ перша година роботи|Виїзд у межах Варшави \+ перша година роботи|Travel within Warsaw \+ first hour of work)<\/div><div class="price-value" role="cell">[^<]*<\/div><\/div>/, homeVisit);
   if (html.includes('class="price-table"') && !html.includes(homeNext)) {
     html = html.replace(homeVisit, `${homeVisit}\n                    ${homeNext}`);
   }
-  const sidebarVisit = `<div class="price-item"><span>${text.visit}</span><strong>${prefix} 250 ${currency}</strong></div>`;
+  const sidebarVisit = `<div class="price-item"><span>${text.visit}</span><strong>${prefix} 200 ${currency}</strong></div>`;
   const sidebarNext = `<div class="price-item"><span>${text.nextHour}</span><strong>${prefix} 150 ${currency}</strong></div>`;
   html = html.replace(/<div class="price-item"><span>(?:Wyjazd serwisowy|Выезд сервисного|Виїзд сервісного|Виїзд Варшавою|On-site visit)[^<]*<\/span><strong>[^<]*<\/strong><\/div>/, sidebarVisit);
   if (html.includes('class="service-sidebar"') && !html.includes(sidebarVisit)) {
@@ -68,22 +69,22 @@ for (const file of await pages('public')) {
   }
   const isRepair = /[\\/]naprawa-sieci[\\/]index\.html$/.test(file);
   if (isRepair) {
-    html = html.replace(/(class="segment-price">[^<]*?)150/g, '$1250');
-    html = html.replace(/("name": "(?:Wyjazd serwisowy|Выезд сервисного|Виїзд сервісного|On-site visit)[^"]*"\s*\},\s*"priceSpecification": \{\s*"@type": "PriceSpecification",\s*"price": ")150"/g, '$1250"');
+    html = html.replace(/(class="segment-price">[^<]*?)150/g, '$1200');
+    html = html.replace(/("name": "(?:Wyjazd serwisowy|Выезд сервисного|Виїзд сервісного|On-site visit)[^"]*"\s*\},\s*"priceSpecification": \{\s*"@type": "PriceSpecification",\s*"price": ")150"/g, '$1200"');
     if (!html.includes(`<span>${text.fiber}</span>`)) {
-      html = html.replace(/(<div class="price-item"><span>[\s\S]*?<\/span><strong>[^<]*250[^<]*<\/strong><\/div>)/,
+      html = html.replace(/(<div class="price-item"><span>[\s\S]*?<\/span><strong>[^<]*200[^<]*<\/strong><\/div>)/,
         `$1\n                <div class="price-item"><span>${text.fiber}</span><strong>${prefix} 280 ${locale === 'en' ? 'PLN' : 'zł'}</strong></div>`);
     }
   }
   if (/[\\/]naprawa-wifi[\\/]index\.html$/.test(file)) {
     // These diagnosis cards and FAQ describe an on-site visit, so their
     // starting amount must agree with the first-hour visit minimum.
-    html = html.replace(/(<div class="segment-price">(?:od|от|від|from) )150(?= (?:zł|PLN)(?:<| \|))/g, '$1250');
-    html = html.replace(/(<div class="price-item"><span>(?:Diagnoza problemów z siecią|Диагностика проблем с сетью|Діагностика проблем з мережею|Network problem diagnosis)<\/span><strong>(?:od|от|від|from) )150/g, '$1250');
-    html = html.replace(/("name": "(?:Diagnoza problemów z siecią|Диагностика проблем с сетью|Діагностика проблем з мережею|Network problem diagnosis)"\s*\},\s*"priceSpecification": \{\s*"@type": "PriceSpecification",\s*"price": ")150("[\s\S]*?"minPrice": ")150/g, '$1250$2250');
-    html = html.replace(/(Diagnoza problemów z WiFi zaczyna się od |Диагностика проблем с WiFi начинается от |Діагностика проблем з WiFi починається від |WiFi diagnostics starts from )150/g, '$1250');
+    html = html.replace(/(<div class="segment-price">(?:od|от|від|from) )150(?= (?:zł|PLN)(?:<| \|))/g, '$1200');
+    html = html.replace(/(<div class="price-item"><span>(?:Diagnoza problemów z siecią|Диагностика проблем с сетью|Діагностика проблем з мережею|Network problem diagnosis)<\/span><strong>(?:od|от|від|from) )150/g, '$1200');
+    html = html.replace(/("name": "(?:Diagnoza problemów z siecią|Диагностика проблем с сетью|Діагностика проблем з мережею|Network problem diagnosis)"\s*\},\s*"priceSpecification": \{\s*"@type": "PriceSpecification",\s*"price": ")150("[\s\S]*?"minPrice": ")150/g, '$1200$2200');
+    html = html.replace(/(Diagnoza problemów z WiFi zaczyna się od |Диагностика проблем с WiFi начинается от |Діагностика проблем з WiFi починається від |WiFi diagnostics starts from )150/g, '$1200');
   }
-  html = html.replace(/(class="segment-price">[^<]*?)150(?= (?:zł|PLN) \/ (?:wizyta|выезд|виїзд|visit))/g, '$1250');
+  html = html.replace(/(class="segment-price">[^<]*?)150(?= (?:zł|PLN) \/ (?:wizyta|выезд|виїзд|visit))/g, '$1200');
   // Keep displayed monthly prices and their Offer microdata in sync.
   for (const [plan, amount] of [['Basic', 600], ['Standard', 1200]]) {
     const packagePrice = new RegExp(`(<h3 class="package-name" itemprop="name">${plan}<\\/h3>\\s*<div class="package-price" itemprop="price" content=")\\d+(">(?:od|от|від|from) )\\d+`);

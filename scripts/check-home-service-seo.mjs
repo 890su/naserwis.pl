@@ -28,10 +28,10 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
     const priceValues = [...html.matchAll(/<(?:strong|div)[^>]*(?:class="price-value"[^>]*)?>((?:od|от|від|from) \d+ (?:zł|PLN))<\/(?:strong|div)>/g)].map(m => m[1].match(/\d+/)[0]);
     // The preview repeats the first two existing rates beside its quick form.
     // Keep rejecting any new rate and verify the compact summary separately.
-    assert.deepEqual([...new Set(priceValues)], ['250', '150', '200'], `${file}: only three alternative visit/hour rates`);
+    assert.deepEqual([...new Set(priceValues)], ['200', '150'], `${file}: visit including first hour and additional hourly rate`);
     if (!route) {
       const summary = html.match(/<div class="preview-prices">([\s\S]*?)<\/a><\/div>/)?.[1];
-      if (summary) assert.deepEqual([...summary.matchAll(/<strong>[^<]*?(\d+) (?:zł|PLN)<\/strong>/g)].map(m=>m[1]), ['250','150'], `${file}: summary must repeat the published rates`);
+      if (summary) assert.deepEqual([...summary.matchAll(/<strong>[^<]*?(\d+) (?:zł|PLN)<\/strong>/g)].map(m=>m[1]), ['200','150'], `${file}: summary must repeat the published rates`);
     }
     for (const match of html.matchAll(/<a\b[^>]*href="(\/[^"?#]*)(?:[?#][^"]*)?"/g)) {
       const path = match[1];

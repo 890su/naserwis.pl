@@ -39,7 +39,7 @@ export function restoreHomepage(html, block) {
     if (!billing.includes('class="price-table"')) {
       const c = copy[html.match(/<html[^>]*lang="([^"]+)"/)?.[1] || 'pl'];
       const rows = [...group.matchAll(/<p class="preview-rate"><strong>([^<]+)<\/strong><span>([^<]+)<\/span><\/p>/g)];
-      if (rows.length !== 3) throw Error('Cannot restore the three homepage rates');
+      if (![2, 3].includes(rows.length)) throw Error('Cannot restore the homepage rates');
       const table = `<h2 id="services-title" class="section-title">${c.billing}</h2><div class="price-table" role="table" aria-label="${c.billing}"><div class="price-row header" role="row"><div class="price-service" role="columnheader">${c.rateLabel}</div><div class="price-value" role="columnheader">${c.amountLabel}</div></div>${rows.map(r => `<div class="price-row" role="row"><div class="price-service" role="cell">${r[2]}</div><div class="price-value" role="cell">${r[1]}</div></div>`).join('')}</div>`;
       billing = billing.replace('<div class="container">', '<div class="container">' + table);
       billing = billing.replace('<section class="services home-billing"', '<section class="services home-billing" aria-labelledby="services-title"');
@@ -57,7 +57,7 @@ export function simplifyHomepage(html, locale, block) {
   const billing = section(html, 'home-billing', block);
   const conditions = section(html, 'preview-conditions', block);
   const rates = [...conditions.matchAll(/<p class="preview-rate">[\s\S]*?<\/p>/g)].map(m => m[0]);
-  if (rates.length !== 3) throw Error('Homepage needs the three published price alternatives');
+  if (rates.length !== 2) throw Error('Homepage needs the visit and additional-hour rates');
   const compactBilling = billing.replace(/\s+id="services"/, '').replace(/\s+aria-labelledby="services-title"/, '')
     .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '')
     .replace(block(billing, 'div', /<div class="price-table"/), '');
