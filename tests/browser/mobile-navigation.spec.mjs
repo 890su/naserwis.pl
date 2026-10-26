@@ -49,9 +49,9 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
 
       const businesses = menu.locator('.mobile-business-services');
       await businesses.locator('summary').click();
-      await expect(businesses.locator('a')).toHaveCount(5);
+      await expect(businesses.locator('a')).toHaveCount(6);
       for (const href of await businesses.locator('a').evaluateAll(links => links.map(a => a.href))) {
-        expect(href).toMatch(/^https:\/\/itbiz\.pl\//);
+        expect(new URL(href).pathname).toMatch(new RegExp(`^${prefix}dla-firm/`));
       }
       const call = await menu.locator('.mobile-call-btn').boundingBox();
       expect(call.y + call.height).toBeLessThanOrEqual(viewport.height);

@@ -6,6 +6,8 @@ import sharp from 'sharp';
 import { PurgeCSS } from 'purgecss';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { applyRedesign } from './apply-redesign.mjs';
+import { localizeRuntime } from './localize-runtime.mjs';
+import { splitReviewModal } from './review-modal-runtime.mjs';
 
 // Both passes write shared HTML, so finish tool relocation before rebuilding headers.
 await import('./apply-tool-navigation.mjs');
@@ -66,13 +68,24 @@ async function source(url) {
   if (!sourceCache.has(path)) sourceCache.set(path, await readFile(path, 'utf8'));
   return sourceCache.get(path);
 }
-async function bundle(tags, type, homepage = false) {
+async function bundle(tags, type, homepage = false, context = {}) {
   if (!tags.length) return '';
-  const cacheKey = JSON.stringify([type, homepage, tags]);
+  const cacheKey = JSON.stringify([type, homepage, tags, type==='js' ? context : null]);
   if (bundleCache.has(cacheKey)) return bundleCache.get(cacheKey);
   const sources = tags.map(tag => tag.match(/(?:href|src)="([^"]+)"/)[1]);
   const parts = await Promise.all(sources.map(async url => {
     let code = await source(url);
+    if(type==='js') {
+      code=localizeRuntime(code,context.locale || 'pl',context);
+      if(url.split('?')[0]==='/script.js' && context.hasReviews) {
+        const split=splitReviewModal(code,context.locale);
+        const compiled=await transform(split.deferred,{loader:'js',minify:true,charset:'utf8',target:['chrome109','firefox115','safari16'],legalComments:'none'});
+        const lazyUrl=`/assets/review-editor-${digest(compiled.code)}.js`;
+        await writeFile('public'+lazyUrl,compiled.code);
+        manifest[lazyUrl]={type:'lazy-js',sources:[url],tags:[],locale:context.locale};
+        code=split.initial.replace('__REVIEW_MODAL_URL__',lazyUrl);
+      }
+    }
     // The approved self-hosted display face and @font-face descriptors must
     // survive the legacy system-font fallback used by the incumbent CSS.
     if (type === 'css' && !url.startsWith('/redesign.css')) code=code.replace(/font-family\s*:[^;}]+/gi, `font-family:${systemFont}`)
@@ -168,7 +181,8 @@ async function processDirectory(directory) {
       return rank(a) - rank(b);
     });
     const stylesheet = await bundle(styles, 'css', identity);
-    const javascript = await bundle(scripts, 'js');
+    const service=file.includes('/dla-firm/') ? '' : file.includes('/naprawa-wifi/') ? 'wifi_repair' : file.includes('/montaz-sieci/') ? 'lan_install' : /\/(?:naprawa-sieci|serwis-monitoringu)\//.test(file) ? 'lan_cctv_repair' : '';
+    const javascript = await bundle(scripts, 'js', false, {locale,service,hasReviews:html.includes('class="reviews-track"')});
     if (stylesheet) html = html.replace('</head>', stylesheet + '\n</head>');
     if (javascript) html = html.replace('</body>', javascript + '\n</body>');
     html = html.replace(/(<head>)([\s\S]*?)(<\/head>)/, (_, start, head, end) => start + head.replace(/^[ \t]+$/gm, '').replace(/\n[ \t]*\n(?:[ \t]*\n)+/g, '\n\n') + end);
