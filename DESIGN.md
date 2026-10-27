@@ -118,6 +118,18 @@ components:
 
 # Design System: NaSerwis
 
+Current content contract, 27 October 2026: show the homepage essentials directly.
+The flow is offer/area/audience, six task links covering Wi-Fi, RJ45/LAN and
+CCTV with the existing form, three rates with visible short-job and billing
+conditions, genuine reviews, light closing contact and the guide. Remove the
+duplicate catalogue, problem grid, benefit list and home/private/business
+disclosures; preserve #available-services and #services. Keep form extras as an
+optional native disclosure. General service pages use one concise scope list,
+limitations, enquiry preparation and two visible questions. CCTV symptoms are
+short visible rows. Review introductions use one source sentence; authors,
+ratings and review text are unchanged. This supersedes older content and
+accordion instructions below, while retaining the approved visual system.
+
 Owner update, 27 October 2026: the homepage uses one 1280px outer desktop grid
 for the header, hero, task chooser, prices, service details, reviews, guide and
 footer. Keep the review heading centered and prose left aligned. Task headings

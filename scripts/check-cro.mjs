@@ -34,26 +34,27 @@ const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-c
 // Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
+  // 2026-10-27 owner-requested concise copy: only Service descriptions and matching visible FAQ changed; metadata/H1/URLs compared with prior release.
   // 2026-10-26 local business pages: existing Service metadata retained; only the audience FAQ answer now accepts organisations locally.
   // 2026-10-26: restored conditional nearby short job from 200 PLN and standard visit from 250 PLN; only the billing FAQ answer changed.
   // 2026-10-24: owner-approved network/internet fault and CCTV share summaries; aligned LocalBusiness descriptions.
   // 2026-10-16 owner-approved shorter homepage H1 in all four languages ("... / Montaż lub naprawa z dojazdem").
   "public/index.html": "49200a1f57759ec3fb0fb5b3e724860181398f34644c3cecb9f44254663030a6",
-  "public/naprawa-wifi/index.html": "4e571b6244bb6fac32a4023f3231d2dc50733cfcf72d529ea2d5964c26a46ac6",
-  "public/naprawa-sieci/index.html": "e2de9b1adea8844a80e1e24b0b1be87f9adc0724002989fd423f15d173376791",
-  "public/montaz-sieci/index.html": "7464792df3642789fd4eb054d671f3c165273436dd79db7914df3520b2d0f44b",
+  "public/naprawa-wifi/index.html": "4eded4ff9ac5570c1b8a203b6231db49e3857dc9bc95295fa68397bcaac16a75",
+  "public/naprawa-sieci/index.html": "065471186dfb580711a1225ea115e8d57d82ad533e4486e27e9f41e42a68a7bd",
+  "public/montaz-sieci/index.html": "cb88b80bceef5928740367eef2d5e196e6545ff05095ce6053d7cbd05b68eb42",
   "public/ru/index.html": "c22ded0339f8afa8dc5ad9512ef6ee8dacc6e32970323ffd3099ad50380ca8ed",
-  "public/ru/naprawa-wifi/index.html": "8d4808fe3670edc9e518af2665578f9cf077760060907c06f59ce74d5dc7aae5",
-  "public/ru/naprawa-sieci/index.html": "0475401a7f30af024fa1a60b514239eed4e6a7df20811b58208538c51c9f46a8",
-  "public/ru/montaz-sieci/index.html": "43513ac17678d1c1530fdf841dd7ed70a45d26c996b70352e311aef1aeec27b4",
+  "public/ru/naprawa-wifi/index.html": "9af2d4e67e4f7cf46924a33aad430c71bfe2e1814010a92e077a81b31b5f613c",
+  "public/ru/naprawa-sieci/index.html": "d8212e9e277fa8becb11a6d69acfcaa1693b9288789bb80f248e363b68589626",
+  "public/ru/montaz-sieci/index.html": "ac71345ed695749ef537d66a9a20dccf83130d735339f33f29a5233627c23cb8",
   "public/uk/index.html": "e5a45f12e15b3535e1ce679e30e2a17fc8e1f90a05e718162bb5230ef89d340a",
-  "public/uk/naprawa-wifi/index.html": "3bc47b1e2fa38cfbb4631b20cea48c80dc99a43707a260c2d0e61573fc3e36a6",
-  "public/uk/naprawa-sieci/index.html": "572b96044d94f2c3f5e1968ceacd50a9030e499209734e33f772a99105f7e0da",
-  "public/uk/montaz-sieci/index.html": "212c36591e823cbb78ac29b4bf14e8e4648152f08ddf45ea72bae0f0fb254fea",
+  "public/uk/naprawa-wifi/index.html": "0c642eb341556b0937a61b339a66f127d7772468dd9bc78618cc9d04b57766bb",
+  "public/uk/naprawa-sieci/index.html": "d99748503041848bebde9800d5091e1a3d3c8040cd499555c910b95634c8b032",
+  "public/uk/montaz-sieci/index.html": "dd8410467173d44c9404f63ecc6f2b141e2ae75fe37788bdcf76145239bdf757",
   "public/en/index.html": "804fb2c0c0de5e272bbb97e160fcb51d7ffdd28649f174fffa70f5eb00dc368c",
-  "public/en/naprawa-wifi/index.html": "59e1aaa972ec5024a8b4b2d0ee8d0118dd39a86306f602a5fbcc27492a60f071",
-  "public/en/naprawa-sieci/index.html": "1ed34631b16b2165749de19c2cd5392a0dc46eecfc77d68bad2888ab666fd5ba",
-  "public/en/montaz-sieci/index.html": "311007d233eae393b26e32d3ba918b118a14ef172c1f2bbc9a08a39ea166c7ba"
+  "public/en/naprawa-wifi/index.html": "ffb98d5c1ca590dd4c9596a1c94d9e493a7fe0855f894e2f24c3b41b3a50d8ef",
+  "public/en/naprawa-sieci/index.html": "9758c21db518e4618686489475e0d00669ce32730debc32220333938725b2845",
+  "public/en/montaz-sieci/index.html": "d904625437e4cc4c8ac75c2f39a7645fcc3a5e8a053e17179f1b1674074178a8"
 };
 // Legacy PHP routes now redirect directly to their established canonical URLs.
 const reviewedProtectedFileHashes = {
@@ -100,9 +101,9 @@ if (record) {
         assert.equal((html.match(/data-intent-select="[^"]+" data-contact-modal/g) || []).length, 3, `${file}: intent options open the enquiry modal`);
         assert.equal((html.match(/class="intent-cluster"/g) || []).length, 1, `${file}: symptom selector`);
       } else if (file.includes('/naprawa-sieci/')) {
-        assert.equal((html.match(/class="service-proof"/g) || []).length, 1, `${file}: repair process`);
+        assert.equal((html.match(/class="service-proof"/g) || []).length, 0, `${file}: no repeated repair process`);
       } else {
-        assert.equal((html.match(/class="delivery-panel"/g) || []).length, 1, `${file}: installation deliverables`);
+        assert.equal((html.match(/class="delivery-panel"/g) || []).length, 0, `${file}: no repeated installation deliverables`);
       }
     }
     if (/^public(?:\/(?:ru|uk|en))?\/index\.html$/.test(file)) {

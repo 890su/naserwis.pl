@@ -9,15 +9,10 @@
 .cctv-page .service-main p{max-width:72ch;line-height:1.7}
 .cctv-symptoms{margin-top:24px;border-top:1px solid #dde2e8}
 .cctv-symptom{border-bottom:1px solid #dde2e8}
-.cctv-symptom summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding:16px 0;cursor:pointer;list-style:none;color:#18212c}
-.cctv-symptom summary::-webkit-details-marker{display:none}
-.cctv-symptom summary::marker{content:''}
-.cctv-symptom summary h3{font-size:18px;line-height:1.5;font-weight:700;margin:0}
-.cctv-symptom summary svg{flex:0 0 20px;color:#1d5bd0}
-.cctv-symptom[open] summary svg{transform:rotate(180deg)}
-.cctv-symptom summary:hover{color:#1d5bd0}
-.cctv-symptom summary:focus-visible,.cctv-page a:focus-visible{outline:2px solid #1d5bd0;outline-offset:5px}
-.cctv-symptom>p{margin:0;padding:0 28px 20px 0}
+.cctv-symptom{padding:16px 0}
+.cctv-symptom h3{font-size:18px;line-height:1.5;font-weight:700;margin:0 0 6px}
+.cctv-page a:focus-visible{outline:2px solid #1d5bd0;outline-offset:5px}
+.cctv-symptom>p{margin:0;padding:0}
 .cctv-page .cctv-preserve{font-size:14px;margin:20px 0 0;color:#485462}
 .cctv-page .cctv-install{background:#f3f5f7;padding:28px;border-radius:12px}
 .cctv-install-steps{padding-left:24px;margin:24px 0}

@@ -137,15 +137,11 @@ for (const language of Object.keys(copy)) {
 function wifiBlock(content) {
   const options = content.options.map(([intent, tag, title, description]) => `
                     <button type="button" class="intent-option" data-intent-select="${intent}" data-contact-modal aria-pressed="false">
-                        <span class="intent-option-tag">${tag}</span>
                         <strong>${title}</strong>
-                        <span>${description}</span>
                     </button>`).join('');
   return `<section class="intent-cluster" aria-labelledby="intent-cluster-title">
                 <div class="intent-cluster-heading">
-                    <span class="intent-cluster-eyebrow">${content.eyebrow}</span>
                     <h3 id="intent-cluster-title">${content.title}</h3>
-                    <p>${content.intro}</p>
                 </div>
                 <div class="intent-options">${options}
                 </div>
@@ -184,10 +180,10 @@ for (const page of pages) {
   let html = await readFile(page.file, 'utf8');
   html = html.replace(new RegExp(`\\s*${markerStart}[\\s\\S]*?${markerEnd}\\s*`, 'g'), '\n\n');
   const content = copy[page.language][page.type];
-  const block = page.type === 'wifi' ? wifiBlock(content) : page.type === 'repair' ? repairBlock(content) : installBlock(content);
+  const block = page.type === 'wifi' ? wifiBlock(content) : '';
   const insertion = `\n\n            ${markerStart}\n            ${block}\n            ${markerEnd}\n\n                `;
-  if (!html.includes('<div class="segment-cards">')) throw new Error(`Insertion point missing: ${page.file}`);
-  html = html.replace('<div class="segment-cards">', `${insertion}<div class="segment-cards">`);
+  if (!html.includes('<div class="home-prepare">')) throw new Error(`Insertion point missing: ${page.file}`);
+  html = html.replace('<div class="home-prepare">', `${insertion}<div class="home-prepare">`);
   await writeFile(page.file, html);
 }
 

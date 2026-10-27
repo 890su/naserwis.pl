@@ -1,25 +1,10 @@
-// Keep detailed service/billing copy in the initial HTML, behind native disclosures.
-// Only the homepage's presentation changes; metadata and service pages stay intact.
-import { copy } from './home-service-copy.mjs';
-import { businessLinks, businessServices } from './business-links.mjs';
-import { homeHumanCopy } from './home-human-copy.mjs';
-const labels = {
-  pl: { prices: 'Orientacyjne ceny', priceNote: 'Kwotę potwierdzamy przed pracą.', terms: 'Warunki rozliczenia', private: 'Dla klientów prywatnych', business: 'Dla firm i organizacji', newTab: 'Usługi dla firm prowadzi ITBIZ.PL. Linki otwierają się w nowej karcie.', contact: 'Skontaktuj się z technikiem' },
-  ru: { prices: 'Ориентировочные цены', priceNote: 'Стоимость согласуем до начала работ.', terms: 'Условия оплаты', private: 'Для частных клиентов', business: 'Для организаций', newTab: 'Компании обслуживает ITBIZ.PL. Ссылки откроются в новой вкладке.', contact: 'Свяжитесь с мастером' },
-  uk: { prices: 'Орієнтовні ціни', priceNote: 'Вартість погоджуємо до початку робіт.', terms: 'Умови оплати', private: 'Для приватних клієнтів', business: 'Для організацій', newTab: 'Компанії обслуговує ITBIZ.PL. Посилання відкриються в новій вкладці.', contact: 'Зв’яжіться з майстром' },
-  en: { prices: 'Indicative prices', priceNote: 'We agree the cost before work starts.', terms: 'Pricing conditions', private: 'For private customers', business: 'For businesses and organisations', newTab: 'ITBIZ.PL handles business services. Links open in a new tab.', contact: 'Contact a technician' }
-};
-const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
-const external = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>';
-const contactCopy = {
-  pl: ['Masz jeszcze pytania?', 'Zadzwoń lub zostaw zgłoszenie — ustalimy szczegóły.', 'Zadzwoń', 'Zostaw zgłoszenie'],
-  ru: ['Остались вопросы?', 'Позвоните или оставьте заявку — обсудим детали.', 'Позвонить', 'Оставить заявку'],
-  uk: ['Залишилися запитання?', 'Зателефонуйте або залиште заявку — обговоримо деталі.', 'Зателефонувати', 'Залишити заявку'],
-  en: ['Still have questions?', 'Call or send an enquiry — we’ll discuss the details.', 'Call us', 'Send an enquiry']
-};
+// Legacy accordion input is accepted once; new pages render a concise visible flow.
+import {copy} from './home-service-copy.mjs';
+import {restoreCompactHome, simplifyCompactHome} from './compact-home.mjs';
 const section = (html, name, block) => block(html, 'section', new RegExp(`<section\\b[^>]*class="[^"]*\\b${name}\\b[^"]*"`));
 
 export function restoreHomepage(html, block) {
+  if (html.includes('data-concise-home="20261027"')) return restoreCompactHome(html, block);
   if (html.includes('<section class="home-more"')) {
     const group = section(html, 'home-more', block);
     const c = copy[html.match(/<html[^>]*lang="([^"]+)"/)?.[1] || 'pl'];
@@ -56,46 +41,5 @@ export function restoreHomepage(html, block) {
   return html;
 }
 
-export function simplifyHomepage(html, locale, block) {
-  const t = labels[locale] || labels.pl;
-  const c = copy[locale] || copy.pl;
-  const editorial = homeHumanCopy[locale] || homeHumanCopy.pl;
-  const billing = section(html, 'home-billing', block);
-  const conditions = section(html, 'preview-conditions', block);
-  const rates = [...conditions.matchAll(/<p class="preview-rate">[\s\S]*?<\/p>/g)].map(m => m[0]);
-  if (rates.length !== 3) throw Error('Homepage needs the short-job, standard visit and additional-hour rates');
-  const compactBilling = billing.replace(/\s+id="services"/, '').replace(/\s+aria-labelledby="services-title"/, '')
-    .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '')
-    .replace(block(billing, 'div', /<div class="price-table"/), '');
-  const pricing = `<section class="home-pricing preview-conditions" id="services"><div class="container"><div class="home-section-header"><h2 class="home-section-heading">${t.prices}</h2><p>${t.priceNote}</p></div><div class="home-pricing-rates">${rates.join('')}</div><details class="home-disclosure home-pricing-details"><summary class="preview-conditions-link" data-pricing-toggle><span>${t.terms}</span>${chevron}</summary><div class="home-disclosure-body">${compactBilling}</div></details></div></section>`;
-  html = html.replace(billing, '').replace(conditions, pricing);
 
-  const catalogue = section(html, 'home-service-catalog', block);
-  const compactCatalogue = catalogue.replace(/<h2\b[^>]*id="available-services-title"[^>]*>[\s\S]*?<\/h2>/, '')
-    .replace(/(<p class="home-section-intro">)[\s\S]*?(<\/p>)/, `$1${editorial.intro}$2`);
-  const problems = section(html, 'problems', block);
-  const about = section(html, 'why-us', block);
-  let benefitTitle = 0, benefitText = 0;
-  const editedAbout = about.replace(/(<h3\b[^>]*>)[\s\S]*?(<\/h3>)/g, (_m, open, close) => open + editorial.benefits[benefitTitle++][0] + close)
-    .replace(/(<p\b[^>]*>)[\s\S]*?(<\/p>)/g, (_m, open, close) => open + editorial.benefits[benefitText++][1] + close);
-  if (benefitTitle !== 4 || benefitText !== 4) throw Error('Expected four homepage benefits');
-  // The visit steps repeated the contact and billing sections. Remove legacy
-  // markup when encountered; later generator runs also accept its absence.
-  if (/<section\b[^>]*class="[^"]*\bhow-we-work\b/.test(html)) {
-    html = html.replace(section(html, 'how-we-work', block), '');
-  }
-  const business = section(html, 'business-handoff', block);
-  const businessList = `<ul class="home-business-links">${businessServices[locale].map(([title, slug]) => `<li><a href="${businessLinks[locale].url}${slug}/"><span>${title}</span>${chevron}</a></li>`).join('')}</ul>`;
-  // Keep the existing audience handoff in the generator model, with one clear
-  // introduction and service destinations in its rendered disclosure.
-  const compactBusiness = business.replace(/\s+aria-labelledby="business-handoff-title"/, '')
-    .replace(/<h2\b[^>]*>[\s\S]*?<\/h2>/, '')
-    .replace(/<p>[\s\S]*?<\/p>/, `<p class="home-business-note">${c.business}</p>${businessList}`);
-  const more = `<section class="home-more" aria-labelledby="available-services-title"><div class="container"><h2 id="available-services-title" class="home-section-heading">${c.catalog}</h2><details class="home-disclosure home-services-details"><summary><span>${t.private}</span>${chevron}</summary><div class="home-disclosure-body">${compactCatalogue}${problems}${editedAbout}</div></details><details class="home-disclosure home-business-details"><summary><span>${t.business}</span>${chevron}</summary><div class="home-disclosure-body">${compactBusiness}</div></details></div></section>`;
-  html = html.replace(catalogue, '<!-- HOME DETAILS -->').replace(problems, '').replace(about, '').replace(business, '').replace('<!-- HOME DETAILS -->', more);
-
-  const contact = section(html, 'final-cta', block);
-  const [title, intro, call, request] = contactCopy[locale] || contactCopy.pl;
-  const updatedContact = `<section class="final-cta home-contact-cta" id="contact" aria-labelledby="contact-title"><div class="container home-contact-grid"><div class="home-contact-copy"><h2 id="contact-title">${title}</h2><p>${intro}</p></div><div class="preview-actions home-contact-actions"><a class="btn preview-outline" href="tel:+48453327678">${call}</a><a class="btn btn-primary" href="#contact" data-contact-modal>${request}</a></div></div></section>`;
-  return html.replace(contact, updatedContact);
-}
+export const simplifyHomepage = simplifyCompactHome;

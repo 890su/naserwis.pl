@@ -50,14 +50,18 @@ for (const locale of ['pl', 'ru', 'uk', 'en']) {
         ['property', 'twitter:title', home.title], ['property', 'twitter:description', home.description]
       ]) assert.ok(html.includes(`<meta ${attribute}="${key}" content="${value}">`), `${file}: consistent ${key}`);
       assert.ok(!html.includes('class="trust-signals"'), `${file}: removed generic trust section`);
-      const catalog = html.match(/<div class="home-services-grid">([\s\S]*?)<\/div>\s*<p class="home-secondary-scope">/)?.[1];
-      assert.ok(catalog, file);
-      assert.equal((catalog.match(/class="home-service-link"/g) || []).length, 6, file);
-      assert.ok(!/(?:\d+\s+(?:zł|PLN)\b|price-value)/.test(catalog), `${file}: scope must not look like extra charges`);
+      assert.ok(html.includes('id="available-services"'), `${file}: established service anchor`);
+      assert.equal((html.match(/class="preview-task-link"/g) || []).length, 6, `${file}: six task links`);
+      assert.ok(!html.includes('class="home-disclosure'), `${file}: important content must be visible`);
+      assert.ok(html.includes('class="home-pricing-notes"'), `${file}: visible rate conditions`);
+      for (const serviceRoute of ['naprawa-wifi/', 'naprawa-sieci/', 'montaz-sieci/', 'serwis-monitoringu/']) {
+        assert.ok(html.includes(`href="/${prefix}${serviceRoute}"`), `${file}: primary service ${serviceRoute}`);
+      }
       continue;
     }
     const faq = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1])).find(s => s['@type'] === 'FAQPage');
-    const visible = [...html.matchAll(/<summary class="faq-question">([\s\S]*?)<\/summary><p class="faq-answer">([\s\S]*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]);
+    const visible = [...html.matchAll(/<h3 class="faq-question">([\s\S]*?)<\/h3><p class="faq-answer">([\s\S]*?)<\/p>/g)].map(m => [decode(m[1]), decode(m[2])]);
+    assert.equal(visible.length, 2, `${file}: only the two remaining distinct questions`);
     assert.deepEqual(faq.mainEntity.map(q => [q.name, q.acceptedAnswer.text]), visible, `${file}: visible FAQ must equal schema`);
     const service = [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1])).find(s => s['@type'] === 'Service');
     assert.ok(!/priceSpecification|"price"/.test(JSON.stringify(service)), `${file}: schema must not imply a separate per-service charge`);

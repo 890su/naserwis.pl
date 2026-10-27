@@ -45,17 +45,17 @@ for (const [locale, c] of Object.entries(cctvCopy)) {
   const oldContent = block(html, 'section', /<section class="service-content /);
   const related = [['naprawa-sieci/', base.repair.h1], ['naprawa-wifi/', base.wifi.h1], ['montaz-sieci/', base.install.h1]];
   const content = `<section class="service-content home-service-content"><div class="container"><div class="service-row"><div class="service-main">
-<section class="cctv-repair" id="cctv-repair" aria-labelledby="cctv-repair-title"><h2 id="cctv-repair-title">${esc(c.repairTitle)}</h2><p>${esc(c.repairIntro)}</p>
-<div class="cctv-symptoms">${c.faults.map(([title, text]) => `<details class="cctv-symptom"><summary><h3>${esc(title)}</h3>${arrow}</summary><p>${esc(text)}</p></details>`).join('\n')}</div>
+<section class="cctv-repair" id="cctv-repair" aria-labelledby="cctv-repair-title"><h2 id="cctv-repair-title">${esc(c.repairTitle)}</h2>
+<div class="cctv-symptoms">${c.faults.map(([title, text]) => `<article class="cctv-symptom"><h3>${esc(title)}</h3><p>${esc(text)}</p></article>`).join('\n')}</div>
 <p class="cctv-preserve">${esc(c.preserve)}</p></section>
-<section class="cctv-install" id="cctv-install" aria-labelledby="cctv-install-title"><h2 id="cctv-install-title">${esc(c.installTitle)}</h2><p>${esc(c.installIntro)}</p>
+<section class="cctv-install" id="cctv-install" aria-labelledby="cctv-install-title"><h2 id="cctv-install-title">${esc(c.installTitle)}</h2>
 <ol class="cctv-install-steps">${c.steps.map(([title, text]) => `<li><h3>${esc(title)}</h3><p>${esc(text)}</p></li>`).join('\n')}</ol><h3 class="cctv-systems-title">${esc(c.systemsTitle)}</h3><ul class="cctv-system-types">${c.systems.map(([title, text]) => `<li><strong>${esc(title)}.</strong> ${esc(text)}</li>`).join('\n')}</ul><p class="cctv-scope">${esc(c.scope)}</p></section>
 <section class="cctv-prepare" aria-labelledby="cctv-prepare-title"><h2 id="cctv-prepare-title">${esc(c.prepareTitle)}</h2><p>${esc(c.prepare)}</p><a href="#contact" data-contact-modal>${esc(base.request)}</a></section>
-<aside class="business-handoff cctv-business"><h2>${esc(c.businessTitle)}</h2><p>${esc(c.business)}</p><a href="${c.businessUrl}">${esc(c.businessLink)} <span aria-hidden="true">→</span></a></aside>
+<aside class="business-handoff cctv-business"><a href="${c.businessUrl}">${esc(c.businessLink)} <span aria-hidden="true">→</span></a></aside>
 <div class="info-box cctv-related"><h2>${esc(c.relatedTitle)}</h2><div class="info-box-links">${related.map(([path, label]) => `<a class="info-link" href="/${prefix}${path}">${esc(label)} <span aria-hidden="true">→</span></a>`).join('\n')}</div></div>
 </div>${sidebar}</div></div></section>`;
   html = html.replace(oldContent, content);
-  const faq = `<section class="faq-section"><div class="container"><h2 class="faq-title">${esc(c.faqTitle)}</h2><div class="faq-container">${c.questions.map(([q, a]) => `<details class="faq-item"><summary class="faq-question">${esc(q)}</summary><p class="faq-answer">${esc(a)}</p></details>`).join('\n')}</div></div></section>`;
+  const faq = `<section class="faq-section"><div class="container"><h2 class="faq-title">${esc(c.faqTitle)}</h2><div class="faq-container">${c.questions.map(([q, a]) => `<div class="faq-item faq-visible"><h3 class="faq-question">${esc(q)}</h3><p class="faq-answer">${esc(a)}</p></div>`).join('\n')}</div></div></section>`;
   html = html.replace(block(html, 'section', /<section class="faq-section"/), faq);
   html = html.replace(/<h2 id="contact-title">[\s\S]*?<\/h2>\s*<p>[\s\S]*?<\/p>/, `<h2 id="contact-title">${esc(c.contactTitle)}</h2><p>${esc(c.contactText)}</p>`);
   html = html.replace(/(<form id="final-form"[^>]*>)\s*<p class="contact-next-step">[\s\S]*?<\/p>/, `$1<p class="contact-next-step">${esc(c.contactText)}</p>`);

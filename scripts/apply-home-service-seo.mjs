@@ -30,27 +30,27 @@ function billing(c, sidebar = false) {
   const rows = [[c.short, 200], [c.visit, 250], [c.next, 150]];
   const prices = sidebar ? rows.map(([label, amount]) => `<div class="price-item"><span>${escape(label)}</span><strong>${c.prefix} ${amount} ${c.currency}</strong></div>`).join('\n') :
     `<div class="price-table" role="table" aria-label="${escape(c.billing)}"><div class="price-row header" role="row"><div class="price-service" role="columnheader">${c.rateLabel}</div><div class="price-value" role="columnheader">${c.amountLabel}</div></div>\n${rows.map(([label, amount]) => `<div class="price-row" role="row"><div class="price-service" role="cell">${escape(label)}</div><div class="price-value" role="cell">${c.prefix} ${amount} ${c.currency}</div></div>`).join('\n')}\n</div>`;
-  return `${prices}\n<p class="billing-rule"><strong>${escape(c.noDouble)}</strong></p>\n<p class="billing-condition">${escape(c.shortNote)}</p>\n<p class="billing-project">${escape(c.project)}</p>\n<p class="price-disclaimer">${escape(c.disclaimer)}</p>`;
+  return `${prices}\n<p class="billing-condition">${escape(c.shortNote)}</p>\n<p class="billing-rule">${escape(c.noDouble)}</p>\n<p class="billing-project">${escape(c.project)}</p>\n<p class="price-disclaimer">${escape(c.disclaimer)}</p>`;
 }
 function handoff(c, locale, section = false) {
+  if (!section) return `<aside class="business-handoff"><p>${c.business}</p><a href="${businessLinks[locale].url}">${c.businessLink} <span aria-hidden="true">→</span></a></aside>`;
   const content = `<h${section ? '2' : '3'} id="business-handoff-title">${c.businessTitle}</h${section ? '2' : '3'}><p>${c.business}</p><a href="${businessLinks[locale].url}">${c.businessLink} <span aria-hidden="true">→</span></a>`;
   return section ? `<section class="packages business-handoff" aria-labelledby="business-handoff-title"><div class="container">${content}</div></section>` : `<aside class="business-handoff">${content}</aside>`;
 }
 function catalog(c, prefix) {
   return `<section class="comprehensive-support home-service-catalog" id="available-services" aria-labelledby="available-services-title"><div class="container">
 <h2 id="available-services-title" class="section-title">${c.catalog}</h2><p class="home-section-intro">${c.catalogIntro}</p>
-<div class="home-services-grid">${c.services.map(([type, title, text]) => `<a class="home-service-link" href="/${prefix}${routes[type]}"><div><h3>${title}</h3><p>${text}</p></div><span aria-hidden="true">↗</span></a>`).join('\n')}</div>
+<div class="home-services-grid">${c.services.map(([type, title, text]) => `<a class="home-service-link" href="/${prefix}${type === 'cctv' ? 'serwis-monitoringu/' : routes[type]}"><div><h3>${title}</h3><p>${text}</p></div><span aria-hidden="true">↗</span></a>`).join('\n')}</div>
 <p class="home-secondary-scope">${c.secondary}</p></div></section>`;
 }
 function serviceContent(c, type, locale, prefix) {
   const s = c[type];
   return `<section class="service-content home-service-content"><div class="container"><div class="service-row"><div class="service-main">
-<span class="home-scope">${c.scope}</span><h2>${s.heading}</h2><p>${s.explanation}</p>
-<h3>${c.catalog}</h3><p class="home-section-intro">${c.catalogIntro}</p>
+<h2>${s.heading}</h2>
 <ul class="service-features">${s.features.map(([title, text]) => `<li class="service-feature-item"><span class="service-feature-icon" aria-hidden="true">✓</span><div><strong>${title}</strong><br>${text}</div></li>`).join('\n')}</ul>
-<div class="segment-cards">${s.scenarios.map(([title, text]) => `<div class="segment-card segment-dom"><h3>${title}</h3><p>${text}</p></div>`).join('\n')}</div>
-<div class="info-box"><h3>${c.related}</h3><div class="info-box-links">${Object.keys(routes).filter(key => key !== 'home' && key !== type).map(key => `<a class="info-link" href="/${prefix}${routes[key]}">${c[key].h1} <span aria-hidden="true">→</span></a>`).join('\n')}</div><a class="home-catalog-back" href="/${prefix}#available-services">${c.catalog} <span aria-hidden="true">→</span></a></div>
+<p class="service-scope-note">${s.explanation}</p>
 <div class="home-prepare"><h3>${c.prepareTitle}</h3><p>${c.prepare}</p></div>${handoff(c, locale)}
+<div class="info-box"><h3>${c.related}</h3><div class="info-box-links">${Object.keys(routes).filter(key => key !== 'home' && key !== type).map(key => `<a class="info-link" href="/${prefix}${routes[key]}">${c[key].h1} <span aria-hidden="true">→</span></a>`).join('\n')}</div><a class="home-catalog-back" href="/${prefix}#available-services">${c.catalog} <span aria-hidden="true">→</span></a></div>
 </div><div class="service-sidebar home-billing"><h3>${c.billing}</h3><p class="price-header">${c.rateLabel}</p>${billing(c, true)}<a href="#contact" class="btn btn-primary btn-block">${c.request}</a></div></div></div></section>`;
 }
 
@@ -69,6 +69,10 @@ for (const [locale, c] of Object.entries(copy)) {
     html = html.replace(/<h1\b([^>]*)>[\s\S]*?<\/h1>/, `<h1$1>${s.h1}<br><span class="accent-text">${s.accent}</span></h1>`);
     html = html.replace(/<p class="hero-(?:large-)?subtitle(?: hero-large-subtitle)?"([^>]*)>[\s\S]*?<\/p>/, (_m, attrs) => `<p class="${type === 'home' ? 'hero-subtitle' : 'hero-large-subtitle'}"${attrs}>${s.intro}</p>`);
     html = html.replace(/(<div class="hero-cta-wrapper">\s*<a[^>]*>)[\s\S]*?(<\/a>)/, `$1${c.request}$2`);
+    if (type !== 'home') {
+      const nextStep = {pl:'Podaj lokalizację i kontakt do siebie.',ru:'Укажите район и контакт для связи.',uk:'Укажіть район і контакт для зв’язку.',en:'Send your location and contact details.'}[locale];
+      html = html.replace(/<h2 id="contact-title">[\s\S]*?<\/h2>\s*<p>[\s\S]*?<\/p>/, `<h2 id="contact-title">${c.request}</h2><p>${nextStep}</p>`);
+    }
     if (type === 'home') {
       if (html.includes('class="trust-signals"')) html = replaceSection(html, 'trust-signals', '');
       html = html.replace(/\s*<!-- Trust Signals -->/g, '');
@@ -81,8 +85,8 @@ for (const [locale, c] of Object.entries(copy)) {
       html = html.replace(/<time\b[^>]*class="review-date"[^>]*>[\s\S]*?<\/time>/g, '');
     } else {
       html = replaceSection(html, 'service-content', serviceContent(c, type, locale, prefix));
-      const questions = [...s.questions, [c.priceQuestion, `${c.noDouble} ${c.project} ${c.shortNote}`], [c.businessQuestion, c.business]];
-      html = replaceSection(html, 'faq-section', `<section class="faq-section"><div class="container"><h2 class="faq-title">${c.faq}</h2><div class="faq-container">${questions.map(([q, a]) => `<details class="faq-item"><summary class="faq-question">${escape(q)}</summary><p class="faq-answer">${escape(a)}</p></details>`).join('\n')}</div></div></section>`);
+      const questions = s.questions;
+      html = replaceSection(html, 'faq-section', `<section class="faq-section"><div class="container"><h2 class="faq-title">${c.faq}</h2><div class="faq-container">${questions.map(([q, a]) => `<div class="faq-item faq-visible"><h3 class="faq-question">${escape(q)}</h3><p class="faq-answer">${escape(a)}</p></div>`).join('\n')}</div></div></section>`);
     }
     html = html.replace(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g, (block, json) => {
       const data = JSON.parse(json);
@@ -98,7 +102,7 @@ for (const [locale, c] of Object.entries(copy)) {
           hasOfferCatalog: { '@type': 'OfferCatalog', name: c.catalog, itemListElement: s.features.map(([name, description]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name, description } })) } });
       }
       if (data['@type'] === 'FAQPage') {
-        const questions = [...s.questions, [c.priceQuestion, `${c.noDouble} ${c.project} ${c.shortNote}`], [c.businessQuestion, c.business]];
+        const questions = s.questions;
         return schema({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: questions.map(([name, text]) => ({ '@type': 'Question', name, acceptedAnswer: { '@type': 'Answer', text } })) });
       }
       return block;

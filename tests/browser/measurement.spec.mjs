@@ -152,23 +152,26 @@ for (const [locale, weather] of locales) {
     await page.evaluate(() => document.addEventListener('click', event => {
       if (event.target.closest('a')) event.preventDefault();
     }, true));
-    const choices = ['wifi-coverage', 'router-setup', 'lan-install', 'lan-repair', 'network-test', 'device-setup'];
-    await page.locator('.home-services-details > summary').click();
+    const choices = ['wifi-coverage', 'router-setup', 'lan-install', 'lan-repair'];
     for (const choice of choices) {
       await page.locator(`.preview-task-link[data-service-choice="${choice}"]`).click();
       expect((await events(page, 'naserwis_service_select')).at(-1)).toMatchObject({
-        service_choice: choice, placement: 'task_panel', task_group: ['wifi-coverage', 'lan-repair', 'network-test'].includes(choice) ? 'fault' : 'setup'
+        service_choice: choice, placement: 'task_panel', task_group: ['wifi-coverage', 'lan-repair'].includes(choice) ? 'fault' : 'setup'
       });
-      await page.locator(`.home-service-link[data-service-choice="${choice}"]`).click();
-      expect((await events(page, 'naserwis_service_select')).at(-1)).toMatchObject({ service_choice: choice, placement: 'services' });
     }
-    expect(await events(page, 'naserwis_service_select')).toHaveLength(12);
-    await page.locator('.preview-conditions-link').click();
-    expect(await events(page, 'naserwis_pricing_click')).toMatchObject([{ placement: 'pricing' }]);
+    const cameras = page.locator('.preview-task-link[href$="serwis-monitoringu/"]');
+    await expect(cameras).toHaveCount(2);
+    for (const link of await cameras.all()) {
+      await link.click();
+      expect((await events(page, 'naserwis_service_select')).at(-1)).toMatchObject({placement:'task_panel',target_service:'lan_cctv_repair'});
+    }
+    expect(await events(page, 'naserwis_service_select')).toHaveLength(6);
+    await page.locator('#header .header-nav-link[href$="#services"]').click();
+    expect(await events(page, 'naserwis_pricing_click')).toMatchObject([{ placement: 'header' }]);
     expect(await conversions(page)).toHaveLength(0);
     await page.locator('#header .header-nav-link[href$="#contact"]').click();
     expect((await events(page, 'naserwis_cta_click')).at(-1)).toMatchObject({ placement: 'header', action: 'form' });
-    expect(await events(page, 'naserwis_service_select')).toHaveLength(12);
+    expect(await events(page, 'naserwis_service_select')).toHaveLength(6);
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));

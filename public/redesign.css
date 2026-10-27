@@ -300,16 +300,15 @@ body[data-redesign] #header .business-menu-label{margin:0;padding:12px 15px 4px;
 body[data-redesign] .reviews>.container{max-width:1200px}
 body[data-redesign] .reviews .section-title,body[data-redesign] .reviews-intro,body[data-redesign] .reviews-note{text-align:center}
 @media(min-width:960px){
-  body[data-redesign] .reviews .container{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px 32px;align-items:start;grid-template-rows:auto auto auto 50px auto}
+  body[data-redesign] .reviews .container{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:16px 32px;align-items:start;grid-template-rows:auto auto 50px auto}
   body[data-redesign] .reviews .section-title{grid-column:1/-1;grid-row:1}
   body[data-redesign] .reviews-intro{grid-column:1/-1;grid-row:2}
-  body[data-redesign] .reviews-note{grid-column:1/-1;grid-row:3}
-  body[data-redesign] .reviews-slider{grid-column:1;grid-row:4/6;min-width:0}
-  body[data-redesign] .reviews .google-link{grid-column:2;grid-row:4;margin:0}
-  body[data-redesign] .review-cta-interactive{grid-column:2;grid-row:5}
+  body[data-redesign] .reviews-slider{grid-column:1;grid-row:3/5;min-width:0}
+  body[data-redesign] .reviews .google-link{grid-column:2;grid-row:3;margin:0}
+  body[data-redesign] .review-cta-interactive{grid-column:2;grid-row:4}
   body[data-redesign] .reviews .section-title{margin-bottom:0}
 }
-body[data-redesign] .reviews-intro{margin:0 0 4px;font-size:17px}
+body[data-redesign] .reviews-intro{max-width:none;width:100%;margin:0 0 4px;font-size:17px}
 body[data-redesign] .reviews-note{margin:0 0 20px;font-size:15px;color:var(--rd-muted)}
 body[data-redesign] .google-link{text-align:left;margin:0 0 16px}
 body[data-redesign] .google-reviews-link{display:flex;justify-content:center;align-items:center;gap:10px;min-height:50px;padding:12px 20px;border:1.5px solid var(--rd-blue);border-radius:6px;background:#fff;color:var(--rd-blue);font-weight:700;box-shadow:none;transform:none;text-decoration:none}
@@ -693,6 +692,26 @@ body[data-redesign="home"] .footer-service-links a{font-size:14px;line-height:1.
 @media(min-width:761px){body[data-redesign="home"] .preview-task-pair{grid-template-rows:auto auto 1fr}body[data-redesign="home"] .preview-task{display:grid;grid-template-rows:subgrid;grid-row:span 3}}
 @media(max-width:760px){body[data-redesign="home"] .home-contact-actions{display:grid;grid-template-columns:1fr 1fr}}
 @media(max-width:420px){body[data-redesign="home"] .home-contact-actions{grid-template-columns:1fr}}
+/* Concise reading flow: visible essentials instead of repeated disclosures. */
+body[data-redesign="home"] .home-audience-note{font-size:14px;line-height:1.6;color:#c9d2dc;max-width:74ch;margin:12px 0 0}
+body[data-redesign="home"] #available-services{scroll-margin-top:96px}
+body[data-redesign="home"] .home-pricing-notes{display:grid;grid-template-columns:1fr 1fr;gap:14px 40px;padding-top:20px;border-top:1px solid var(--rd-line)}
+body[data-redesign="home"] .home-pricing-notes p{margin:0;max-width:75ch;padding:0;border:0;background:transparent;color:var(--rd-muted);font-size:14px;line-height:1.6;font-weight:400}
+body[data-redesign="home"] .home-pricing-notes .billing-condition{grid-column:1/-1;font-size:15px;color:var(--rd-ink)}
+body[data-redesign="home"] .home-pricing-notes .price-disclaimer{grid-column:1/-1}
+body[data-redesign] .service-main>.home-prepare{padding:20px 0;background:transparent;border-radius:0;border-top:1px solid var(--rd-line);margin:28px 0}
+body[data-redesign] .service-main>.business-handoff{padding:0;background:transparent;border:0;margin:24px 0}
+body[data-redesign] .service-main>.business-handoff p{margin:0 0 8px}
+body[data-redesign] .service-scope-note{color:var(--rd-muted);font-size:15px;line-height:1.65}
+body[data-redesign] .intent-cluster{margin:28px 0;padding:20px 24px}
+body[data-redesign] .intent-cluster-heading h3{font-size:20px;margin:0 0 16px}
+body[data-redesign] .intent-option{min-height:52px;padding:14px 0}
+body[data-redesign] .intent-option strong{font-size:16px}
+body[data-redesign] .faq-visible{padding:20px 0}
+body[data-redesign] .faq-visible .faq-question{cursor:default;padding:0;margin:0 0 8px;font-size:18px}
+body[data-redesign] .faq-visible .faq-question::after{content:none}
+body[data-redesign] .faq-visible .faq-answer{border:0;padding:0;margin:0;max-width:75ch;line-height:1.65}
+@media(max-width:760px){body[data-redesign="home"] .home-pricing-notes{grid-template-columns:1fr;gap:14px}body[data-redesign] .intent-cluster{padding:20px}}
 /* Shared visual rhythm across the homepage and both service templates. */
 body[data-redesign] .faq-section>.container{max-width:1040px}
 body[data-redesign] .faq-container{max-width:none;margin-inline:0}

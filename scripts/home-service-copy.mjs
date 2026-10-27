@@ -1,95 +1,743 @@
-// Existing general services and billing; organisational requests stay in NaSerwis.
-// One source for rendered scope, billing, FAQ and search-engine descriptions.
+// Shared factual copy for four locales. Keep metadata/URLs and the published rate conditions.
 export const copy = {
-  pl: {
-    scope: 'Dla mieszkań i domów', catalog: 'W czym możemy pomóc', catalogIntro: 'Wybierz problem lub planowane prace. To zakres dostępnych usług, a nie dodatkowe pozycje w cenniku.',
-    services: [
-      ['wifi', 'Diagnostyka zasięgu Wi-Fi', 'Słaby sygnał w pokoju, przerwy w połączeniu lub Wi-Fi bez internetu.'],
-      ['wifi', 'Konfiguracja routera, AP i Mesh', 'Ustawienia sieci, rozmieszczenie punktów i podłączenie nowego routera.'],
-      ['install', 'Montaż sieci LAN', 'Plan punktów, prowadzenie przewodów i montaż gniazd RJ45.'],
-      ['repair', 'Naprawa gniazd RJ45 i kabli', 'Uszkodzony przewód, luźne złącze lub gniazdo bez połączenia.'],
-      ['repair', 'Testowanie połączeń sieciowych', 'Sprawdzenie kabli, portów i połączenia po naprawie lub zmianie sprzętu.'],
-      ['wifi', 'Podłączenie urządzeń', 'Komputer, Smart TV, drukarka lub inne urządzenie w sieci.'],
+  "pl": {
+    "scope": "Dla klientów indywidualnych i organizacji",
+    "catalog": "W czym możemy pomóc",
+    "catalogIntro": "Wybierz problem lub planowane prace. To zakres dostępnych usług, a nie dodatkowe pozycje w cenniku.",
+    "services": [
+      [
+        "wifi",
+        "Wi-Fi i internet",
+        "Słaby sygnał w pokoju, przerwy w połączeniu lub Wi-Fi bez internetu."
+      ],
+      [
+        "wifi",
+        "Router, AP lub Mesh",
+        "Ustawienia sieci, rozmieszczenie punktów i podłączenie nowego routera."
+      ],
+      [
+        "install",
+        "Montaż sieci LAN",
+        "Plan punktów, prowadzenie przewodów i montaż gniazd RJ45."
+      ],
+      [
+        "repair",
+        "Gniazda RJ45 i kable",
+        "Uszkodzony przewód, luźne złącze lub gniazdo bez połączenia."
+      ],
+      [
+        "cctv",
+        "Naprawa monitoringu",
+        "Naprawa monitoringu"
+      ],
+      [
+        "cctv",
+        "Montaż kamer",
+        "Montaż kamer"
+      ]
     ],
-    secondary: 'Po uzgodnieniu zakresu pomagamy też z połączeniami kamer i PoE oraz uszkodzonym domowym kablem światłowodowym. Nie ingerujemy w infrastrukturę operatora bez jego zgody.',
-    billing: 'Jak rozliczamy pracę', rateLabel: 'Sposób rozliczenia', amountLabel: 'Cena od', prefix: 'od', currency: 'zł', visit: 'Dojazd w Warszawie + pierwsza godzina pracy', next: 'Każda kolejna godzina pracy', short: 'Krótkie zlecenie w pobliżu — po uzgodnieniu',
-    shortNote: 'Stawka od 200 zł dotyczy krótkiego zlecenia z bliskim dojazdem, po skutecznym wykonaniu zadania. Jest alternatywą dla standardowej wizyty, nie dodatkową opłatą.',
-    noDouble: 'Płacisz za uzgodniony zakres pracy. Nie naliczamy jednocześnie stawki godzinowej i osobnej opłaty za tę samą pracę.',
-    project: 'Większy montaż możemy wycenić jako projekt zamiast rozliczenia godzinowego. Materiały, urządzenia, dodatkowe prace i sposób rozliczenia niepełnej godziny uzgadniamy przed rozpoczęciem.',
-    disclaimer: 'Ceny „od” zależą od warunków realizacji i nie stanowią oferty. Kwotę potwierdzamy przed pracą. VAT nie doliczamy.',
-    businessTitle: 'Potrzebujesz pomocy dla firmy?', business: 'NaSerwis pomaga klientom prywatnym z domową infrastrukturą. Obsługę firm, biur i sprzętu zarządzanego przez pracodawcę prowadzi ITBIZ.PL.', businessLink: 'Usługi IT dla firm — ITBIZ.PL',
-    faq: 'Pytania przed wizytą', related: 'Inne prace w domowej sieci', request: 'Opisz zadanie', prepareTitle: 'Co przygotować przed kontaktem?', prepare: 'Podaj miejscowość, objawy i model routera lub liczbę gniazd. Zdjęcie miejsca lub schemat ułatwi rozmowę. Nie wysyłaj haseł do sieci ani danych logowania.',
-    problemsTitle: 'Od objawu do właściwej usługi',
-    problems: [['wifi','Wi-Fi nie dociera do pokoju?','Zaczynamy od pomiaru i sprawdzenia ustawień, zanim zaproponujemy zakup sprzętu.'],['repair','Kabel podłączony, internetu brak?','Sprawdzamy gniazdo, przewód i port, aby ustalić źródło problemu.'],['install','Remontujesz lub urządzasz dom?','Zaplanuj punkty LAN do TV, prywatnego stanowiska pracy i punktów Wi-Fi.']],
-    home: {title:'Wi-Fi, sieci i monitoring — Warszawa | NaSerwis.pl', description:'Serwis Wi-Fi, sieci LAN i monitoringu wizyjnego w Warszawie i okolicy. Diagnozujemy awarie sieci i internetu, konfigurujemy routery, montujemy okablowanie i kamery. Zakres i koszt uzgadniamy przed pracą.', h1:'Wi-Fi i sieci w Warszawie', accent:'Montaż lub naprawa z dojazdem', intro:'Diagnozujemy Wi-Fi, konfigurujemy routery, montujemy i naprawiamy sieci LAN. Zakres, koszt i termin uzgadniamy przed pracą.'},
-    wifi: {title:'Naprawa Wi-Fi i konfiguracja domowej sieci — Warszawa | NaSerwis.pl', description:'Słaby zasięg lub Wi-Fi bez internetu? Diagnostyka, konfiguracja routera, AP i Mesh w domu lub mieszkaniu w Warszawie. Rozliczenie ustalamy przed pracą.', h1:'Naprawa Wi-Fi w Warszawie', accent:'Router i zasięg w Twoim domu', intro:'Sprawdzamy sygnał, ustawienia routera i połączenie z internetem. Dobieramy rozwiązanie do mieszkania, domu i Twoich urządzeń.', heading:'Słaby sygnał czy problem z połączeniem?', explanation:'Zasięg Wi-Fi i dostęp do internetu to różne problemy. Porównujemy połączenie przy routerze, po kablu i w miejscach, gdzie występuje usterka. Gdy przyczyna leży po stronie operatora, wskazujemy, co zgłosić do jego wsparcia.', features:[['Pomiar w pomieszczeniach','Sprawdzamy zasięg, zakłócenia i lokalizację routera.'],['Konfiguracja routera i punktów Wi-Fi','Uzgadniamy ustawienia, sieć gościnną i rozmieszczenie AP lub Mesh. Dobór zależy od układu domu i dostępnego okablowania.'],['Połączenie urządzeń domowych','Pomagamy podłączyć prywatny komputer, TV lub drukarkę i sprawdzamy działanie po zmianach.']], scenarios:[['Mieszkanie','Słaby sygnał w sypialni lub brak internetu po zmianie routera.'],['Dom i prywatne stanowisko pracy','Pokrycie na kilku piętrach i stabilne połączenie osobistych urządzeń.']], questions:[['Czy Mesh zawsze będzie najlepszy?','Nie. Wybór między ustawieniami routera, punktem dostępowym, Mesh i połączeniem kablowym zależy od układu domu, sprzętu i pomiarów. Najpierw sprawdzamy przyczynę.'],['Co oznacza Wi-Fi bez internetu?','Urządzenie może połączyć się z routerem, mimo że router nie ma dostępu do internetu. Sprawdzamy połączenie, ustawienia i objawy; awarie sieci operatora zgłasza się operatorowi.'],['Czy trzeba kupić nowy router?','Nie zawsze. Najpierw sprawdzamy obecny sprzęt i ustawienia. Ewentualny zakup oraz jego koszt uzgadniamy z Tobą.']]},
-    repair: {title:'Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl', description:'Naprawa domowej sieci LAN w Warszawie: diagnostyka kabli i portów, gniazda RJ45 oraz test po naprawie. Dojazd i zakres prac uzgadniamy przed wizytą.', h1:'Naprawa sieci LAN w Warszawie', accent:'Gniazda RJ45, kable i połączenia', intro:'Szukamy przyczyny braku połączenia lub przerw w domowej sieci. Sprawdzamy przewody, gniazda i porty, a naprawę uzgadniamy po diagnozie.', heading:'Kabel jest podłączony, a sieć nie działa?', explanation:'Usterka może dotyczyć przewodu, złącza, portu albo ustawień urządzenia. Sprawdzamy połączenie krok po kroku, aby ustalić zakres naprawy bez wymiany sprawnych elementów.', features:[['Kable i gniazda RJ45','Sprawdzamy połączenia, wymieniamy uszkodzone złącza i uzgadniamy naprawę dostępnego odcinka przewodu.'],['Porty i urządzenia domowe','Weryfikujemy port routera lub switcha oraz ustawienia połączenia.'],['Test po wykonaniu prac','Ponownie sprawdzamy naprawiony tor i omawiamy wynik. Połączenia domowych kamer, PoE i światłowód wymagają uzgodnienia zakresu.']], scenarios:[['Jedno gniazdo nie działa','Brak połączenia przy TV lub prywatnym komputerze.'],['Problem po remoncie','Uszkodzony kabel, nowe złącze lub nieopisane punkty sieciowe.']], questions:[['Czy trzeba wymienić cały kabel?','Nie zawsze. Najpierw sprawdzamy przewód i zakończenia. Możliwość naprawy zależy od uszkodzenia i dostępu do instalacji.'],['Czy naprawiacie domowy światłowód lub połączenia kamer?','Takie zadania ustalamy indywidualnie po opisie i oględzinach. Pracujemy w uzgodnionym zakresie domowej instalacji; usterki po stronie operatora kierujemy do niego.'],['Kiedy możecie przyjechać?','Podaj lokalizację i objawy. Możliwy termin potwierdzamy podczas kontaktu, zgodnie z aktualną dostępnością.']]},
-    install: {title:'Montaż sieci LAN w domu i mieszkaniu — Warszawa | NaSerwis.pl', description:'Instalacja domowej sieci LAN w Warszawie: plan punktów, okablowanie, gniazda RJ45 i testy po montażu. Wycena projektu lub rozliczenie godzinowe po uzgodnieniu.', h1:'Montaż sieci LAN w Warszawie', accent:'Okablowanie domu i mieszkania', intro:'Planujemy punkty, prowadzimy przewody, montujemy gniazda RJ45 i testujemy połączenia. Zakres instalacji i sposób rozliczenia uzgadniamy przed pracą.', heading:'Domowa sieć przed remontem lub po nim', explanation:'Zaczynamy od rozmieszczenia urządzeń: TV, prywatnego komputera i punktów Wi-Fi. Ustalamy dostępne trasy kabli, liczbę gniazd i sposób wykończenia. Przy gotowym mieszkaniu omawiamy rozwiązania możliwe bez zaplanowanego remontu.', features:[['Plan punktów LAN','Uzgadniamy, gdzie potrzebne są przewody i gniazda oraz jak połączyć je z routerem.'],['Okablowanie i gniazda RJ45','Prowadzenie kabli i sposób montażu dopasowujemy do warunków oraz uzgodnionych prac wykończeniowych.'],['Opis i sprawdzenie instalacji','Oznaczamy punkty, sprawdzamy połączenia i przekazujemy ustalony opis wykonanych prac.']], scenarios:[['Dom w budowie lub remont','Trasy przewodów i punkty ustalone przed wykończeniem ścian.'],['Gotowe mieszkanie','Nowy punkt do TV, komputera lub AP po ocenie dostępnej trasy.']], questions:[['Co wpływa na koszt montażu LAN?','Liczba punktów, długość i dostępność tras, sposób prowadzenia kabli i materiały. Po ustaleniu zakresu wybieramy wycenę projektu albo rozliczenie godzinowe.'],['Czy można zamontować LAN w gotowym mieszkaniu?','Możliwości zależą od istniejących tras i wykończenia. Omawiamy prowadzenie przewodów i potrzebne prace przed rozpoczęciem.'],['Co otrzymam po montażu?','Uzgodnioną instalację, oznaczenia punktów i sprawdzenie połączeń. Zakres schematu oraz dokumentacji ustalamy przy wycenie.']]},
-    priceQuestion:'Czy do ceny godziny dochodzi opłata za usługę?', businessQuestion:'Czy obsługujecie sprzęt firmowy lub biura?',
+    "secondary": "Po uzgodnieniu zakresu pomagamy też z połączeniami kamer i PoE oraz uszkodzonym domowym kablem światłowodowym. Nie ingerujemy w infrastrukturę operatora bez jego zgody.",
+    "billing": "Jak rozliczamy pracę",
+    "rateLabel": "Sposób rozliczenia",
+    "amountLabel": "Cena od",
+    "prefix": "od",
+    "currency": "zł",
+    "visit": "Dojazd w Warszawie + pierwsza godzina pracy",
+    "next": "Każda kolejna godzina pracy",
+    "short": "Krótkie zlecenie w pobliżu — po uzgodnieniu",
+    "shortNote": "Od 200 zł za krótkie zlecenie z bliskim dojazdem, po uzgodnieniu i skutecznym wykonaniu. Zamiast standardowej wizyty.",
+    "noDouble": "Rozliczenie godzinowe albo uzgodniona wycena. Bez podwójnej opłaty za tę samą pracę.",
+    "project": "Montaż możemy wycenić jako projekt. Sprzęt, materiały, dodatkowe prace i niepełną godzinę uzgadniamy przed rozpoczęciem.",
+    "disclaimer": "Podane ceny są orientacyjne. Końcową kwotę potwierdzamy przed pracą. VAT nie doliczamy.",
+    "businessTitle": "Potrzebujesz pomocy w firmie?",
+    "business": "Obsługujemy też firmy. Dostęp do sprzętu i ewentualną przerwę w pracy uzgadniamy przed wizytą.",
+    "businessLink": "Usługi dla firm w NaSerwis",
+    "faq": "Pytania przed wizytą",
+    "related": "Pozostałe usługi",
+    "request": "Opisz zadanie",
+    "prepareTitle": "Co podać w zgłoszeniu",
+    "prepare": "Podaj miejscowość, objawy i model urządzenia lub liczbę punktów. Zdjęcia instalacji możesz wysłać przez WhatsApp lub Telegram. Nie wysyłaj haseł.",
+    "problemsTitle": "Od objawu do właściwej usługi",
+    "problems": [
+      [
+        "wifi",
+        "Wi-Fi nie dociera do pokoju?",
+        "Zaczynamy od pomiaru i sprawdzenia ustawień, zanim zaproponujemy zakup sprzętu."
+      ],
+      [
+        "repair",
+        "Kabel podłączony, internetu brak?",
+        "Sprawdzamy gniazdo, przewód i port, aby ustalić źródło problemu."
+      ],
+      [
+        "install",
+        "Remontujesz lub urządzasz dom?",
+        "Zaplanuj punkty LAN do TV, prywatnego stanowiska pracy i punktów Wi-Fi."
+      ]
+    ],
+    "home": {
+      "title": "Wi-Fi, sieci i monitoring — Warszawa | NaSerwis.pl",
+      "description": "Serwis Wi-Fi, sieci LAN i monitoringu wizyjnego w Warszawie i okolicy. Diagnozujemy awarie sieci i internetu, konfigurujemy routery, montujemy okablowanie i kamery. Zakres i koszt uzgadniamy przed pracą.",
+      "h1": "Wi-Fi i sieci w Warszawie",
+      "accent": "Montaż lub naprawa z dojazdem",
+      "intro": "Naprawiamy Wi-Fi, sieci LAN i monitoring. Konfigurujemy routery, układamy kable i montujemy kamery w Warszawie i okolicy."
+    },
+    "wifi": {
+      "title": "Naprawa Wi-Fi i konfiguracja domowej sieci — Warszawa | NaSerwis.pl",
+      "description": "Słaby zasięg lub Wi-Fi bez internetu? Diagnostyka, konfiguracja routera, AP i Mesh w domu lub mieszkaniu w Warszawie. Rozliczenie ustalamy przed pracą.",
+      "h1": "Naprawa Wi-Fi w Warszawie",
+      "accent": "Router i zasięg w Twoim domu",
+      "intro": "Wi-Fi zrywa, ma słaby zasięg albo nie ma internetu? Sprawdzamy połączenie i konfigurujemy router, AP lub Mesh.",
+      "heading": "Co sprawdzimy i ustawimy",
+      "explanation": "Usterkę po stronie operatora trzeba zgłosić operatorowi. Pomożemy ustalić, czy problem dotyczy jego sieci.",
+      "features": [
+        [
+          "Zasięg i połączenie",
+          "Pomiar sygnału, zakłóceń i połączenia przy routerze oraz w miejscu usterki."
+        ],
+        [
+          "Router, AP i Mesh",
+          "Ustawienia sieci, rozmieszczenie punktów i podłączenie urządzeń."
+        ],
+        [
+          "Sprawdzenie po zmianach",
+          "Test internetu i zasięgu w uzgodnionych miejscach."
+        ]
+      ],
+      "questions": [
+        [
+          "Czy muszę kupić nowy router lub Mesh?",
+          "Najpierw sprawdzamy obecny sprzęt. Zakup proponujemy, jeśli jest potrzebny, i uzgadniamy koszt."
+        ],
+        [
+          "Czy Wi-Fi bez internetu to awaria routera?",
+          "Nie zawsze. Urządzenie może łączyć się z routerem, mimo że sam router nie ma dostępu do internetu."
+        ]
+      ]
+    },
+    "repair": {
+      "title": "Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl",
+      "description": "Naprawa domowej sieci LAN w Warszawie: diagnostyka kabli i portów, gniazda RJ45 oraz test po naprawie. Dojazd i zakres prac uzgadniamy przed wizytą.",
+      "h1": "Naprawa sieci LAN w Warszawie",
+      "accent": "Gniazda RJ45, kable i połączenia",
+      "intro": "Nie działa gniazdo RJ45, połączenie zanika lub spadła prędkość? Sprawdzamy kabel, złącza i porty.",
+      "heading": "Zakres naprawy",
+      "explanation": "Naprawę światłowodu i połączeń PoE uzgadniamy osobno. Nie ingerujemy w instalację operatora bez jego zgody.",
+      "features": [
+        [
+          "Diagnoza linii",
+          "Sprawdzenie przewodu, gniazda RJ45, wtyków i portu routera lub switcha."
+        ],
+        [
+          "Naprawa dostępnych elementów",
+          "Wymiana uszkodzonego złącza, gniazda lub dostępnego odcinka kabla."
+        ],
+        [
+          "Test po naprawie",
+          "Sprawdzenie połączenia i uzyskanej prędkości."
+        ]
+      ],
+      "questions": [
+        [
+          "Czy trzeba wymienić cały kabel?",
+          "To zależy od miejsca uszkodzenia i dostępu do przewodu. Najpierw sprawdzamy kabel i zakończenia."
+        ],
+        [
+          "Kiedy możecie przyjechać?",
+          "Podaj lokalizację i objawy. Możliwy termin ustalimy podczas kontaktu."
+        ]
+      ]
+    },
+    "install": {
+      "title": "Montaż sieci LAN w domu i mieszkaniu — Warszawa | NaSerwis.pl",
+      "description": "Instalacja domowej sieci LAN w Warszawie: plan punktów, okablowanie, gniazda RJ45 i testy po montażu. Wycena projektu lub rozliczenie godzinowe po uzgodnieniu.",
+      "h1": "Montaż sieci LAN w Warszawie",
+      "accent": "Okablowanie domu i mieszkania",
+      "intro": "Prowadzimy kable, montujemy gniazda RJ45 i podłączamy punkty sieciowe do routera lub switcha.",
+      "heading": "Co obejmuje montaż LAN",
+      "explanation": "W gotowym lokalu sprawdzamy dostępne trasy. Sposób prowadzenia kabli i prace wykończeniowe uzgadniamy przed montażem.",
+      "features": [
+        [
+          "Plan punktów i tras",
+          "Ustalenie miejsc dla komputerów, TV, punktów Wi-Fi i kamer."
+        ],
+        [
+          "Okablowanie i gniazda",
+          "Prowadzenie przewodów, zakończenie RJ45 i podłączenie do sieci."
+        ],
+        [
+          "Oznaczenie i test",
+          "Opis punktów i sprawdzenie każdej wykonanej linii. Schemat w uzgodnionym zakresie."
+        ]
+      ],
+      "questions": [
+        [
+          "Od czego zależy koszt montażu?",
+          "Od liczby punktów, długości i dostępności tras, materiałów oraz sposobu prowadzenia kabli."
+        ],
+        [
+          "Czy można dołożyć sieć po remoncie?",
+          "Po sprawdzeniu istniejących tras ustalimy, gdzie i jak można poprowadzić przewody."
+        ]
+      ]
+    },
+    "priceQuestion": "Czy do ceny godziny dochodzi opłata za usługę?",
+    "businessQuestion": "Czy obsługujecie sprzęt firmowy lub biura?",
+    "audience": "Dla mieszkań, domów i organizacji. Kontakt po polsku, rosyjsku, ukraińsku i angielsku."
   },
-  ru: {
-    scope:'Для квартир и домов', catalog:'С чем мы можем помочь', catalogIntro:'Выберите проблему или планируемую работу. Это перечень доступных услуг, а не дополнительные позиции прайса.',
-    services:[['wifi','Диагностика покрытия Wi-Fi','Слабый сигнал в комнате, обрывы связи или Wi-Fi без интернета.'],['wifi','Настройка роутера, AP и Mesh','Настройки сети, размещение точек и подключение нового роутера.'],['install','Монтаж сети LAN','План точек, прокладка кабелей и монтаж розеток RJ45.'],['repair','Ремонт розеток RJ45 и кабелей','Повреждённый провод, плохой контакт или розетка без соединения.'],['repair','Проверка сетевых соединений','Проверка кабелей, портов и связи после ремонта или замены оборудования.'],['wifi','Подключение устройств','Компьютер, Smart TV, принтер или другое сетевое устройство.']],
-    secondary:'По согласованию помогаем также с соединениями камер и PoE и повреждённым домашним оптоволокном. Не вмешиваемся в инфраструктуру оператора без его согласия.',
-    billing:'Как рассчитывается стоимость', rateLabel:'Способ расчёта', amountLabel:'Цена от', prefix:'от', currency:'zł', visit:'Выезд по Варшаве + первый час работы', next:'Каждый следующий час работы', short:'Короткая задача поблизости — по согласованию',
-    shortNote: 'Цена от 200 zł действует для короткой задачи с близким выездом при её успешном выполнении. Это альтернатива стандартному визиту, а не дополнительная плата.',
-    noDouble:'Вы платите за согласованный объём работы. Мы не начисляем одновременно почасовую ставку и отдельную плату за ту же работу.',
-    project:'Большой монтаж можно оценить как проект вместо почасового расчёта. Материалы, оборудование, дополнительные задачи и расчёт неполного часа согласуем до начала работ.',
-    disclaimer:'Цены «от» зависят от условий работы и не являются офертой. Сумму согласуем до начала. VAT не начисляем.',
-    businessTitle:'Нужна помощь для компании?', business:'NaSerwis помогает частным клиентам с домашней инфраструктурой. Компании, офисы и оборудование под управлением работодателя обслуживает ITBIZ.PL.', businessLink:'IT-услуги для компаний — ITBIZ.PL',
-    faq:'Вопросы перед визитом', related:'Другие работы в домашней сети', request:'Описать задачу', prepareTitle:'Что подготовить перед обращением?', prepare:'Укажите город, симптомы и модель роутера или число розеток. Фото места или схема помогут обсудить работу. Не отправляйте пароли сети и данные доступа.',
-    problemsTitle:'Выберите услугу по вашей задаче', problems:[['wifi','Wi-Fi не доходит до комнаты?','Начинаем с измерений и настроек, прежде чем предлагать покупку оборудования.'],['repair','Кабель подключён, интернета нет?','Проверяем розетку, кабель и порт, чтобы найти причину.'],['install','Ремонтируете или обустраиваете дом?','Запланируйте LAN для TV, личного рабочего места и точек Wi-Fi.']],
-    home:{title:'Wi-Fi, сети и видеонаблюдение — Варшава | NaSerwis.pl',description:'Сервис Wi-Fi, сетей LAN и видеонаблюдения в Варшаве и окрестностях. Диагностируем сбои сети и интернета, настраиваем роутеры, прокладываем кабели и устанавливаем камеры. Объём и стоимость согласуем до работы.',h1:'Wi-Fi и сети в Варшаве',accent:'Монтаж или ремонт с выездом',intro:'Диагностируем Wi-Fi, настраиваем роутеры, монтируем и ремонтируем сети LAN. Объём, стоимость и время согласуем до работы.'},
-    wifi:{title:'Ремонт Wi-Fi и настройка домашней сети — Варшава | NaSerwis.pl',description:'Слабый сигнал или Wi-Fi без интернета? Диагностика, настройка роутера, AP и Mesh в квартире или доме в Варшаве. Расчёт согласуем до работы.',h1:'Ремонт Wi-Fi в Варшаве',accent:'Роутер и покрытие в вашем доме',intro:'Проверяем сигнал, настройки роутера и доступ к интернету. Подбираем решение для квартиры, дома и ваших устройств.',heading:'Слабый сигнал или проблема соединения?',explanation:'Покрытие Wi-Fi и доступ к интернету — разные проблемы. Сравниваем соединение возле роутера, по кабелю и в месте сбоя. Если причина на стороне оператора, подскажем, что сообщить его поддержке.',features:[['Измерения в комнатах','Проверяем покрытие, помехи и расположение роутера.'],['Роутер и точки Wi-Fi','Согласуем настройки, гостевую сеть и размещение AP или Mesh с учётом планировки и кабелей.'],['Домашние устройства','Подключаем личный компьютер, TV или принтер и проверяем связь после изменений.']],scenarios:[['Квартира','Слабый сигнал в спальне или нет интернета после замены роутера.'],['Дом и личное рабочее место','Покрытие на нескольких этажах и соединение личных устройств.']],questions:[['Всегда ли Mesh — лучший вариант?','Нет. Выбор настроек роутера, AP, Mesh или кабеля зависит от планировки, оборудования и измерений. Сначала проверяем причину.'],['Что значит Wi-Fi без интернета?','Устройство может соединиться с роутером, даже если у него нет доступа к интернету. Проверяем связь, настройки и симптомы; сбой в сети оператора нужно сообщить оператору.'],['Нужно ли покупать новый роутер?','Не всегда. Сначала проверяем имеющееся оборудование и настройки. Возможную покупку и её стоимость согласуем с вами.']]},
-    repair:{title:'Ремонт сети LAN, розеток и кабелей — Варшава | NaSerwis.pl',description:'Ремонт домашней LAN в Варшаве: диагностика кабелей и портов, розетки RJ45 и проверка после ремонта. Выезд и объём согласуем до визита.',h1:'Ремонт сети LAN в Варшаве',accent:'Розетки RJ45, кабели и соединения',intro:'Ищем причину отсутствия связи или обрывов домашней сети. Проверяем кабели, розетки и порты, ремонт согласуем после диагностики.',heading:'Кабель подключён, а сеть не работает?',explanation:'Причина может быть в кабеле, коннекторе, порте или настройках. Последовательно проверяем соединение, чтобы определить нужный ремонт без замены исправных элементов.',features:[['Кабели и розетки RJ45','Проверяем соединения, меняем повреждённые коннекторы и согласуем ремонт доступного участка кабеля.'],['Порты и домашнее оборудование','Проверяем порт роутера или коммутатора и настройки подключения.'],['Проверка после работы','Повторно проверяем линию и обсуждаем результат. Задачи с домашними камерами, PoE и оптоволокном согласуем отдельно.']],scenarios:[['Не работает одна розетка','Нет соединения у TV или личного компьютера.'],['Проблема после ремонта','Повреждённый кабель, новый коннектор или немаркированные точки.']],questions:[['Нужно ли менять весь кабель?','Не всегда. Сначала проверяем кабель и его окончания. Возможность ремонта зависит от повреждения и доступа к проводке.'],['Ремонтируете домашнее оптоволокно и соединения камер?','Такие задачи согласуем индивидуально по описанию и осмотру. Работаем в согласованных пределах домашней сети; неисправности на стороне оператора направляем ему.'],['Когда вы сможете приехать?','Укажите местоположение и симптомы. Возможное время подтвердим при обращении с учётом текущей доступности.']]},
-    install:{title:'Монтаж сети LAN в доме и квартире — Варшава | NaSerwis.pl',description:'Домашняя LAN в Варшаве: план точек, кабели, розетки RJ45 и проверка после монтажа. Проектная стоимость или почасовой расчёт по согласованию.',h1:'Монтаж сети LAN в Варшаве',accent:'Кабели в доме и квартире',intro:'Планируем точки, прокладываем кабели, монтируем розетки RJ45 и проверяем соединения. Объём и способ расчёта согласуем до работы.',heading:'Домашняя сеть до ремонта или после него',explanation:'Начинаем с расположения TV, личного компьютера и точек Wi-Fi. Согласуем трассы, число розеток и способ отделки. Для готовой квартиры обсуждаем решения с учётом существующей проводки.',features:[['План точек LAN','Согласуем расположение кабелей, розеток и соединение с роутером.'],['Кабели и розетки RJ45','Подбираем трассы и монтаж под условия и согласованные отделочные работы.'],['Маркировка и проверка','Обозначаем точки, проверяем соединения и передаём согласованное описание работы.']],scenarios:[['Стройка или ремонт дома','Согласуйте трассы и точки до отделки стен.'],['Готовая квартира','Новая точка для TV, компьютера или AP после оценки доступного пути.']],questions:[['Что влияет на стоимость монтажа LAN?','Число точек, длина и доступность трасс, способ прокладки и материалы. После уточнения объёма выбираем стоимость проекта или почасовой расчёт.'],['Можно ли установить LAN в готовой квартире?','Возможности зависят от существующих трасс и отделки. Прокладку и необходимые работы обсуждаем до начала.'],['Что я получу после монтажа?','Согласованную проводку, маркировку точек и проверку соединений. Объём схемы и документации определяем при оценке.']]},
-    priceQuestion:'К стоимости часа добавляется плата за услугу?',businessQuestion:'Вы обслуживаете офисы или оборудование компаний?',
+  "ru": {
+    "scope": "Для частных клиентов и организаций",
+    "catalog": "С чем мы можем помочь",
+    "catalogIntro": "Выберите проблему или планируемую работу. Это перечень доступных услуг, а не дополнительные позиции прайса.",
+    "services": [
+      [
+        "wifi",
+        "Wi-Fi и интернет",
+        "Слабый сигнал в комнате, обрывы связи или Wi-Fi без интернета."
+      ],
+      [
+        "wifi",
+        "Роутер, AP или Mesh",
+        "Настройки сети, размещение точек и подключение нового роутера."
+      ],
+      [
+        "install",
+        "Монтаж сети LAN",
+        "План точек, прокладка кабелей и монтаж розеток RJ45."
+      ],
+      [
+        "repair",
+        "Розетки RJ45 и кабели",
+        "Повреждённый провод, плохой контакт или розетка без соединения."
+      ],
+      [
+        "cctv",
+        "Ремонт видеонаблюдения",
+        "Ремонт видеонаблюдения"
+      ],
+      [
+        "cctv",
+        "Установка камер",
+        "Установка камер"
+      ]
+    ],
+    "secondary": "По согласованию помогаем также с соединениями камер и PoE и повреждённым домашним оптоволокном. Не вмешиваемся в инфраструктуру оператора без его согласия.",
+    "billing": "Как рассчитывается стоимость",
+    "rateLabel": "Способ расчёта",
+    "amountLabel": "Цена от",
+    "prefix": "от",
+    "currency": "zł",
+    "visit": "Выезд по Варшаве + первый час работы",
+    "next": "Каждый следующий час работы",
+    "short": "Короткая задача поблизости — по согласованию",
+    "shortNote": "От 200 zł за короткую работу с близким выездом, по согласованию и при успешном выполнении. Вместо стандартного визита.",
+    "noDouble": "Почасовая оплата или согласованная смета. Без двойной оплаты за одну работу.",
+    "project": "Монтаж можно оценить как проект. Оборудование, материалы, дополнительные работы и неполный час согласуем заранее.",
+    "disclaimer": "Цены ориентировочные. Итоговую сумму подтвердим до начала работы. НДС не начисляется.",
+    "businessTitle": "Нужна помощь в организации?",
+    "business": "Работаем и с организациями. Доступ к оборудованию и возможный перерыв в работе согласуем до визита.",
+    "businessLink": "Услуги для бизнеса в NaSerwis",
+    "faq": "Вопросы перед визитом",
+    "related": "Другие услуги",
+    "request": "Описать задачу",
+    "prepareTitle": "Что указать в заявке",
+    "prepare": "Укажите населённый пункт, симптомы и модель устройства или число точек. Фото установки можно отправить в WhatsApp или Telegram. Не отправляйте пароли.",
+    "problemsTitle": "Выберите услугу по вашей задаче",
+    "problems": [
+      [
+        "wifi",
+        "Wi-Fi не доходит до комнаты?",
+        "Начинаем с измерений и настроек, прежде чем предлагать покупку оборудования."
+      ],
+      [
+        "repair",
+        "Кабель подключён, интернета нет?",
+        "Проверяем розетку, кабель и порт, чтобы найти причину."
+      ],
+      [
+        "install",
+        "Ремонтируете или обустраиваете дом?",
+        "Запланируйте LAN для TV, личного рабочего места и точек Wi-Fi."
+      ]
+    ],
+    "home": {
+      "title": "Wi-Fi, сети и видеонаблюдение — Варшава | NaSerwis.pl",
+      "description": "Сервис Wi-Fi, сетей LAN и видеонаблюдения в Варшаве и окрестностях. Диагностируем сбои сети и интернета, настраиваем роутеры, прокладываем кабели и устанавливаем камеры. Объём и стоимость согласуем до работы.",
+      "h1": "Wi-Fi и сети в Варшаве",
+      "accent": "Монтаж или ремонт с выездом",
+      "intro": "Ремонтируем Wi-Fi, сети LAN и видеонаблюдение. Настраиваем роутеры, прокладываем кабели и устанавливаем камеры в Варшаве и окрестностях."
+    },
+    "wifi": {
+      "title": "Ремонт Wi-Fi и настройка домашней сети — Варшава | NaSerwis.pl",
+      "description": "Слабый сигнал или Wi-Fi без интернета? Диагностика, настройка роутера, AP и Mesh в квартире или доме в Варшаве. Расчёт согласуем до работы.",
+      "h1": "Ремонт Wi-Fi в Варшаве",
+      "accent": "Роутер и покрытие в вашем доме",
+      "intro": "Wi-Fi обрывается, плохо ловит или нет интернета? Проверяем подключение и настраиваем роутер, AP или Mesh.",
+      "heading": "Что проверим и настроим",
+      "explanation": "Аварии в сети оператора устраняет оператор. Поможем определить, относится ли проблема к его сети.",
+      "features": [
+        [
+          "Сигнал и подключение",
+          "Проверка покрытия, помех и соединения у роутера и в месте сбоя."
+        ],
+        [
+          "Роутер, AP и Mesh",
+          "Настройка сети, размещение точек и подключение устройств."
+        ],
+        [
+          "Проверка после изменений",
+          "Тест интернета и покрытия в согласованных местах."
+        ]
+      ],
+      "questions": [
+        [
+          "Нужно покупать новый роутер или Mesh?",
+          "Сначала проверим имеющееся оборудование. Если потребуется замена, согласуем покупку и стоимость."
+        ],
+        [
+          "Wi-Fi без интернета означает поломку роутера?",
+          "Не всегда. Устройство может подключаться к роутеру, даже если у самого роутера нет доступа к интернету."
+        ]
+      ]
+    },
+    "repair": {
+      "title": "Ремонт сети LAN, розеток и кабелей — Варшава | NaSerwis.pl",
+      "description": "Ремонт домашней LAN в Варшаве: диагностика кабелей и портов, розетки RJ45 и проверка после ремонта. Выезд и объём согласуем до визита.",
+      "h1": "Ремонт сети LAN в Варшаве",
+      "accent": "Розетки RJ45, кабели и соединения",
+      "intro": "Не работает розетка RJ45, пропадает связь или упала скорость? Проверяем кабель, разъёмы и порты.",
+      "heading": "Что входит в ремонт",
+      "explanation": "Ремонт оптоволокна и подключений PoE согласуем отдельно. В сеть оператора вмешиваемся только с его разрешения.",
+      "features": [
+        [
+          "Диагностика линии",
+          "Проверка кабеля, розетки RJ45, разъёмов и порта роутера или коммутатора."
+        ],
+        [
+          "Ремонт доступных элементов",
+          "Замена повреждённого разъёма, розетки или доступного участка кабеля."
+        ],
+        [
+          "Тест после ремонта",
+          "Проверка соединения и полученной скорости."
+        ]
+      ],
+      "questions": [
+        [
+          "Придётся менять весь кабель?",
+          "Зависит от места повреждения и доступа к кабелю. Сначала проверим линию и её окончания."
+        ],
+        [
+          "Когда сможете приехать?",
+          "Укажите адрес и симптомы. Возможное время обсудим при обращении."
+        ]
+      ]
+    },
+    "install": {
+      "title": "Монтаж сети LAN в доме и квартире — Варшава | NaSerwis.pl",
+      "description": "Домашняя LAN в Варшаве: план точек, кабели, розетки RJ45 и проверка после монтажа. Проектная стоимость или почасовой расчёт по согласованию.",
+      "h1": "Монтаж сети LAN в Варшаве",
+      "accent": "Кабели в доме и квартире",
+      "intro": "Прокладываем кабели, устанавливаем розетки RJ45 и подключаем сетевые точки к роутеру или коммутатору.",
+      "heading": "Что входит в монтаж LAN",
+      "explanation": "В готовом помещении проверим доступные трассы. Способ прокладки и отделочные работы согласуем до монтажа.",
+      "features": [
+        [
+          "План точек и трасс",
+          "Места подключения компьютеров, ТВ, точек Wi-Fi и камер."
+        ],
+        [
+          "Кабели и розетки",
+          "Прокладка проводов, окончания RJ45 и подключение к сети."
+        ],
+        [
+          "Маркировка и тест",
+          "Обозначение точек и проверка каждой новой линии. Схема в согласованном объёме."
+        ]
+      ],
+      "questions": [
+        [
+          "От чего зависит стоимость монтажа?",
+          "От числа точек, длины и доступности трасс, материалов и способа прокладки."
+        ],
+        [
+          "Можно добавить сеть после ремонта?",
+          "Проверим существующие трассы и обсудим, где и как можно проложить кабели."
+        ]
+      ]
+    },
+    "priceQuestion": "К стоимости часа добавляется плата за услугу?",
+    "businessQuestion": "Вы обслуживаете офисы или оборудование компаний?",
+    "audience": "Для квартир, домов и организаций. Общаемся по-польски, по-русски, по-украински и по-английски."
   },
-  uk: {
-    scope:'Для квартир і будинків',catalog:'З чим ми можемо допомогти',catalogIntro:'Виберіть проблему або заплановану роботу. Це перелік доступних послуг, а не додаткові позиції прайсу.',
-    services:[['wifi','Діагностика покриття Wi-Fi','Слабкий сигнал у кімнаті, обриви зв’язку або Wi-Fi без інтернету.'],['wifi','Налаштування роутера, AP і Mesh','Налаштування мережі, розміщення точок і підключення нового роутера.'],['install','Монтаж мережі LAN','План точок, прокладання кабелів і монтаж розеток RJ45.'],['repair','Ремонт розеток RJ45 і кабелів','Пошкоджений провід, поганий контакт або розетка без з’єднання.'],['repair','Перевірка мережевих з’єднань','Перевірка кабелів, портів і зв’язку після ремонту або заміни обладнання.'],['wifi','Підключення пристроїв','Комп’ютер, Smart TV, принтер або інший мережевий пристрій.']],
-    secondary:'За погодженням допомагаємо також зі з’єднаннями камер і PoE та пошкодженим домашнім оптоволокном. Не втручаємося в інфраструктуру оператора без його згоди.',
-    billing:'Як розраховується вартість',rateLabel:'Спосіб розрахунку',amountLabel:'Ціна від',prefix:'від',currency:'zł',visit:'Виїзд у межах Варшави + перша година роботи',next:'Кожна наступна година роботи',short:'Коротке завдання поблизу — за погодженням',
-    shortNote: 'Ціна від 200 zł діє для короткого завдання з близьким виїздом за умови його успішного виконання. Це альтернатива стандартному візиту, а не додаткова плата.',
-    noDouble:'Ви платите за погоджений обсяг роботи. Ми не нараховуємо одночасно погодинну ставку й окрему плату за ту саму роботу.',
-    project:'Великий монтаж можна оцінити як проєкт замість погодинного розрахунку. Матеріали, обладнання, додаткові завдання та розрахунок неповної години погоджуємо до початку робіт.',
-    disclaimer:'Ціни «від» залежать від умов роботи та не є офертою. Суму погоджуємо до початку. VAT не нараховуємо.',
-    businessTitle:'Потрібна допомога для компанії?',business:'NaSerwis допомагає приватним клієнтам із домашньою інфраструктурою. Компанії, офіси та обладнання під управлінням роботодавця обслуговує ITBIZ.PL.',businessLink:'IT-послуги для компаній — ITBIZ.PL',
-    faq:'Питання перед візитом',related:'Інші роботи в домашній мережі',request:'Описати завдання',prepareTitle:'Що підготувати перед зверненням?',prepare:'Укажіть місто, симптоми й модель роутера або кількість розеток. Фото місця чи схема допоможуть обговорити роботу. Не надсилайте паролі мережі та дані доступу.',
-    problemsTitle:'Виберіть послугу за вашим завданням',problems:[['wifi','Wi-Fi не доходить до кімнати?','Починаємо з вимірювань і налаштувань, перш ніж пропонувати купівлю обладнання.'],['repair','Кабель підключений, інтернету немає?','Перевіряємо розетку, кабель і порт, щоб знайти причину.'],['install','Ремонтуєте або облаштовуєте дім?','Заплануйте LAN для TV, особистого робочого місця й точок Wi-Fi.']],
-    home:{title:'Wi-Fi, мережі й відеоспостереження — Варшава | NaSerwis.pl',description:'Сервіс Wi-Fi, мереж LAN і відеоспостереження у Варшаві та околицях. Діагностуємо збої мережі й інтернету, налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери. Обсяг і вартість узгоджуємо до роботи.',h1:'Wi-Fi та мережі у Варшаві',accent:'Монтаж або ремонт з виїздом',intro:'Діагностуємо Wi-Fi, налаштовуємо роутери, монтуємо й ремонтуємо мережі LAN. Обсяг, вартість і час погоджуємо до роботи.'},
-    wifi:{title:'Ремонт Wi-Fi та налаштування домашньої мережі — Варшава | NaSerwis.pl',description:'Слабкий сигнал або Wi-Fi без інтернету? Діагностика, налаштування роутера, AP і Mesh у квартирі чи будинку у Варшаві. Розрахунок погоджуємо до роботи.',h1:'Ремонт Wi-Fi у Варшаві',accent:'Роутер і покриття у вашому домі',intro:'Перевіряємо сигнал, налаштування роутера й доступ до інтернету. Підбираємо рішення для квартири, будинку та ваших пристроїв.',heading:'Слабкий сигнал чи проблема з’єднання?',explanation:'Покриття Wi-Fi та доступ до інтернету — різні проблеми. Порівнюємо з’єднання біля роутера, кабелем і в місці збою. Якщо причина на боці оператора, підкажемо, що повідомити його підтримці.',features:[['Вимірювання в кімнатах','Перевіряємо покриття, перешкоди й розташування роутера.'],['Роутер і точки Wi-Fi','Погоджуємо налаштування, гостьову мережу та розміщення AP або Mesh з урахуванням планування й кабелів.'],['Домашні пристрої','Підключаємо особистий комп’ютер, TV або принтер і перевіряємо зв’язок після змін.']],scenarios:[['Квартира','Слабкий сигнал у спальні або немає інтернету після заміни роутера.'],['Дім і особисте робоче місце','Покриття на кількох поверхах і з’єднання особистих пристроїв.']],questions:[['Чи завжди Mesh — найкращий варіант?','Ні. Вибір налаштувань роутера, AP, Mesh або кабелю залежить від планування, обладнання та вимірювань. Спочатку перевіряємо причину.'],['Що означає Wi-Fi без інтернету?','Пристрій може з’єднатися з роутером, навіть якщо той не має доступу до інтернету. Перевіряємо зв’язок, налаштування та симптоми; про збій мережі оператора потрібно повідомити оператору.'],['Чи потрібно купувати новий роутер?','Не завжди. Спочатку перевіряємо наявне обладнання й налаштування. Можливу купівлю та її вартість погоджуємо з вами.']]},
-    repair:{title:'Ремонт мережі LAN, розеток і кабелів — Варшава | NaSerwis.pl',description:'Ремонт домашньої LAN у Варшаві: діагностика кабелів і портів, розетки RJ45 та перевірка після ремонту. Виїзд і обсяг погоджуємо до візиту.',h1:'Ремонт мережі LAN у Варшаві',accent:'Розетки RJ45, кабелі та з’єднання',intro:'Шукаємо причину відсутності зв’язку або обривів домашньої мережі. Перевіряємо кабелі, розетки й порти, ремонт погоджуємо після діагностики.',heading:'Кабель підключений, а мережа не працює?',explanation:'Причина може бути в кабелі, конекторі, порту чи налаштуваннях. Послідовно перевіряємо з’єднання, щоб визначити потрібний ремонт без заміни справних елементів.',features:[['Кабелі та розетки RJ45','Перевіряємо з’єднання, міняємо пошкоджені конектори й погоджуємо ремонт доступної ділянки кабелю.'],['Порти та домашнє обладнання','Перевіряємо порт роутера або комутатора й налаштування підключення.'],['Перевірка після роботи','Повторно перевіряємо лінію й обговорюємо результат. Завдання з домашніми камерами, PoE та оптоволокном погоджуємо окремо.']],scenarios:[['Не працює одна розетка','Немає з’єднання біля TV або особистого комп’ютера.'],['Проблема після ремонту','Пошкоджений кабель, новий конектор або немарковані точки.']],questions:[['Чи потрібно міняти весь кабель?','Не завжди. Спочатку перевіряємо кабель і його закінчення. Можливість ремонту залежить від пошкодження та доступу до проводки.'],['Ремонтуєте домашнє оптоволокно та з’єднання камер?','Такі завдання погоджуємо індивідуально за описом і оглядом. Працюємо в погоджених межах домашньої мережі; несправності на боці оператора спрямовуємо йому.'],['Коли ви зможете приїхати?','Укажіть місце розташування та симптоми. Можливий час підтвердимо під час звернення з урахуванням поточної доступності.']]},
-    install:{title:'Монтаж мережі LAN у будинку та квартирі — Варшава | NaSerwis.pl',description:'Домашня LAN у Варшаві: план точок, кабелі, розетки RJ45 та перевірка після монтажу. Вартість проєкту або погодинний розрахунок за погодженням.',h1:'Монтаж мережі LAN у Варшаві',accent:'Кабелі в будинку та квартирі',intro:'Плануємо точки, прокладаємо кабелі, монтуємо розетки RJ45 та перевіряємо з’єднання. Обсяг і спосіб розрахунку погоджуємо до роботи.',heading:'Домашня мережа до ремонту або після нього',explanation:'Починаємо з розташування TV, особистого комп’ютера й точок Wi-Fi. Погоджуємо траси, кількість розеток і спосіб оздоблення. Для готової квартири обговорюємо рішення з урахуванням наявної проводки.',features:[['План точок LAN','Погоджуємо розташування кабелів, розеток і з’єднання з роутером.'],['Кабелі та розетки RJ45','Підбираємо траси й монтаж під умови та погоджені оздоблювальні роботи.'],['Маркування та перевірка','Позначаємо точки, перевіряємо з’єднання й передаємо погоджений опис роботи.']],scenarios:[['Будівництво чи ремонт дому','Погодьте траси й точки до оздоблення стін.'],['Готова квартира','Нова точка для TV, комп’ютера або AP після оцінки доступного шляху.']],questions:[['Що впливає на вартість монтажу LAN?','Кількість точок, довжина й доступність трас, спосіб прокладання та матеріали. Після уточнення обсягу вибираємо вартість проєкту або погодинний розрахунок.'],['Чи можна встановити LAN у готовій квартирі?','Можливості залежать від наявних трас і оздоблення. Прокладання й потрібні роботи обговорюємо до початку.'],['Що я отримаю після монтажу?','Погоджену проводку, маркування точок і перевірку з’єднань. Обсяг схеми й документації визначаємо під час оцінки.']]},
-    priceQuestion:'До вартості години додається плата за послугу?',businessQuestion:'Ви обслуговуєте офіси або обладнання компаній?',
+  "uk": {
+    "scope": "Для приватних клієнтів і організацій",
+    "catalog": "З чим ми можемо допомогти",
+    "catalogIntro": "Виберіть проблему або заплановану роботу. Це перелік доступних послуг, а не додаткові позиції прайсу.",
+    "services": [
+      [
+        "wifi",
+        "Wi-Fi та інтернет",
+        "Слабкий сигнал у кімнаті, обриви зв’язку або Wi-Fi без інтернету."
+      ],
+      [
+        "wifi",
+        "Роутер, AP або Mesh",
+        "Налаштування мережі, розміщення точок і підключення нового роутера."
+      ],
+      [
+        "install",
+        "Монтаж мережі LAN",
+        "План точок, прокладання кабелів і монтаж розеток RJ45."
+      ],
+      [
+        "repair",
+        "Розетки RJ45 і кабелі",
+        "Пошкоджений провід, поганий контакт або розетка без з’єднання."
+      ],
+      [
+        "cctv",
+        "Ремонт відеоспостереження",
+        "Ремонт відеоспостереження"
+      ],
+      [
+        "cctv",
+        "Встановлення камер",
+        "Встановлення камер"
+      ]
+    ],
+    "secondary": "За погодженням допомагаємо також зі з’єднаннями камер і PoE та пошкодженим домашнім оптоволокном. Не втручаємося в інфраструктуру оператора без його згоди.",
+    "billing": "Як розраховується вартість",
+    "rateLabel": "Спосіб розрахунку",
+    "amountLabel": "Ціна від",
+    "prefix": "від",
+    "currency": "zł",
+    "visit": "Виїзд у межах Варшави + перша година роботи",
+    "next": "Кожна наступна година роботи",
+    "short": "Коротке завдання поблизу — за погодженням",
+    "shortNote": "Від 200 zł за коротку роботу з близьким виїздом, за погодженням і за умови успішного виконання. Замість стандартного візиту.",
+    "noDouble": "Погодинна оплата або погоджений кошторис. Без подвійної оплати за одну роботу.",
+    "project": "Монтаж можна оцінити як проєкт. Обладнання, матеріали, додаткові роботи та неповну годину погоджуємо заздалегідь.",
+    "disclaimer": "Ціни орієнтовні. Остаточну суму підтвердимо до початку роботи. ПДВ не нараховується.",
+    "businessTitle": "Потрібна допомога в організації?",
+    "business": "Працюємо й з організаціями. Доступ до обладнання та можливу перерву в роботі погоджуємо до візиту.",
+    "businessLink": "Послуги для бізнесу в NaSerwis",
+    "faq": "Питання перед візитом",
+    "related": "Інші послуги",
+    "request": "Описати завдання",
+    "prepareTitle": "Що вказати в заявці",
+    "prepare": "Укажіть населений пункт, симптоми й модель пристрою або кількість точок. Фото установки можна надіслати у WhatsApp або Telegram. Не надсилайте паролі.",
+    "problemsTitle": "Виберіть послугу за вашим завданням",
+    "problems": [
+      [
+        "wifi",
+        "Wi-Fi не доходить до кімнати?",
+        "Починаємо з вимірювань і налаштувань, перш ніж пропонувати купівлю обладнання."
+      ],
+      [
+        "repair",
+        "Кабель підключений, інтернету немає?",
+        "Перевіряємо розетку, кабель і порт, щоб знайти причину."
+      ],
+      [
+        "install",
+        "Ремонтуєте або облаштовуєте дім?",
+        "Заплануйте LAN для TV, особистого робочого місця й точок Wi-Fi."
+      ]
+    ],
+    "home": {
+      "title": "Wi-Fi, мережі й відеоспостереження — Варшава | NaSerwis.pl",
+      "description": "Сервіс Wi-Fi, мереж LAN і відеоспостереження у Варшаві та околицях. Діагностуємо збої мережі й інтернету, налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери. Обсяг і вартість узгоджуємо до роботи.",
+      "h1": "Wi-Fi та мережі у Варшаві",
+      "accent": "Монтаж або ремонт з виїздом",
+      "intro": "Ремонтуємо Wi-Fi, мережі LAN і відеоспостереження. Налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери у Варшаві й околицях."
+    },
+    "wifi": {
+      "title": "Ремонт Wi-Fi та налаштування домашньої мережі — Варшава | NaSerwis.pl",
+      "description": "Слабкий сигнал або Wi-Fi без інтернету? Діагностика, налаштування роутера, AP і Mesh у квартирі чи будинку у Варшаві. Розрахунок погоджуємо до роботи.",
+      "h1": "Ремонт Wi-Fi у Варшаві",
+      "accent": "Роутер і покриття у вашому домі",
+      "intro": "Wi-Fi обривається, погано ловить або немає інтернету? Перевіряємо підключення й налаштовуємо роутер, AP або Mesh.",
+      "heading": "Що перевіримо й налаштуємо",
+      "explanation": "Аварії в мережі оператора усуває оператор. Допоможемо визначити, чи стосується проблема його мережі.",
+      "features": [
+        [
+          "Сигнал і підключення",
+          "Перевірка покриття, перешкод і з’єднання біля роутера та в місці збою."
+        ],
+        [
+          "Роутер, AP і Mesh",
+          "Налаштування мережі, розміщення точок і підключення пристроїв."
+        ],
+        [
+          "Перевірка після змін",
+          "Тест інтернету та покриття в погоджених місцях."
+        ]
+      ],
+      "questions": [
+        [
+          "Потрібно купувати новий роутер або Mesh?",
+          "Спочатку перевіримо наявне обладнання. Якщо потрібна заміна, погодимо купівлю та вартість."
+        ],
+        [
+          "Wi-Fi без інтернету означає поломку роутера?",
+          "Не завжди. Пристрій може підключатися до роутера, навіть якщо сам роутер не має доступу до інтернету."
+        ]
+      ]
+    },
+    "repair": {
+      "title": "Ремонт мережі LAN, розеток і кабелів — Варшава | NaSerwis.pl",
+      "description": "Ремонт домашньої LAN у Варшаві: діагностика кабелів і портів, розетки RJ45 та перевірка після ремонту. Виїзд і обсяг погоджуємо до візиту.",
+      "h1": "Ремонт мережі LAN у Варшаві",
+      "accent": "Розетки RJ45, кабелі та з’єднання",
+      "intro": "Не працює розетка RJ45, зникає зв’язок або впала швидкість? Перевіряємо кабель, роз’єми та порти.",
+      "heading": "Що входить у ремонт",
+      "explanation": "Ремонт оптоволокна й підключень PoE погоджуємо окремо. У мережу оператора втручаємося лише з його дозволу.",
+      "features": [
+        [
+          "Діагностика лінії",
+          "Перевірка кабелю, розетки RJ45, роз’ємів і порту роутера або комутатора."
+        ],
+        [
+          "Ремонт доступних елементів",
+          "Заміна пошкодженого роз’єму, розетки або доступної ділянки кабелю."
+        ],
+        [
+          "Тест після ремонту",
+          "Перевірка з’єднання й отриманої швидкості."
+        ]
+      ],
+      "questions": [
+        [
+          "Доведеться міняти весь кабель?",
+          "Залежить від місця пошкодження та доступу до кабелю. Спочатку перевіримо лінію та її закінчення."
+        ],
+        [
+          "Коли зможете приїхати?",
+          "Укажіть адресу й симптоми. Можливий час обговоримо під час звернення."
+        ]
+      ]
+    },
+    "install": {
+      "title": "Монтаж мережі LAN у будинку та квартирі — Варшава | NaSerwis.pl",
+      "description": "Домашня LAN у Варшаві: план точок, кабелі, розетки RJ45 та перевірка після монтажу. Вартість проєкту або погодинний розрахунок за погодженням.",
+      "h1": "Монтаж мережі LAN у Варшаві",
+      "accent": "Кабелі в будинку та квартирі",
+      "intro": "Прокладаємо кабелі, встановлюємо розетки RJ45 і підключаємо мережеві точки до роутера або комутатора.",
+      "heading": "Що входить у монтаж LAN",
+      "explanation": "У готовому приміщенні перевіримо доступні траси. Спосіб прокладання й оздоблювальні роботи погодимо до монтажу.",
+      "features": [
+        [
+          "План точок і трас",
+          "Місця підключення комп’ютерів, ТВ, точок Wi-Fi і камер."
+        ],
+        [
+          "Кабелі та розетки",
+          "Прокладання проводів, закінчення RJ45 і підключення до мережі."
+        ],
+        [
+          "Маркування й тест",
+          "Позначення точок і перевірка кожної нової лінії. Схема в погодженому обсязі."
+        ]
+      ],
+      "questions": [
+        [
+          "Від чого залежить вартість монтажу?",
+          "Від кількості точок, довжини й доступності трас, матеріалів і способу прокладання."
+        ],
+        [
+          "Можна додати мережу після ремонту?",
+          "Перевіримо наявні траси й обговоримо, де та як можна прокласти кабелі."
+        ]
+      ]
+    },
+    "priceQuestion": "До вартості години додається плата за послугу?",
+    "businessQuestion": "Ви обслуговуєте офіси або обладнання компаній?",
+    "audience": "Для квартир, будинків і організацій. Спілкуємося польською, російською, українською й англійською."
   },
-  en: {
-    scope:'For flats and homes',catalog:'What we can help with',catalogIntro:'Choose an issue or a planned job. This is the available service scope, not a list of extra charges.',
-    services:[['wifi','Wi-Fi coverage diagnosis','Weak signal in a room, dropped connections or Wi-Fi without internet.'],['wifi','Router, AP and Mesh setup','Network settings, access point placement and connecting a new router.'],['install','LAN installation','Point planning, cabling and RJ45 socket installation.'],['repair','RJ45 socket and cable repair','A damaged cable, loose connector or socket with no connection.'],['repair','Network connection testing','Checking cables, ports and connectivity after a repair or equipment change.'],['wifi','Connecting devices','A computer, Smart TV, printer or another network device.']],
-    secondary:'By agreement, we also help with home camera and PoE connections and damaged home fibre cables. We do not work on an operator’s infrastructure without their permission.',
-    billing:'How we charge for work',rateLabel:'Billing basis',amountLabel:'Starting price',prefix:'from',currency:'PLN',visit:'Travel within Warsaw + first hour of work',next:'Each additional hour of work',short:'Short job nearby — by agreement',
-    shortNote: 'The 200 PLN starting rate applies to a short job nearby when the task is successfully completed. It is an alternative to a standard visit, not an additional charge.',
-    noDouble:'You pay for the agreed scope of work. We do not charge both an hourly rate and a separate service fee for the same work.',
-    project:'Larger installations can be quoted as a project instead of hourly billing. Materials, equipment, extra work and billing for part of an hour are agreed before work starts.',
-    disclaimer:'Starting prices depend on job conditions and are not an offer. We confirm the amount before work starts. No VAT is charged.',
-    businessTitle:'Need help for a business?',business:'NaSerwis helps private customers with home infrastructure. ITBIZ.PL serves companies, offices and equipment managed by an employer.',businessLink:'IT services for businesses — ITBIZ.PL',
-    faq:'Questions before a visit',related:'Other work on your home network',request:'Describe the job',prepareTitle:'What to prepare before contacting us',prepare:'Tell us your town, symptoms and router model or number of sockets. A photo or a diagram helps us discuss the job. Do not send network passwords or login details.',
-    problemsTitle:'Find the service for your situation',problems:[['wifi','Wi-Fi does not reach a room?','We start with measurements and settings before suggesting new equipment.'],['repair','Cable connected, but no internet?','We check the socket, cable and port to locate the cause.'],['install','Renovating or setting up a home?','Plan LAN points for your TV, personal workspace and Wi-Fi access points.']],
-    home:{title:'Wi-Fi, networks and CCTV — Warsaw | NaSerwis.pl',description:'Wi-Fi, LAN and CCTV services in Warsaw and nearby areas. We diagnose network and internet faults, configure routers, install cabling and cameras. Scope and cost are agreed before work starts.',h1:'Wi-Fi and networks in Warsaw',accent:'Installation or repair on site',intro:'We diagnose Wi-Fi, configure routers, install and repair LAN networks. We agree the scope, cost and visit time before work starts.'},
-    wifi:{title:'Wi-Fi repair and home network setup — Warsaw | NaSerwis.pl',description:'Weak signal or Wi-Fi without internet? Diagnosis, router, AP and Mesh setup in homes and flats in Warsaw. We agree billing before work starts.',h1:'Wi-Fi repair in Warsaw',accent:'Your home router and coverage',intro:'We check signal, router settings and internet connectivity, then select an approach for your flat, home and devices.',heading:'Weak signal or a connection problem?',explanation:'Wi-Fi coverage and internet access are different issues. We compare connections near the router, over a cable and where the fault occurs. If the cause is on the provider’s side, we explain what to report to their support.',features:[['Measurements in rooms','We check coverage, interference and router placement.'],['Router and Wi-Fi access points','We agree settings, guest networking and AP or Mesh placement based on your layout and available cabling.'],['Home devices','We help connect a personal computer, TV or printer and check connectivity after changes.']],scenarios:[['A flat','Weak signal in a bedroom or no internet after changing the router.'],['A house and personal workspace','Coverage on several floors and connectivity for personal devices.']],questions:[['Is Mesh always the best option?','No. Router settings, access points, Mesh or cabling are selected based on the layout, equipment and measurements. We check the cause first.'],['What does Wi-Fi without internet mean?','A device can connect to a router even when the router has no internet access. We check connections, settings and symptoms; a fault in the provider’s network must be reported to the provider.'],['Do I need a new router?','Not always. We check your existing equipment and settings first. Any purchase and its cost are agreed with you.']]},
-    repair:{title:'LAN network, socket and cable repair — Warsaw | NaSerwis.pl',description:'Home LAN repair in Warsaw: cable and port diagnosis, RJ45 sockets and checks after repair. Travel and work scope are agreed before the visit.',h1:'LAN network repair in Warsaw',accent:'RJ45 sockets, cables and connections',intro:'We investigate missing or intermittent home network connections. We check cables, sockets and ports and agree the repair after diagnosis.',heading:'Cable connected, but the network does not work?',explanation:'The cause may be a cable, connector, port or device setting. We check the connection step by step to identify the repair needed without replacing working components.',features:[['Cables and RJ45 sockets','We check connections, replace damaged connectors and agree repairs to accessible cable sections.'],['Ports and home equipment','We check router or switch ports and connection settings.'],['Checks after work','We retest the repaired link and discuss the result. Home camera, PoE and fibre tasks require an agreed scope.']],scenarios:[['One socket does not work','No connection at a TV or personal computer.'],['A fault after renovation','Damaged cabling, a new connector or unlabelled network points.']],questions:[['Must the entire cable be replaced?','Not always. We check the cable and its ends first. Repair options depend on the damage and access to the installation.'],['Do you repair home fibre or camera connections?','We agree these tasks individually after a description and inspection. We work within the agreed home installation scope; provider-side faults are referred to the provider.'],['When can you visit?','Tell us your location and symptoms. We confirm a possible time when you contact us, according to current availability.']]},
-    install:{title:'LAN installation in homes and flats — Warsaw | NaSerwis.pl',description:'Home LAN installation in Warsaw: point planning, cabling, RJ45 sockets and connection tests. Project pricing or hourly billing by agreement.',h1:'LAN installation in Warsaw',accent:'Cabling for your house or flat',intro:'We plan points, run cables, install RJ45 sockets and test connections. We agree the installation scope and billing basis before work starts.',heading:'A home network before or after renovation',explanation:'We start with the locations of your TV, personal computer and Wi-Fi access points. We agree cable routes, socket counts and finishes. In a finished flat, we discuss options based on existing routes and access.',features:[['LAN point planning','We agree where cables and sockets are needed and how they connect to your router.'],['Cabling and RJ45 sockets','Cable routes and installation methods depend on site conditions and agreed finishing work.'],['Labelling and checks','We label points, test connections and provide the agreed description of the work.']],scenarios:[['Building or renovating a home','Agree cable routes and points before walls are finished.'],['A finished flat','A new TV, computer or AP point after checking the available route.']],questions:[['What affects LAN installation costs?','Point count, route length and access, cable installation methods and materials. Once the scope is clear, we choose project pricing or hourly billing.'],['Can you install LAN in a finished flat?','Options depend on existing routes and finishes. We discuss cable routing and any required work before starting.'],['What do I receive after installation?','The agreed installation, point labels and connection checks. Diagram and documentation scope are agreed when quoting.']]},
-    priceQuestion:'Is a service fee added to the hourly rate?',businessQuestion:'Do you serve offices or company equipment?',
-  },
+  "en": {
+    "scope": "For individuals and organisations",
+    "catalog": "What we can help with",
+    "catalogIntro": "Choose an issue or a planned job. This is the available service scope, not a list of extra charges.",
+    "services": [
+      [
+        "wifi",
+        "Wi-Fi and internet",
+        "Weak signal in a room, dropped connections or Wi-Fi without internet."
+      ],
+      [
+        "wifi",
+        "Router, AP or Mesh",
+        "Network settings, access point placement and connecting a new router."
+      ],
+      [
+        "install",
+        "LAN installation",
+        "Point planning, cabling and RJ45 socket installation."
+      ],
+      [
+        "repair",
+        "RJ45 sockets and cables",
+        "A damaged cable, loose connector or socket with no connection."
+      ],
+      [
+        "cctv",
+        "CCTV repair",
+        "CCTV repair"
+      ],
+      [
+        "cctv",
+        "Camera installation",
+        "Camera installation"
+      ]
+    ],
+    "secondary": "By agreement, we also help with home camera and PoE connections and damaged home fibre cables. We do not work on an operator’s infrastructure without their permission.",
+    "billing": "How we charge for work",
+    "rateLabel": "Billing basis",
+    "amountLabel": "Starting price",
+    "prefix": "from",
+    "currency": "PLN",
+    "visit": "Travel within Warsaw + first hour of work",
+    "next": "Each additional hour of work",
+    "short": "Short job nearby — by agreement",
+    "shortNote": "From 200 PLN for a short nearby job, agreed in advance and successfully completed. An alternative to the standard visit.",
+    "noDouble": "Hourly billing or an agreed quote. No double charge for the same work.",
+    "project": "Installation can be quoted as a project. Equipment, materials, extra work and part-hour billing are agreed before we start.",
+    "disclaimer": "Prices are indicative. We confirm the final amount before work starts. No VAT is charged.",
+    "businessTitle": "Need help at your business?",
+    "business": "We also serve organisations. Equipment access and any work interruption are agreed before the visit.",
+    "businessLink": "Business services at NaSerwis",
+    "faq": "Questions before a visit",
+    "related": "Other services",
+    "request": "Describe the job",
+    "prepareTitle": "What to include in your enquiry",
+    "prepare": "Send your town, symptoms and device model or number of points. Installation photos can be sent through WhatsApp or Telegram. Do not send passwords.",
+    "problemsTitle": "Find the service for your situation",
+    "problems": [
+      [
+        "wifi",
+        "Wi-Fi does not reach a room?",
+        "We start with measurements and settings before suggesting new equipment."
+      ],
+      [
+        "repair",
+        "Cable connected, but no internet?",
+        "We check the socket, cable and port to locate the cause."
+      ],
+      [
+        "install",
+        "Renovating or setting up a home?",
+        "Plan LAN points for your TV, personal workspace and Wi-Fi access points."
+      ]
+    ],
+    "home": {
+      "title": "Wi-Fi, networks and CCTV — Warsaw | NaSerwis.pl",
+      "description": "Wi-Fi, LAN and CCTV services in Warsaw and nearby areas. We diagnose network and internet faults, configure routers, install cabling and cameras. Scope and cost are agreed before work starts.",
+      "h1": "Wi-Fi and networks in Warsaw",
+      "accent": "Installation or repair on site",
+      "intro": "We repair Wi-Fi, LAN networks and CCTV. Router setup, cabling and camera installation in Warsaw and nearby areas."
+    },
+    "wifi": {
+      "title": "Wi-Fi repair and home network setup — Warsaw | NaSerwis.pl",
+      "description": "Weak signal or Wi-Fi without internet? Diagnosis, router, AP and Mesh setup in homes and flats in Warsaw. We agree billing before work starts.",
+      "h1": "Wi-Fi repair in Warsaw",
+      "accent": "Your home router and coverage",
+      "intro": "Wi-Fi drops, has weak coverage or no internet? We check the connection and set up your router, AP or Mesh.",
+      "heading": "What we check and configure",
+      "explanation": "Provider network faults must be fixed by the provider. We help identify whether the problem is on their side.",
+      "features": [
+        [
+          "Signal and connection",
+          "Coverage, interference and connectivity tests near the router and where the fault occurs."
+        ],
+        [
+          "Router, AP and Mesh",
+          "Network settings, access point placement and device connections."
+        ],
+        [
+          "Checks after changes",
+          "Internet and coverage tests at the agreed locations."
+        ]
+      ],
+      "questions": [
+        [
+          "Do I need a new router or Mesh?",
+          "We check your existing equipment first. If replacement is needed, we agree the purchase and cost."
+        ],
+        [
+          "Does Wi-Fi without internet mean the router is broken?",
+          "Not always. A device can connect to the router even when the router itself has no internet access."
+        ]
+      ]
+    },
+    "repair": {
+      "title": "LAN network, socket and cable repair — Warsaw | NaSerwis.pl",
+      "description": "Home LAN repair in Warsaw: cable and port diagnosis, RJ45 sockets and checks after repair. Travel and work scope are agreed before the visit.",
+      "h1": "LAN network repair in Warsaw",
+      "accent": "RJ45 sockets, cables and connections",
+      "intro": "An RJ45 socket is dead, the connection drops or speed has fallen? We test the cable, connectors and ports.",
+      "heading": "What the repair covers",
+      "explanation": "Fibre and PoE connection repairs need an agreed scope. We work on provider infrastructure only with their permission.",
+      "features": [
+        [
+          "Line diagnosis",
+          "Cable, RJ45 socket, plugs and router or switch port checks."
+        ],
+        [
+          "Accessible component repairs",
+          "Replacement of a damaged connector, socket or accessible cable section."
+        ],
+        [
+          "Checks after repair",
+          "Connection and achieved speed tests."
+        ]
+      ],
+      "questions": [
+        [
+          "Will the whole cable need replacing?",
+          "It depends on the damage and cable access. We check the line and its ends first."
+        ],
+        [
+          "When can you visit?",
+          "Send your location and symptoms. We will discuss an available time when you contact us."
+        ]
+      ]
+    },
+    "install": {
+      "title": "LAN installation in homes and flats — Warsaw | NaSerwis.pl",
+      "description": "Home LAN installation in Warsaw: point planning, cabling, RJ45 sockets and connection tests. Project pricing or hourly billing by agreement.",
+      "h1": "LAN installation in Warsaw",
+      "accent": "Cabling for your house or flat",
+      "intro": "We run cables, install RJ45 sockets and connect network points to your router or switch.",
+      "heading": "What LAN installation includes",
+      "explanation": "In a finished property, we check available routes. Cable routing and any finishing work are agreed before installation.",
+      "features": [
+        [
+          "Point and route plan",
+          "Connection locations for computers, TVs, Wi-Fi access points and cameras."
+        ],
+        [
+          "Cables and sockets",
+          "Cable runs, RJ45 terminations and network connection."
+        ],
+        [
+          "Labels and testing",
+          "Point labels and a check of every new line. A diagram to the agreed scope."
+        ]
+      ],
+      "questions": [
+        [
+          "What determines the installation cost?",
+          "Point count, route length and access, materials and the cable installation method."
+        ],
+        [
+          "Can you add a network after renovation?",
+          "We check existing routes and discuss where and how the cables can be run."
+        ]
+      ]
+    },
+    "priceQuestion": "Is a service fee added to the hourly rate?",
+    "businessQuestion": "Do you serve offices or company equipment?",
+    "audience": "For flats, houses and organisations. Contact us in Polish, Russian, Ukrainian or English."
+  }
 };
-
-// 2026-10-26: NaSerwis accepts both audiences; business requests stay local.
-const localBusinessCopy = {
-  pl: ['Dla klientów indywidualnych i organizacji', 'Potrzebujesz pomocy w firmie?', 'Tak, przyjmujemy również zgłoszenia firm i organizacji. Zakres, dostęp do sprzętu i ewentualną przerwę w pracy uzgadniamy przed wizytą.', 'Usługi dla firm w NaSerwis'],
-  ru: ['Для частных клиентов и организаций', 'Нужна помощь в организации?', 'Да, принимаем заявки компаний и организаций. Объём, доступ к оборудованию и возможный перерыв в работе согласуем до визита.', 'Услуги для бизнеса в NaSerwis'],
-  uk: ['Для приватних клієнтів і організацій', 'Потрібна допомога в організації?', 'Так, приймаємо заявки компаній і організацій. Обсяг, доступ до обладнання та можливу перерву в роботі погоджуємо до візиту.', 'Послуги для бізнесу в NaSerwis'],
-  en: ['For individuals and organisations', 'Need help at your business?', 'Yes, we also accept requests from businesses and organisations. We agree the scope, equipment access and any interruption before the visit.', 'Business services at NaSerwis']
-};
-for (const [locale, [scope, businessTitle, business, businessLink]] of Object.entries(localBusinessCopy)) {
-  Object.assign(copy[locale], { scope, businessTitle, business, businessLink });
-}

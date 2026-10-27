@@ -64,7 +64,7 @@ test('reduced motion leaves content visible and reviews do not autoplay', async 
   await page.clock.install();
   await page.addInitScript(() => localStorage.setItem('naserwis_consent_v1', JSON.stringify({ version: 1, analytics: false, marketing: false, support: false })));
   await page.goto('/');
-  await expect(page.locator('.problem-card').first()).toHaveCSS('opacity', '1');
+  await expect(page.locator('.preview-task').first()).toHaveCSS('opacity', '1');
   const fittedReview = () => page.locator('.reviews-track').evaluate(track => {
     const cards = [...track.children];
     const active = cards.reduce((best, card) => Math.abs(card.offsetLeft - cards[0].offsetLeft - track.scrollLeft) < Math.abs(best.offsetLeft - cards[0].offsetLeft - track.scrollLeft) ? card : best);
