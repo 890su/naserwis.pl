@@ -660,6 +660,7 @@ body[data-redesign] .preview-contact-rail{padding:0;background:transparent}
 body[data-redesign="service"] .preview-service-rail{padding:0;border:0}
 body[data-redesign] :is(.hero-form,.final-form)[data-enquiry-panel]{--rd-ink:#fff;--rd-muted:#c9d2dc;--enquiry-muted:#c9d2dc;--enquiry-link:#bad2ff;background:#18212c;color:#fff;border:0;border-radius:8px;padding:24px;color-scheme:dark}
 body[data-redesign] :is(.hero-form,.final-form)[data-enquiry-panel] h2{color:#fff}
+body[data-redesign] [data-enquiry-panel] [data-staged-form] h2.enquiry-title{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:0;text-align:left;margin:0 0 12px}
 body[data-redesign] [data-enquiry-panel] :is(.enquiry-example-heading,.enquiry-extras summary span){color:var(--enquiry-muted)}
 body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(.enquiry-example-controls button,.enquiry-extras summary,.form-privacy-notice a){color:var(--enquiry-link)}
 body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(input:not([type="radio"]),textarea){background:#dfe5ec;color:#18212c;color-scheme:light}

@@ -64,6 +64,7 @@ export function stagedEnquiries(html, lang, path) {
     const alternatives = original.match(/<p class="contact-alternatives">[\s\S]*?<\/p>/)?.[0] || '';
     const choice = (name, value, label) => `<label class="enquiry-choice"><input type="radio" name="${name}" value="${value}"><span>${esc(label)}</span></label>`;
     return `<form id="${id}"${attrs.replace(/ data-staged-form(?:="[^"]*")?/g, '')} data-staged-form>
+      <h2 class="enquiry-title">${t.problem}</h2>
       <div class="form-group enquiry-problem"><textarea id="${prefix}-message" name="message" aria-label="${t.problem}" required minlength="3" maxlength="4000" rows="3" placeholder="${t.placeholder}" aria-describedby="${id}-help"></textarea><small id="${id}-help" class="contact-field-help">${t.examples}</small></div>
       <div class="enquiry-examples"><div class="enquiry-example-heading"><span>${t.examples}</span><div class="enquiry-example-controls"><button type="button" data-examples-all data-all="${t.all}" data-less="${t.less}" aria-expanded="false" aria-controls="${id}-examples">${t.all}</button></div></div><div class="enquiry-example-list" id="${id}-examples">${(examples || t.examplesByService[service]).map(text => `<button type="button" data-enquiry-example><span class="enquiry-example-text">${esc(text)}</span></button>`).join('')}</div></div>
       <div class="enquiry-details" id="${id}-details" hidden>

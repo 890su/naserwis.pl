@@ -124,11 +124,11 @@ the icon/number group and hide the redundant inline phone link beside WhatsApp
 and Telegram in that mobile/tablet form. Above 900px the phone stays alongside
 the heading in the existing two-column hero.
 
-Owner update, 26 October 2026: in-page enquiry panels start directly with the
-description field. Remove the visible “What happened?” heading in all four
-locales, including business pages. Keep the textarea's accessible name, form
-behavior and the separate contact dialog title. This supersedes the heading
-instruction in the historical progressive-enquiry notes below.
+Owner update, 27 October 2026: restore the localized “What happened?” heading
+above the description field in all in-page enquiry panels, including business
+pages. Use compact 18px / 700 type with 1.4 line height and 12px below it at all
+breakpoints. Preserve the textarea's accessible name, form behavior and separate
+contact dialog title. This supersedes the previous heading-removal decision.
 
 ## Local business services — 26 October 2026
 
