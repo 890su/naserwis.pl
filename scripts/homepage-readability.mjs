@@ -11,6 +11,12 @@ const labels = {
 };
 const chevron = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 const external = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/></svg>';
+const contactCopy = {
+  pl: ['Masz jeszcze pytania?', 'Zadzwoń lub zostaw zgłoszenie — ustalimy szczegóły.', 'Zadzwoń', 'Zostaw zgłoszenie'],
+  ru: ['Остались вопросы?', 'Позвоните или оставьте заявку — обсудим детали.', 'Позвонить', 'Оставить заявку'],
+  uk: ['Залишилися запитання?', 'Зателефонуйте або залиште заявку — обговоримо деталі.', 'Зателефонувати', 'Залишити заявку'],
+  en: ['Still have questions?', 'Call or send an enquiry — we’ll discuss the details.', 'Call us', 'Send an enquiry']
+};
 const section = (html, name, block) => block(html, 'section', new RegExp(`<section\\b[^>]*class="[^"]*\\b${name}\\b[^"]*"`));
 
 export function restoreHomepage(html, block) {
@@ -89,8 +95,7 @@ export function simplifyHomepage(html, locale, block) {
   html = html.replace(catalogue, '<!-- HOME DETAILS -->').replace(problems, '').replace(about, '').replace(business, '').replace('<!-- HOME DETAILS -->', more);
 
   const contact = section(html, 'final-cta', block);
-  const form = block(contact, 'div', /<div class="final-form"/);
-  const intro = form.match(/<p class="contact-next-step">([\s\S]*?)<\/p>/)?.[1] || '';
-  const updatedContact = contact.replace(block(contact, 'div', /<div class="container(?: home-contact-grid)?"/), `<div class="container home-contact-grid"><div class="home-contact-copy"><h2 id="contact-title">${t.contact}</h2><p>${intro}</p><a class="home-contact-phone" href="tel:+48453327678">+48 453 327 678</a></div>${form}</div>`);
+  const [title, intro, call, request] = contactCopy[locale] || contactCopy.pl;
+  const updatedContact = `<section class="final-cta home-contact-cta" id="contact" aria-labelledby="contact-title"><div class="container home-contact-grid"><div class="home-contact-copy"><h2 id="contact-title">${title}</h2><p>${intro}</p></div><div class="preview-actions home-contact-actions"><a class="btn preview-outline" href="tel:+48453327678">${call}</a><a class="btn btn-primary" href="#contact" data-contact-modal>${request}</a></div></div></section>`;
   return html.replace(contact, updatedContact);
 }

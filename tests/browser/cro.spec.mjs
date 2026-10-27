@@ -58,9 +58,9 @@ for (const locale of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.fab-menu')).toBeVisible();
       await page.keyboard.press('Escape');
       await expect(page.locator('.fab-toggle')).toBeFocused();
-      await page.locator('#final-form').scrollIntoViewIfNeeded();
+      await page.locator(service ? '#final-form' : '.home-contact-cta').scrollIntoViewIfNeeded();
       await expect(page.locator('.fab-toggle')).toBeVisible();
-      await expect(page.locator('#final-form')).toHaveCount(1);
+      await expect(page.locator('#final-form')).toHaveCount(service ? 1 : 0);
       const scrollBeforeModal = await page.evaluate(() => scrollY);
       await page.locator('a[href="#contact"]').first().evaluate(element => element.click());
       await expect(page.locator('#quick-contact-modal')).toBeVisible();

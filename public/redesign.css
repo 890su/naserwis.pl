@@ -502,23 +502,12 @@ body[data-redesign="home"] .home-pricing .home-billing .billing-rule{background:
 body[data-redesign="home"] .how-we-work .steps{gap:28px}
 body[data-redesign="home"] .how-we-work .step h3{font-size:18px;line-height:1.4}
 body[data-redesign="home"] .how-we-work .step p{font-size:15px;line-height:1.6;margin-bottom:0}
-body[data-redesign="home"] .home-contact-grid{display:grid;grid-template-columns:minmax(0,1fr);max-width:688px;padding-inline:24px;margin-inline:auto;gap:28px;align-items:start;text-align:left}
+body[data-redesign="home"] .home-contact-cta{background:var(--rd-wash);color:var(--rd-ink);text-align:left}
+body[data-redesign="home"] .home-contact-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:center;text-align:left}
 body[data-redesign="home"] .home-contact-copy h2{font-size:28px;line-height:1.25;margin:0 0 16px}
-body[data-redesign="home"] .home-contact-copy p{font-size:17px;line-height:1.6;max-width:40ch;margin:0 0 20px;color:#c9d2dc}
-body[data-redesign="home"] .home-contact-phone{font-size:26px;font-weight:800;color:#fff;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums}
-body[data-redesign="home"] .home-contact-grid .final-form{max-width:none;width:100%;margin:0;padding:24px;text-align:left;background:var(--rd-wash)}
-body[data-redesign="home"] .home-contact-grid .contact-next-step{display:none}
-body[data-redesign="home"] .home-contact-grid form:not([data-staged-form]){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}
-body[data-redesign="home"] .home-contact-grid form>.form-group:has(textarea),body[data-redesign="home"] .home-contact-grid form>p,body[data-redesign="home"] .home-contact-grid form>button,body[data-redesign="home"] .home-contact-grid form>[role=alert]{grid-column:1/-1}
-body[data-redesign="home"] .home-contact-grid form>.form-group{min-width:0;margin-bottom:14px}
-body[data-redesign="home"] .home-contact-grid label{font-size:14px;font-weight:700;color:var(--rd-ink)}
-body[data-redesign="home"] .home-contact-grid input,body[data-redesign="home"] .home-contact-grid textarea{min-height:46px;background:#fff;border:1px solid #c4ccd5;border-radius:6px;font:inherit;color:var(--rd-ink);padding:10px 12px}
-body[data-redesign="home"] .home-contact-grid textarea{min-height:90px;height:90px}
-body[data-redesign="home"] .home-contact-grid .contact-field-help{font-size:12px;line-height:1.5;margin-top:6px}
-body[data-redesign="home"] .home-contact-grid .form-privacy-notice{margin:10px 0 0;font-size:12px;color:var(--rd-muted)}
-body[data-redesign="home"] .home-contact-grid .contact-alternatives{justify-content:flex-start;font-size:14px;line-height:1.4;margin:14px 0 0}
-body[data-redesign="home"] .home-contact-grid .contact-alternatives a{color:var(--rd-ink)}
-body[data-redesign="home"] .home-contact-grid form>.btn{width:100%;margin-top:0}
+body[data-redesign="home"] .home-contact-cta .home-contact-copy h2{color:var(--rd-ink);margin-bottom:10px}
+body[data-redesign="home"] .home-contact-copy p{font-size:16px;line-height:1.6;max-width:65ch;margin:0;color:var(--rd-muted)}
+body[data-redesign="home"] .home-contact-actions{justify-content:flex-end}
 body[data-redesign="home"] .guides-teaser .container{max-width:1440px}
 body[data-redesign="home"] .guides-teaser h2{font-size:24px;line-height:1.3;margin:0 0 12px}
 body[data-redesign="home"] .guides-teaser p{font-size:15px;line-height:1.6;max-width:65ch;margin:0 0 16px}
@@ -549,7 +538,7 @@ body[data-redesign] .home-guides a:focus-visible{outline:3px solid #1d5bd0;outli
   body[data-redesign] .home-guides-all{grid-column:2;grid-row:1}
   body[data-redesign] .home-guides-list a{grid-template-columns:54px minmax(0,1fr) 18px;gap:12px;min-height:60px}
 }
-@media(max-width:900px){body[data-redesign="home"] .home-contact-grid{grid-template-columns:1fr;gap:28px}body[data-redesign="home"] .home-contact-copy p{max-width:60ch}}
+@media(max-width:900px){body[data-redesign="home"] .home-contact-grid{grid-template-columns:1fr;gap:24px}body[data-redesign="home"] .home-contact-actions{justify-content:flex-start}}
 @media(max-width:760px){
   body[data-redesign="home"]{--home-section-space:28px}
   body[data-redesign="home"] .home-section-heading,body[data-redesign="home"] .section-title,body[data-redesign="home"] .home-contact-copy h2{font-size:25px;margin-bottom:18px}
@@ -560,8 +549,6 @@ body[data-redesign] .home-guides a:focus-visible{outline:3px solid #1d5bd0;outli
   body[data-redesign="home"] .home-disclosure>summary{font-size:16px;min-height:58px;padding:15px 0}
   body[data-redesign="home"] .home-disclosure-body .home-services-grid{grid-template-columns:1fr}
   body[data-redesign="home"] .preview-task-link{min-height:56px;padding:12px 0}
-  body[data-redesign="home"] .home-contact-grid .final-form{padding:20px}
-  body[data-redesign="home"] .home-contact-phone{font-size:25px}
 }
 @media(prefers-reduced-motion:reduce){body[data-redesign="home"] .home-disclosure>summary svg{transition:none}}
 
@@ -680,7 +667,6 @@ body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-alternative
 body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-field-error{color:#fca5a5}
 body[data-redesign] [data-enquiry-panel] [data-staged-form] .intent-context{color:#dce8fa;background:#293849;border-color:#526679}
 body[data-redesign] [data-enquiry-panel] [data-staged-form] :focus-visible{outline-color:#bad2ff}
-body[data-redesign="home"] .home-contact-grid .final-form[data-enquiry-panel]{padding:0}
 body[data-redesign="home"] [data-staged-form] .contact-alternatives{justify-content:center}
 @media(max-width:1199px){
   .mobile-enquiry-slot{background:#18212c;padding:8px 0 32px}
@@ -690,13 +676,23 @@ body[data-redesign="home"] [data-staged-form] .contact-alternatives{justify-cont
   body[data-redesign] .mobile-enquiry-slot .contact-alternatives a{color:#fff}
   body[data-redesign="service"] [data-staged-form] .contact-alternatives{justify-content:center}
 }
-@media(max-width:760px){.mobile-enquiry-slot>.container{padding-inline:20px}body[data-redesign="home"] .home-contact-grid{max-width:680px;padding-inline:20px}}
+@media(max-width:760px){.mobile-enquiry-slot>.container{padding-inline:20px}}
 @media(max-width:900px){
   body[data-redesign] .hero .preview-hero-call{display:none}
   body[data-redesign] .mobile-enquiry-slot>.container::before{content:"";display:block;border-top:1px solid #3a4757;margin-bottom:24px}
   body[data-redesign] .mobile-enquiry-slot .contact-alternatives a[href^="tel:"]{display:none}
   body[data-redesign] .preview-home-mobile-call{display:flex;justify-content:center;max-width:none;width:100%;border-left:0;border-top:1px solid #3a4757;padding:24px 0 0;margin-top:24px}
 }
+/* One desktop page grid; the review heading retains its centered composition. */
+body[data-redesign="home"] :is(.hero,.preview-overview,.home-pricing,.home-more,.reviews,.home-guides,.home-contact-cta)>.container,body[data-redesign="home"] #header nav.container,body[data-redesign="home"] footer>.container{max-width:1280px}
+body[data-redesign="home"] .preview-task-heading{align-items:flex-start}
+body[data-redesign="home"] .preview-task-heading h2{padding-left:0;text-align:left}
+body[data-redesign="home"] .footer-service-links{display:grid;gap:8px}
+body[data-redesign="home"] .footer-service-links li{margin:0}
+body[data-redesign="home"] .footer-service-links a{font-size:14px;line-height:1.5;padding:0}
+@media(min-width:761px){body[data-redesign="home"] .preview-task-pair{grid-template-rows:auto auto 1fr}body[data-redesign="home"] .preview-task{display:grid;grid-template-rows:subgrid;grid-row:span 3}}
+@media(max-width:760px){body[data-redesign="home"] .home-contact-actions{display:grid;grid-template-columns:1fr 1fr}}
+@media(max-width:420px){body[data-redesign="home"] .home-contact-actions{grid-template-columns:1fr}}
 /* Shared visual rhythm across the homepage and both service templates. */
 body[data-redesign] .faq-section>.container{max-width:1040px}
 body[data-redesign] .faq-container{max-width:none;margin-inline:0}

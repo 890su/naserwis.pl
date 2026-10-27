@@ -118,6 +118,16 @@ components:
 
 # Design System: NaSerwis
 
+Owner update, 27 October 2026: the homepage uses one 1280px outer desktop grid
+for the header, hero, task chooser, prices, service details, reviews, guide and
+footer. Keep the review heading centered and prose left aligned. Task headings
+start at their card's inner left edge; paired card rows share height on desktop.
+Replace the lower duplicate form with a light #f3f5f7 contact section: localized
+“Still have questions?”, one short sentence, a phone link and a request button
+that opens the existing compact contact dialog. On desktop put text left and
+actions right; stack the content on tablet and buttons on narrow phones. The
+upper progressive form and service-page forms remain as approved.
+
 Owner update, 26 October 2026: the large phone action follows the enquiry form
 whenever the hero is a single column (through 900px), including tablets. Center
 the icon/number group and hide the redundant inline phone link beside WhatsApp

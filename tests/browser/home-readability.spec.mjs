@@ -74,10 +74,17 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
       await expect(page.locator('.business-handoff h2')).toHaveCount(0);
       expect(await page.locator('.home-more').evaluate(e => getComputedStyle(e).backgroundColor))
         .not.toBe(await page.locator('.reviews').evaluate(e => getComputedStyle(e).backgroundColor));
-      await page.locator('#final-form').scrollIntoViewIfNeeded();
-      await expect(page.locator('#final-name')).toBeHidden();
-      await expect(page.locator('#final-phone')).toBeHidden();
-      await expect(page.locator('#final-form textarea')).toBeVisible();
+      const contact = page.locator('.home-contact-cta');
+      await contact.scrollIntoViewIfNeeded();
+      await expect(contact.locator('form, textarea')).toHaveCount(0);
+      await expect(contact.locator('.btn')).toHaveCount(2);
+      await expect(contact.locator('a[href="tel:+48453327678"]')).toBeVisible();
+      expect(await contact.evaluate(e => getComputedStyle(e).backgroundColor)).toBe('rgb(243, 245, 247)');
+      await contact.locator('[data-contact-modal]').click();
+      await expect(page.locator('#quick-contact-modal')).toBeVisible();
+      await expect(page.locator('#quick-form textarea')).toBeVisible();
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#quick-contact-modal')).toBeHidden();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
     });
   }
