@@ -283,20 +283,17 @@ test('mobile dock and modal form preserve secondary phone and primary lead conve
   await expect(page.locator('#final-form')).toHaveCount(1);
 });
 
-test('chat consent grants open once after ready; reject never counts as chat open', async ({ page }) => {
-  await isolate(page); await consent(page); await page.goto('/naprawa-sieci/');
+test('chat request opens once after ready without changing saved consent', async ({ page }) => {
+  await isolate(page);
+  await page.route('**/packs/js/sdk.js', route => route.fulfill({ contentType: 'application/javascript', body: 'window.chatwootSDK = { run() {} };' }));
+  await consent(page, { analytics: true }); await page.goto('/naprawa-sieci/');
+  const saved = await page.evaluate(() => localStorage.getItem('naserwis_consent_v1'));
   await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
-  await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'region');
+  await expect(page.locator('#consent-dialog')).toBeHidden();
   expect((await events(page, 'chatwoot_open')).length).toBe(0);
-  await page.locator('.consent-reject').click();
-  await page.locator('.fab-toggle').click(); await page.locator('.fab-chat').click();
-  await page.evaluate(() => window.NASERWIS_CONSENT.open());
-  await expect(page.locator('.consent-panel')).toHaveAttribute('role', 'dialog');
-  await page.locator('label').filter({ has: page.locator('input[name=support]') }).click();
-  await expect(page.locator('input[name=support]')).toBeChecked();
-  await page.locator('.consent-save').click();
   await page.evaluate(() => { window.$chatwoot = { toggle: () => {} }; dispatchEvent(new Event('chatwoot:ready')); });
   expect((await events(page, 'chatwoot_open')).length).toBe(1);
+  expect(await page.evaluate(() => localStorage.getItem('naserwis_consent_v1'))).toBe(saved);
   await page.evaluate(() => dispatchEvent(new Event('chatwoot:ready')));
   expect((await events(page, 'chatwoot_open')).length).toBe(1);
 });

@@ -161,6 +161,13 @@ only for their granted categories. Existing destination IDs and conversion
 labels remain in source. This intentionally stops denied-consent Google pings;
 it changes measurement coverage for visitors who do not grant consent.
 
+The Chat button starts Chatwoot on demand even before a cookie choice or after
+Necessary only. This page-scoped request never changes saved preferences or
+Google consent and does not auto-load chat on the next page. The separate Chat
+privacy option permits automatic loading. Closing chat or a failed load restores
+the initial notice when no cookie choice has been made. Chat failures offer the
+existing phone/messenger fallback, and a failed SDK load can be retried.
+
 `public/_headers` stages CSP in report-only mode (browser console reports;
 no collection endpoint) and HSTS for one day, without subdomain/preload opt-in.
 Hosting header behavior must be checked after deployment. No public premises

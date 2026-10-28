@@ -8,6 +8,8 @@
     const STORAGE_KEY = 'naserwis_consent_v1';
     const POLICY_VERSION = 1;
     let memoryConsent = null;
+    // An explicit chat request is scoped to this page, not a cookie preference.
+    let supportRequested = false;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
@@ -84,7 +86,7 @@
             necessary: 'Niezbędne', necessaryDesc: 'Bezpieczeństwo, formularze i zapis ustawień prywatności.',
             analytics: 'Analityka', analyticsDesc: 'Pomaga nam mierzyć korzystanie ze strony i skuteczność formularzy.',
             marketing: 'Reklama', marketingDesc: 'Pomiar reklam Google i personalizacja reklam.',
-            support: 'Czat', supportDesc: 'Uruchamia zewnętrzny czat pomocy Chatwoot.',
+            support: 'Czat', supportDesc: 'Automatyczne ładowanie Chatwoot. Bez tej zgody czat uruchomisz przyciskiem.',
             privacy: 'Polityka prywatności', cookies: 'Polityka cookies', manage: 'Ustawienia prywatności'
         },
         ru: {
@@ -98,7 +100,7 @@
             necessary: 'Необходимые', necessaryDesc: 'Безопасность, формы и сохранение настроек конфиденциальности.',
             analytics: 'Аналитика', analyticsDesc: 'Помогает измерять использование сайта и эффективность форм.',
             marketing: 'Реклама', marketingDesc: 'Измерение рекламы Google и персонализация объявлений.',
-            support: 'Чат', supportDesc: 'Включает внешний чат поддержки Chatwoot.',
+            support: 'Чат', supportDesc: 'Автозагрузка Chatwoot. Без этого разрешения чат доступен по кнопке.',
             privacy: 'Политика конфиденциальности', cookies: 'Политика cookies', manage: 'Настройки конфиденциальности'
         },
         uk: {
@@ -112,7 +114,7 @@
             necessary: 'Необхідні', necessaryDesc: 'Безпека, форми та збереження налаштувань конфіденційності.',
             analytics: 'Аналітика', analyticsDesc: 'Допомагає вимірювати використання сайту та ефективність форм.',
             marketing: 'Реклама', marketingDesc: 'Вимірювання реклами Google і персоналізація оголошень.',
-            support: 'Чат', supportDesc: 'Вмикає зовнішній чат підтримки Chatwoot.',
+            support: 'Чат', supportDesc: 'Автозавантаження Chatwoot. Без цього дозволу чат доступний за кнопкою.',
             privacy: 'Політика конфіденційності', cookies: 'Політика cookies', manage: 'Налаштування конфіденційності'
         },
         en: {
@@ -126,7 +128,7 @@
             necessary: 'Necessary', necessaryDesc: 'Security, forms and storing your privacy settings.',
             analytics: 'Analytics', analyticsDesc: 'Helps us measure site usage and form effectiveness.',
             marketing: 'Advertising', marketingDesc: 'Google Ads measurement and ad personalisation.',
-            support: 'Chat', supportDesc: 'Enables the external Chatwoot support chat.',
+            support: 'Chat', supportDesc: 'Load Chatwoot automatically. Without this permission, use the chat button.',
             privacy: 'Privacy policy', cookies: 'Cookie policy', manage: 'Privacy settings'
         }
     };
@@ -141,6 +143,10 @@
         return prefix + '/' + type;
     }
 
+    function isSupportEnabled() {
+        return supportRequested || Boolean(readConsent()?.support);
+    }
+
     function loadChatwoot() {
         if (window.$chatwoot || document.querySelector('script[data-chatwoot-loader]')) return;
         const config = window.NASERWIS_CONFIG || {};
@@ -152,10 +158,15 @@
         loader.async = true;
         loader.dataset.chatwootLoader = 'true';
         loader.addEventListener('load', function () {
+            if (!isSupportEnabled()) return;
             window.chatwootSDK.run({
                 websiteToken: config.chatwootWebsiteToken,
                 baseUrl: config.chatwootBaseUrl
             });
+        });
+        loader.addEventListener('error', function () {
+            loader.remove();
+            window.dispatchEvent(new Event('chatwoot:error'));
         });
         document.head.appendChild(loader);
     }
@@ -170,6 +181,7 @@
         };
 
         memoryConsent = value;
+        if (!value.support) supportRequested = false;
         if (persist) {
             try { localStorage.setItem(STORAGE_KEY, JSON.stringify(value)); } catch (_error) { /* Contact must work with storage disabled. */ }
         }
@@ -347,14 +359,18 @@
         window.NASERWIS_CONSENT = {
             get: readConsent,
             open: function () { show(true); },
+            isSupportEnabled: isSupportEnabled,
             requestSupport: function () {
-                const value = readConsent();
-                if (value && value.support) {
-                    loadChatwoot();
-                    return true;
-                }
-                show(false);
-                return false;
+                // Only the requested conversation starts. Do not grant Google
+                // categories, persist a choice or auto-load chat on later pages.
+                supportRequested = true;
+                close();
+                loadChatwoot();
+                return true;
+            },
+            finishSupportRequest: function () {
+                supportRequested = false;
+                if (!readConsent()) show(false);
             }
         };
 

@@ -171,7 +171,7 @@
     addEventListener('resize', scheduleUpdate);
     window.visualViewport?.addEventListener('resize', scheduleUpdate);
     window.addEventListener('naserwis:consent-ui', () => {
-        if (!consentVisible() && !window.NASERWIS_CONSENT?.get()?.support) chatPending = false;
+        if (!consentVisible() && !window.NASERWIS_CONSENT?.isSupportEnabled()) chatPending = false;
         scheduleUpdate();
     });
     // Consent is built on DOMContentLoaded. Measure again after its panel has
@@ -258,13 +258,14 @@
     function failChat() {
         if (!chatPending) return;
         chatPending = false;
+        window.NASERWIS_CONSENT?.finishSupportRequest();
         status.textContent = chatErrors[language] || chatErrors.pl;
         setOpen(true, opener);
         fallback.hidden = false;
         track('naserwis_chat_error', { placement: 'floating' });
     }
     function openChat() {
-        if (!chatPending || !window.NASERWIS_CONSENT?.get()?.support) return;
+        if (!chatPending || !window.NASERWIS_CONSENT?.isSupportEnabled()) return;
         if (window.$chatwoot) {
             try {
                 window.$chatwoot.toggle('open');
@@ -289,7 +290,12 @@
         else if (!window.NASERWIS_CONSENT) failChat();
     });
     window.addEventListener('chatwoot:ready', openChat);
-    window.addEventListener('chatwoot:closed', () => { chatOpen = false; scheduleUpdate(); });
+    window.addEventListener('chatwoot:error', failChat);
+    window.addEventListener('chatwoot:closed', () => {
+        chatOpen = false;
+        window.NASERWIS_CONSENT?.finishSupportRequest();
+        scheduleUpdate();
+    });
     window.addEventListener('naserwis:consent-cancel', () => {
         chatPending = false;
         clearTimeout(chatTimer);
