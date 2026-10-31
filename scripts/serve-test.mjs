@@ -9,7 +9,7 @@ const performanceMode = process.env.QA_PERFORMANCE === '1';
 let cachedWeather;
 let weatherExpires = 0;
 const root = resolve('public');
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.xml': 'application/xml', '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json', '.webp': 'image/webp', '.avif': 'image/avif' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.xml': 'application/xml', '.png': 'image/png', '.ico': 'image/x-icon', '.json': 'application/json', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2' };
 createServer(async (request, response) => {
   const pathname = new URL(request.url, 'http://localhost').pathname;
   if (performanceMode && request.method === 'GET' && ['/api/weather', '/api/network'].includes(pathname)) {

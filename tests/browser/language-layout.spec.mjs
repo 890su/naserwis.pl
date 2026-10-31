@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
 
 function contrast(foreground, background) {
-  const luminance = color => color.match(/[\d.]+/g).slice(0, 3)
-    .map(Number).map(value => value / 255)
+  const luminance = color => (color.startsWith('#')
+    ? color.slice(1).match(/../g).map(value => parseInt(value, 16))
+    : color.match(/[\d.]+/g).slice(0, 3).map(Number)).map(value => value / 255)
     .map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4)
     .reduce((sum, value, index) => sum + value * [.2126, .7152, .0722][index], 0);
   const values = [luminance(foreground), luminance(background)].sort((a, b) => b - a);
@@ -37,10 +38,13 @@ for (const [locale, destination] of [['en-US', '/en/'], ['ru-RU', '/ru/'], ['uk-
           expect((await page.locator('h1').boundingBox()).y).toBeCloseTo(before.y, 1);
           const target = new URL(await banner.locator('a').getAttribute('href'), page.url());
           expect(target.pathname.replace(/\/*$/, '/')).toBe(destination + route.slice(1));
-          const positions = await page.evaluate(() => {
+          const positions = await page.evaluate(async () => {
             const banner = document.querySelector('#lang-suggestion');
             const header = document.querySelector('#header');
-            const logo = document.querySelector('.logo span');
+            const logo = document.querySelector('.logo img.brand-logo');
+            const artwork = new DOMParser().parseFromString(await (await fetch(logo.src)).text(), 'image/svg+xml');
+            const logoColors = [...new Set([...artwork.querySelectorAll('[fill]')]
+              .map(element => element.getAttribute('fill')).filter(color => /^#[0-9a-f]{6}$/i.test(color)))];
             const question = banner.querySelector('span');
             const link = banner.querySelector('a');
             const close = banner.querySelector('button');
@@ -50,7 +54,8 @@ for (const [locale, destination] of [['en-US', '/en/'], ['ru-RU', '/ru/'], ['uk-
               headerBottom: header.getBoundingClientRect().bottom,
               firstContentTop: document.querySelector('main a, main h1').getBoundingClientRect().top,
               viewport: document.documentElement.clientWidth,
-              logoColor: getComputedStyle(logo).color,
+              logoLoaded: logo.complete && logo.naturalWidth > 0,
+              logoColors,
               background: getComputedStyle(banner).backgroundColor,
               questionColor: getComputedStyle(question).color,
               linkColor: getComputedStyle(link).color,
@@ -64,7 +69,9 @@ for (const [locale, destination] of [['en-US', '/en/'], ['ru-RU', '/ru/'], ['uk-
           expect(positions.left).toBeGreaterThanOrEqual(0);
           expect(positions.right).toBeLessThanOrEqual(positions.viewport);
           expect(positions.questionIsExposed).toBe(true);
-          expect(contrast(positions.logoColor, 'rgb(255, 255, 255)')).toBeGreaterThanOrEqual(4.5);
+          expect(positions.logoLoaded).toBe(true);
+          expect(positions.logoColors.length).toBeGreaterThan(0);
+          for (const color of positions.logoColors) expect(contrast(color, 'rgb(255, 255, 255)')).toBeGreaterThanOrEqual(4.5);
           expect(contrast(positions.questionColor, positions.background)).toBeGreaterThanOrEqual(4.5);
           expect(contrast(positions.linkColor, positions.linkBackground)).toBeGreaterThanOrEqual(4.5);
           expect(contrast(positions.closeColor, positions.background)).toBeGreaterThanOrEqual(4.5);
