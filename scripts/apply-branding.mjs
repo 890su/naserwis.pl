@@ -4,7 +4,7 @@ import sharp from 'sharp';
 // Approved in the logo-design review on 31 October 2026: S and radio signal.
 export const brandDirectory = '/assets/brand/20261031';
 export const brandSocialPath = `${brandDirectory}/share.png`;
-const logo = `<img class="brand-logo" src="${brandDirectory}/logo-horizontal-light.svg" width="843" height="168" alt="NaSerwis.pl" decoding="async">`;
+const logo = `<img class="brand-logo" src="${brandDirectory}/logo-symbol.svg" width="256" height="256" alt="" aria-hidden="true" decoding="async"><span class="brand-wordmark">Na<span>Serwis</span></span>`;
 const icons = `<link rel="icon" href="${brandDirectory}/favicon.ico" sizes="any">
 <link rel="icon" href="${brandDirectory}/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="${brandDirectory}/apple-touch-icon.png">
