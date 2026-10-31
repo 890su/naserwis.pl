@@ -18,7 +18,7 @@ body[data-redesign] .logo span{color:var(--rd-blue)}
 .logo .brand-logo{display:block;width:196px;height:auto;aspect-ratio:843/168}
 @media(max-width:760px){.logo .brand-logo{width:160px}}
 @media(max-width:420px){.logo .brand-logo{width:140px}}
-@media(max-width:360px){.logo .brand-logo{width:116px}}
+@media(max-width:360px){.logo .brand-logo{width:112px}}
 body[data-redesign] .nav-center{gap:24px}
 body[data-redesign] .header-nav-link,body[data-redesign] .guides-nav-link,body[data-redesign] .services-label{font-size:15px;font-weight:600;color:var(--rd-ink)}
 body[data-redesign] .services-btn{padding:10px 0}
