@@ -187,7 +187,13 @@ for (const route of ['', 'serwis-monitoringu/']) {
       await page.goto('/ru/' + route);
       const form = page.locator(route ? '#final-form' : '#hero-form');
       const panel = form.locator('..');
-      await expect(panel.locator('h2')).toHaveCount(0);
+      await expect(panel.locator('h2')).toHaveCount(1);
+      const heading = form.getByRole('heading', { level: 2, name: 'Что случилось?', exact: true });
+      await expect(heading).toBeVisible();
+      await expect(heading).toHaveClass('enquiry-title');
+      await expect(heading).toHaveCSS('font-size', '18px');
+      await expect(heading).toHaveCSS('font-weight', '700');
+      await expect(heading).toHaveCSS('margin-bottom', '12px');
       await expect(form.locator('.enquiry-problem label')).toHaveCount(0);
       await expect(form.locator('textarea')).toHaveAttribute('aria-label', 'Что случилось?');
       if (width < 1200) {

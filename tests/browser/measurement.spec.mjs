@@ -244,8 +244,8 @@ test('desktop service menu records its destination before native navigation', as
     sessionStorage.setItem('qa-service-navigation', JSON.stringify(window.dataLayer.filter(item => item.event === 'naserwis_service_select')));
   }));
   await page.goto('/ru/');
-  await page.locator('.services-btn').click();
-  await page.locator('.services-menu button[onclick*="naprawa-wifi"]').click();
+  await page.locator('.services-dropdown .services-btn').click();
+  await page.locator('.services-dropdown .services-menu button[onclick*="naprawa-wifi"]').click();
   await page.waitForURL('**/ru/naprawa-wifi/');
   expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem('qa-service-navigation')))).toMatchObject([
     { target_service: 'wifi_repair', placement: 'header', language: 'ru' }

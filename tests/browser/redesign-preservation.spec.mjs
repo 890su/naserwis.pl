@@ -28,21 +28,30 @@ for (const route of ['/', '/naprawa-wifi/']) {
 }
 
 for(const reducedMotion of ['no-preference','reduce']) {
-  test(`why-us copy stays readable in service details / ${reducedMotion}`,async({page})=>{
+  test(`visible service choices and billing stay readable / ${reducedMotion}`,async({page})=>{
     await page.emulateMedia({reducedMotion});
     await page.addInitScript(()=>{
       localStorage.setItem('preferredLanguage','pl');
       localStorage.setItem('naserwis_consent_v1',JSON.stringify({version:1,analytics:false,marketing:false,support:false}));
     });
     await page.goto('/');
-    await expect(page.locator('.why-us')).toBeHidden();
-    await page.locator('.home-services-details > summary').click();
-    await page.locator('.why-us').scrollIntoViewIfNeeded();
-    await expect(page.locator('.why-us .section-title')).toHaveCSS('color','rgb(24, 33, 44)');
-    for(const benefit of await page.locator('.why-us .benefit').all()) {
-      await benefit.scrollIntoViewIfNeeded();
-      await expect(benefit).toHaveCSS('opacity','1');
-      await expect(benefit.locator('p')).toHaveCSS('color','rgb(72, 84, 98)');
+    await expect(page.locator('.why-us,.home-services-details')).toHaveCount(0);
+    const headings = page.locator('.preview-task-heading h2');
+    await expect(headings).toHaveCount(2);
+    for(const heading of await headings.all()) {
+      await heading.scrollIntoViewIfNeeded();
+      await expect(heading).toBeVisible();
+      await expect(heading).toHaveCSS('opacity','1');
+      await expect(heading).toHaveCSS('color','rgb(24, 33, 44)');
+    }
+    const notes = page.locator('.home-pricing-notes p');
+    await expect(notes).toHaveCount(4);
+    for(const note of await notes.all()) {
+      await note.scrollIntoViewIfNeeded();
+      await expect(note).toBeVisible();
+      await expect(note).toHaveCSS('opacity','1');
+      const colour = await note.evaluate(el => el.classList.contains('billing-condition') ? 'rgb(24, 33, 44)' : 'rgb(72, 84, 98)');
+      await expect(note).toHaveCSS('color',colour);
     }
   });
 }
