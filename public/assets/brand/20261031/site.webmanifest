@@ -1,0 +1,26 @@
+{
+  "name": "NaSerwis.pl",
+  "short_name": "NaSerwis.pl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#18212c",
+  "theme_color": "#1d5bd0",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

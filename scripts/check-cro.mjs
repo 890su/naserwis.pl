@@ -34,27 +34,28 @@ const protectedFiles = ['public/robots.txt', 'public/_redirects', 'public/site-c
 // Existing title/description/H1, canonical/hreflang, FAQ and Service facts are retained.
 // Canonicals and reciprocal hreflang are preserved; original fixture is immutable.
 const reviewedPageHashes = {
+  // 2026-10-31 owner-approved logo: only the LocalBusiness image URL changes to the versioned brand plate; all other SEO fields verified against HEAD.
   // 2026-10-27 owner-requested concise copy: only Service descriptions and matching visible FAQ changed; metadata/H1/URLs compared with prior release.
   // 2026-10-26 local business pages: existing Service metadata retained; only the audience FAQ answer now accepts organisations locally.
   // 2026-10-26: restored conditional nearby short job from 200 PLN and standard visit from 250 PLN; only the billing FAQ answer changed.
   // 2026-10-24: owner-approved network/internet fault and CCTV share summaries; aligned LocalBusiness descriptions.
   // 2026-10-16 owner-approved shorter homepage H1 in all four languages ("... / Montaż lub naprawa z dojazdem").
-  "public/index.html": "49200a1f57759ec3fb0fb5b3e724860181398f34644c3cecb9f44254663030a6",
-  "public/naprawa-wifi/index.html": "4eded4ff9ac5570c1b8a203b6231db49e3857dc9bc95295fa68397bcaac16a75",
-  "public/naprawa-sieci/index.html": "065471186dfb580711a1225ea115e8d57d82ad533e4486e27e9f41e42a68a7bd",
-  "public/montaz-sieci/index.html": "cb88b80bceef5928740367eef2d5e196e6545ff05095ce6053d7cbd05b68eb42",
-  "public/ru/index.html": "c22ded0339f8afa8dc5ad9512ef6ee8dacc6e32970323ffd3099ad50380ca8ed",
-  "public/ru/naprawa-wifi/index.html": "9af2d4e67e4f7cf46924a33aad430c71bfe2e1814010a92e077a81b31b5f613c",
-  "public/ru/naprawa-sieci/index.html": "d8212e9e277fa8becb11a6d69acfcaa1693b9288789bb80f248e363b68589626",
-  "public/ru/montaz-sieci/index.html": "ac71345ed695749ef537d66a9a20dccf83130d735339f33f29a5233627c23cb8",
-  "public/uk/index.html": "e5a45f12e15b3535e1ce679e30e2a17fc8e1f90a05e718162bb5230ef89d340a",
-  "public/uk/naprawa-wifi/index.html": "0c642eb341556b0937a61b339a66f127d7772468dd9bc78618cc9d04b57766bb",
-  "public/uk/naprawa-sieci/index.html": "d99748503041848bebde9800d5091e1a3d3c8040cd499555c910b95634c8b032",
-  "public/uk/montaz-sieci/index.html": "dd8410467173d44c9404f63ecc6f2b141e2ae75fe37788bdcf76145239bdf757",
-  "public/en/index.html": "804fb2c0c0de5e272bbb97e160fcb51d7ffdd28649f174fffa70f5eb00dc368c",
-  "public/en/naprawa-wifi/index.html": "ffb98d5c1ca590dd4c9596a1c94d9e493a7fe0855f894e2f24c3b41b3a50d8ef",
-  "public/en/naprawa-sieci/index.html": "9758c21db518e4618686489475e0d00669ce32730debc32220333938725b2845",
-  "public/en/montaz-sieci/index.html": "d904625437e4cc4c8ac75c2f39a7645fcc3a5e8a053e17179f1b1674074178a8"
+  "public/index.html": "e58a5fd007308adaac6d4fc0d20b8776c0561ea76dd2b16f4cd990ef68871836",
+  "public/naprawa-wifi/index.html": "9af1b877763b203c2b60b95b0b8b4b8be986b8a229afa7b7608215ed83d0d59c",
+  "public/naprawa-sieci/index.html": "d9ec6c61c60960f07da0897b8ec0a0dfb0831f449668e971a78229f04ba6e999",
+  "public/montaz-sieci/index.html": "bc029de07f93bec84f784ccbd8fed76ba92aba452f895081ef1537ee40fd7a2a",
+  "public/ru/index.html": "507e1d303507767d9d5bb921f1ad9d5d415fdbad73c15bf1b83be8064ea04cdc",
+  "public/ru/naprawa-wifi/index.html": "7b68a788915be005711a738c4a65dcff7f1c6e377686b5729d5a19109cec32d4",
+  "public/ru/naprawa-sieci/index.html": "3abfc4682caa3a450647b3523e81b507b3c0a9d0c0a414abf4e9e4ef53f978c7",
+  "public/ru/montaz-sieci/index.html": "9e534bd69e20e8a77b15d0b888273b3ceb275e3c9fe09d0e9bb1b6f0cba37d10",
+  "public/uk/index.html": "712626feb08032ff6cdd3547e3218220eb7549f356fba506d574f94b7dd728f2",
+  "public/uk/naprawa-wifi/index.html": "b2266a59b1e33aeeb8bd24a6a2f0588b12bb417593130ed27d4159d597b27b6e",
+  "public/uk/naprawa-sieci/index.html": "b4c1834fec35b0568ed8464439749fcc6dd4419597e5cfb29dcc97e1f0008eea",
+  "public/uk/montaz-sieci/index.html": "1b20c900824472e298665c2a6c8cd64bdbc1c69a78efc50b220686dfc15a8431",
+  "public/en/index.html": "344b75a05ae823d810885c7a43ef5f47f6dfa17b4f761c2981a7118b6ee7eae4",
+  "public/en/naprawa-wifi/index.html": "503c9f92d55d8d1b185f0697b9069f45d6e3b33e5d4e48d5bf808a32e171b0ed",
+  "public/en/naprawa-sieci/index.html": "ba33de85629444e8872cbc5389cd7b9643027929323aa14291ed0f5779526a45",
+  "public/en/montaz-sieci/index.html": "78a63eb3a4e7f50b98324d5481b0aca5d35b365381441f7c16dd9ff000c88127"
 };
 // Legacy PHP routes now redirect directly to their established canonical URLs.
 const reviewedProtectedFileHashes = {

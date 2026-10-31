@@ -2,12 +2,12 @@
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { transform } from 'esbuild';
-import sharp from 'sharp';
 import { PurgeCSS } from 'purgecss';
 import { assetManifest, expandAssetBundles } from './site-assets.mjs';
 import { applyRedesign } from './apply-redesign.mjs';
 import { localizeRuntime } from './localize-runtime.mjs';
 import { splitReviewModal } from './review-modal-runtime.mjs';
+import { applyBranding, brandSocialPath } from './apply-branding.mjs';
 
 // Both passes write shared HTML, so finish tool relocation before rebuilding headers.
 await import('./apply-tool-navigation.mjs');
@@ -15,6 +15,7 @@ await import('./apply-header-navigation.mjs');
 await import('./sync-home-metadata.mjs');
 await import('./sync-google-reviews.mjs');
 await applyRedesign();
+await applyBranding();
 
 const previousManifest = await assetManifest();
 const manifest = {};
@@ -31,18 +32,6 @@ const privacyNotice = {
   en: 'We use the data to answer your enquiry. Controller: Ihar Shestsiuk.'
 };
 const privacyLabel = { pl: 'Prywatność', ru: 'Конфиденциальность', uk: 'Конфіденційність', en: 'Privacy' };
-
-// Rasterize the existing two-colour NaSerwis wordmark; no new brand symbol.
-const wordmark = (width, height, fontSize) => `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="#fff"/><text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="${fontSize}" font-weight="700" fill="#0a2540">Na<tspan fill="#00d4aa">Serwis</tspan></text></svg>`;
-await sharp(Buffer.from(wordmark(1200, 630, 154))).png().toFile(`${output}/naserwis-social.png`);
-await sharp(Buffer.from(wordmark(256, 256, 46))).png().toFile('public/favicon.png');
-// A true ICO fallback also removes automatic /favicon.ico 404 requests.
-const iconPng = await sharp(Buffer.from(wordmark(256, 256, 46))).png().toBuffer();
-const ico = Buffer.alloc(22);
-ico.writeUInt16LE(1, 2); ico.writeUInt16LE(1, 4);
-ico.writeUInt16LE(1, 10); ico.writeUInt16LE(32, 12);
-ico.writeUInt32LE(iconPng.length, 14); ico.writeUInt32LE(22, 18);
-await writeFile('public/favicon.ico', Buffer.concat([ico, iconPng]));
 
 const overrides = `
 /* Technical accessibility fixes; keep the established brand palette. */
@@ -158,7 +147,7 @@ async function processDirectory(directory) {
         if (!item || typeof item !== 'object') return;
         if (item['@type'] === 'LocalBusiness') {
           delete item.inLanguage;
-          item.image = 'https://naserwis.pl/assets/naserwis-social.png';
+          item.image = `https://naserwis.pl${brandSocialPath}`;
         }
         for (const value of Object.values(item)) if (Array.isArray(value)) value.forEach(visit); else visit(value);
       }
