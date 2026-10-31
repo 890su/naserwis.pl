@@ -1,3 +1,5 @@
+import { storeJournal } from '../../shared/lead-journal.js';
+
 const MAX_NAME_LENGTH = 120;
 const MAX_PHONE_LENGTH = 60;
 const MAX_MESSAGE_LENGTH = 4_000;
@@ -45,12 +47,12 @@ function attributionText(attribution) {
   return `\n\n📊 Attribution\n${entries.map(([key, value]) => `${key}: ${value}`).join("\n")}`;
 }
 
-function telegramText({ leadId, name, phone, message, formType, rating, lang, intent, attribution, requestType, urgency, address }) {
+function telegramText({ leadId, name, phone, message, formType, rating, lang, intent, attribution, requestType, urgency, address, submittedAt }) {
   const title = formType === "review" ? "📝 New private review" : "📩 New contact request";
   const review = formType === "review" ? `\n⭐ Rating: ${rating}/5` : "";
   const intentLine = intent ? `\n🎯 Intent: ${intent}` : "";
   const details = [requestType && `Request type: ${requestType}`, urgency && `Urgency: ${urgency}`, address && `Address: ${address}`].filter(Boolean).join('\n');
-  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name || '—'}\n📞 ${phone}\n💬 ${message}${details ? '\n' + details : ''}\n📋 Form: ${formType}\n🌐 Language: ${lang}${intentLine}\n🕐 ${new Date().toISOString()}${attributionText(attribution)}`;
+  return `${title}${review}\n\n🆔 ${leadId}\n👤 ${name || '—'}\n📞 ${phone}\n💬 ${message}${details ? '\n' + details : ''}\n📋 Form: ${formType}\n🌐 Language: ${lang}${intentLine}\n🕐 ${submittedAt || new Date().toISOString()}${attributionText(attribution)}`;
 }
 
 async function validateTurnstile(token, request, env) {
@@ -108,6 +110,7 @@ export async function onRequestPost(context) {
   const text = messages[lang];
   const data = {
     leadId: crypto.randomUUID(),
+    submittedAt: new Date().toISOString(),
     name: clean(payload.name, MAX_NAME_LENGTH),
     phone: clean(payload.phone, payload.contactFlow === 'staged' ? 120 : MAX_PHONE_LENGTH),
     message: clean(payload.message, MAX_MESSAGE_LENGTH),
@@ -130,6 +133,11 @@ export async function onRequestPost(context) {
     return reply({ success: false, message: text.spam }, 403);
   }
 
+  // Persist verified enquiries before acknowledging them; reviews are not leads.
+  if (data.formType !== 'review' && env.JOURNAL_DB) {
+    try { await storeJournal(data, env); }
+    catch { return reply({ success: false, message: 'Nie udało się zapisać zapytania. Spróbuj ponownie.' }, 503); }
+  }
   const delivered = await Promise.all([sendTelegram(data, env), sendEmail(data, env)]);
   if (!delivered.some(Boolean)) {
     console.error("Contact delivery failed: configure Telegram and/or Resend secrets.");

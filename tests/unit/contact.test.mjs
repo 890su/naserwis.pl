@@ -94,3 +94,36 @@ test('staged enquiries allow an omitted name and deliver sanitized details throu
   await call({ ...valid, contactFlow: 'staged', requestType: 'unknown', urgency: 'unknown' }, env);
   assert.ok(!sent.at(-1).text.includes('unknown'));
 });
+
+test('verified enquiries enter the shared journal before notification, reviews do not', async t => {
+  const calls = [];
+  const journal = [];
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls.push('notification'); return Response.json({ok: true});
+  });
+  const env = {
+    TELEGRAM_BOT_TOKEN: 'test-only', TELEGRAM_CHAT_ID: 'test-only',
+    JOURNAL_DB: {prepare(sql) {return {bind(...values) {return {async run() {
+      assert.match(sql, /INSERT INTO lead_journal/); calls.push('journal'); journal.push(values);
+    }}}}}},
+  };
+  const response = await call({...valid, attribution: {utm_source: 'chatgpt.com'}}, env);
+  assert.equal(response.status, 200);
+  assert.deepEqual(calls, ['journal', 'notification']);
+  const result = await response.json();
+  const payload = JSON.parse(journal[0][3]);
+  assert.equal(payload.site_brand, 'NaSerwis');
+  assert.equal(payload.request_id, result.leadId);
+  assert.equal(payload.attribution.utm_source, 'chatgpt.com');
+  await call({...valid, formType: 'review'}, env);
+  assert.equal(journal.length, 1);
+});
+
+test('a journal storage failure is reported before sending a duplicate notification', async t => {
+  let sent = false;
+  t.mock.method(globalThis, 'fetch', async () => {sent = true; return Response.json({ok: true});});
+  const env = {JOURNAL_DB: {prepare() {throw new Error('Offline');}}};
+  const response = await call(valid, env);
+  assert.equal(response.status, 503);
+  assert.equal(sent, false);
+});
