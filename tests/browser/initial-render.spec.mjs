@@ -26,7 +26,9 @@ for (const width of [390, 1280]) {
         release();
       }
       await page.waitForLoadState('load');
-      await expect(page.locator('.services-menu')).toBeHidden();
+      const serviceMenus = page.locator('.services-menu');
+      await expect(serviceMenus).toHaveCount(2);
+      for (const menu of await serviceMenus.all()) await expect(menu).toBeHidden();
       await expect(page.locator('#lang-menu')).toBeHidden();
       await expect(page.locator('h1')).toBeVisible();
       await expect.poll(() => page.evaluate(() => performance.getEntriesByName('first-contentful-paint').length)).toBe(1);

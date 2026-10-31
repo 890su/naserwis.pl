@@ -28,23 +28,27 @@ for (const prefix of ['', 'ru/', 'uk/', 'en/']) {
     }
     await page.locator('.guide-cards h2 a').first().click();
     await page.waitForURL(new RegExp(`/poradnik/${wifi}$`), { waitUntil: 'load' });
-    await page.locator('.services-btn').click();
-    await expect(page.locator('.services-menu')).toHaveAttribute('aria-hidden', 'false');
+    const services = page.locator('.services-dropdown');
+    await services.locator('.services-btn').click();
+    await expect(services.locator('.services-menu')).toHaveAttribute('aria-hidden', 'false');
+    await expect(page.locator('#business-menu')).toHaveAttribute('aria-hidden', 'true');
     await page.keyboard.press('Escape');
+    await expect(services.locator('.services-menu')).toHaveAttribute('aria-hidden', 'true');
     await page.locator('#select-technical').click();
     await page.setViewportSize({ width: 320, height: 740 });
     await page.locator('#mobile-menu-toggle').click();
     await expect(page.locator('#mobile-menu-overlay')).toHaveClass(/active/);
     await expect(page.locator('#mobile-menu-overlay .guides-nav-link')).toBeVisible();
+    const destination = prefix === 'ru/' ? 'en' : 'ru';
     await Promise.all([
-      page.waitForURL(new RegExp(`/ru/poradnik/${wifi}#technical$`), { waitUntil: 'load' }),
-      page.locator('.mobile-lang-btn[hreflang=ru]').click()
+      page.waitForURL(new RegExp(`/${destination}/poradnik/${wifi}#technical$`), { waitUntil: 'load' }),
+      page.locator(`.mobile-lang-btn[hreflang=${destination}]`).click()
     ]);
     await expect(page.locator('#technical')).toBeVisible();
     await page.locator('#mobile-menu-toggle').click();
     await expect(page.locator('#mobile-menu-overlay')).toHaveClass(/active/);
     await page.locator('#mobile-menu-overlay .guides-nav-link').click();
-    await expect(page).toHaveURL(/\/ru\/poradnik\/$/);
+    await expect(page).toHaveURL(new RegExp(`/${destination}/poradnik/$`));
     expect(errors).toEqual([]);
   });
   for (const slug of [wifi, lan, cctv]) {
