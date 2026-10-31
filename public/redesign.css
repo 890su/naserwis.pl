@@ -13,12 +13,13 @@ body[data-redesign] #header{position:sticky;top:0;background:#fff;backdrop-filte
 body[data-redesign] #header nav{min-height:76px;padding-top:12px;padding-bottom:12px;line-height:1.4}
 body[data-redesign] .logo{font-size:28px;font-weight:800;letter-spacing:-.03em}
 body[data-redesign] .logo span{color:var(--rd-blue)}
-/* The approved outlined logo reserves its size before the SVG loads. */
-.logo{display:inline-flex;align-items:center;min-height:44px;flex-shrink:0}
-.logo .brand-logo{display:block;width:196px;height:auto;aspect-ratio:843/168}
-@media(max-width:760px){.logo .brand-logo{width:160px}}
-@media(max-width:420px){.logo .brand-logo{width:140px}}
-@media(max-width:360px){.logo .brand-logo{width:112px}}
+/* Keep the original two-colour type alongside the approved S/signal symbol. */
+.logo{display:inline-flex;align-items:center;gap:8px;min-height:44px;flex-shrink:0}
+.logo .brand-logo{display:block;flex:none;width:34px;height:34px}
+body[data-redesign] .logo .brand-wordmark{color:inherit;white-space:nowrap}
+@media(max-width:760px){.logo .brand-logo{width:30px;height:30px}}
+@media(max-width:360px){.logo{gap:5px}.logo .brand-logo{width:24px;height:24px}}
+@media(max-width:340px){body[data-redesign] .logo .brand-wordmark{font-size:20px}.logo .brand-logo{width:20px;height:20px}}
 body[data-redesign] .nav-center{gap:24px}
 body[data-redesign] .header-nav-link,body[data-redesign] .guides-nav-link,body[data-redesign] .services-label{font-size:15px;font-weight:600;color:var(--rd-ink)}
 body[data-redesign] .services-btn{padding:10px 0}
