@@ -1,4 +1,4 @@
-// Shared factual copy for four locales. Keep metadata/URLs and the published rate conditions.
+// Shared factual copy for four locales. Preserve URLs and the published rate conditions.
 export const copy = {
   "pl": {
     "scope": "Dla klientów indywidualnych i organizacji",
@@ -12,7 +12,7 @@ export const copy = {
       ],
       [
         "wifi",
-        "Router, AP lub Mesh",
+        "Konfiguracja routera i Mesh w Warszawie",
         "Ustawienia sieci, rozmieszczenie punktów i podłączenie nowego routera."
       ],
       [
@@ -76,17 +76,17 @@ export const copy = {
       ]
     ],
     "home": {
-      "title": "Wi-Fi, sieci i monitoring — Warszawa | NaSerwis.pl",
+      "title": "Wi-Fi i sieci Warszawa – naprawa i montaż | NaSerwis.pl",
       "description": "Serwis Wi-Fi, sieci LAN i monitoringu wizyjnego w Warszawie i okolicy. Diagnozujemy awarie sieci i internetu, konfigurujemy routery, montujemy okablowanie i kamery. Zakres i koszt uzgadniamy przed pracą.",
       "h1": "Wi-Fi i sieci w Warszawie",
       "accent": "Montaż lub naprawa z dojazdem",
       "intro": "Naprawiamy Wi-Fi, sieci LAN i monitoring. Konfigurujemy routery, układamy kable i montujemy kamery w Warszawie i okolicy."
     },
     "wifi": {
-      "title": "Naprawa Wi-Fi i konfiguracja domowej sieci — Warszawa | NaSerwis.pl",
-      "description": "Słaby zasięg lub Wi-Fi bez internetu? Diagnostyka, konfiguracja routera, AP i Mesh w domu lub mieszkaniu w Warszawie. Rozliczenie ustalamy przed pracą.",
+      "title": "Naprawa Wi-Fi Warszawa – router i Mesh | NaSerwis.pl",
+      "description": "Wi-Fi zrywa lub nie ma internetu? Diagnoza i konfiguracja routera, AP i Mesh w Warszawie. Dojazd do domu lub firmy; zakres i koszt ustalamy przed wizytą.",
       "h1": "Naprawa Wi-Fi w Warszawie",
-      "accent": "Router i zasięg w Twoim domu",
+      "accent": "Router, Mesh i zasięg – z dojazdem",
       "intro": "Wi-Fi zrywa, ma słaby zasięg albo nie ma internetu? Sprawdzamy połączenie i konfigurujemy router, AP lub Mesh.",
       "heading": "Co sprawdzimy i ustawimy",
       "explanation": "Usterkę po stronie operatora trzeba zgłosić operatorowi. Pomożemy ustalić, czy problem dotyczy jego sieci.",
@@ -117,7 +117,7 @@ export const copy = {
     },
     "repair": {
       "title": "Naprawa sieci LAN, gniazd i kabli — Warszawa | NaSerwis.pl",
-      "description": "Naprawa domowej sieci LAN w Warszawie: diagnostyka kabli i portów, gniazda RJ45 oraz test po naprawie. Dojazd i zakres prac uzgadniamy przed wizytą.",
+      "description": "Naprawa sieci LAN w Warszawie: diagnostyka kabli i portów, gniazda RJ45 i test po naprawie. Dojazd do domu lub firmy; zakres uzgadniamy przed wizytą.",
       "h1": "Naprawa sieci LAN w Warszawie",
       "accent": "Gniazda RJ45, kable i połączenia",
       "intro": "Nie działa gniazdo RJ45, połączenie zanika lub spadła prędkość? Sprawdzamy kabel, złącza i porty.",
@@ -149,10 +149,10 @@ export const copy = {
       ]
     },
     "install": {
-      "title": "Montaż sieci LAN w domu i mieszkaniu — Warszawa | NaSerwis.pl",
-      "description": "Instalacja domowej sieci LAN w Warszawie: plan punktów, okablowanie, gniazda RJ45 i testy po montażu. Wycena projektu lub rozliczenie godzinowe po uzgodnieniu.",
+      "title": "Montaż sieci LAN Warszawa – okablowanie i RJ45 | NaSerwis.pl",
+      "description": "Montaż sieci LAN w Warszawie: plan punktów, okablowanie, gniazda RJ45 i testy po montażu. Dla domów i firm. Wycena projektu lub rozliczenie godzinowe po uzgodnieniu.",
       "h1": "Montaż sieci LAN w Warszawie",
-      "accent": "Okablowanie domu i mieszkania",
+      "accent": "Okablowanie i gniazda RJ45 w domu lub firmie",
       "intro": "Prowadzimy kable, montujemy gniazda RJ45 i podłączamy punkty sieciowe do routera lub switcha.",
       "heading": "Co obejmuje montaż LAN",
       "explanation": "W gotowym lokalu sprawdzamy dostępne trasy. Sposób prowadzenia kabli i prace wykończeniowe uzgadniamy przed montażem.",
@@ -197,7 +197,7 @@ export const copy = {
       ],
       [
         "wifi",
-        "Роутер, AP или Mesh",
+        "Настройка роутера и Mesh в Варшаве",
         "Настройки сети, размещение точек и подключение нового роутера."
       ],
       [
@@ -261,17 +261,17 @@ export const copy = {
       ]
     ],
     "home": {
-      "title": "Wi-Fi, сети и видеонаблюдение — Варшава | NaSerwis.pl",
+      "title": "Wi-Fi и сети в Варшаве – ремонт и монтаж | NaSerwis.pl",
       "description": "Сервис Wi-Fi, сетей LAN и видеонаблюдения в Варшаве и окрестностях. Диагностируем сбои сети и интернета, настраиваем роутеры, прокладываем кабели и устанавливаем камеры. Объём и стоимость согласуем до работы.",
       "h1": "Wi-Fi и сети в Варшаве",
       "accent": "Монтаж или ремонт с выездом",
       "intro": "Ремонтируем Wi-Fi, сети LAN и видеонаблюдение. Настраиваем роутеры, прокладываем кабели и устанавливаем камеры в Варшаве и окрестностях."
     },
     "wifi": {
-      "title": "Ремонт Wi-Fi и настройка домашней сети — Варшава | NaSerwis.pl",
-      "description": "Слабый сигнал или Wi-Fi без интернета? Диагностика, настройка роутера, AP и Mesh в квартире или доме в Варшаве. Расчёт согласуем до работы.",
+      "title": "Ремонт Wi-Fi в Варшаве – роутер и Mesh | NaSerwis.pl",
+      "description": "Wi-Fi обрывается или нет интернета? Диагностика и настройка роутера, AP и Mesh в Варшаве. Выезд домой или в организацию; объём и стоимость согласуем до визита.",
       "h1": "Ремонт Wi-Fi в Варшаве",
-      "accent": "Роутер и покрытие в вашем доме",
+      "accent": "Роутер, Mesh и покрытие – с выездом",
       "intro": "Wi-Fi обрывается, плохо ловит или нет интернета? Проверяем подключение и настраиваем роутер, AP или Mesh.",
       "heading": "Что проверим и настроим",
       "explanation": "Аварии в сети оператора устраняет оператор. Поможем определить, относится ли проблема к его сети.",
@@ -302,7 +302,7 @@ export const copy = {
     },
     "repair": {
       "title": "Ремонт сети LAN, розеток и кабелей — Варшава | NaSerwis.pl",
-      "description": "Ремонт домашней LAN в Варшаве: диагностика кабелей и портов, розетки RJ45 и проверка после ремонта. Выезд и объём согласуем до визита.",
+      "description": "Ремонт сети LAN в Варшаве: диагностика кабелей и портов, розетки RJ45 и проверка после ремонта. Выезд домой или в организацию; объём согласуем до визита.",
       "h1": "Ремонт сети LAN в Варшаве",
       "accent": "Розетки RJ45, кабели и соединения",
       "intro": "Не работает розетка RJ45, пропадает связь или упала скорость? Проверяем кабель, разъёмы и порты.",
@@ -334,10 +334,10 @@ export const copy = {
       ]
     },
     "install": {
-      "title": "Монтаж сети LAN в доме и квартире — Варшава | NaSerwis.pl",
-      "description": "Домашняя LAN в Варшаве: план точек, кабели, розетки RJ45 и проверка после монтажа. Проектная стоимость или почасовой расчёт по согласованию.",
+      "title": "Монтаж сети LAN в Варшаве – кабели и RJ45 | NaSerwis.pl",
+      "description": "Монтаж сети LAN в Варшаве: план точек, кабели, розетки RJ45 и проверка подключений. Для частных клиентов и организаций. Смета или почасовая оплата по согласованию.",
       "h1": "Монтаж сети LAN в Варшаве",
-      "accent": "Кабели в доме и квартире",
+      "accent": "Кабели и розетки RJ45 дома и в организации",
       "intro": "Прокладываем кабели, устанавливаем розетки RJ45 и подключаем сетевые точки к роутеру или коммутатору.",
       "heading": "Что входит в монтаж LAN",
       "explanation": "В готовом помещении проверим доступные трассы. Способ прокладки и отделочные работы согласуем до монтажа.",
@@ -382,7 +382,7 @@ export const copy = {
       ],
       [
         "wifi",
-        "Роутер, AP або Mesh",
+        "Налаштування роутера й Mesh у Варшаві",
         "Налаштування мережі, розміщення точок і підключення нового роутера."
       ],
       [
@@ -446,17 +446,17 @@ export const copy = {
       ]
     ],
     "home": {
-      "title": "Wi-Fi, мережі й відеоспостереження — Варшава | NaSerwis.pl",
+      "title": "Wi-Fi та мережі у Варшаві – ремонт і монтаж | NaSerwis.pl",
       "description": "Сервіс Wi-Fi, мереж LAN і відеоспостереження у Варшаві та околицях. Діагностуємо збої мережі й інтернету, налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери. Обсяг і вартість узгоджуємо до роботи.",
       "h1": "Wi-Fi та мережі у Варшаві",
       "accent": "Монтаж або ремонт з виїздом",
       "intro": "Ремонтуємо Wi-Fi, мережі LAN і відеоспостереження. Налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери у Варшаві й околицях."
     },
     "wifi": {
-      "title": "Ремонт Wi-Fi та налаштування домашньої мережі — Варшава | NaSerwis.pl",
-      "description": "Слабкий сигнал або Wi-Fi без інтернету? Діагностика, налаштування роутера, AP і Mesh у квартирі чи будинку у Варшаві. Розрахунок погоджуємо до роботи.",
+      "title": "Ремонт Wi-Fi у Варшаві – роутер і Mesh | NaSerwis.pl",
+      "description": "Wi-Fi обривається або немає інтернету? Діагностика й налаштування роутера, AP та Mesh у Варшаві. Виїзд додому чи в організацію; обсяг і вартість погодимо до візиту.",
       "h1": "Ремонт Wi-Fi у Варшаві",
-      "accent": "Роутер і покриття у вашому домі",
+      "accent": "Роутер, Mesh і покриття – з виїздом",
       "intro": "Wi-Fi обривається, погано ловить або немає інтернету? Перевіряємо підключення й налаштовуємо роутер, AP або Mesh.",
       "heading": "Що перевіримо й налаштуємо",
       "explanation": "Аварії в мережі оператора усуває оператор. Допоможемо визначити, чи стосується проблема його мережі.",
@@ -487,7 +487,7 @@ export const copy = {
     },
     "repair": {
       "title": "Ремонт мережі LAN, розеток і кабелів — Варшава | NaSerwis.pl",
-      "description": "Ремонт домашньої LAN у Варшаві: діагностика кабелів і портів, розетки RJ45 та перевірка після ремонту. Виїзд і обсяг погоджуємо до візиту.",
+      "description": "Ремонт мережі LAN у Варшаві: діагностика кабелів і портів, розетки RJ45 та перевірка після ремонту. Виїзд додому чи в організацію; обсяг погодимо до візиту.",
       "h1": "Ремонт мережі LAN у Варшаві",
       "accent": "Розетки RJ45, кабелі та з’єднання",
       "intro": "Не працює розетка RJ45, зникає зв’язок або впала швидкість? Перевіряємо кабель, роз’єми та порти.",
@@ -519,10 +519,10 @@ export const copy = {
       ]
     },
     "install": {
-      "title": "Монтаж мережі LAN у будинку та квартирі — Варшава | NaSerwis.pl",
-      "description": "Домашня LAN у Варшаві: план точок, кабелі, розетки RJ45 та перевірка після монтажу. Вартість проєкту або погодинний розрахунок за погодженням.",
+      "title": "Монтаж мережі LAN у Варшаві – кабелі й RJ45 | NaSerwis.pl",
+      "description": "Монтаж мережі LAN у Варшаві: план точок, кабелі, розетки RJ45 та перевірка підключень. Для приватних клієнтів і організацій. Кошторис або погодинна оплата за погодженням.",
       "h1": "Монтаж мережі LAN у Варшаві",
-      "accent": "Кабелі в будинку та квартирі",
+      "accent": "Кабелі й розетки RJ45 вдома та в організації",
       "intro": "Прокладаємо кабелі, встановлюємо розетки RJ45 і підключаємо мережеві точки до роутера або комутатора.",
       "heading": "Що входить у монтаж LAN",
       "explanation": "У готовому приміщенні перевіримо доступні траси. Спосіб прокладання й оздоблювальні роботи погодимо до монтажу.",
@@ -567,7 +567,7 @@ export const copy = {
       ],
       [
         "wifi",
-        "Router, AP or Mesh",
+        "Router and Mesh setup in Warsaw",
         "Network settings, access point placement and connecting a new router."
       ],
       [
@@ -631,17 +631,17 @@ export const copy = {
       ]
     ],
     "home": {
-      "title": "Wi-Fi, networks and CCTV — Warsaw | NaSerwis.pl",
+      "title": "Wi-Fi and networks Warsaw – repair and installation | NaSerwis.pl",
       "description": "Wi-Fi, LAN and CCTV services in Warsaw and nearby areas. We diagnose network and internet faults, configure routers, install cabling and cameras. Scope and cost are agreed before work starts.",
       "h1": "Wi-Fi and networks in Warsaw",
       "accent": "Installation or repair on site",
       "intro": "We repair Wi-Fi, LAN networks and CCTV. Router setup, cabling and camera installation in Warsaw and nearby areas."
     },
     "wifi": {
-      "title": "Wi-Fi repair and home network setup — Warsaw | NaSerwis.pl",
-      "description": "Weak signal or Wi-Fi without internet? Diagnosis, router, AP and Mesh setup in homes and flats in Warsaw. We agree billing before work starts.",
+      "title": "Wi-Fi repair Warsaw – router and Mesh setup | NaSerwis.pl",
+      "description": "Wi-Fi drops or has no internet? Router, AP and Mesh diagnosis and setup in Warsaw. Home and business visits; scope and cost agreed before the visit.",
       "h1": "Wi-Fi repair in Warsaw",
-      "accent": "Your home router and coverage",
+      "accent": "Router, Mesh and coverage – on-site visits",
       "intro": "Wi-Fi drops, has weak coverage or no internet? We check the connection and set up your router, AP or Mesh.",
       "heading": "What we check and configure",
       "explanation": "Provider network faults must be fixed by the provider. We help identify whether the problem is on their side.",
@@ -672,7 +672,7 @@ export const copy = {
     },
     "repair": {
       "title": "LAN network, socket and cable repair — Warsaw | NaSerwis.pl",
-      "description": "Home LAN repair in Warsaw: cable and port diagnosis, RJ45 sockets and checks after repair. Travel and work scope are agreed before the visit.",
+      "description": "LAN repair in Warsaw: cable and port diagnosis, RJ45 sockets and connection tests. Home and business visits; travel and work scope agreed before the visit.",
       "h1": "LAN network repair in Warsaw",
       "accent": "RJ45 sockets, cables and connections",
       "intro": "An RJ45 socket is dead, the connection drops or speed has fallen? We test the cable, connectors and ports.",
@@ -704,10 +704,10 @@ export const copy = {
       ]
     },
     "install": {
-      "title": "LAN installation in homes and flats — Warsaw | NaSerwis.pl",
-      "description": "Home LAN installation in Warsaw: point planning, cabling, RJ45 sockets and connection tests. Project pricing or hourly billing by agreement.",
+      "title": "LAN installation Warsaw – cabling and RJ45 | NaSerwis.pl",
+      "description": "LAN installation in Warsaw: point planning, cabling, RJ45 sockets and connection tests. For homes and businesses. Project pricing or hourly billing by agreement.",
       "h1": "LAN installation in Warsaw",
-      "accent": "Cabling for your house or flat",
+      "accent": "Cabling and RJ45 sockets for homes and businesses",
       "intro": "We run cables, install RJ45 sockets and connect network points to your router or switch.",
       "heading": "What LAN installation includes",
       "explanation": "In a finished property, we check available routes. Cable routing and any finishing work are agreed before installation.",

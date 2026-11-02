@@ -135,6 +135,12 @@ the paused repository drafts must not be imported as duplicates.
 The 2026-10-09 home-service implementation remains in the source, but its
 home-only brand boundary is superseded. Current positioning and query ownership
 are defined in [PRODUCT.md](PRODUCT.md) and the workspace promotion contract.
+For focused search/share copy changes, edit `scripts/home-service-copy.mjs` and
+run `npm run seo:metadata`. This synchronizes the four homepage titles, general
+service metadata and hero subtitles, the homepage router link, and matching
+Service descriptions without rebuilding layouts or assets. Update sitemap
+`lastmod` only for pages whose content actually changed. See
+[the search copy release note](docs/SEARCH-COPY-2026-11-02.md).
 The old implementation note is preserved under `docs/archive/`. Use
 `npm run seo:generate` after editing `scripts/home-service-copy.mjs` and inspect
 the generated copy for the current two-segment model.
