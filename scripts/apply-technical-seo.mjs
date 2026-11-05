@@ -118,6 +118,11 @@ async function processDirectory(directory) {
     if (entry.isDirectory()) { if (entry.name !== 'assets') await processDirectory(file); continue; }
     if (!entry.name.endsWith('.html')) continue;
     let html = expandAssetBundles((await readFile(file, 'utf8')).replace(/\r\n/g, '\n'), previousManifest);
+    // HTML lang and reciprocal hreflang already identify each locale. Legacy
+    // language-name meta tags ("Polish", etc.) conflict with ISO-code checkers.
+    html = html.replace(/^[ \t]*<meta\b(?=[^>]*\bname="language")[^>]*>[^\S\n]*\n?/gmi, '');
+    // Review authors label individual cards; they are not page subsections.
+    html = html.replace(/<h3\b([^>]*\bclass="review-author"[^>]*)>([\s\S]*?)<\/h3>/g, '<p$1>$2</p>');
     html = html.replace(/\s*<link\b[^>]*href="https:\/\/fonts\.(?:googleapis|gstatic)\.com[^>]*>/g, '');
     html = html.replace(/\s*<script\b[^>]*src="https:\/\/www\.googletagmanager\.com\/gtag\/js[^>]*><\/script>/g, '');
     html = html.replace(/\s*<script>\s*gtag\('js',[\s\S]*?<\/script>/g, '');

@@ -77,7 +77,7 @@ export const copy = {
     ],
     "home": {
       "title": "Wi-Fi i sieci Warszawa – naprawa i montaż | NaSerwis.pl",
-      "description": "Serwis Wi-Fi, sieci LAN i monitoringu wizyjnego w Warszawie i okolicy. Diagnozujemy awarie sieci i internetu, konfigurujemy routery, montujemy okablowanie i kamery. Zakres i koszt uzgadniamy przed pracą.",
+      "description": "Naprawa Wi-Fi, sieci LAN i monitoring w Warszawie. Konfiguracja routerów, montaż kabli i kamer. Dojazd do domu lub firmy. Koszt uzgadniamy przed pracą.",
       "h1": "Wi-Fi i sieci w Warszawie",
       "accent": "Montaż lub naprawa z dojazdem",
       "intro": "Naprawiamy Wi-Fi, sieci LAN i monitoring. Konfigurujemy routery, układamy kable i montujemy kamery w Warszawie i okolicy."
@@ -262,7 +262,7 @@ export const copy = {
     ],
     "home": {
       "title": "Wi-Fi и сети в Варшаве – ремонт и монтаж | NaSerwis.pl",
-      "description": "Сервис Wi-Fi, сетей LAN и видеонаблюдения в Варшаве и окрестностях. Диагностируем сбои сети и интернета, настраиваем роутеры, прокладываем кабели и устанавливаем камеры. Объём и стоимость согласуем до работы.",
+      "description": "Ремонт Wi-Fi, сетей LAN и видеонаблюдения в Варшаве. Настройка роутеров, монтаж кабелей и камер. Выезд домой или в офис. Стоимость согласуем до работы.",
       "h1": "Wi-Fi и сети в Варшаве",
       "accent": "Монтаж или ремонт с выездом",
       "intro": "Ремонтируем Wi-Fi, сети LAN и видеонаблюдение. Настраиваем роутеры, прокладываем кабели и устанавливаем камеры в Варшаве и окрестностях."
@@ -447,7 +447,7 @@ export const copy = {
     ],
     "home": {
       "title": "Wi-Fi та мережі у Варшаві – ремонт і монтаж | NaSerwis.pl",
-      "description": "Сервіс Wi-Fi, мереж LAN і відеоспостереження у Варшаві та околицях. Діагностуємо збої мережі й інтернету, налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери. Обсяг і вартість узгоджуємо до роботи.",
+      "description": "Ремонт Wi-Fi, мереж LAN і відеоспостереження у Варшаві. Налаштування роутерів, монтаж кабелів і камер. Виїзд додому або в офіс. Вартість узгоджуємо до роботи.",
       "h1": "Wi-Fi та мережі у Варшаві",
       "accent": "Монтаж або ремонт з виїздом",
       "intro": "Ремонтуємо Wi-Fi, мережі LAN і відеоспостереження. Налаштовуємо роутери, прокладаємо кабелі та встановлюємо камери у Варшаві й околицях."
@@ -632,7 +632,7 @@ export const copy = {
     ],
     "home": {
       "title": "Wi-Fi and networks Warsaw – repair and installation | NaSerwis.pl",
-      "description": "Wi-Fi, LAN and CCTV services in Warsaw and nearby areas. We diagnose network and internet faults, configure routers, install cabling and cameras. Scope and cost are agreed before work starts.",
+      "description": "Wi-Fi, LAN and CCTV services in Warsaw. Router setup, cabling and camera installation. Home and business visits. We agree the cost before work starts.",
       "h1": "Wi-Fi and networks in Warsaw",
       "accent": "Installation or repair on site",
       "intro": "We repair Wi-Fi, LAN networks and CCTV. Router setup, cabling and camera installation in Warsaw and nearby areas."

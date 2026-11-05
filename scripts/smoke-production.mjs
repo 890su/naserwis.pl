@@ -87,6 +87,12 @@ for (const [source, destination] of [
 const missingPage = await fetch(origin + '/__naserwis_missing_page_check__', { redirect: 'manual', signal: AbortSignal.timeout(20000) });
 assert.equal(missingPage.status, 404, 'Unknown paths must return a real 404');
 assert.match(await missingPage.text(), /<meta name="robots" content="noindex, follow">/, '404 page must stay out of the index');
+for (const path of ['/', '/ru/naprawa-wifi/', '/uk/dla-firm/wifi/', '/en/poradnik/']) {
+  const query = '?utm_source=seo-check&gclid=a%2Bb%2Fc';
+  const response = await fetch('https://www.naserwis.pl' + path + query, { redirect: 'manual', signal: AbortSignal.timeout(20000) });
+  assert.equal(response.status, 301, `www must permanently redirect: ${path}`);
+  assert.equal(response.headers.get('location'), origin + path + query, 'www must preserve the path and attribution');
+}
 assert.equal((await fetch(origin + '/api/contact', { signal: AbortSignal.timeout(20000) })).status, 405);
 const invalid = await fetch(origin + '/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: '{}', signal: AbortSignal.timeout(20000) });
 assert.equal(invalid.status, 400); assert.equal((await invalid.json()).success, false);

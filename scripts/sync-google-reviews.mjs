@@ -26,7 +26,7 @@ function card(review, locale) {
     ? `<p class="review-text" lang="${review.language}">${escape(review.text)}</p>`
     : `<p class="review-rating-only">${noText}</p>`;
   return `<article class="review-card" data-google-review="${escape(review.id)}">
-    <div class="review-header"><div class="review-avatar" aria-hidden="true">${escape([...review.author][0].toUpperCase())}</div><div class="review-info"><h3 class="review-author">${escape(review.author)}</h3><div class="review-stars" role="img" aria-label="${review.rating} ${outOf}">${'&#11088;'.repeat(review.rating)}</div></div></div>
+    <div class="review-header"><div class="review-avatar" aria-hidden="true">${escape([...review.author][0].toUpperCase())}</div><div class="review-info"><p class="review-author">${escape(review.author)}</p><div class="review-stars" role="img" aria-label="${review.rating} ${outOf}">${'&#11088;'.repeat(review.rating)}</div></div></div>
     ${content}
     <p class="review-source"><a href="${checkURL(review.source || snapshot.listing)}" target="_blank" rel="noopener noreferrer">Google</a>${review.excerpt ? ` · ${excerpt}` : ''}</p>
   </article>`;
@@ -47,7 +47,8 @@ for (const locale of Object.keys(strings)) {
 for (const author of oldAuthors) assert.ok(originals.has(author), `Missing original review: ${author}`);
 assert.equal(snapshot.reviews.length + oldAuthors.length, snapshot.googleReviewCount);
 for (const [locale, { file, html, cards }] of homes) {
-  const markup = [...snapshot.reviews.map(r => card(r, locale)), ...oldAuthors.map(author => cards.get(author) || originals.get(author))].join('\n');
+  const markup = [...snapshot.reviews.map(r => card(r, locale)), ...oldAuthors.map(author => cards.get(author) || originals.get(author))].join('\n')
+    .replace(/<h3 class="review-author">([\s\S]*?)<\/h3>/g, '<p class="review-author">$1</p>');
   let replacements = 0;
   const updated = html.replace(/(<div class="reviews-track">)[\s\S]*?(<\/div>\s*<button class="slider-btn next")/g, (_, start, end) => { replacements++; return `${start}\n${markup}\n${end}`; });
   assert.equal(replacements, 1, `Exactly one review track required: ${file}`);
