@@ -585,6 +585,7 @@ body[data-redesign] [data-staged-form] :is(input,textarea)::placeholder{color:#5
 body[data-redesign] [data-staged-form] .enquiry-problem .contact-field-help{display:none}
 body[data-redesign] [data-staged-form] :is(.contact-next-step,.enquiry-next-step){font-size:13px;margin:0 0 18px;line-height:1.5;color:var(--rd-muted)}
 body[data-redesign] [data-staged-form] .enquiry-details{margin-top:20px}
+body[data-redesign] [data-staged-form] .enquiry-start{width:100%;min-height:48px;margin-top:12px}
 .enquiry-example-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;font-size:12px;line-height:1.5;color:#485462;margin:12px 0 6px}
 .enquiry-example-controls{display:flex;flex-wrap:wrap;gap:0 12px}
 body[data-redesign] [data-staged-form] .enquiry-example-controls button{background:none;color:#174bb0;border:0;padding:6px 0;min-height:32px;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
@@ -597,6 +598,9 @@ body[data-redesign] [data-staged-form] [data-enquiry-example]:is(:hover,.is-hove
 body[data-redesign] [data-staged-form] [data-enquiry-example]:focus-visible{outline-offset:-3px}
 .enquiry-example-list:focus-within{mask-image:none}
 .enquiry-example-list.enquiry-show-all{height:auto;max-height:none;overflow:visible;mask-image:none}
+@media(max-width:760px){
+  .enquiry-example-list:not(.enquiry-show-all){height:156px;max-height:156px}
+}
 body[data-redesign] [data-staged-form] .enquiry-choices{display:flex;flex-wrap:wrap;gap:8px;min-width:0;border:0;padding:0;margin:0 0 22px}
 body[data-redesign] [data-staged-form] .enquiry-choices legend{padding:0;margin-bottom:10px;font-size:14px;font-weight:700;line-height:1.5;color:var(--rd-ink)}
 body[data-redesign] [data-staged-form] .enquiry-choice{position:relative;display:flex;align-items:center;gap:8px;flex:0 1 auto;max-width:100%;font-size:14px;line-height:1.5;font-weight:400;margin:0;padding:6px 0;min-height:40px;background:transparent;border:0;border-radius:0;cursor:pointer}

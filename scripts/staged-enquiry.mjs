@@ -2,6 +2,7 @@
 import { businessContext } from './business-copy.mjs';
 const copy = {
   pl: {
+    start: 'Zostaw zgłoszenie', send: 'Wyślij zgłoszenie',
     problem: 'Co się stało?', placeholder: 'Opisz problem lub wybierz podobną sytuację poniżej…', examples: 'Wybierz podobną sytuację', pause: 'Pauza', resume: 'Wznów', all: 'Wszystkie przykłady', less: 'Zwiń',
     type: 'Czego potrzebujesz?', broken: 'Działało i przestało', setup: 'Potrzebuję konfiguracji lub montażu', urgency: 'Jak pilna jest sprawa?', urgent: 'Pilne', today: 'W najbliższym czasie', normal: 'Nie spieszy się',
     contact: 'Kontakt do Ciebie', contactHint: 'Telefon, e-mail lub @Telegram', extras: 'Dodaj imię i adres', optional: 'nieobowiązkowe', name: 'Imię', address: 'Adres lub miejscowość', submit: 'Poproś o kontakt', next: 'Podaj kontakt — ustalimy szczegóły i możliwy termin.', noJs: 'Aby wysłać formularz, włącz JavaScript lub zadzwoń.',
@@ -14,6 +15,7 @@ const copy = {
     ]
   },
   ru: {
+    start: 'Оставить заявку', send: 'Отправить заявку',
     problem: 'Что случилось?', placeholder: 'Опишите проблему или выберите похожую ситуацию ниже…', examples: 'Выберите похожую ситуацию', pause: 'Пауза', resume: 'Продолжить', all: 'Все примеры', less: 'Свернуть',
     type: 'Что нужно сделать?', broken: 'Работало, но перестало', setup: 'Нужно настроить', urgency: 'Насколько срочно?', urgent: 'Срочно', today: 'В ближайшее время', normal: 'Сроки не горящие',
     contact: 'Контакт для связи', contactHint: 'Телефон, e-mail или @Telegram', extras: 'Добавить имя и адрес', optional: 'необязательно', name: 'Имя', address: 'Адрес или населённый пункт', submit: 'Отправить заявку', next: 'Оставьте контакт — обсудим детали и возможное время.', noJs: 'Для отправки формы включите JavaScript или позвоните.',
@@ -26,6 +28,7 @@ const copy = {
     ]
   },
   uk: {
+    start: 'Залишити заявку', send: 'Надіслати заявку',
     problem: 'Що сталося?', placeholder: 'Опишіть проблему або виберіть схожу ситуацію нижче…', examples: 'Виберіть схожу ситуацію', pause: 'Пауза', resume: 'Продовжити', all: 'Усі приклади', less: 'Згорнути',
     type: 'Що потрібно зробити?', broken: 'Працювало й перестало', setup: 'Потрібно налаштувати', urgency: 'Наскільки терміново?', urgent: 'Терміново', today: 'Найближчим часом', normal: 'Терміни не горять',
     contact: 'Контакт для зв’язку', contactHint: 'Телефон, e-mail або @Telegram', extras: 'Додати ім’я та адресу', optional: 'необов’язково', name: 'Ім’я', address: 'Адреса або населений пункт', submit: 'Надіслати заявку', next: 'Залиште контакт — обговоримо деталі та можливий час.', noJs: 'Щоб надіслати форму, увімкніть JavaScript або зателефонуйте.',
@@ -38,6 +41,7 @@ const copy = {
     ]
   },
   en: {
+    start: 'Start an enquiry', send: 'Send enquiry',
     problem: 'What happened?', placeholder: 'Describe the problem or choose a similar situation below…', examples: 'Choose a similar situation', pause: 'Pause', resume: 'Resume', all: 'All examples', less: 'Show less',
     type: 'What do you need?', broken: 'It worked, then stopped', setup: 'Setup or installation', urgency: 'How urgent is it?', urgent: 'Urgent', today: 'In the near future', normal: 'No rush',
     contact: 'How can we reach you?', contactHint: 'Phone, email or @Telegram', extras: 'Add your name and address', optional: 'optional', name: 'Name', address: 'Address or town', submit: 'Request a callback', next: 'Leave a contact — we’ll discuss the details and a possible time.', noJs: 'Enable JavaScript to send the form, or call us.',
@@ -66,14 +70,16 @@ export function stagedEnquiries(html, lang, path) {
     return `<form id="${id}"${attrs.replace(/ data-staged-form(?:="[^"]*")?/g, '')} data-staged-form>
       <h2 class="enquiry-title">${t.problem}</h2>
       <div class="form-group enquiry-problem"><textarea id="${prefix}-message" name="message" aria-label="${t.problem}" required minlength="3" maxlength="4000" rows="3" placeholder="${t.placeholder}" aria-describedby="${id}-help"></textarea><small id="${id}-help" class="contact-field-help">${t.examples}</small></div>
-      <div class="enquiry-examples"><div class="enquiry-example-heading"><span>${t.examples}</span><div class="enquiry-example-controls"><button type="button" data-examples-all data-all="${t.all}" data-less="${t.less}" aria-expanded="false" aria-controls="${id}-examples">${t.all}</button></div></div><div class="enquiry-example-list" id="${id}-examples">${(examples || t.examplesByService[service]).map(text => `<button type="button" data-enquiry-example><span class="enquiry-example-text">${esc(text)}</span></button>`).join('')}</div></div>
+      <div class="enquiry-examples"><div class="enquiry-example-heading"><span>${t.examples}</span><div class="enquiry-example-controls"><button type="button" data-examples-all data-all="${t.all}" data-less="${t.less}" aria-expanded="false" aria-controls="${id}-examples">${t.all}</button></div></div><div class="enquiry-example-list" id="${id}-examples">${(examples || t.examplesByService[service]).map(text => `<button type="button" data-enquiry-example><span class="enquiry-example-text">${esc(text)}</span></button>`).join('')}</div>
+        <button type="button" class="btn btn-primary enquiry-start" data-enquiry-start aria-controls="${id}-details">${t.start}</button>
+      </div>
       <div class="enquiry-details" id="${id}-details" hidden>
         <p class="${id === 'quick-form' ? 'enquiry-next-step' : 'contact-next-step'}">${t.next}</p>
         <fieldset class="enquiry-choices"><legend>${t.type}</legend>${choice('requestType', 'broken', t.broken)}${choice('requestType', 'setup', t.setup)}</fieldset>
         <fieldset class="enquiry-choices enquiry-urgency"><legend>${t.urgency}</legend>${choice('urgency', 'urgent', t.urgent)}${choice('urgency', 'soon', t.today)}${choice('urgency', 'flexible', t.normal)}</fieldset>
         <div class="form-group"><label for="${prefix}-phone">${t.contact}</label><input type="text" id="${prefix}-phone" name="phone" required minlength="5" maxlength="120" autocomplete="off" placeholder="${t.contactHint}" aria-describedby="${id}-contact-help"><small id="${id}-contact-help" class="enquiry-hint">${t.contactHint}</small></div>
         <details class="enquiry-extras"><summary>${t.extras} <span>(${t.optional})</span></summary><div class="form-group"><label for="${prefix}-name">${t.name}</label><input type="text" id="${prefix}-name" name="name" maxlength="120" autocomplete="name"></div><div class="form-group"><label for="${prefix}-address">${t.address}</label><input type="text" id="${prefix}-address" name="address" maxlength="300" autocomplete="address-line1"></div></details>
-        <button type="submit" class="btn btn-primary form-submit">${t.submit}</button>${notice}
+        <button type="submit" class="btn btn-primary form-submit">${t.send}</button>${notice}
       </div>
       <div id="${id}-message" role="alert" aria-live="polite"></div>${alternatives}
       <noscript><p>${t.noJs} <a href="tel:+48453327678">+48 453 327 678</a></p></noscript>

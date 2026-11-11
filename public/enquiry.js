@@ -21,6 +21,7 @@
         const examples = form.querySelector('.enquiry-examples');
         const list = form.querySelector('.enquiry-example-list');
         const all = form.querySelector('[data-examples-all]');
+        const start = form.querySelector('[data-enquiry-start]');
         let expanded = false;
         let visible = false;
         let frame = 0;
@@ -62,9 +63,14 @@
             const hasDescription = message.value.trim().length > 0;
             // Once opened, preserve contact fields even if the description is edited away.
             if (hasDescription) details.hidden = false;
-            examples.hidden = hasDescription || Boolean(typingTimer);
+            examples.hidden = !details.hidden;
             updateMotion();
         }
+        start.addEventListener('click', () => {
+            details.hidden = false;
+            reveal();
+            message.focus();
+        });
         // Rows remain selectable across their full width. Wheel and touch
         // gestures always scroll the page; only animation moves this list.
         function rowAtPoint(event) {

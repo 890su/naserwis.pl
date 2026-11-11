@@ -225,6 +225,38 @@ for (const route of ['', 'serwis-monitoringu/']) {
   }
 }
 
+test('the visible first-step button opens a request without selecting an example', async ({ page }) => {
+  await prepare(page, 'pl');
+  await page.setViewportSize({ width: 390, height: 844 });
+  let submissions = 0;
+  await page.route('**/api/contact', async route => {
+    submissions++;
+    expect(route.request().postDataJSON()).toMatchObject({
+      formType: 'hero-form', message: 'Wi-Fi nie działa w drugim pokoju', phone: '@qa_test'
+    });
+    await route.fulfill({ json: { success: true, leadId: 'qa', message: 'QA accepted' } });
+  });
+  await page.goto('/');
+  const form = page.locator('#hero-form');
+  const start = form.getByRole('button', { name: 'Zostaw zgłoszenie', exact: true });
+  const send = form.getByRole('button', { name: 'Wyślij zgłoszenie', exact: true });
+  await expect(start).toBeVisible();
+  await expect(send).toBeHidden();
+  await start.focus();
+  await page.keyboard.press('Enter');
+  await expect(form.locator('[name=message]')).toBeFocused();
+  await expect(form.locator('[name=phone]')).toBeVisible();
+  await expect(send).toBeVisible();
+  await expect(start).toBeHidden();
+  expect(submissions).toBe(0);
+  await form.locator('[name=message]').fill('Wi-Fi nie działa w drugim pokoju');
+  await form.locator('[name=phone]').fill('@qa_test');
+  await send.click();
+  await expect(form.locator('[role=alert]')).toHaveText('QA accepted');
+  await expect(start).toBeVisible();
+  expect(submissions).toBe(1);
+});
+
 test('an early submit finishes the selected example instead of sending partial text', async ({ page }) => {
   await prepare(page, 'pl');
   await page.goto('/');
