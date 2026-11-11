@@ -187,7 +187,7 @@ body[data-redesign] .service-main h2::before{display:none}
 body[data-redesign] #lang-suggestion{top:77px;font-family:Manrope,Arial,sans-serif}
 body[data-redesign] #lang-suggestion .lang-banner-btn{background:#fff;color:var(--rd-blue)}
 .preview-task-heading h2{min-width:0;overflow-wrap:anywhere;padding-left:46px}
-body[data-redesign] .hero-form form:not([data-staged-form]){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px}
+body[data-redesign] .hero-form form:not([data-inline-enquiry]){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:12px}
 body[data-redesign] .hero-form form>p,body[data-redesign] .hero-form form>button,body[data-redesign] .hero-form form>[role=alert],body[data-redesign] .hero-form .form-group:has(textarea){grid-column:1/-1}
 body[data-redesign] .hero-form .form-group{min-width:0}
 body[data-redesign] .btn-mobile-call,body[data-redesign] .mobile-contact-request{background:var(--rd-blue);box-shadow:none}
@@ -577,55 +577,58 @@ body[data-redesign] :is(.hero-form,.final-form,#quick-form,#review-form) :is(inp
 
 /* Two-step enquiry: one description first, details when the visitor starts. */
 /* purgecss start ignore */
-body[data-redesign] [data-staged-form]{display:block;text-align:left;color:var(--rd-ink)}
-body[data-redesign] [data-staged-form] [hidden]{display:none!important}
-body[data-redesign] [data-staged-form] .enquiry-problem>label{font-size:18px;font-weight:800;line-height:1.4;margin-bottom:10px}
-body[data-redesign] [data-staged-form] textarea{width:100%;min-height:108px;height:108px;font-size:16px;line-height:1.5;resize:vertical}
-body[data-redesign] [data-staged-form] :is(input,textarea)::placeholder{color:#5d6875;opacity:1}
-body[data-redesign] [data-staged-form] .enquiry-problem .contact-field-help{display:none}
-body[data-redesign] [data-staged-form] :is(.contact-next-step,.enquiry-next-step){font-size:13px;margin:0 0 18px;line-height:1.5;color:var(--rd-muted)}
-body[data-redesign] [data-staged-form] .enquiry-details{margin-top:20px}
-body[data-redesign] [data-staged-form] .enquiry-start{width:100%;min-height:48px;margin-top:12px}
+body[data-redesign] [data-inline-enquiry]{display:block;text-align:left;color:var(--rd-ink)}
+body[data-redesign] [data-inline-enquiry] [hidden]{display:none!important}
+body[data-redesign] [data-inline-enquiry] .enquiry-problem>label{font-size:18px;font-weight:800;line-height:1.4;margin-bottom:10px}
+body[data-redesign] [data-inline-enquiry] textarea{width:100%;min-height:108px;height:108px;font-size:16px;line-height:1.5;resize:vertical}
+body[data-redesign] [data-inline-enquiry] :is(input,textarea)::placeholder{color:#5d6875;opacity:1}
+body[data-redesign] [data-inline-enquiry] .enquiry-problem .contact-field-help{display:none}
+body[data-redesign] [data-inline-enquiry] :is(.contact-next-step,.enquiry-next-step){font-size:13px;margin:0 0 18px;line-height:1.5;color:var(--rd-muted)}
+body[data-redesign] [data-inline-enquiry] .enquiry-details{margin-top:20px}
+html[data-enquiry-experiment="simple"] [data-staged-form]{visibility:hidden}
+body[data-redesign] [data-enquiry-variant="simple"] .enquiry-problem>label{font-size:14px;font-weight:700;margin-bottom:8px}
+body[data-redesign] [data-enquiry-variant="simple"] .enquiry-details{margin-top:0}
+body[data-redesign] [data-inline-enquiry] .enquiry-start{width:100%;min-height:48px;margin-top:12px}
 .enquiry-example-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;font-size:12px;line-height:1.5;color:#485462;margin:12px 0 6px}
 .enquiry-example-controls{display:flex;flex-wrap:wrap;gap:0 12px}
-body[data-redesign] [data-staged-form] .enquiry-example-controls button{background:none;color:#174bb0;border:0;padding:6px 0;min-height:32px;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+body[data-redesign] [data-inline-enquiry] .enquiry-example-controls button{background:none;color:#174bb0;border:0;padding:6px 0;min-height:32px;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .enquiry-example-list{position:relative;height:240px;max-height:240px;overflow:hidden;overscroll-behavior:auto;touch-action:pan-y pinch-zoom;scrollbar-width:none;scroll-behavior:auto;pointer-events:none;mask-image:linear-gradient(to bottom,transparent,#000 32px,#000 calc(100% - 32px),transparent)}
 .enquiry-example-text{pointer-events:auto}
 .enquiry-examples:has([data-enquiry-example].is-hovered){cursor:pointer}
 .enquiry-example-list::-webkit-scrollbar{display:none}
-body[data-redesign] [data-staged-form] [data-enquiry-example]{display:block;width:100%;min-height:46px;padding:12px 10px;text-align:center;white-space:normal;text-wrap:balance;overflow-wrap:anywhere;background:transparent;color:var(--rd-muted);border:0;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5;cursor:pointer}
-body[data-redesign] [data-staged-form] [data-enquiry-example]:is(:hover,.is-hovered){color:#174bb0;background:#dce5f0}
-body[data-redesign] [data-staged-form] [data-enquiry-example]:focus-visible{outline-offset:-3px}
+body[data-redesign] [data-inline-enquiry] [data-enquiry-example]{display:block;width:100%;min-height:46px;padding:12px 10px;text-align:center;white-space:normal;text-wrap:balance;overflow-wrap:anywhere;background:transparent;color:var(--rd-muted);border:0;border-radius:6px;font-family:inherit;font-size:14px;line-height:1.5;cursor:pointer}
+body[data-redesign] [data-inline-enquiry] [data-enquiry-example]:is(:hover,.is-hovered){color:#174bb0;background:#dce5f0}
+body[data-redesign] [data-inline-enquiry] [data-enquiry-example]:focus-visible{outline-offset:-3px}
 .enquiry-example-list:focus-within{mask-image:none}
 .enquiry-example-list.enquiry-show-all{height:auto;max-height:none;overflow:visible;mask-image:none}
 @media(max-width:760px){
   .enquiry-example-list:not(.enquiry-show-all){height:156px;max-height:156px}
 }
-body[data-redesign] [data-staged-form] .enquiry-choices{display:flex;flex-wrap:wrap;gap:8px;min-width:0;border:0;padding:0;margin:0 0 22px}
-body[data-redesign] [data-staged-form] .enquiry-choices legend{padding:0;margin-bottom:10px;font-size:14px;font-weight:700;line-height:1.5;color:var(--rd-ink)}
-body[data-redesign] [data-staged-form] .enquiry-choice{position:relative;display:flex;align-items:center;gap:8px;flex:0 1 auto;max-width:100%;font-size:14px;line-height:1.5;font-weight:400;margin:0;padding:6px 0;min-height:40px;background:transparent;border:0;border-radius:0;cursor:pointer}
-body[data-redesign] [data-staged-form] .enquiry-choice input{appearance:auto;position:static;display:block;flex:0 0 16px;width:16px;height:16px;min-height:0;padding:0;margin:2px 0 0;accent-color:var(--rd-blue);box-shadow:none}
-body[data-redesign] [data-staged-form] .enquiry-choice:has(input:checked){color:#174bb0;font-weight:600}
-body[data-redesign] [data-staged-form] .enquiry-choice:has(input:focus-visible){outline:3px solid var(--rd-blue);outline-offset:2px}
-body[data-redesign] [data-staged-form] .enquiry-urgency .enquiry-choice{flex:0 1 auto}
-body[data-redesign] [data-staged-form] .enquiry-choices{column-gap:20px;row-gap:0}
-body[data-redesign] [data-staged-form] .enquiry-urgency input{appearance:none;display:grid;place-content:center;border:2px solid var(--urgency-color);border-radius:50%;background:#fff;margin:0;color:var(--urgency-color);accent-color:var(--urgency-color)}
-body[data-redesign] [data-staged-form] .enquiry-urgency input::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;transform:scale(0)}
-body[data-redesign] [data-staged-form] .enquiry-urgency input:checked::before{transform:scale(1)}
-body[data-redesign] [data-staged-form] .enquiry-urgency input[value="urgent"]{--urgency-color:#b91c1c}
-body[data-redesign] [data-staged-form] .enquiry-urgency input[value="soon"]{--urgency-color:#a16207}
-body[data-redesign] [data-staged-form] .enquiry-urgency input[value="flexible"]{--urgency-color:#15803d}
-body[data-redesign] [data-staged-form] .enquiry-urgency .enquiry-choice:has(input:checked){font-weight:400;color:var(--rd-ink)}
-body[data-redesign] [data-staged-form] .contact-alternatives{margin:24px 0 0}
-body[data-redesign] .hero-form:has([data-staged-form])::after{content:none}
+body[data-redesign] [data-inline-enquiry] .enquiry-choices{display:flex;flex-wrap:wrap;gap:8px;min-width:0;border:0;padding:0;margin:0 0 22px}
+body[data-redesign] [data-inline-enquiry] .enquiry-choices legend{padding:0;margin-bottom:10px;font-size:14px;font-weight:700;line-height:1.5;color:var(--rd-ink)}
+body[data-redesign] [data-inline-enquiry] .enquiry-choice{position:relative;display:flex;align-items:center;gap:8px;flex:0 1 auto;max-width:100%;font-size:14px;line-height:1.5;font-weight:400;margin:0;padding:6px 0;min-height:40px;background:transparent;border:0;border-radius:0;cursor:pointer}
+body[data-redesign] [data-inline-enquiry] .enquiry-choice input{appearance:auto;position:static;display:block;flex:0 0 16px;width:16px;height:16px;min-height:0;padding:0;margin:2px 0 0;accent-color:var(--rd-blue);box-shadow:none}
+body[data-redesign] [data-inline-enquiry] .enquiry-choice:has(input:checked){color:#174bb0;font-weight:600}
+body[data-redesign] [data-inline-enquiry] .enquiry-choice:has(input:focus-visible){outline:3px solid var(--rd-blue);outline-offset:2px}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency .enquiry-choice{flex:0 1 auto}
+body[data-redesign] [data-inline-enquiry] .enquiry-choices{column-gap:20px;row-gap:0}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input{appearance:none;display:grid;place-content:center;border:2px solid var(--urgency-color);border-radius:50%;background:#fff;margin:0;color:var(--urgency-color);accent-color:var(--urgency-color)}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;transform:scale(0)}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input:checked::before{transform:scale(1)}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input[value="urgent"]{--urgency-color:#b91c1c}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input[value="soon"]{--urgency-color:#a16207}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency input[value="flexible"]{--urgency-color:#15803d}
+body[data-redesign] [data-inline-enquiry] .enquiry-urgency .enquiry-choice:has(input:checked){font-weight:400;color:var(--rd-ink)}
+body[data-redesign] [data-inline-enquiry] .contact-alternatives{margin:24px 0 0}
+body[data-redesign] .hero-form:has([data-inline-enquiry])::after{content:none}
 .preview-contact-rail{align-self:start}
-@media(forced-colors:active){body[data-redesign] [data-staged-form] .enquiry-urgency input{appearance:auto}body[data-redesign] [data-staged-form] .enquiry-urgency input::before{content:none}}
-body[data-redesign] [data-staged-form] .enquiry-hint{display:block;font-size:12px;color:var(--rd-muted);margin-top:6px;line-height:1.5}
-body[data-redesign] [data-staged-form] .enquiry-extras{margin:18px 0;border:0;color:var(--rd-ink)}
-body[data-redesign] [data-staged-form] .enquiry-extras summary{padding:6px 0;min-height:40px;font-size:14px;font-weight:700;cursor:pointer;color:#174bb0;line-height:1.6}
-body[data-redesign] [data-staged-form] .enquiry-extras summary span{font-weight:400;font-size:12px;color:var(--rd-muted)}
-body[data-redesign] [data-staged-form] .enquiry-extras[open] summary{margin-bottom:12px}
-body[data-redesign] [data-staged-form] .enquiry-extras input{width:100%;font-size:16px}
+@media(forced-colors:active){body[data-redesign] [data-inline-enquiry] .enquiry-urgency input{appearance:auto}body[data-redesign] [data-inline-enquiry] .enquiry-urgency input::before{content:none}}
+body[data-redesign] [data-inline-enquiry] .enquiry-hint{display:block;font-size:12px;color:var(--rd-muted);margin-top:6px;line-height:1.5}
+body[data-redesign] [data-inline-enquiry] .enquiry-extras{margin:18px 0;border:0;color:var(--rd-ink)}
+body[data-redesign] [data-inline-enquiry] .enquiry-extras summary{padding:6px 0;min-height:40px;font-size:14px;font-weight:700;cursor:pointer;color:#174bb0;line-height:1.6}
+body[data-redesign] [data-inline-enquiry] .enquiry-extras summary span{font-weight:400;font-size:12px;color:var(--rd-muted)}
+body[data-redesign] [data-inline-enquiry] .enquiry-extras[open] summary{margin-bottom:12px}
+body[data-redesign] [data-inline-enquiry] .enquiry-extras input{width:100%;font-size:16px}
 body[data-redesign] [data-compact-form] .enquiry-extras{margin:18px 0;border:0;color:var(--rd-ink)}
 body[data-redesign] [data-compact-form] .enquiry-extras summary{padding:6px 0;min-height:40px;font-size:14px;font-weight:700;line-height:1.6;color:#174bb0;cursor:pointer}
 body[data-redesign] [data-compact-form] .enquiry-extras summary span{font-size:12px;font-weight:400;color:var(--rd-muted)}
@@ -633,8 +636,8 @@ body[data-redesign] [data-compact-form] .enquiry-extras[open] summary{margin-bot
 body[data-redesign] [data-compact-form] .enquiry-extras input{width:100%;font-size:16px}
 body[data-redesign] [data-compact-form] textarea{min-height:108px;resize:vertical}
 body[data-redesign] [data-compact-form] .form-submit{width:100%}
-body[data-redesign] [data-staged-form] .form-submit{width:100%}
-body[data-redesign] [data-staged-form] [role=alert]:not(:empty){margin-top:14px}
+body[data-redesign] [data-inline-enquiry] .form-submit{width:100%}
+body[data-redesign] [data-inline-enquiry] [role=alert]:not(:empty){margin-top:14px}
 [data-enquiry-desktop-slot]{min-width:0;align-self:start}
 @media(min-width:1200px){.mobile-enquiry-slot{display:none}}
 @media(max-width:1199px){[data-enquiry-desktop-slot]{display:none}}
@@ -649,7 +652,7 @@ body[data-redesign] [data-staged-form] [role=alert]:not(:empty){margin-top:14px}
 }
 @media(max-width:760px){
   body[data-redesign] .mobile-enquiry-slot :is(.preview-contact-rail,.hero-form){padding:20px}
-  body[data-redesign] [data-staged-form] .contact-alternatives{margin-top:20px}
+  body[data-redesign] [data-inline-enquiry] .contact-alternatives{margin-top:20px}
 }
 
 /* Approved graphite enquiry skin. Compact modal and review forms keep their light skin. */
@@ -657,34 +660,34 @@ body[data-redesign] .preview-contact-rail{padding:0;background:transparent}
 body[data-redesign="service"] .preview-service-rail{padding:0;border:0}
 body[data-redesign] :is(.hero-form,.final-form)[data-enquiry-panel]{--rd-ink:#fff;--rd-muted:#c9d2dc;--enquiry-muted:#c9d2dc;--enquiry-link:#bad2ff;background:#18212c;color:#fff;border:0;border-radius:8px;padding:24px;color-scheme:dark}
 body[data-redesign] :is(.hero-form,.final-form)[data-enquiry-panel] h2{color:#fff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] h2.enquiry-title{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:0;text-align:left;margin:0 0 12px}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] h2.enquiry-title{font-size:18px;font-weight:700;line-height:1.4;letter-spacing:0;text-align:left;margin:0 0 12px}
 body[data-redesign] [data-enquiry-panel] :is(.enquiry-example-heading,.enquiry-extras summary span){color:var(--enquiry-muted)}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(.enquiry-example-controls button,.enquiry-extras summary,.form-privacy-notice a){color:var(--enquiry-link)}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(input:not([type="radio"]),textarea){background:#dfe5ec;color:#18212c;color-scheme:light}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(input,textarea)::placeholder{color:#4e5c6b;opacity:1}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] :is(input:not([type="radio"]),textarea):focus{background:#e7ecf2;border-color:#1d5bd0}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] [data-enquiry-example]:is(:hover,.is-hovered){background:#293849;color:#fff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .enquiry-choice:has(input:checked){color:#fff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .enquiry-choice input{color-scheme:dark;accent-color:#a8c6ff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .enquiry-urgency input{background:transparent;accent-color:var(--urgency-color)}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] input[value="urgent"]{--urgency-color:#f87171}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] input[value="soon"]{--urgency-color:#fbbf24}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] input[value="flexible"]{--urgency-color:#4ade80}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-alternatives a:hover{color:var(--enquiry-link)}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-alternatives a[href^="tel:"] svg{color:#a8c6ff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-alternatives a[href^="https://wa.me"] svg{color:#4ade80}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-alternatives a[href^="https://t.me"] svg{color:#7dc4ff}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .contact-field-error{color:#fca5a5}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] .intent-context{color:#dce8fa;background:#293849;border-color:#526679}
-body[data-redesign] [data-enquiry-panel] [data-staged-form] :focus-visible{outline-color:#bad2ff}
-body[data-redesign="home"] [data-staged-form] .contact-alternatives{justify-content:center}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] :is(.enquiry-example-controls button,.enquiry-extras summary,.form-privacy-notice a){color:var(--enquiry-link)}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] :is(input:not([type="radio"]),textarea){background:#dfe5ec;color:#18212c;color-scheme:light}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] :is(input,textarea)::placeholder{color:#4e5c6b;opacity:1}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] :is(input:not([type="radio"]),textarea):focus{background:#e7ecf2;border-color:#1d5bd0}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] [data-enquiry-example]:is(:hover,.is-hovered){background:#293849;color:#fff}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .enquiry-choice:has(input:checked){color:#fff}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .enquiry-choice input{color-scheme:dark;accent-color:#a8c6ff}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .enquiry-urgency input{background:transparent;accent-color:var(--urgency-color)}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] input[value="urgent"]{--urgency-color:#f87171}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] input[value="soon"]{--urgency-color:#fbbf24}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] input[value="flexible"]{--urgency-color:#4ade80}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .contact-alternatives a:hover{color:var(--enquiry-link)}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .contact-alternatives a[href^="tel:"] svg{color:#a8c6ff}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .contact-alternatives a[href^="https://wa.me"] svg{color:#4ade80}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .contact-alternatives a[href^="https://t.me"] svg{color:#7dc4ff}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .contact-field-error{color:#fca5a5}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] .intent-context{color:#dce8fa;background:#293849;border-color:#526679}
+body[data-redesign] [data-enquiry-panel] [data-inline-enquiry] :focus-visible{outline-color:#bad2ff}
+body[data-redesign="home"] [data-inline-enquiry] .contact-alternatives{justify-content:center}
 @media(max-width:1199px){
   .mobile-enquiry-slot{background:#18212c;padding:8px 0 32px}
   .mobile-enquiry-slot>.container{max-width:688px;padding-inline:24px;margin-inline:auto}
   body[data-redesign] .mobile-enquiry-slot .preview-contact-rail{background:transparent;padding:0;border-radius:0}
   body[data-redesign] .mobile-enquiry-slot [data-enquiry-panel]{max-width:640px;margin-inline:auto;padding:0;border-radius:0}
   body[data-redesign] .mobile-enquiry-slot .contact-alternatives a{color:#fff}
-  body[data-redesign="service"] [data-staged-form] .contact-alternatives{justify-content:center}
+  body[data-redesign="service"] [data-inline-enquiry] .contact-alternatives{justify-content:center}
 }
 @media(max-width:760px){.mobile-enquiry-slot>.container{padding-inline:20px}}
 @media(max-width:900px){
@@ -732,7 +735,7 @@ body[data-redesign] .service-main>p,body[data-redesign] .service-main .feature-c
 body[data-redesign] .service-main :is(.segment-card,.contact-checkpoint,.business-handoff) p{max-width:70ch}
 body[data-redesign] .service-main .segment-card h3{margin-top:0;font-size:20px}
 body[data-redesign] .service-main .segment-card p{margin-bottom:0}
-body[data-redesign] [data-staged-form] .contact-alternatives{justify-content:center}
+body[data-redesign] [data-inline-enquiry] .contact-alternatives{justify-content:center}
 body[data-redesign] .final-cta>.container>p{max-width:70ch;margin-inline:auto}
 body[data-redesign] .final-cta>.container>h2{max-width:30ch;margin-inline:auto;text-wrap:balance}
 @media(min-width:1200px){body[data-redesign="service"] .preview-service-rail .contact-alternatives{gap:10px 14px;font-size:13px}}

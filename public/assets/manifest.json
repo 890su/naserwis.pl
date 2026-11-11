@@ -1,5 +1,5 @@
 {
-  "/assets/site-cc5cdd78facf8005.css": {
+  "/assets/site-5ec0c8852b99bcb5.css": {
     "type": "css",
     "sources": [
       "/redesign.css?v=20261015"
@@ -8,7 +8,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-393f6d25ee2c3d5a.css": {
+  "/assets/site-7e3be68d5bd4f050.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261009-home1",
@@ -34,7 +34,7 @@
       "<script src=\"/consent.js?v=20261009-home1\"></script>"
     ]
   },
-  "/assets/site-158c4fa120d66c28.css": {
+  "/assets/site-c884f8d35a649704.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -55,7 +55,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-26de6aa88c7c2ae2.js": {
+  "/assets/site-7553f1cb1381b170.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -83,7 +83,7 @@
       "<script src=\"/consent.js?v=20261009-home1\"></script>"
     ]
   },
-  "/assets/site-fa57f31ea63822f5.js": {
+  "/assets/site-3877a3cb1d4ca0cd.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -100,7 +100,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-7f0f046076d5805d.css": {
+  "/assets/site-e50ee2e9bef3f4e6.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -127,7 +127,7 @@
     "tags": [],
     "locale": "en"
   },
-  "/assets/site-66778e42eb6d2eba.js": {
+  "/assets/site-e0a705d1093ea2e5.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -146,7 +146,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-8ea8f297e4a15730.css": {
+  "/assets/site-ca974e675a8a6c20.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -165,7 +165,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-ad7041db95ddba3c.js": {
+  "/assets/site-51a1cb4d8b97c30e.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -182,7 +182,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-555e5e262f97b0fa.js": {
+  "/assets/site-af2c999a50f69a89.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -199,7 +199,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-bf29af1959673205.js": {
+  "/assets/site-6a93ea78dcf0845d.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -216,7 +216,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-c2593e676adcd3cc.css": {
+  "/assets/site-97bf1cdd0b3714f5.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -233,7 +233,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-05732f21e5f0040f.js": {
+  "/assets/site-c4763e8e15d1faee.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -248,7 +248,7 @@
       "<script src=\"/guides.js?v=20261010-guide3\" defer></script>"
     ]
   },
-  "/assets/site-de913923caa88385.css": {
+  "/assets/site-177290c41c7f4efb.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -269,7 +269,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-f6e7ddabdcb4422d.css": {
+  "/assets/site-0fbf6332b97be889.css": {
     "type": "css",
     "sources": [
       "/styles.css?v=20261010-guide3",
@@ -286,7 +286,7 @@
       "<link rel=\"stylesheet\" href=\"/redesign.css?v=20261015\">"
     ]
   },
-  "/assets/site-2b132569fd0d5e42.js": {
+  "/assets/site-787e7b2281728b41.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -311,7 +311,7 @@
     "tags": [],
     "locale": "pl"
   },
-  "/assets/site-abd42251221300e1.js": {
+  "/assets/site-9064b266a426073f.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -330,7 +330,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-3e80b53f6c19a1b4.js": {
+  "/assets/site-de98fc6287733d07.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -347,7 +347,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-24e86c29387cc358.js": {
+  "/assets/site-26ab57be32390582.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -364,7 +364,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-8cacabbfc73b579b.js": {
+  "/assets/site-38ab64fc1340fca6.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -381,7 +381,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-c3471918d5340c3a.js": {
+  "/assets/site-1325643d6ce1d863.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -398,7 +398,7 @@
       "<script src=\"/weather-network.js?v=20260907-2\" defer></script>"
     ]
   },
-  "/assets/site-32906e0d05119b9a.js": {
+  "/assets/site-5efaa578ddd3e926.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -424,7 +424,7 @@
       "<script src=\"/consent.js?v=20261009-home1\"></script>"
     ]
   },
-  "/assets/site-727aef60cec3aaa3.js": {
+  "/assets/site-83e545c43f58c61a.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -449,7 +449,7 @@
     "tags": [],
     "locale": "ru"
   },
-  "/assets/site-80b84029ac757201.js": {
+  "/assets/site-0de719f86937f685.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -468,7 +468,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-4330825e033bafb5.js": {
+  "/assets/site-a16029d960e70c9a.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -485,7 +485,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-315679e25c21e08a.js": {
+  "/assets/site-1c47aa7d44200dd1.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -502,7 +502,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-e5001b3b377b1b4b.js": {
+  "/assets/site-0218b172804a9bd7.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -519,7 +519,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-6db541178b32b92c.js": {
+  "/assets/site-033aa22522829c44.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -536,7 +536,7 @@
       "<script src=\"/weather-network.js?v=20260907-2\" defer></script>"
     ]
   },
-  "/assets/site-10fb2e1527569052.js": {
+  "/assets/site-c22f7f5559301add.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -562,7 +562,7 @@
       "<script src=\"/consent.js?v=20261009-home1\"></script>"
     ]
   },
-  "/assets/site-8f825ef4ba9430ab.js": {
+  "/assets/site-81384ee32faa24db.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -587,7 +587,7 @@
     "tags": [],
     "locale": "uk"
   },
-  "/assets/site-56ddcd08d0ac2ec6.js": {
+  "/assets/site-0959b3a7811a11be.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -606,7 +606,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-997a2048d25fe75d.js": {
+  "/assets/site-dd3b74ff6f0f1305.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -623,7 +623,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-0212f3760b25c44a.js": {
+  "/assets/site-aa87b3ea05d28ec6.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -640,7 +640,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-31ecb1c55967c780.js": {
+  "/assets/site-d52b3ec0615d542b.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -657,7 +657,7 @@
       "<script defer src=\"/enquiry.js\"></script>"
     ]
   },
-  "/assets/site-ed56d5b13bcd6bdf.js": {
+  "/assets/site-24453adb9e287b4e.js": {
     "type": "js",
     "sources": [
       "/site-config.js",
@@ -674,7 +674,7 @@
       "<script src=\"/weather-network.js?v=20260907-2\" defer></script>"
     ]
   },
-  "/assets/site-b4634de6b9e2c04b.js": {
+  "/assets/site-9b1a2724fceb63bd.js": {
     "type": "js",
     "sources": [
       "/site-config.js",

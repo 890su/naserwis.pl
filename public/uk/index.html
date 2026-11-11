@@ -128,13 +128,38 @@
 <link rel="preload" href="/assets/redesign/manrope-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/redesign/manrope-700.woff2" as="font" type="font/woff2" crossorigin>
 
+<script id="enquiry-experiment">(function assignEnquiryVariant(endsAt, storageKey) {
+  if (Date.now() >= Date.parse(endsAt)) return;
+  const root = document.documentElement;
+  try {
+    const consent = JSON.parse(localStorage.getItem('naserwis_consent_v1'));
+    const hasPreference = consent?.version === 1;
+    if (hasPreference && !consent.analytics) return;
+    const saved = hasPreference ? localStorage.getItem(storageKey) : null;
+    const variant = ['simple', 'staged'].includes(saved)
+      ? saved
+      : Math.random() < 0.5 ? 'simple' : 'staged';
+    if (hasPreference) localStorage.setItem(storageKey, variant);
+    root.dataset.enquiryExperiment = variant;
+    window.addEventListener('naserwis:consent', ({ detail }) => {
+      try {
+        if (!detail?.analytics) localStorage.removeItem(storageKey);
+        else if (!localStorage.getItem(storageKey)) localStorage.setItem(storageKey, variant);
+      } catch {
+        // Storage can be blocked even when the form remains usable.
+      }
+    });
+  } catch {
+    // The standard form is already in the HTML if storage is unavailable.
+  }
+})('2026-12-09T23:59:59+01:00', 'naserwis_enquiry_ab_v1');</script>
 <noscript><style>.mobile-enquiry-slot{display:block!important;background:#18212c;padding:24px 0}.mobile-enquiry-slot>.container{max-width:688px}</style></noscript>
 <link rel="icon" href="/assets/brand/20261031/favicon.ico" sizes="any">
 <link rel="icon" href="/assets/brand/20261031/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/brand/20261031/apple-touch-icon.png">
 <link rel="manifest" href="/assets/brand/20261031/site.webmanifest">
 <style id="layout-fallback">img,svg{max-width:100%}img{height:auto}input,textarea,select{max-width:100%;box-sizing:border-box}</style>
-<link rel="stylesheet" href="/assets/site-7f0f046076d5805d.css">
+<link rel="stylesheet" href="/assets/site-e50ee2e9bef3f4e6.css">
 </head>
 <body data-concise-home="20261027" itemscope itemtype="https://schema.org/WebPage" data-redesign="home">
 <a class="site-skip-link" href="#main-content">Перейти до вмісту</a>
@@ -274,7 +299,7 @@
             </div>
         </section><section class="mobile-enquiry-slot" aria-label="Що сталося?"><div class="container"><aside id="preview-contact" class="preview-contact-rail"><aside class="hero-form" data-enquiry-panel aria-label="Форма безкоштовної консультації">
 
-                        <form id="hero-form" aria-label="Форма безкоштовної консультації" data-staged-form data-enquiry-placement="contact_rail">
+                        <form id="hero-form" aria-label="Форма безкоштовної консультації" data-inline-enquiry data-staged-form data-enquiry-placement="contact_rail">
       <h2 class="enquiry-title">Що сталося?</h2>
       <div class="form-group enquiry-problem"><textarea id="hero-message" name="message" aria-label="Що сталося?" required minlength="3" maxlength="4000" rows="3" placeholder="Опишіть проблему або виберіть схожу ситуацію нижче…" aria-describedby="hero-form-help"></textarea><small id="hero-form-help" class="contact-field-help">Виберіть схожу ситуацію</small></div>
       <div class="enquiry-examples"><div class="enquiry-example-heading"><span>Виберіть схожу ситуацію</span><div class="enquiry-example-controls"><button type="button" data-examples-all data-all="Усі приклади" data-less="Згорнути" aria-expanded="false" aria-controls="hero-form-examples">Усі приклади</button></div></div><div class="enquiry-example-list" id="hero-form-examples"><button type="button" data-enquiry-example><span class="enquiry-example-text">Wi-Fi постійно відключається</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Після заміни роутера немає інтернету</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Wi-Fi не ловить в іншій кімнаті</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Не працює мережева розетка</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Потрібно налаштувати роутер або Mesh</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Потрібно прокласти кабель у квартирі</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Не бачу камери в телефоні</span></button><button type="button" data-enquiry-example><span class="enquiry-example-text">Потрібно підключити новий пристрій</span></button></div>
@@ -290,6 +315,46 @@
       </div>
       <div id="hero-form-message" role="alert" aria-live="polite"></div><p class="contact-alternatives"><a href="tel:+48453327678"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/></svg>Зателефонувати</a><a href="https://wa.me/48453327678" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>WhatsApp</a><a href="https://t.me/naserwis_bot" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>Telegram</a></p>
       <noscript><p>Щоб надіслати форму, увімкніть JavaScript або зателефонуйте. <a href="tel:+48453327678">+48 453 327 678</a></p></noscript>
+      <script>(function mountEnquiryVariant(title, phoneLabel) {
+  const form = document.currentScript.closest('form');
+  const variant = document.documentElement.dataset.enquiryExperiment;
+  if (!variant) return;
+  form.dataset.enquiryVariant = variant;
+  if (variant !== 'simple') return;
+
+  const heading = form.querySelector('.enquiry-title');
+  const problem = form.querySelector('.enquiry-problem');
+  const message = form.elements.message;
+  const phone = form.elements.phone;
+  const contact = phone.closest('.form-group');
+  const details = form.querySelector('.enquiry-details');
+  const problemLabel = document.createElement('label');
+  problemLabel.htmlFor = message.id;
+  problemLabel.textContent = heading.textContent;
+  heading.textContent = title;
+  message.removeAttribute('aria-label');
+  message.removeAttribute('aria-describedby');
+  message.removeAttribute('placeholder');
+  problem.querySelector('.contact-field-help').remove();
+  problem.prepend(problemLabel);
+  contact.querySelector('label').textContent = phoneLabel;
+  contact.querySelector('.enquiry-hint').remove();
+  phone.type = 'tel';
+  phone.inputMode = 'tel';
+  phone.autocomplete = 'tel';
+  phone.maxLength = 60;
+  phone.removeAttribute('placeholder');
+  phone.removeAttribute('aria-describedby');
+  form.insertBefore(contact, problem);
+  form.querySelector('.enquiry-examples').remove();
+  details.querySelectorAll('fieldset, .contact-next-step').forEach(element => element.remove());
+  details.hidden = false;
+  form.removeAttribute('data-staged-form');
+  form.setAttribute('data-compact-form', '');
+  form.addEventListener('reset', () => {
+    details.querySelector('.enquiry-extras').open = false;
+  });
+})("Залишити заявку", "Контактний номер");</script>
     </form>
                     </aside></aside><a href="tel:+48453327678" class="preview-hero-call preview-home-mobile-call"><span class="preview-call-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16.5v3a2 2 0 0 1-2.2 2 19.7 19.7 0 0 1-8.6-3.1 19.3 19.3 0 0 1-6-6A19.7 19.7 0 0 1 1.1 3.8 2 2 0 0 1 3.1 1.6h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L7 9.6a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z"/></svg></span><span><strong>+48 453 327 678</strong><small>Зателефонувати майстру</small></span></a></div></section><section class="preview-overview" id="available-services" aria-label="З чим ми можемо допомогти"><div class="container preview-overview-grid"><div class="preview-task-pair"><article class="preview-task preview-task-fault"><figure class="preview-task-photo" data-fault-photo><picture><source type="image/avif" srcset="/assets/redesign/no-internet-uk-20261018-640.avif 640w, /assets/redesign/no-internet-uk-20261018-800.avif 800w, /assets/redesign/no-internet-uk-20261018-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw"><img src="/assets/redesign/no-internet-uk-20261018-1200.webp" srcset="/assets/redesign/no-internet-uk-20261018-640.webp 640w, /assets/redesign/no-internet-uk-20261018-800.webp 800w, /assets/redesign/no-internet-uk-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" decoding="async" fetchpriority="high" alt="Роутер із червоним індикатором інтернету й телефон із написом «Немає інтернету» — ілюстрація"></picture><picture><source type="image/avif" srcset="/assets/redesign/no-internet-led-off-20261018-640.avif 640w, /assets/redesign/no-internet-led-off-20261018-800.avif 800w, /assets/redesign/no-internet-led-off-20261018-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw"><img class="preview-led-off" src="/assets/redesign/no-internet-led-off-20261018-1200.webp" srcset="/assets/redesign/no-internet-led-off-20261018-640.webp 640w, /assets/redesign/no-internet-led-off-20261018-800.webp 800w, /assets/redesign/no-internet-led-off-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" alt="" aria-hidden="true" loading="lazy" fetchpriority="low" decoding="async"></picture><button type="button" class="preview-photo-motion" data-photo-motion data-pause="Вимкнути індикатор" data-play="Увімкнути індикатор" aria-label="Живлення індикатора" aria-pressed="true" title="Вимкнути індикатор" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0M12 2v10"/></svg></button></figure><div class="preview-task-heading"><h2 id="available-services-title">Щось не працює?</h2></div><div class="preview-task-links"><a class="preview-task-link" data-service-choice="wifi-coverage" href="/uk/naprawa-wifi/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><path d="M12 20h.01"/></svg></span><div><h3>Wi-Fi та інтернет</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" data-service-choice="lan-repair" href="/uk/naprawa-sieci/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 20 3-3h2a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h2l3 3z"/><path d="M6 8v1"/><path d="M10 8v1"/><path d="M14 8v1"/><path d="M18 8v1"/></svg></span><div><h3>Розетки RJ45 і кабелі</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/uk/serwis-monitoringu/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="12" rx="2"/><path d="m16 9 5-3v10l-5-3M7 21h5M10 17v4"/></svg></span><div><h3>Ремонт відеоспостереження</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></div></article><article class="preview-task preview-task-setup"><figure class="preview-task-photo"><picture><source type="image/avif" srcset="/assets/redesign/rj45-installation-20261018-640.avif 640w, /assets/redesign/rj45-installation-20261018-800.avif 800w, /assets/redesign/rj45-installation-20261018-1200.avif 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw"><img src="/assets/redesign/rj45-installation-20261018-1200.webp" srcset="/assets/redesign/rj45-installation-20261018-640.webp 640w, /assets/redesign/rj45-installation-20261018-800.webp 800w, /assets/redesign/rj45-installation-20261018-1200.webp 1200w" sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1100px) 44vw, 30vw" width="1200" height="675" decoding="async" loading="lazy" alt="Підключення мережевого кабелю до розетки RJ45 — ілюстрація"></picture></figure><div class="preview-task-heading"><h2>Потрібно налаштувати або встановити</h2></div><div class="preview-task-links"><a class="preview-task-link" data-service-choice="router-setup" href="/uk/naprawa-wifi/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6.01 18H6"/><path d="M10.01 18H10"/><path d="M15 10v4"/><path d="M17.84 7.17a4 4 0 0 0-5.66 0"/><path d="M20.66 4.34a8 8 0 0 0-11.31 0"/></svg></span><div><h3>Налаштування роутера й Mesh у Варшаві</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" data-service-choice="lan-install" href="/uk/montaz-sieci/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span><div><h3>Монтаж мережі LAN</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link" href="/uk/serwis-monitoringu/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="13" height="12" rx="2"/><path d="m16 9 5-3v10l-5-3M7 21h5M10 17v4"/></svg></span><div><h3>Встановлення камер</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a><a class="preview-task-link preview-business-link" href="/uk/dla-firm/"><span class="preview-task-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></svg></span><div><h3>Послуги для компаній та організацій</h3></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a></div></article></div><div data-enquiry-desktop-slot></div></div></section><section class="home-pricing preview-conditions" id="services"><div class="container"><h2 class="home-section-heading">Орієнтовні ціни</h2><div class="home-pricing-rates"><p class="preview-rate"><strong>від 200 zł</strong><span>Коротке завдання поблизу — за погодженням</span></p><p class="preview-rate"><strong>від 250 zł</strong><span>Виїзд у межах Варшави + перша година роботи</span></p><p class="preview-rate"><strong>від 150 zł</strong><span>Кожна наступна година роботи</span></p></div><div class="home-pricing-notes"><p class="billing-condition">Від 200 zł за коротку роботу з близьким виїздом, за погодженням і за умови успішного виконання. Замість стандартного візиту.</p><p class="billing-rule">Погодинна оплата або погоджений кошторис. Без подвійної оплати за одну роботу.</p><p class="billing-project">Монтаж можна оцінити як проєкт. Обладнання, матеріали, додаткові роботи та неповну годину погоджуємо заздалегідь.</p><p class="price-disclaimer">Ціни орієнтовні. Остаточну суму підтвердимо до початку роботи. ПДВ не нараховується.</p></div></div></section>
 
@@ -600,6 +665,6 @@
             </svg>
         </button>
     </div>
-<script defer src="/assets/site-56ddcd08d0ac2ec6.js"></script>
+<script defer src="/assets/site-0959b3a7811a11be.js"></script>
 </body>
 </html>

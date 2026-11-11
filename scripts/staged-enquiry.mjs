@@ -1,5 +1,6 @@
 // Shared, idempotent form markup for the four commercial locales.
 import { businessContext } from './business-copy.mjs';
+import { enquiryExperimentHead, enquiryExperimentMount } from './enquiry-experiment.mjs';
 const copy = {
   pl: {
     start: 'Zostaw zgłoszenie', send: 'Wyślij zgłoszenie',
@@ -59,6 +60,7 @@ export const enquiryHeading = lang => (copy[lang] || copy.pl).problem;
 
 export function stagedEnquiries(html, lang, path) {
   const t = copy[lang] || copy.pl;
+  const phoneLabel = { pl: 'Telefon kontaktowy', ru: 'Контактный номер', uk: 'Контактний номер', en: 'Contact phone number' }[lang] || 'Telefon kontaktowy';
   const business = businessContext(lang, path);
   const examples = business?.examples;
   const service = ['naprawa-wifi', 'naprawa-sieci', 'montaz-sieci', 'serwis-monitoringu'].findIndex(route => path.includes(route)) + 1;
@@ -67,7 +69,7 @@ export function stagedEnquiries(html, lang, path) {
     const notice = original.match(/<p class="form-privacy-notice">[\s\S]*?<\/p>/)?.[0] || '';
     const alternatives = original.match(/<p class="contact-alternatives">[\s\S]*?<\/p>/)?.[0] || '';
     const choice = (name, value, label) => `<label class="enquiry-choice"><input type="radio" name="${name}" value="${value}"><span>${esc(label)}</span></label>`;
-    return `<form id="${id}"${attrs.replace(/ data-staged-form(?:="[^"]*")?/g, '')} data-staged-form>
+    return `<form id="${id}"${attrs.replace(/ data-(?:staged-form|inline-enquiry)(?:="[^"]*")?/g, '')} data-inline-enquiry data-staged-form>
       <h2 class="enquiry-title">${t.problem}</h2>
       <div class="form-group enquiry-problem"><textarea id="${prefix}-message" name="message" aria-label="${t.problem}" required minlength="3" maxlength="4000" rows="3" placeholder="${t.placeholder}" aria-describedby="${id}-help"></textarea><small id="${id}-help" class="contact-field-help">${t.examples}</small></div>
       <div class="enquiry-examples"><div class="enquiry-example-heading"><span>${t.examples}</span><div class="enquiry-example-controls"><button type="button" data-examples-all data-all="${t.all}" data-less="${t.less}" aria-expanded="false" aria-controls="${id}-examples">${t.all}</button></div></div><div class="enquiry-example-list" id="${id}-examples">${(examples || t.examplesByService[service]).map(text => `<button type="button" data-enquiry-example><span class="enquiry-example-text">${esc(text)}</span></button>`).join('')}</div>
@@ -83,8 +85,11 @@ export function stagedEnquiries(html, lang, path) {
       </div>
       <div id="${id}-message" role="alert" aria-live="polite"></div>${alternatives}
       <noscript><p>${t.noJs} <a href="tel:+48453327678">+48 453 327 678</a></p></noscript>
+      ${enquiryExperimentMount(t.start, phoneLabel)}
     </form>`;
   });
+  html = html.replace(/\s*<script id="enquiry-experiment">[\s\S]*?<\/script>/g, '');
+  if (html.includes(' data-inline-enquiry ')) html = html.replace('</head>', enquiryExperimentHead + '\n</head>');
   html = html.replace(/(<(?:aside|div) class="(?:hero-form|final-form)")(?: data-enquiry-panel)?/g, '$1 data-enquiry-panel');
   html = html.replace(/\s*<script[^>]*src="\/enquiry.js[^"]*"[^>]*><\/script>/g, '');
   return html.replace('</body>', '<script defer src="/enquiry.js"></script>\n</body>');

@@ -417,6 +417,7 @@
         let sending = false;
         let started = false;
         const formParameters = { form_id: formId, placement: formId === 'quick-form' ? 'modal' : contactPlacement(form) };
+        const recordExperimentLead = trackEnquiryExperiment(form, formParameters);
         const shortMessages = {
             pl: 'Uzupełnij pole — minimalna liczba znaków: ',
             ru: 'Дополните поле — минимум символов: ',
@@ -530,6 +531,7 @@
                     });
                     sendGoogleAdsConversion('lead', result.leadId);
                     trackFunnelEvent('naserwis_form_success', formParameters);
+                    recordExperimentLead?.();
 
                     // Reset form
                     form.reset();
@@ -1293,6 +1295,44 @@
         if (window.NASERWIS_CONSENT?.get()?.analytics && typeof window.gtag === 'function') {
             window.gtag('event', eventName, parameters || {});
         }
+    }
+
+    function trackEnquiryExperiment(form, formParameters) {
+        const variant = form.dataset.enquiryVariant;
+        if (!['simple', 'staged'].includes(variant)) return;
+        let exposed = false;
+        let visible = false;
+        const send = event => window.gtag('event', `naserwis_ab_${variant}_${event}`, {
+            send_to: 'G-FVC64PTKR3',
+            ...formParameters,
+            language: document.documentElement.lang || 'pl',
+            page_path: window.location.pathname
+        });
+        function canMeasure() {
+            if (!window.NASERWIS_CONSENT?.get()?.analytics || typeof window.gtag !== 'function') return false;
+            try { return localStorage.getItem('naserwis_enquiry_ab_v1') === variant; }
+            catch { return false; }
+        }
+        function recordExposure() {
+            if (!exposed) {
+                send('view');
+                exposed = true;
+            }
+        }
+        function observeExposure() {
+            if (visible && canMeasure()) recordExposure();
+        }
+        const observer = new IntersectionObserver(([entry]) => {
+            visible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+            observeExposure();
+        }, { threshold: 0.5 });
+        observer.observe(form.querySelector('.enquiry-title'));
+        window.addEventListener('naserwis:consent', observeExposure);
+        return () => {
+            if (!canMeasure()) return;
+            recordExposure();
+            send('lead');
+        };
     }
 
     function trackFunnelEvent(eventName, parameters = {}) {
