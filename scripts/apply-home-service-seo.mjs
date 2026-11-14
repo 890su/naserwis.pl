@@ -48,7 +48,7 @@ function serviceContent(c, type, locale, prefix) {
   return `<section class="service-content home-service-content"><div class="container"><div class="service-row"><div class="service-main">
 <h2>${s.heading}</h2>
 <ul class="service-features">${s.features.map(([title, text]) => `<li class="service-feature-item"><span class="service-feature-icon" aria-hidden="true">✓</span><div><strong>${title}</strong><br>${text}</div></li>`).join('\n')}</ul>
-<p class="service-scope-note">${s.explanation}</p>
+${s.routerReplacement ? `<p>${escape(s.routerReplacement)}</p>\n` : ''}<p class="service-scope-note">${s.explanation}</p>
 <div class="home-prepare"><h3>${c.prepareTitle}</h3><p>${c.prepare}</p></div>${handoff(c, locale)}
 <div class="info-box"><h3>${c.related}</h3><div class="info-box-links">${Object.keys(routes).filter(key => key !== 'home' && key !== type).map(key => `<a class="info-link" href="/${prefix}${routes[key]}">${c[key].h1} <span aria-hidden="true">→</span></a>`).join('\n')}</div><a class="home-catalog-back" href="/${prefix}#available-services">${c.catalog} <span aria-hidden="true">→</span></a></div>
 </div><div class="service-sidebar home-billing"><h3>${c.billing}</h3><p class="price-header">${c.rateLabel}</p>${billing(c, true)}<a href="#contact" class="btn btn-primary btn-block">${c.request}</a></div></div></div></section>`;

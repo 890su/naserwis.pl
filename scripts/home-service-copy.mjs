@@ -7,7 +7,7 @@ export const copy = {
     "services": [
       [
         "wifi",
-        "Wi-Fi i internet",
+        "Naprawa Wi-Fi i problemów z internetem",
         "Słaby sygnał w pokoju, przerwy w połączeniu lub Wi-Fi bez internetu."
       ],
       [
@@ -90,6 +90,7 @@ export const copy = {
       "intro": "Wi-Fi zrywa, ma słaby zasięg albo nie ma internetu? Sprawdzamy połączenie i konfigurujemy router, AP lub Mesh.",
       "heading": "Co sprawdzimy i ustawimy",
       "explanation": "Usterkę po stronie operatora trzeba zgłosić operatorowi. Pomożemy ustalić, czy problem dotyczy jego sieci.",
+      "routerReplacement": "Po wymianie routera drukarka może przestać drukować, urządzenia smart home mogą stracić połączenie, a podgląd z kamer może przestać działać. Sprawdzamy, czy zmieniła się adresacja sieci i czy urządzenia są dostępne pod dotychczasowymi adresami IP lub nazwami. W razie potrzeby odtwarzamy przypisania adresów i lokalne nazwy urządzeń, a potem sprawdzamy, czy sprzęt działa. Możemy przywrócić poprzednią nazwę i hasło Wi‑Fi, żeby urządzenia połączyły się bez ponownej konfiguracji, albo ustawić nową sieć. Na życzenie konfigurujemy też osobną sieć Wi‑Fi dla gości.",
       "features": [
         [
           "Zasięg i połączenie",
@@ -192,7 +193,7 @@ export const copy = {
     "services": [
       [
         "wifi",
-        "Wi-Fi и интернет",
+        "Ремонт Wi-Fi и проблемы с интернетом",
         "Слабый сигнал в комнате, обрывы связи или Wi-Fi без интернета."
       ],
       [
@@ -275,6 +276,7 @@ export const copy = {
       "intro": "Wi-Fi обрывается, плохо ловит или нет интернета? Проверяем подключение и настраиваем роутер, AP или Mesh.",
       "heading": "Что проверим и настроим",
       "explanation": "Аварии в сети оператора устраняет оператор. Поможем определить, относится ли проблема к его сети.",
+      "routerReplacement": "После замены роутера принтер может перестать печатать, устройства умного дома могут потерять связь, а просмотр камер может стать недоступен. Проверяем, изменилась ли адресация сети и доступны ли устройства по прежним IP-адресам или именам. При необходимости восстанавливаем привязки IP-адресов и локальные имена, затем проверяем работу оборудования. Можем вернуть прежнее имя и пароль Wi‑Fi, чтобы устройства подключились без повторной настройки, или настроить новую сеть. По желанию настроим отдельную гостевую сеть Wi‑Fi.",
       "features": [
         [
           "Сигнал и подключение",
@@ -377,7 +379,7 @@ export const copy = {
     "services": [
       [
         "wifi",
-        "Wi-Fi та інтернет",
+        "Ремонт Wi-Fi та проблеми з інтернетом",
         "Слабкий сигнал у кімнаті, обриви зв’язку або Wi-Fi без інтернету."
       ],
       [
@@ -460,6 +462,7 @@ export const copy = {
       "intro": "Wi-Fi обривається, погано ловить або немає інтернету? Перевіряємо підключення й налаштовуємо роутер, AP або Mesh.",
       "heading": "Що перевіримо й налаштуємо",
       "explanation": "Аварії в мережі оператора усуває оператор. Допоможемо визначити, чи стосується проблема його мережі.",
+      "routerReplacement": "Після заміни роутера принтер може перестати друкувати, пристрої розумного дому можуть втратити зв’язок, а перегляд камер може стати недоступним. Перевіряємо, чи змінилася адресація мережі та чи доступні пристрої за попередніми IP-адресами або іменами. За потреби відновлюємо прив’язки IP-адрес і локальні імена, а потім перевіряємо роботу обладнання. Можемо повернути попередню назву й пароль Wi‑Fi, щоб пристрої підключилися без повторного налаштування, або налаштувати нову мережу. За бажанням налаштуємо окрему гостьову мережу Wi‑Fi.",
       "features": [
         [
           "Сигнал і підключення",
@@ -562,7 +565,7 @@ export const copy = {
     "services": [
       [
         "wifi",
-        "Wi-Fi and internet",
+        "Wi-Fi and internet troubleshooting",
         "Weak signal in a room, dropped connections or Wi-Fi without internet."
       ],
       [
@@ -645,6 +648,7 @@ export const copy = {
       "intro": "Wi-Fi drops, has weak coverage or no internet? We check the connection and set up your router, AP or Mesh.",
       "heading": "What we check and configure",
       "explanation": "Provider network faults must be fixed by the provider. We help identify whether the problem is on their side.",
+      "routerReplacement": "After a router replacement, your printer may stop printing, smart home devices may go offline, and you may lose access to your camera feeds. We check whether the network addressing changed and whether devices are reachable at their previous IP addresses or local names. Where needed, we restore address reservations and local names, then check that the devices work. We can restore your previous Wi‑Fi name and password so devices reconnect without being set up again, or configure a new network. We can also set up a separate guest Wi‑Fi network on request.",
       "features": [
         [
           "Signal and connection",
